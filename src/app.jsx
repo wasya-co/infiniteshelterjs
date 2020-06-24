@@ -1,9 +1,15 @@
-import Menu from './components/menu';
-import Page from './pages/Page';
 import React from 'react';
-import { IonApp, IonRouterOutlet } from '@ionic/react';
+import { IonApp, IonRouterOutlet, IonButtons, IonMenuButton, IonContent } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
 import { Redirect, Route } from 'react-router-dom';
+
+import Menu from './components/menu';
+import Home from './pages/home';
+import Cities from "./pages/cities";
+import CityShow from "./pages/city_show";
+import Account from "./pages/account";
+import GalleryShow from "./pages/gallery_show";
+
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
@@ -24,17 +30,26 @@ import '@ionic/react/css/display.css';
 /* Theme variables */
 import './theme/variables.css';
 
+import './app.scss';
 
 const App = () => {
 
   return (
     <IonApp>
       <IonReactRouter>
-          <Menu />
+        <IonButtons>
+        <IonMenuButton />
+        </IonButtons>
+        <Menu />
           <IonRouterOutlet id="main" main>
-            <Route path="/page/:name" component={Page} exact />
-            <Redirect from="/" to="/page/Inbox" exact />
+            <Route path="/en" component={Home} exact />
+            <Route path="/en/cities" component={Cities} exact />
+            <Route path="/en/cities/travel-to/:name/show" component={CityShow} />
+            <Route path="/en/account" component={Account} exact />
+            <Route path="/en/galleries/show/:name" component={GalleryShow} exact />
+            <Redirect from="/" to="/en" exact />
           </IonRouterOutlet>
+
       </IonReactRouter>
     </IonApp>
   );

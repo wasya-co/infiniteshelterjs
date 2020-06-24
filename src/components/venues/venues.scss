@@ -1,0 +1,117 @@
+.venues-section {
+  $darkGrey: #605d5d;
+  $lightGrey: #988b8b;
+  $blue: #6aa3e9;
+
+  div.filter-section {
+    padding: 0 1em;
+    position: relative;
+    margin: 1em 0;
+
+    .filter-input {
+      width: 100%;
+      border: 2px solid $blue;
+      border-radius: 2em;
+      height: 2.5em;
+      outline: none;
+      padding: 1em 1em;
+      color: $blue;
+      background: white;
+    }
+
+    .filter-icon {
+      position: absolute;
+      right: 1.3em;
+      font-size: 1.5em;
+      top: 0.3em;
+      color: $blue;
+    }
+  }
+
+  .container {
+    max-width: 44em;
+    margin: auto;
+    margin: 0 3%;
+    padding-bottom: 2em;
+
+    .venues {
+      padding: 1em;
+      border-bottom: 1px solid #e3d3d3;
+      box-shadow: 0px 1px 5px 1px #b3aeae;
+      display: flex;
+      background-color: white;
+      position: relative;
+
+      .image-section {
+        img {
+          width: 100%;
+          border-radius: 10px;
+        }
+      }
+
+      .info-section {
+        padding-left: 1em;
+
+        .title {
+          margin-top: 0;
+        }
+
+        .reviews {
+          vertical-align: super;
+          padding-left: 0.5em;
+          color: grey;
+        }
+
+        .description {
+          color: $darkGrey;
+          margin-bottom: 0;
+        }
+
+        .address {
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          color: $darkGrey;
+          font-size: 14px;
+        }
+
+        .tags {
+          border: 0.1em solid #378ff9;
+          border-radius: 1.5em;
+          padding: 0.5em 1em;
+          margin: 0px;
+          display: inline-block;
+          margin: 1em 1em 0 0;
+          font-size: 0.7em;
+          color: #5f5353;
+        }
+      }
+
+      .forward-arrow {
+        position: absolute;
+        right: 0;
+        top: 50%;
+        transform: translateY(-50%);
+        height: 1.5em;
+      }
+    }
+  }
+
+  @media all and (min-width: 601px) {
+    .image-section {
+      width: 25%;
+    }
+    .info-section {
+      width: 75%;
+    }
+  }
+
+  @media all and (max-width: 600px) {
+    .image-section {
+      width: 30%;
+    }
+    .info-section {
+      width: 70%;
+    }
+  }
+}

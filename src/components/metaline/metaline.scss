@@ -1,0 +1,22 @@
+.meta-info {
+  font-size: 0.8em;
+  .user {
+    color: #378ff9;
+    font-weight: 600;
+    font-style: italic;
+  }
+  .city {
+    color: #378ff9;
+    font-weight: 600;
+    font-style: italic;
+    cursor: pointer;
+  }
+  .tags {
+    border: 0.1em solid #378ff9;
+    border-radius: 1.5em;
+    padding: 0.5em 1em;
+    margin: 0px;
+    display: inline-block;
+    margin: 1em 1em 0 0;
+  }
+}

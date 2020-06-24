@@ -1,0 +1,19 @@
+.home {
+  div.image-container {
+    height: 180px;
+    text-align: center;
+
+    img {
+      max-height: 100%;
+    }
+  }
+
+  div.container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    overflow: scroll;
+    margin: auto;
+    max-width: 44em;
+  }
+}
