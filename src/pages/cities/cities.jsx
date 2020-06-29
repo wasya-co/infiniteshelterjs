@@ -13,12 +13,11 @@ const Cities = (props) => {
   useEffect(() => {
 
     setShowLoading(true);
-    getCities()
-      .then(res => {
-        setShowLoading(false);
-        setFilteredCities(JSON.parse(JSON.stringify(res.data)));
-        setCities(res.data);
-      })
+    getCities().then(res => {
+      setShowLoading(false);
+      setFilteredCities(JSON.parse(JSON.stringify(res.data)));
+      setCities(res.data);
+    });
 
   }, []);
 
