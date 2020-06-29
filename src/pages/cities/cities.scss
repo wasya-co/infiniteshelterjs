@@ -1,0 +1,208 @@
+// Colors Used in City Page
+
+.cities {
+  $darkGrey: #605d5d;
+  $lightGrey: #988b8b;
+  $blue: #6aa3e9;
+
+  h1.heading {
+    text-align: center;
+    color: $darkGrey;
+  }
+
+  div.filter-section {
+    padding: 0 1em;
+    position: relative;
+    margin: 1em 0;
+
+    .filter-input {
+      width: 100%;
+      border: 2px solid $blue;
+      border-radius: 2em;
+      height: 2.5em;
+      outline: none;
+      padding: 1em 1em;
+      color: $blue;
+      background: white;
+    }
+
+    .filter-icon {
+      position: absolute;
+      right: 1.3em;
+      font-size: 1.5em;
+      top: 0.3em;
+      color: $blue;
+    }
+  }
+
+  div.bookmark-section {
+    margin: 1em 0;
+    padding: 0 1em;
+
+    .bookmark-text {
+      color: $blue;
+      padding: 1em;
+    }
+  }
+
+  div.container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+
+    .cities {
+      margin: 0.5em;
+      padding: 0.8em;
+      border: 1px solid $blue;
+      border-radius: 0.4em;
+      box-shadow: 1px 2px 8px 0px #d5cdcd;
+      background: white;
+      cursor: pointer;
+
+      .img-section {
+        position: relative;
+        .city-img {
+          border-radius: 0.4em;
+          opacity: 0.8;
+        }
+
+        .city-title {
+          position: absolute;
+          bottom: 0;
+          left: 50%;
+          transform: translate(-50%, 15%);
+          background: white;
+          padding: 0.5em;
+          text-align: center;
+          border-radius: 0.4em;
+          font-size: 0.8em;
+          font-weight: 600;
+          color: $darkGrey;
+        }
+
+        .bookmark {
+          position: absolute;
+          top: 0;
+          right: 0.2em;
+          padding: 0.8em;
+          background: white;
+          z-index: 1;
+          border-radius: 50%;
+        }
+
+        .bookmark-icon {
+          position: absolute;
+          top: -0.25em;
+          right: 50%;
+          transform: translate(50%);
+          font-size: 1.6em;
+          color: $blue;
+        }
+      }
+
+      .content-section {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        margin: 1em 0px;
+
+        .content-item {
+          width: 50%;
+          text-align: center;
+          position: relative;
+          padding: 0.1em;
+
+          .icon {
+            font-size: 2em;
+            color: $darkGrey;
+          }
+
+          .count {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-60%);
+            padding: 0.5em;
+            color: $lightGrey;
+            font-size: 0.9em;
+            font-weight: 600;
+          }
+        }
+      }
+    }
+  }
+
+  // toggle switch style
+  .switch {
+    position: relative;
+    display: inline-block;
+    width: 2.9em;
+    height: 1.5em;
+  }
+
+  .switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+
+  .slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    -webkit-transition: 0.4s;
+    transition: 0.4s;
+  }
+
+  .slider:before {
+    position: absolute;
+    content: "";
+    height: 1.15em;
+    width: 1.15em;
+    left: 0.2em;
+    bottom: 0.2em;
+    background-color: white;
+    -webkit-transition: 0.4s;
+    transition: 0.4s;
+  }
+
+  input:checked + .slider {
+    background-color: $blue;
+  }
+
+  input:checked + .slider:before {
+    -webkit-transform: translateX(1.3em);
+    -ms-transform: translateX(1.3em);
+    transform: translateX(1.3em);
+  }
+
+  /* Rounded sliders */
+  .slider.round {
+    border-radius: 2em;
+  }
+
+  .slider.round:before {
+    border-radius: 50%;
+  }
+
+  @media all and (max-width: 296px) {
+    .cities {
+      width: 80%;
+    }
+  }
+
+  @media all and (min-width: 296px) and (max-width: 540px) {
+    .cities {
+      width: 44%;
+    }
+  }
+
+  @media all and (min-width: 540px) {
+    .cities {
+      width: 22%;
+    }
+  }
+}
