@@ -22,12 +22,6 @@
     "react-scripts": "3.4.1",
     "typescript": "3.8.3"
   },
-  "eslintConfig": {
-    "extends": "react-app",
-    "rules": {
-      "no-unused-vars": 0
-    }
-  },
   "browserslist": {
     "production": [
       ">0.2%",
@@ -43,6 +37,8 @@
   "devDependencies": {
     "@capacitor/cli": "2.2.0",
     "cordova-res": "^0.15.0",
+    "eslint-config-react-app": "^5.2.1",
+    "jest-environment-jsdom-sixteen": "^1.0.3",
     "link-module-alias": "^1.2.0"
   },
   "_moduleAliases": {

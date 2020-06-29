@@ -23,14 +23,6 @@ const CityShow = (props) => {
     })
   }, [match.params.name]);
 
-  function deSelectAll() {
-
-  }
-
-  function tagSelection() {
-
-  }
-
   function changeMenuHandler(menu) {
     history.push(`${match.url}/${menu}`);
   }
@@ -62,22 +54,12 @@ const CityShow = (props) => {
               </div>
             </section>
 
-            {
-              (city.tags || []).length > 0 ?
-                <section className="tags-section">
-                  <span className="btn delete-btn" onClick={deSelectAll}>
-                    <IonIcon name="close"> </IonIcon> deselect all
-                  </span>
-
-                  {
-                    (city.tags || []).map((tag, i) => {
-                      return (
-                        <span className="btn" key={i} onClick={tagSelection}>{tag.name}</span>
-                      );
-                    })
-                  }
-                </section> : null
-            }
+            { city.tags && <section className="tags-section">
+              <span className="btn delete-btn" >
+                <IonIcon name="close"> </IonIcon> deselect all
+              </span>
+              { city.tags.map((tag, i) => <span className="btn" key={i} >{tag.name}</span>) }
+            </section> }
 
             <section className="section-three">
 
@@ -94,13 +76,12 @@ const CityShow = (props) => {
             </section>
 
             <section>
-
               <Switch>
                 <Route exact path={`${match.url}/venues`} render={() => <Venues data={city.venues} />} />
                 <Route exact path={`${match.url}/newsfeed`} render={() => <NewsItems data={city.newsitems} />} />
               </Switch>
-
             </section>
+
           </div>
         </div>}
         <IonLoading
