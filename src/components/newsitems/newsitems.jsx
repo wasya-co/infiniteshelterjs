@@ -13,26 +13,16 @@ const newsitems = (props) => {
 
   return (
     <div className="newsitems">
-      {
-        data.map((newsitem, i) => {
-          const icon = ICONS[newsitem.premium_tier];
-
-
-          return (
-            <div key={i} className={`items premium-${newsitem.premium_tier || 0}`}>
-              {
-                newsitem.item_type == "report" ?
-                  <NewsItemReport data={newsitem} icon={icon} /> :
-                  newsitem.item_type == "video" ?
-                    <NewsItemVideo data={newsitem} icon={icon} /> :
-                    newsitem.item_type == "gallery" ?
-                      <NewsItemGallery data={newsitem} icon={icon} /> :
-                      null
-              }
-            </div>
-          )
-        })
-      }
+      { data.map((newsitem, i) => {
+        const icon = ICONS[newsitem.premium_tier];
+        return (
+          <div key={i} className={`items premium-${newsitem.premium_tier || 0}`}>
+            { newsitem.item_type === "report" && <NewsItemReport data={newsitem} icon={icon} /> }
+            { newsitem.item_type === "gallery" && <NewsItemGallery data={newsitem} icon={icon} /> }
+            { newsitem.item_type === "video" && <NewsItemVideo data={newsitem} icon={icon} /> }
+          </div>
+        )
+      }) }
     </div>
   )
 }

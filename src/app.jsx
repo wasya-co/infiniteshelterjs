@@ -1,15 +1,7 @@
 import React from 'react';
-import { IonApp, IonRouterOutlet, IonButtons, IonMenuButton, IonContent } from '@ionic/react';
+import { IonApp, IonRouterOutlet, IonButtons, IonMenuButton } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
 import { Redirect, Route } from 'react-router-dom';
-
-import Menu from './components/menu';
-import Home from './pages/home';
-import Cities from "./pages/cities";
-import CityShow from "./pages/city_show";
-import Account from "./pages/account";
-import GalleryShow from "./pages/gallery_show";
-
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
@@ -31,6 +23,13 @@ import '@ionic/react/css/display.css';
 import './theme/variables.css';
 
 import './app.scss';
+
+import Cities from "$components/cities/Cities";
+import Menu from "$components/menu";
+import { Account } from "$components/users";
+import Home from './pages/home';
+import CityShow from "./pages/city_show";
+import GalleryShow from "./pages/gallery_show";
 
 const App = () => {
 

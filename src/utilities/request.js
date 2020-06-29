@@ -1,8 +1,8 @@
 import axios from "axios";
-import config from "../configuration.json";
+import config from "config";
 
 const settings = {
-    baseURL: config.base_url
+  baseURL: config.apiOrigin
 }
 
 export default axios.create(settings);

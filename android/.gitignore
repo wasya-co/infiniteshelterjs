@@ -5,7 +5,7 @@
 # Using Android gitignore template: https://github.com/github/gitignore/blob/master/Android.gitignore
 
 # Built application files
-*.apk
+# *.apk
 *.ap_
 *.aab
 
@@ -16,10 +16,10 @@
 *.class
 
 # Generated files
-bin/
+# bin/
 gen/
 out/
-release/
+# release/
 
 # Gradle files
 .gradle/
@@ -84,8 +84,3 @@ lint/outputs/
 lint/tmp/
 # lint/reports/
 
-# Cordova plugins for Capacitor
-capacitor-cordova-android-plugins
-
-# Copied web assets
-app/src/main/assets/public
