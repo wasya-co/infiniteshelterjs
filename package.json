@@ -1,5 +1,6 @@
 {
   "name": "guyd",
+  "description": "An Ionic project",
   "version": "0.0.1",
   "private": true,
   "dependencies": {
@@ -20,13 +21,6 @@
     "react-scripts": "3.4.1",
     "typescript": "3.8.3"
   },
-  "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "resources": "cordova-res ios && cordova-res android && node scripts/resources.js"
-  },
   "eslintConfig": {
     "extends": "react-app"
   },
@@ -46,5 +40,11 @@
     "@capacitor/cli": "2.2.0",
     "cordova-res": "^0.15.0"
   },
-  "description": "An Ionic project"
+  "scripts": {
+    "start": "PORT=3002 react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+    "resources": "cordova-res ios && cordova-res android && node scripts/resources.js"
+  }
 }

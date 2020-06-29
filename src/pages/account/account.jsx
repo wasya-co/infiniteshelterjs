@@ -4,21 +4,14 @@ import VideosNew from "./videos-new";
 import GalleriesNew from "./galleries-new";
 import ReportsNew from "./reports-new";
 
-
 import "./account.scss";
 
 const Account = (props) => {
-
   const [selectedSection, setSelectedSection] = useState("reports-new");
-
-  function sectionChangeHandler(section) {
-    setSelectedSection(section);
-  }
 
   return (
     <IonPage>
       <IonContent>
-
         <div className="account">
 
           <section className="sectionOne">
@@ -31,42 +24,30 @@ const Account = (props) => {
           </section>
 
           <section className="sectionTwo">
-            <div className="account-tabs" onClick={sectionChangeHandler.bind(null, "reports-new")}>
-
-              <img src={selectedSection == "reports-new" ? "/assets/accounts/addReportSelected.png" : "/assets/accounts/addReport.png"} alt="Add Report" />
+            <div className="account-tabs" onClick={() => setSelectedSection("reports-new")} >
+              <img src={selectedSection === "reports-new" ? "/assets/accounts/addReportSelected.png" : "/assets/accounts/addReport.png"} alt="Add Report" />
               <p>Add Report</p>
-              <span className={`${selectedSection == "reports-new" ? "activeSpan" : ""}`}></span>
-
+              <span className={`${selectedSection === "reports-new" ? "activeSpan" : ""}`}></span>
             </div>
-            <div className="account-tabs" onClick={sectionChangeHandler.bind(null, "galleries-new")}>
-
-              <img src={selectedSection == "galleries-new" ? "/assets/accounts/addGallerySelected.png" : "/assets/accounts/addGallery.png"} alt="Add Image" />
+            <div className="account-tabs" onClick={() => setSelectedSection("galleries-new")} >
+              <img src={selectedSection === "galleries-new" ? "/assets/accounts/addGallerySelected.png" : "/assets/accounts/addGallery.png"} alt="Add Image" />
               <p>Add Gallery</p>
-              <span className={`${selectedSection == "galleries-new" ? "activeSpan" : ""}`}></span>
-
+              <span className={`${selectedSection === "galleries-new" ? "activeSpan" : ""}`}></span>
             </div>
-            <div className="account-tabs" onClick={sectionChangeHandler.bind(null, "videos-new")}>
-
-              <img src={selectedSection == "videos-new" ? "/assets/accounts/addVideoSelected.png" : "/assets/accounts/addVideo.png"} alt="Add Video" />
+            <div className="account-tabs" onClick={() => setSelectedSection("videos-new")} >
+              <img src={selectedSection === "videos-new" ? "/assets/accounts/addVideoSelected.png" : "/assets/accounts/addVideo.png"} alt="Add Video" />
               <p>Add Video</p>
-              <span className={`${selectedSection == "videos-new" ? "activeSpan" : ""}`}></span>
-
+              <span className={`${selectedSection === "videos-new" ? "activeSpan" : ""}`}></span>
             </div>
           </section>
 
           <section className="sectionThree">
-            {
-              selectedSection == "reports-new" ?
-                <ReportsNew /> :
-                selectedSection == "galleries-new" ?
-                  <GalleriesNew /> :
-                  <VideosNew />
-
-            }
+            { selectedSection === "reports-new" && <ReportsNew /> }
+            { selectedSection === "galleries-new" && <GalleriesNew /> }
+            { selectedSection === "videos-new" && <VideosNew /> }
           </section>
 
         </div>
-
       </IonContent>
     </IonPage>
   );

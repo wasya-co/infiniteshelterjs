@@ -13,11 +13,10 @@ const Home = (props) => {
 
   useEffect(() => {
     setShowLoading(true);
-    getNewsitems()
-      .then(res => {
-        setShowLoading(false);
-        setNewsItems(res.data.newsitems);
-      })
+    getNewsitems().then(res => {
+      setShowLoading(false);
+      setNewsItems(res.data.newsitems);
+    })
   }, []);
 
   return (
