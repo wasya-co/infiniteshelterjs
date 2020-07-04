@@ -57,6 +57,7 @@
   },
   "scripts": {
     "start": "HTTPS=true NODE_PATH=config/environments/development PORT=3002 react-scripts start",
+    "start_do": "HTTPS=true NODE_PATH=config/environments/production PORT=3002 react-scripts start",
     "build": "NODE_PATH=config/environments/production react-scripts build",
     "test": "NODE_PATH=config/environments/test jest spec",
     "eject": "react-scripts eject",
