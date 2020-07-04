@@ -1,5 +1,5 @@
 
 export default {
-  "apiOrigin": "https://manager.piousbox.com",
+  "apiOrigin": "http://localhost:3001",
   "domain": "tgm.piousbox.com",
 };

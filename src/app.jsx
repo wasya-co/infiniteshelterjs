@@ -29,6 +29,7 @@ import Menu from "$components/menu";
 import { Account } from "$components/users";
 import Home from '$components/home';
 import { GalleryShow } from "$components/galleries";
+import { Videos } from "$components/videos";
 
 const App = () => {
 
@@ -45,6 +46,7 @@ const App = () => {
             <Route path="/en/cities/travel-to/:name/show" component={CityShow} />
             <Route path="/en/account" component={Account} exact />
             <Route path="/en/galleries/show/:name" component={GalleryShow} exact />
+            <Route path="/en/account/my/videos" component={Videos} exact />
             <Redirect from="/" to="/en" exact />
           </IonRouterOutlet>
 

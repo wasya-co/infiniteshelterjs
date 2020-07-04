@@ -1,6 +1,6 @@
 import React from "react";
 
-const videosNew = (props) => {
+const VideosNew = (props) => {
   return (
 
     <div>
@@ -20,4 +20,4 @@ const videosNew = (props) => {
   )
 }
 
-export default videosNew;
+export default VideosNew;

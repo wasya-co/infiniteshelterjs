@@ -1,13 +1,41 @@
 import React, { useEffect, useState } from "react";
+import FacebookLogin from 'react-facebook-login';
 import { IonPage, IonContent } from "@ionic/react";
+
+import { useHistory } from "react-router-dom";
+
+import { logg, request } from "$shared";
+import config from "config";
+
+import "./users.scss";
 /* import VideosNew from "./videos-new";
 import GalleriesNew from "./galleries-new";
 import ReportsNew from "./reports-new"; */
 
-import "./users.scss";
+const Api = {
+  longTermTokenPath: '/api/users/long_term_token',
+};
 
 const Account = (props) => {
+  logg(props, 'Account');
+  const { navigation } = props;
+
+  const history = useHistory();
   const [selectedSection, setSelectedSection] = useState("reports-new");
+
+  const fbCallback = (response) => {
+    if (localStorage.getItem("jwtToken")) {
+      logg("already got jwtToken");
+      return;
+    }
+    logg(response, 'facebook response');
+    request.post(`${config.apiOrigin}${Api.longTermTokenPath}`, { accessToken: response.accessToken }).then((resp) => {
+      logg(resp, 'microsites3 response');
+      localStorage.setItem("jwtToken", resp.data.jwt_token);
+    });
+  };
+
+  const componentClicked = () => {};
 
   return (
     <IonPage>
@@ -23,9 +51,17 @@ const Account = (props) => {
             </div>
           </section>
 
-          <button>Login</button>
+          <FacebookLogin
+            appId="3016949928380365"
+            autoLoad={false}
+            fields="name,email,picture"
+            onClick={componentClicked}
+            callback={fbCallback} />
 
           <section className="sectionTwo">
+            <div className="account-tabs" onClick={() => history.push("/en/account/my/videos")} >
+              <p>Videos</p>
+            </div>
             <div className="account-tabs" onClick={() => setSelectedSection("reports-new")} >
               <img src={selectedSection === "reports-new" ? "/assets/accounts/addReportSelected.png" : "/assets/accounts/addReport.png"} alt="Add Report" />
               <p>Add Report</p>
