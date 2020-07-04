@@ -1,7 +1,8 @@
-import React from "react";
+
+import React, { useEffect, useState } from "react";
 
 import { logg, request } from "$shared";
-import Api from "$src";
+import { Api } from "$src";
 
 /**
  * @TODO: styled components?
@@ -9,16 +10,22 @@ import Api from "$src";
  *
  */
 const Videos = () => {
+  const [videos, setVideos] = useState([]);
 
-  localStorage.getItem("jwtToken").then((data) => {
-    logg(data, 'data');
-    request.get(Api.myVideosPath, { jwtToken: data }).then((data) => {
-      logg(data, 'data 2');
-    });
-  });
+  const jwtToken = localStorage.getItem("jwtToken");
+
+  useEffect(() => {
+    request.post(Api.myVideosPath, { jwtToken: jwtToken }).then(r => r.data
+      ).then(({ videos }) => {
+        logg(videos, 'data')
+        setVideos(videos);
+      })
+  }, []);
 
   return <div>
+    <br /><br /><br /><br /><br /><br />
     Videos
+    { videos && videos.map((v, idx) => <p key={idx} >v.name</p> ) }
   </div>
 
 };
