@@ -1,0 +1,23 @@
+#!/bin/bash
+
+if [[ -z "${NODE_ENV}" ]]; then
+  eee=production
+  # echo "Please set NODE_ENV = [ production | staging | development ] before running this script."
+  # exit 3
+else
+  eee="${NODE_ENV}"
+fi
+
+set -e
+
+ionic cordova build browser --configuration=$eee
+echo "" >> README.md
+
+git add .
+git commit -m 'autobuild'
+git push
+
+ssh do "cd /home/ubuntu/projects/tgm_ionic && git pull && sudo apachectl -k restart"
+
+set +e
+echo 'build tgm_ionic browser ok'

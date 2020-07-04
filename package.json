@@ -9,6 +9,7 @@
     "@capacitor/ios": "^2.2.0",
     "@ionic/react": "^5.0.7",
     "@ionic/react-router": "^5.0.7",
+    "@material-ui/core": "^4.11.0",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.4.0",
     "@testing-library/user-event": "^8.0.3",
@@ -49,7 +50,7 @@
   },
   "scripts": {
     "start": "HTTPS=true NODE_PATH=config/environments/development PORT=3002 react-scripts start",
-    "build": "react-scripts build",
+    "build": "NODE_PATH=config/environments/development react-scripts build",
     "test": "NODE_PATH=config/environments/test react-scripts test",
     "eject": "react-scripts eject",
     "postinstall": "link-module-alias",
