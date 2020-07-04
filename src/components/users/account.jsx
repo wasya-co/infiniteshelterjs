@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { IonPage, IonContent } from "@ionic/react";
-import VideosNew from "./videos-new";
+/* import VideosNew from "./videos-new";
 import GalleriesNew from "./galleries-new";
-import ReportsNew from "./reports-new";
+import ReportsNew from "./reports-new"; */
 
-import "./account.scss";
+import "./users.scss";
 
 const Account = (props) => {
   const [selectedSection, setSelectedSection] = useState("reports-new");
@@ -22,6 +22,8 @@ const Account = (props) => {
               <p>Jamie_kv@gmail.com</p>
             </div>
           </section>
+
+          <button>Login</button>
 
           <section className="sectionTwo">
             <div className="account-tabs" onClick={() => setSelectedSection("reports-new")} >
@@ -41,11 +43,11 @@ const Account = (props) => {
             </div>
           </section>
 
-          <section className="sectionThree">
+          { /* <section className="sectionThree">
             { selectedSection === "reports-new" && <ReportsNew /> }
             { selectedSection === "galleries-new" && <GalleriesNew /> }
             { selectedSection === "videos-new" && <VideosNew /> }
-          </section>
+          </section> */ }
 
         </div>
       </IonContent>
