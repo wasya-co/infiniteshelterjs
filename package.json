@@ -57,7 +57,7 @@
   },
   "scripts": {
     "start": "HTTPS=true NODE_PATH=config/environments/development PORT=3002 react-scripts start",
-    "build": "NODE_PATH=config/environments/development react-scripts build",
+    "build": "NODE_PATH=config/environments/production react-scripts build",
     "test": "NODE_PATH=config/environments/test jest spec",
     "eject": "react-scripts eject",
     "postinstall": "link-module-alias",
