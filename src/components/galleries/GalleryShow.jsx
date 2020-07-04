@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { IonPage, IonContent, IonButton, IonImg, IonLoading } from "@ionic/react";
 
-import MetaLine from "../../components/metaline";
+import MetaLine from "$components/metaline";
 
-import getGallery from "../../services/getGallery";
-import "./gallery_show.scss";
+import getGallery from "./getGallery";
+import "./galleries.scss";
 
 
 const GalleryShow = (props) => {

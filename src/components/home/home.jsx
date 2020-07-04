@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { IonPage, IonLoading, IonContent } from '@ionic/react';
 import NewsItems from "../../components/newsitems";
 
-import getNewsitems from "../../services/getNewsitems";
+import getNewsitems from "$components/newsitems/getNewsitems";
 
 import "./home.scss";
 

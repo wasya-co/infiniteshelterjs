@@ -5,8 +5,8 @@ import { Route, useLocation, useHistory, Switch } from 'react-router-dom';
 import NewsItems from "../../components/newsitems";
 import Venues from "../../components/venues";
 
-import getCity from "../../services/getCity";
-import "./city_show.scss";
+import getCity from "./getCity";
+import "./cities.scss";
 
 const CityShow = (props) => {
   let location = useLocation();

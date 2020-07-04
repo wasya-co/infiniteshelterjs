@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { IonPage, IonLoading, IonContent, IonIcon } from '@ionic/react';
 import { funnel, bookmark, newspaperOutline, image, videocam } from 'ionicons/icons';
 
-import getCities from "../../services/getCities";
+import getCities from "./getCities";
 import "./cities.scss";
 
 const Cities = (props) => {

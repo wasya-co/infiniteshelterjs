@@ -24,12 +24,11 @@ import './theme/variables.css';
 
 import './app.scss';
 
-import Cities from "$components/cities/Cities";
+import { Cities, CityShow } from "$components/cities";
 import Menu from "$components/menu";
 import { Account } from "$components/users";
-import Home from './pages/home';
-import CityShow from "./pages/city_show";
-import GalleryShow from "./pages/gallery_show";
+import Home from '$components/home';
+import { GalleryShow } from "$components/galleries";
 
 const App = () => {
 

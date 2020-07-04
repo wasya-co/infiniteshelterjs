@@ -1,4 +1,4 @@
-import request from "../utilities/request";
+import request from "$shared/request";
 import config from "config";
 
 function getNewsitems(){

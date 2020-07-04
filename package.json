@@ -42,7 +42,8 @@
     "link-module-alias": "^1.2.0"
   },
   "_moduleAliases": {
-    "$components": "src/components"
+    "$components": "src/components",
+    "$shared": "src/shared"
   },
   "scripts": {
     "start": "NODE_PATH=config/environments/development PORT=3002 react-scripts start",
