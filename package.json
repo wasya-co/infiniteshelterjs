@@ -39,7 +39,6 @@
   "devDependencies": {
     "@capacitor/cli": "2.2.0",
     "cordova-res": "^0.15.0",
-    "eslint-config-react-app": "^5.2.1",
     "jest-environment-jsdom-sixteen": "^1.0.3",
     "link-module-alias": "^1.2.0"
   },

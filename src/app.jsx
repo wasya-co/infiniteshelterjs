@@ -27,7 +27,7 @@ import './app.scss';
 import { Cities, CityShow } from "$components/cities";
 import Menu from "$components/menu";
 import { Account } from "$components/users";
-import Home from '$components/home';
+import { SitesShow } from '$components/sites';
 import { GalleryShow } from "$components/galleries";
 import { Videos } from "$components/videos";
 
@@ -41,7 +41,7 @@ const App = () => {
         </IonButtons>
         <Menu />
           <IonRouterOutlet id="main" main>
-            <Route path="/en" component={Home} exact />
+            <Route path="/en" component={SitesShow} exact />
             <Route path="/en/cities" component={Cities} exact />
             <Route path="/en/cities/travel-to/:name/show" component={CityShow} />
             <Route path="/en/account" component={Account} exact />

@@ -1,67 +1,89 @@
-.newsitems{
+/*
+.home {
+  div.image-container {
+    height: 180px;
+    text-align: center;
+
+    img {
+      max-height: 100%;
+    }
+  }
+
+  div.container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    overflow: scroll;
+    margin: auto;
+    max-width: 44em;
+  }
+}
+
+*/
+
+.newsitems {
 
   div.items {
-  box-shadow: -0.2em 0.3em 0.4em #bfb4b4;
-  flex-basis: 100%;
-  padding: 1em;
-  margin: 2%;
-  max-width: 96%;
-  background-size: 100%;
-  background-position: bottom;
-  background-repeat: no-repeat;
-
-  img.image {
-    max-width: 100%;
-    border-radius: 0.7em;
-  }
-
-  .icon {
-    height: 1.9em;
-  }
-
-  .title-heading {
+    box-shadow: -0.2em 0.3em 0.4em #bfb4b4;
+    flex-basis: 100%;
     padding: 1em;
-    vertical-align: super;
-    font-size: 1.2em;
-    cursor: pointer;
+    margin: 2%;
+    max-width: 96%;
+    background-size: 100%;
+    background-position: bottom;
+    background-repeat: no-repeat;
+
+    img.image {
+      max-width: 100%;
+      border-radius: 0.7em;
+    }
+
+    .icon {
+      height: 1.9em;
+    }
+
+    .title-heading {
+      padding: 1em;
+      vertical-align: super;
+      font-size: 1.2em;
+      cursor: pointer;
+    }
+
+    .routable{
+      cursor: pointer;
+    }
+
+    .description {
+      font-size: 1em;
+      font-weight: unset;
+    }
   }
 
-  .routable{
-    cursor: pointer;
+  .image-section {
+    position: relative;
   }
 
-  .description {
-    font-size: 1em;
-    font-weight: unset;
+  .play-icon {
+    color: white;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    font-size: 3.12em;
+    transform: translate(-50%, -50%);
   }
-}
 
-.image-section {
-  position: relative;
-}
+  .premium-0 {
+    background: white;
+  }
 
-.play-icon {
-  color: white;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  font-size: 3.12em;
-  transform: translate(-50%, -50%);
-}
-
-.premium-0 {
-  background: white;
-}
-
-.premium-1 {
-  background-image: linear-gradient(rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.7)),
+  .premium-1 {
+    background-image: linear-gradient(rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.7)),
     url("/assets/newsfeed/sunglass-background.png");
-}
+  }
 
-.premium-2 {
-  background-image: linear-gradient(rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.7)),
+  .premium-2 {
+    background-image: linear-gradient(rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.7)),
     url("/assets/newsfeed/lock-background.png");
-}
+  }
 
-  
 }

@@ -1,20 +1,21 @@
 import React, { useEffect, useState } from "react";
 import { IonPage, IonLoading, IonContent } from '@ionic/react';
+import NewsItems from "../../components/newsitems";
 
-import { getNewsitems, NewsitemsList } from "components/newsitems";
+import getNewsitems from "$components/newsitems/getNewsitems";
 
 import "./sites.scss";
 
 const SitesShow = (props) => {
 
-  let [newsitems, setNewsitems] = useState([]);
-  let [isLoading, setIsLoading] = useState(false);
+  let [newsItems, setNewsItems] = useState([]);
+  let [showLoading, setShowLoading] = useState(false);
 
   useEffect(() => {
-    setIsLoading(true);
+    setShowLoading(true);
     getNewsitems().then(res => {
-      setNewsitems(res.data.newsitems);
-      setIsLoading(false);
+      setShowLoading(false);
+      setNewsItems(res.data.newsitems);
     })
   }, []);
 
@@ -23,7 +24,7 @@ const SitesShow = (props) => {
       <IonContent>
         <div className="home wrapper">
           <div className="image-container">
-            <img className="image" src="/assets/hero.png" alt='' />
+            <img className="image" src="/assets/hero.png" />
           </div>
           <div className="container">
             <NewsItems data={newsItems} />
