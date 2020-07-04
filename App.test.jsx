@@ -1,8 +1,11 @@
 import React from 'react';
-import { render } from '@testing-library/react';
-import App from './app';
+import { configure, shallow } from 'enzyme';
+import App from '../App';
+import { logg } from "$shared";
+import Adapter from 'enzyme-adapter-react-16';
+configure({ adapter: new Adapter() });
 
-Object.defineProperty(window, 'matchMedia', {
+/* Object.defineProperty(window, 'matchMedia', {
   writable: true,
   value: jest.fn().mockImplementation(query => ({
     matches: false,
@@ -14,9 +17,10 @@ Object.defineProperty(window, 'matchMedia', {
     removeEventListener: jest.fn(),
     dispatchEvent: jest.fn(),
   })),
-});
+}); */
 
 test('renders without crashing', () => {
-  const { baseElement } = render(<App />);
-  expect(baseElement).toBeDefined();
+  const app = shallow(<App />);
+  logg(app, 'app');
+  // expect(baseElement).toBeDefined();
 });

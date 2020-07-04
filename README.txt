@@ -2,6 +2,13 @@
 = Develop =
  yarn install
 
+== How to implement a feature ==
+Once you get a Redmine ticket,
+
+Create a new feature branch. The branch name should either be a version (e.g. 0.0.0) or the ticket number, with prefix `ii-`, so for example ii-123. Only branch from master please.
+
+Submit a PR to master.
+
 = Run =
  npm run start
 

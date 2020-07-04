@@ -26,6 +26,8 @@ const Account = (props) => {
   const fbCallback = (response) => {
     if (localStorage.getItem("jwtToken")) {
       logg("already got jwtToken");
+      // @TODO: check if expired
+      // @TODO: write a test for it
       return;
     }
     logg(response, 'facebook response');
@@ -36,6 +38,10 @@ const Account = (props) => {
   };
 
   const componentClicked = () => {};
+
+  const clearJwtToken = () => {
+    localStorage.removeItem("jwtToken");
+  };
 
   return (
     <IonPage>
@@ -57,6 +63,8 @@ const Account = (props) => {
             fields="name,email,picture"
             onClick={componentClicked}
             callback={fbCallback} />
+
+          <button onClick={clearJwtToken} >Clear Token</button>
 
           <section className="sectionTwo">
             <div className="account-tabs" onClick={() => history.push("/en/account/my/videos")} >

@@ -1,12 +1,9 @@
-
 import { IonPage, IonContent, IonIcon, IonLoading } from '@ionic/react';
-
 import Container from '@material-ui/core/Container';
-
 import React, { useEffect, useState } from "react";
 
 import { logg, request } from "$shared";
-import { Api } from "$src";
+import Api from "$src/Api";
 
 const Video = (props) => {
   logg(props, 'Video');
