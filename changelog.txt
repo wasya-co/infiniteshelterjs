@@ -1,0 +1,1 @@
+0.0.0 20200704 - it shows shared videos, let's build for web. Then lets build for android.
