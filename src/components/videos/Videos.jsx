@@ -1,19 +1,25 @@
 import { IonPage, IonContent, IonIcon, IonLoading } from '@ionic/react';
 import Container from '@material-ui/core/Container';
 import React, { useEffect, useState } from "react";
+import styled from 'styled-components'
 
 import { logg, request } from "$shared";
 import Api from "$src/Api";
+
+const VideoItem = styled.div`
+  border-bottom: 1px solid red;
+`;
 
 const Video = (props) => {
   logg(props, 'Video');
 
   const { item: video } = props;
 
-  return <div key={props.idx} >
+  return <VideoItem key={props.idx} >
     <h5>Video {video.name}</h5>
+    <p>created {video.created_at}</p>
     <video controls preload="metadata" type="video/mp4" src={video.video_url} ></video>
-  </div>;
+  </VideoItem>;
 };
 
 /**
