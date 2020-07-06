@@ -35,15 +35,18 @@
   },
   "devDependencies": {
     "@capacitor/cli": "2.2.0",
+    "@ionic/cli": "^6.10.1",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.4.0",
     "@testing-library/user-event": "^8.0.3",
     "babel-plugin-transform-export-extensions": "^6.22.0",
-    "cordova-res": "^0.15.0",
+    "cordova-res": "^0.15.1",
     "enzyme": "^3.11.0",
     "enzyme-adapter-react-16": "^1.15.2",
+    "ionic": "^5.4.16",
     "jest-environment-jsdom-sixteen": "^1.0.3",
-    "link-module-alias": "^1.2.0"
+    "link-module-alias": "^1.2.0",
+    "native-run": "^1.0.0"
   },
   "_moduleAliases": {
     "$components": "src/components",

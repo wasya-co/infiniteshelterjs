@@ -1,4 +1,4 @@
-package io.ionic.starter;
+package me.guyd;
 
 import android.os.Bundle;
 

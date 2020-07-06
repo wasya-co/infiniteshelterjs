@@ -37,19 +37,18 @@ const App = () => {
     <IonApp>
       <IonReactRouter>
         <IonButtons>
-        <IonMenuButton />
+          <IonMenuButton />
         </IonButtons>
         <Menu />
-          <IonRouterOutlet id="main" main>
-            <Route path="/en" component={SitesShow} exact />
-            <Route path="/en/cities" component={Cities} exact />
-            <Route path="/en/cities/travel-to/:name/show" component={CityShow} />
-            <Route path="/en/account" component={Account} exact />
-            <Route path="/en/galleries/show/:name" component={GalleryShow} exact />
-            <Route path="/en/account/my/videos" component={Videos} exact />
-            <Redirect from="/" to="/en" exact />
-          </IonRouterOutlet>
-
+        <IonRouterOutlet id="main" main>
+          <Route path="/en" component={SitesShow} exact />
+          <Route path="/en/cities" component={Cities} exact />
+          <Route path="/en/cities/travel-to/:name/show" component={CityShow} />
+          <Route path="/en/account" component={Account} exact />
+          <Route path="/en/galleries/show/:name" component={GalleryShow} exact />
+          <Route path="/en/account/my/videos" component={Videos} exact />
+          <Redirect from="/" to="/en" exact />
+        </IonRouterOutlet>
       </IonReactRouter>
     </IonApp>
   );
