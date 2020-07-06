@@ -26,7 +26,7 @@ import './app.scss';
 
 import { Cities, CityShow } from "$components/cities";
 import Menu from "$components/menu";
-import { Account } from "$components/users";
+import { Account, Account2 } from "$components/users";
 import { SitesShow } from '$components/sites';
 import { GalleryShow } from "$components/galleries";
 import { Videos } from "$components/videos";
@@ -45,6 +45,7 @@ const App = () => {
           <Route path="/en/cities" component={Cities} exact />
           <Route path="/en/cities/travel-to/:name/show" component={CityShow} />
           <Route path="/en/account" component={Account} exact />
+          <Route path="/en/account2" component={Account2} exact />
           <Route path="/en/galleries/show/:name" component={GalleryShow} exact />
           <Route path="/en/account/my/videos" component={Videos} exact />
           <Redirect from="/" to="/en" exact />

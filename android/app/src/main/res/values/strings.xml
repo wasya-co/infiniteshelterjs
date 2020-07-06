@@ -4,4 +4,6 @@
     <string name="title_activity_main">guyd</string>
     <string name="package_name">me.guyd</string>
     <string name="custom_url_scheme">me.guyd</string>
+    <string name="facebook_app_id">3016949928380365</string>
+    <string name="fb_login_protocol_scheme">fb3016949928380365</string>
 </resources>

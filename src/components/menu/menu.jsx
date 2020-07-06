@@ -32,6 +32,11 @@ const appPages = [
     url: "/en/account"
   },
   {
+    title: 'Account2',
+    icon: person,
+    url: "/en/account2"
+  },
+  {
     title: 'Login',
     icon: powerOutline
   }
