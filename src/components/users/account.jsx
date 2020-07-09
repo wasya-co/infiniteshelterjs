@@ -1,11 +1,12 @@
+import { IonPage, IonContent } from "@ionic/react";
+import { Container, Grid, GridList } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
 import React, { useEffect, useState } from "react";
 import FacebookLogin from 'react-facebook-login';
-import { IonPage, IonContent } from "@ionic/react";
-
 import { useHistory } from "react-router-dom";
 
-import { logg, request } from "$shared";
 import config from "config";
+import { logg, request } from "$shared";
 
 import "./users.scss";
 /* import VideosNew from "./videos-new";
@@ -16,12 +17,29 @@ const Api = {
   longTermTokenPath: '/api/users/long_term_token',
 };
 
-const Account = (props) => {
-  logg(props, 'Account');
-  const { navigation } = props;
+const useStyles = makeStyles((theme) => ({
 
+  paper: {
+    padding: theme.spacing(2),
+    textAlign: 'center',
+    color: theme.palette.text.secondary,
+  },
+  redBorder: {
+    border: '1px solid red',
+  },
+  root: {
+    flexGrow: 1,
+    overflow: 'scroll',
+    height: '100vh',
+  },
+
+}));
+
+const Account = (props) => {
+  const { navigation } = props;
   const history = useHistory();
   const [selectedSection, setSelectedSection] = useState("reports-new");
+  const classes = useStyles();
 
   const fbCallback = (response) => {
     if (localStorage.getItem("jwtToken")) {
@@ -44,58 +62,55 @@ const Account = (props) => {
   };
 
   return (
-    <IonPage>
-      <IonContent>
-        <div className="account">
+    <Container maxWidth="md" >
+        <Grid container spacing={2} className={classes.root} >
 
-          <section className="sectionOne">
-            <img src="/assets/accounts/default-avatar.png" alt="profile pic" />
-            <div className="userName">
-              <h4>Jamie Kavanaugh</h4>
-              <img src="/assets/accounts/edit.png" alt="edit pic" />
-              <p>Jamie_kv@gmail.com</p>
+          <Grid item className={classes.redBorder} xs={12}>
+            <Grid container>
+              <Grid item xs={6}>
+                <img src="/assets/accounts/default-avatar.png" alt="profile pic" />
+              </Grid>
+              <Grid item xs={6}>
+                <h4>Jamie Kavanaugh 22</h4>
+                <img src="/assets/accounts/edit.png" alt="edit pic" />
+                <p>Jamie_kv@gmail.com</p>
+              </Grid>
+            </Grid>
+          </Grid>
+
+          <Grid item xs={12} >
+            <Grid container>
+              <Grid item xs={6}>
+                <FacebookLogin
+                  appId="3016949928380365"
+                  autoLoad={false}
+                  fields="name,email,picture"
+                  onClick={componentClicked}
+                  callback={fbCallback} />
+              </Grid>
+              <Grid item xs={6}>
+                <button onClick={clearJwtToken} >Clear Token</button>
+              </Grid>
+            </Grid>
+          </Grid>
+
+          <Grid item xs={12} >
+            <div onClick={() => history.push("/en/account/my/videos")} >
+              <p>My Videos</p>
             </div>
-          </section>
-
-          <FacebookLogin
-            appId="3016949928380365"
-            autoLoad={false}
-            fields="name,email,picture"
-            onClick={componentClicked}
-            callback={fbCallback} />
-
-          <button onClick={clearJwtToken} >Clear Token</button>
-
-          <section className="sectionTwo">
-            <div className="account-tabs" onClick={() => history.push("/en/account/my/videos")} >
-              <p>Videos</p>
-            </div>
-            <div className="account-tabs" onClick={() => setSelectedSection("reports-new")} >
-              <img src={selectedSection === "reports-new" ? "/assets/accounts/addReportSelected.png" : "/assets/accounts/addReport.png"} alt="Add Report" />
-              <p>Add Report</p>
-              <span className={`${selectedSection === "reports-new" ? "activeSpan" : ""}`}></span>
-            </div>
-            <div className="account-tabs" onClick={() => setSelectedSection("galleries-new")} >
-              <img src={selectedSection === "galleries-new" ? "/assets/accounts/addGallerySelected.png" : "/assets/accounts/addGallery.png"} alt="Add Image" />
+            <div onClick={() => history.push("/en/galleries/new")} >
               <p>Add Gallery</p>
-              <span className={`${selectedSection === "galleries-new" ? "activeSpan" : ""}`}></span>
             </div>
-            <div className="account-tabs" onClick={() => setSelectedSection("videos-new")} >
-              <img src={selectedSection === "videos-new" ? "/assets/accounts/addVideoSelected.png" : "/assets/accounts/addVideo.png"} alt="Add Video" />
-              <p>Add Video</p>
-              <span className={`${selectedSection === "videos-new" ? "activeSpan" : ""}`}></span>
-            </div>
-          </section>
+          </Grid>
 
-          { /* <section className="sectionThree">
-            { selectedSection === "reports-new" && <ReportsNew /> }
-            { selectedSection === "galleries-new" && <GalleriesNew /> }
-            { selectedSection === "videos-new" && <VideosNew /> }
-          </section> */ }
+          <Grid item xs={12}>
+            <br /><br /><br />
+            <br /><br /><br />
+            <br /><br /><br />
+          </Grid>
 
-        </div>
-      </IonContent>
-    </IonPage>
+        </Grid>
+      </Container>
   );
 }
 

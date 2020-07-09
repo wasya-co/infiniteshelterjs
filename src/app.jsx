@@ -1,6 +1,9 @@
-import React from 'react';
 import { IonApp, IonRouterOutlet, IonButtons, IonMenuButton } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
+
+import { Container, Grid, GridList } from '@material-ui/core';
+
+import React from 'react';
 import { Redirect, Route } from 'react-router-dom';
 
 /* Core CSS required for Ionic components to work properly */
@@ -34,7 +37,7 @@ import { Videos } from "$components/videos";
 const App = () => {
 
   return (
-    <IonApp>
+    <Container maxWidth="md" >
       <IonReactRouter>
         <IonButtons>
           <IonMenuButton />
@@ -51,7 +54,7 @@ const App = () => {
           <Redirect from="/" to="/en" exact />
         </IonRouterOutlet>
       </IonReactRouter>
-    </IonApp>
+    </Container>
   );
 };
 
