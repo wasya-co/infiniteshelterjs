@@ -17,8 +17,7 @@ const logg = (a, b="", c=null) => {
     window[c] = a;
   }
 
-  /* eslint-disable-next-line no-console */
-  console.log(`+++ ${b}:`, a);
+  console.log(`+++ ${b}:`, a); // eslint-disable-line no-console
 };
 
 export { logg };

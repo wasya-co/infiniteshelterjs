@@ -27,6 +27,7 @@ import './theme/variables.css';
 
 import './app.scss';
 
+import { logg } from "$shared";
 import { Cities, CityShow } from "$components/cities";
 import Menu from "$components/menu";
 import { Account, Account2 } from "$components/users";
@@ -36,11 +37,19 @@ import { Videos } from "$components/videos";
 
 const App = () => {
 
+  let currentUser = {};
+  const tmp = localStorage.getItem("current_user");
+  if (tmp) {
+    currentUser = tmp;
+  }
+  logg(currentUser, 'currentUser');
+
   return (
     <IonApp>
       <IonReactRouter>
         <IonButtons style={{ zIndex: 100 }} >
           <IonMenuButton />
+          { currentUser.email }
         </IonButtons>
         <Menu />
         <IonRouterOutlet id="main" main>

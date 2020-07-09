@@ -1,9 +1,17 @@
 import React from "react";
+
 import MetaLine from "$components/metaline";
+
+import { logg } from "$shared";
+
 import "./newsitems.scss";
 
-const reportNewsItem = (props) => {
-  const { data, icon = "/assets/newsfeed/reports_icon.png" } = props;
+const NewsitemReport = (props) => {
+  logg(props, "NewsitemReport");
+
+  const { newsitem } = props;
+
+  const icon = "/assets/newsfeed/reports_icon.png";
 
   function navigateToReport() {
 
@@ -18,20 +26,20 @@ const reportNewsItem = (props) => {
             src={icon} />
           <span
             className="title-heading"
-            onClick={navigateToReport}>{data.name}
+            onClick={navigateToReport}>{newsitem.name}
           </span>
         </p>
         <MetaLine
-          created_at={data.created_at}
-          username={data.username}
-          city={data.city || {}}
-          tags={data.tags}>
+          created_at={newsitem.created_at}
+          username={newsitem.username}
+          city={newsitem.city || {}}
+          tags={newsitem.tags}>
         </MetaLine>
         <p
           className="subhead"
-          dangerouslySetInnerHTML={{ __html: data.subhead }}>
+          dangerouslySetInnerHTML={{ __html: newsitem.subhead }}>
         </p>
-        <p>Premium Tier #{data.premium_tier}</p>
+        <p>Premium Tier #{newsitem.premium_tier}</p>
       </div>
     </div>
 
@@ -39,4 +47,4 @@ const reportNewsItem = (props) => {
 
 }
 
-export default reportNewsItem;
+export default NewsitemReport;

@@ -1,5 +1,4 @@
-import { Plugins } from '@capacitor/core';
-import { FacebookLoginResponse } from '@capacitor-community/facebook-login';
+import { Plugins, registerWebPlugin } from '@capacitor/core';
 
 import React, { useEffect, useState } from "react";
 // import FacebookLogin from 'react-facebook-login';
@@ -13,6 +12,7 @@ import config from "config";
 import "./users.scss";
 
 const { FacebookLogin } = Plugins;
+registerWebPlugin(FacebookLogin);
 
 const FACEBOOK_PERMISSIONS = ['email']; // , 'user_birthday', 'user_photos', 'user_gender'];
 

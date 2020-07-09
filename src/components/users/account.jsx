@@ -1,8 +1,8 @@
+import { Plugins, registerWebPlugin } from '@capacitor/core';
 import { IonPage, IonContent } from "@ionic/react";
 import { Container, Grid, GridList } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import React, { useEffect, useState } from "react";
-import FacebookLogin from 'react-facebook-login';
 import { useHistory } from "react-router-dom";
 
 import config from "config";
@@ -12,6 +12,9 @@ import "./users.scss";
 /* import VideosNew from "./videos-new";
 import GalleriesNew from "./galleries-new";
 import ReportsNew from "./reports-new"; */
+
+const { FacebookLogin } = Plugins;
+registerWebPlugin(FacebookLogin);
 
 const Api = {
   longTermTokenPath: '/api/users/long_term_token',
@@ -35,7 +38,11 @@ const useStyles = makeStyles((theme) => ({
 
 }));
 
+const FACEBOOK_PERMISSIONS = ['email']; // , 'user_birthday', 'user_photos', 'user_gender'];
+
 const Account = (props) => {
+  logg(props, "Account");
+
   const { navigation } = props;
   const history = useHistory();
   const [selectedSection, setSelectedSection] = useState("reports-new");
@@ -59,6 +66,26 @@ const Account = (props) => {
 
   const clearJwtToken = () => {
     localStorage.removeItem("jwtToken");
+    localStorage.removeItem("current_user");
+  };
+
+  const doLogin = async (props) => {
+    logg(props, 'doLogin');
+
+    const result = await FacebookLogin.login({ permissions: FACEBOOK_PERMISSIONS });
+
+    if (result.accessToken) {
+      logg(result.accessToken.token, 'Facebook access token');
+      request.post(`${config.apiOrigin}${Api.longTermTokenPath}`, { accessToken: result.accessToken.token }).then((resp) => {
+        logg(resp, 'microsites3 response');
+        localStorage.setItem("jwtToken", resp.data.jwt_token);
+        localStorage.setItem("current_user", { email: resp.data });
+      });
+    } else {
+      logg('canceled');
+      // Cancelled by user.
+    }
+
   };
 
   return (
@@ -80,16 +107,11 @@ const Account = (props) => {
 
           <Grid item xs={12} >
             <Grid container>
-              <Grid item xs={6}>
-                <FacebookLogin
-                  appId="3016949928380365"
-                  autoLoad={false}
-                  fields="name,email,picture"
-                  onClick={componentClicked}
-                  callback={fbCallback} />
-              </Grid>
-              <Grid item xs={6}>
+              <Grid item xs={4}>
                 <button onClick={clearJwtToken} >Clear Token</button>
+              </Grid>
+              <Grid item xs={4} >
+                <button onClick={doLogin} >Login</button>
               </Grid>
             </Grid>
           </Grid>
