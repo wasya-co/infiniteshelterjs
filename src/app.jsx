@@ -57,7 +57,6 @@ const App = () => {
           <Route path="/en/cities" component={Cities} exact />
           <Route path="/en/cities/travel-to/:name/show" component={CityShow} />
           <Route path="/en/account" component={Account} exact />
-          <Route path="/en/account2" component={Account2} exact />
           <Route path="/en/galleries/show/:name" component={GalleryShow} exact />
           <Route path="/en/account/my/videos" component={Videos} exact />
           <Redirect from="/" to="/en" exact />
