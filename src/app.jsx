@@ -40,7 +40,7 @@ const App = () => {
   let currentUser = {};
   const tmp = localStorage.getItem("current_user");
   if (tmp) {
-    currentUser = tmp;
+    currentUser = JSON.parse(tmp);
   }
   logg(currentUser, 'currentUser');
 

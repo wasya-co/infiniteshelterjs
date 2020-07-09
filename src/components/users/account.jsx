@@ -41,27 +41,29 @@ const useStyles = makeStyles((theme) => ({
 const Account = (props) => {
   logg(props, 'Account2');
   const classes = useStyles();
-  const { navigation } = props;
   const history = useHistory();
 
   const doLogin = async (props) => {
     logg(props, 'doLogin');
-
     const result = await FacebookLogin.login({ permissions: FACEBOOK_PERMISSIONS });
-
     if (result.accessToken) {
       logg(result.accessToken.token, 'Facebook access token');
       request.post(`${config.apiOrigin}${Api.longTermTokenPath}`, { accessToken: result.accessToken.token }).then((resp) => {
         logg(resp, 'microsites3 response');
         localStorage.setItem("jwtToken", resp.data.jwt_token);
+        localStorage.setItem("current_user", JSON.stringify({ email: resp.data.email }) );
       });
     } else {
       logg('canceled');
       // Cancelled by user.
     }
-
   };
 
+  const logout = () => {
+    localStorage.removeItem("jwtToken");
+    localStorage.removeItem("current_user");
+    logg("logged out");
+  };
 
   return (
     <Container maxWidth="md" >
@@ -82,6 +84,11 @@ const Account = (props) => {
 
         <br /><br /><br /><br />
         <button onClick={doLogin} >Login</button>
+
+        <button onClick={logout} >Clear Token</button>
+
+        <a onClick={() => history.push("/en/account/my/videos")}>Videos</a>
+
       </Grid>
     </Container>
   );

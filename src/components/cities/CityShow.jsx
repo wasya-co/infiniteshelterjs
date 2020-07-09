@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { IonPage, IonContent, IonIcon, IonLoading } from '@ionic/react';
 import { pin, newspaperOutline, image, videocam } from 'ionicons/icons';
 import { Route, useLocation, useHistory, Switch } from 'react-router-dom';
-import NewsItems from "../../components/newsitems";
+import { Newsitems } from "$components/newsitems";
 import Venues from "../../components/venues";
 
 import getCity from "./getCity";
@@ -78,7 +78,7 @@ const CityShow = (props) => {
             <section>
               <Switch>
                 <Route exact path={`${match.url}/venues`} render={() => <Venues data={city.venues} />} />
-                <Route exact path={`${match.url}/newsfeed`} render={() => <NewsItems data={city.newsitems} />} />
+                <Route exact path={`${match.url}/newsfeed`} render={() => <Newsitems data={city.newsitems} />} />
               </Switch>
             </section>
 

@@ -13,9 +13,7 @@ const NewsitemReport = (props) => {
 
   const icon = "/assets/newsfeed/reports_icon.png";
 
-  function navigateToReport() {
-
-  }
+  function navigateToReport() {}
 
   return (
     <div className="newsitems-report">
@@ -39,7 +37,8 @@ const NewsitemReport = (props) => {
           className="subhead"
           dangerouslySetInnerHTML={{ __html: newsitem.subhead }}>
         </p>
-        <p>Premium Tier #{newsitem.premium_tier}</p>
+        <p>Premium Tier {newsitem.premium_tier}</p>
+        <p>Purchased? {JSON.stringify(newsitem.is_purchased)}</p>
       </div>
     </div>
 

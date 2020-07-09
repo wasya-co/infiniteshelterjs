@@ -38,7 +38,6 @@ const FACEBOOK_PERMISSIONS = ['email']; // , 'user_birthday', 'user_photos', 'us
 const Account2 = (props) => {
   logg(props, "Account");
 
-  const { navigation } = props;
   const history = useHistory();
   const [selectedSection, setSelectedSection] = useState("reports-new");
   const classes = useStyles();

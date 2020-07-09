@@ -1,21 +1,24 @@
 import React, { useEffect, useState } from "react";
 import { IonPage, IonLoading, IonContent } from '@ionic/react';
-import NewsItems from "../../components/newsitems";
 
-import getNewsitems from "$components/newsitems/getNewsitems";
+import { logg } from "$shared";
+import { getNewsitems, Newsitems } from "$components/newsitems";
 
 import "./sites.scss";
 
 const SitesShow = (props) => {
 
-  let [newsItems, setNewsItems] = useState([]);
+  let [newsitems, setNewsitems] = useState([]);
   let [showLoading, setShowLoading] = useState(false);
 
   useEffect(() => {
     setShowLoading(true);
     getNewsitems().then(res => {
+      logg(res, 'res')
+      logg(res.data.newsitems, 'got newsitems')
+
       setShowLoading(false);
-      setNewsItems(res.data.newsitems);
+      setNewsitems(res.data.newsitems);
     })
   }, []);
 
@@ -27,7 +30,7 @@ const SitesShow = (props) => {
             <img className="image" src="/assets/hero.png" />
           </div>
           <div className="container">
-            <NewsItems data={newsItems} />
+            <Newsitems newsitems={newsitems} />
           </div>
         </div>
         <IonLoading

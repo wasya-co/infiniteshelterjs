@@ -4,17 +4,21 @@ import NewsItemReport from "./NewsitemReport";
 import NewsItemVideo from "./NewsitemVideo";
 import "./newsitems.scss";
 
+import { logg } from "$shared";
+
 const ICONS = {
   1: "/assets/newsfeed/sunglass.png",
   2: "/assets/newsfeed/gem_premium.png"
 };
 const Newsitems = (props) => {
-  const { data } = props;
+  const { newsitems } = props;
 
   return (
     <div className="newsitems">
-      { data.map((newsitem, i) => {
+      { newsitems.map((newsitem, i) => {
         const icon = ICONS[newsitem.premium_tier];
+        logg(newsitem, 'this one newsitem');
+
         return (
           <div key={i} className={`items premium-${newsitem.premium_tier || 0}`}>
             { newsitem.item_type === "report" && <NewsItemReport newsitem={newsitem} /> }
