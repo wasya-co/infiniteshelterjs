@@ -29,11 +29,13 @@ const Account2 = (props) => {
     logg(props, 'doLogin');
 
     const result = await FacebookLogin.login({ permissions: FACEBOOK_PERMISSIONS });
-    logg(result, 'ze-result');
 
     if (result.accessToken) {
-      // Login successful.
-      logg(`Facebook access token is ${result.accessToken.token}`);
+      logg(result.accessToken.token, 'Facebook access token');
+      request.post(`${config.apiOrigin}${Api.longTermTokenPath}`, { accessToken: result.accessToken.token }).then((resp) => {
+        logg(resp, 'microsites3 response');
+        localStorage.setItem("jwtToken", resp.data.jwt_token);
+      });
     } else {
       logg('canceled');
       // Cancelled by user.
