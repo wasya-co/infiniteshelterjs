@@ -2,6 +2,7 @@ import { IonPage, IonContent, IonIcon, IonLoading } from '@ionic/react';
 import Container from '@material-ui/core/Container';
 import React, { useEffect, useState } from "react";
 import styled from 'styled-components'
+import config from "config";
 
 import { logg, request } from "$shared";
 import Api from "$src/Api";
@@ -28,11 +29,15 @@ const Video = (props) => {
  *
  */
 const Videos = () => {
+  logg(config, 'Videos component');
+  console.log(JSON.stringify(config));
+
   const [videos, setVideos] = useState([]);
 
   const jwtToken = localStorage.getItem("jwtToken");
 
   useEffect(() => {
+    logg('posting...');
     request.post(Api.myVideosPath, { jwtToken: jwtToken }).then(r => r.data
       ).then(({ videos }) => {
         logg(videos, 'data')
@@ -43,7 +48,7 @@ const Videos = () => {
   return <IonPage>
     <IonContent>
       <br /><br /><br /><br /><br /><br />
-      Videos
+      Videos hahaha
       { videos && videos.map((v, idx) => <Video key={idx} item={v} ></Video> ) }
     </IonContent>
   </IonPage>;
