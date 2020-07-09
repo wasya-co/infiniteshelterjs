@@ -1,9 +1,9 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
-import MetaLine from "../../metaline";
-import "./newsitem_gallery.scss";
+import MetaLine from "$components/metaline";
+import "./newsitems.scss";
 
-const NewsItemVideo = (props) => {
+const NewsitemGallery = (props) => {
   const { data, icon = "/assets/newsfeed/photos_icon.png" } = props;
 
   const history = useHistory();
@@ -58,4 +58,4 @@ const NewsItemVideo = (props) => {
 
 }
 
-export default NewsItemVideo;
+export default NewsitemGallery;

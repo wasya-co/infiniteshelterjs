@@ -1,3 +1,5 @@
-import NewsItems from "./newsitems.jsx";
+import Newsitems from "./Newsitems.jsx";
 
-export default NewsItems;
+export { default as NewsitemReport } from "./NewsitemReport";
+
+export default Newsitems;

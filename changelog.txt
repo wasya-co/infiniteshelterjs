@@ -1,3 +1,4 @@
 0.0.0 20200704 - it shows shared videos, let's build for web. Then lets build for android.
 0.0.1 20200705 - facebook login on android
+0.0.2 20200709 - let's wire payments real quick
 

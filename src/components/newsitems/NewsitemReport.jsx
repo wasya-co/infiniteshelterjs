@@ -1,6 +1,6 @@
 import React from "react";
-import MetaLine from "../../metaline";
-import "./newsitem_report.scss";
+import MetaLine from "$components/metaline";
+import "./newsitems.scss";
 
 const reportNewsItem = (props) => {
   const { data, icon = "/assets/newsfeed/reports_icon.png" } = props;
@@ -31,6 +31,7 @@ const reportNewsItem = (props) => {
           className="subhead"
           dangerouslySetInnerHTML={{ __html: data.subhead }}>
         </p>
+        <p>Premium Tier #{data.premium_tier}</p>
       </div>
     </div>
 

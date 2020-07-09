@@ -37,9 +37,9 @@ import { Videos } from "$components/videos";
 const App = () => {
 
   return (
-    <Container maxWidth="md" >
+    <IonApp>
       <IonReactRouter>
-        <IonButtons>
+        <IonButtons style={{ zIndex: 100 }} >
           <IonMenuButton />
         </IonButtons>
         <Menu />
@@ -54,7 +54,7 @@ const App = () => {
           <Redirect from="/" to="/en" exact />
         </IonRouterOutlet>
       </IonReactRouter>
-    </Container>
+    </IonApp>
   );
 };
 

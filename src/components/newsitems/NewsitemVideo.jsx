@@ -1,8 +1,8 @@
 import React from "react";
-import MetaLine from "../../metaline";
-import "./newsitem_video.scss";
+import MetaLine from "$components/metaline";
+import "./newsitems.scss";
 
-const NewsItemVideo = (props) => {
+const NewsitemVideo = (props) => {
   const { data, icon = "/assets/newsfeed/video_icon.svg" } = props;
 
   return (
@@ -37,4 +37,4 @@ const NewsItemVideo = (props) => {
 
 }
 
-export default NewsItemVideo;
+export default NewsitemVideo;

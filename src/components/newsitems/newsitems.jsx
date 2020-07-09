@@ -1,14 +1,14 @@
 import React from "react";
-import NewsItemGallery from "./newsitem_gallery";
-import NewsItemReport from "./newsitem_report";
-import NewsItemVideo from "./newsitem_video";
+import NewsItemGallery from "./NewsitemGallery";
+import NewsItemReport from "./NewsitemReport";
+import NewsItemVideo from "./NewsitemVideo";
 import "./newsitems.scss";
 
 const ICONS = {
   1: "/assets/newsfeed/sunglass.png",
   2: "/assets/newsfeed/gem_premium.png"
 };
-const newsitems = (props) => {
+const Newsitems = (props) => {
   const { data } = props;
 
   return (
@@ -27,4 +27,4 @@ const newsitems = (props) => {
   )
 }
 
-export default newsitems;
+export default Newsitems;
