@@ -16,33 +16,25 @@ import '@ionic/react/css/text-alignment.css';
 import '@ionic/react/css/text-transformation.css';
 import '@ionic/react/css/flex-utils.css';
 import '@ionic/react/css/display.css';
-import './theme/variables.css';
 
+import './theme/variables.css';
 import './app.scss';
 
 import { logg } from "$shared";
-import { Cities, CityShow } from "$components/cities";
 import { Menu } from "$components/application";
-import { Account, Account2 } from "$components/users";
-import { SitesShow } from '$components/sites';
+import { Cities, CityShow } from "$components/cities";
 import { GalleryShow } from "$components/galleries";
+import { SitesShow } from '$components/sites';
+import { Account, Account2, MyAccountWidget } from "$components/users";
 import { Videos } from "$components/videos";
 
 const App = () => {
-
-  let currentUser = {};
-  const tmp = localStorage.getItem("current_user");
-  if (tmp) {
-    currentUser = JSON.parse(tmp);
-  }
-  logg(currentUser, 'currentUser');
-
   return (
     <IonApp>
       <IonReactRouter>
         <IonButtons style={{ zIndex: 100 }} >
           <IonMenuButton />
-          { currentUser.email }
+          <MyAccountWidget />
         </IonButtons>
         <Menu />
         <IonRouterOutlet id="main" main>
