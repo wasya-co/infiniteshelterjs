@@ -1,4 +1,12 @@
 
+= Discussion of Concepts =
+
+== Files ==
+
+src/components is where most of the application lives. We're adapting concepts from rails, and the components resemble rails resources. (A resource is basically the object that has a corresponding database table.) That means CRUD operations can be done by "actions" list, new, create, edit, update, destroy, show.
+
+The default namespace and default component name is "application". If you don't know where to put something and it doesn't belong to a resource, consider putting it there.
+
 = Develop =
  yarn install
 
@@ -13,7 +21,12 @@ Submit a PR to master.
  npm run start
 
 = Test =
-How?!
+
+This application is to be test-driven, and regression bugs should gain a test when fixed. While we are not rock-hard on this rule, and committing code without tests is allowed, we very much encourage writing tests with code. We reserve the right to reject code that is not tested. Effectively, TDD is almost required.
+
+We use jest, enzyme. See package.json and scripts/ .
+
+ npm run test
 
 = Deploy =
 

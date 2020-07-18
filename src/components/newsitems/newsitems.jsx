@@ -1,7 +1,7 @@
 import React from "react";
-import NewsItemGallery from "./NewsitemGallery";
-import NewsItemReport from "./NewsitemReport";
-import NewsItemVideo from "./NewsitemVideo";
+import NewsitemGallery from "./NewsitemGallery";
+import NewsitemReport from "./NewsitemReport";
+import NewsitemVideo from "./NewsitemVideo";
 import "./newsitems.scss";
 
 import { logg } from "$shared";
@@ -21,9 +21,9 @@ const Newsitems = (props) => {
 
         return (
           <div key={i} className={`items premium-${newsitem.premium_tier || 0}`}>
-            { newsitem.item_type === "report" && <NewsItemReport newsitem={newsitem} /> }
-            { newsitem.item_type === "gallery" && <NewsItemGallery data={newsitem} icon={icon} /> }
-            { newsitem.item_type === "video" && <NewsItemVideo data={newsitem} icon={icon} /> }
+            { newsitem.item_type === "report" && <NewsitemReport newsitem={newsitem} /> }
+            { newsitem.item_type === "gallery" && <NewsitemGallery data={newsitem} icon={icon} /> }
+            { newsitem.item_type === "video" && <NewsitemVideo data={newsitem} icon={icon} /> }
           </div>
         )
       }) }

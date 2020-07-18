@@ -4,7 +4,7 @@ import MetaLine from "$components/metaline";
 import "./newsitems.scss";
 
 const NewsitemGallery = (props) => {
-  const { data, icon = "/assets/newsfeed/photos_icon.png" } = props;
+  const { data } = props;
 
   const history = useHistory();
 
@@ -25,11 +25,7 @@ const NewsitemGallery = (props) => {
                     <div
                       className="image-item"
                       style={{ backgroundImage: `url(${photo.large_url})` }}>
-                      {
-                        data.photos.length > 3 && i == 2 ?
-                          <div className="number">+{data.photos.length - 3}</div>
-                          : null
-                      }
+                      { data.photos.length > 3 && i == 2 && <div className="number">+{data.photos.length - 3}</div> }
                     </div>
                   </div>
                 )
@@ -39,7 +35,7 @@ const NewsitemGallery = (props) => {
       </div>
       <div>
         <p className="title routable" onClick={navigateToGallery.bind(this, data.slug)}>
-          <img className="icon" src={icon} />
+          <img className="icon" src={"/assets/newsfeed/photos_icon.png"} alt='' />
           <span className="title-heading">{data.name}</span>
         </p>
         <MetaLine

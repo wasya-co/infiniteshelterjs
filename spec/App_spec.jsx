@@ -1,6 +1,6 @@
 import React from 'react';
 import { configure, shallow } from 'enzyme';
-import App from '../App';
+import App from '$src/App';
 import { logg } from "$shared";
 import Adapter from 'enzyme-adapter-react-16';
 configure({ adapter: new Adapter() });
@@ -22,5 +22,6 @@ configure({ adapter: new Adapter() });
 test('renders without crashing', () => {
   const app = shallow(<App />);
   logg(app, 'app');
+  expect(true).toBeTruthy();
   // expect(baseElement).toBeDefined();
 });
