@@ -6,8 +6,6 @@ import { IonPage, IonContent } from "@ionic/react";
 import { Container, Grid } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 
-import { useHistory } from "react-router-dom";
-
 import { logg, request } from "$shared";
 import config from "config";
 
@@ -39,23 +37,29 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Account = (props) => {
-  logg(props, 'Account2');
+  logg(props, 'Account');
   const classes = useStyles();
-  const history = useHistory();
 
   const doLogin = async (props) => {
     logg(props, 'doLogin');
+
     const result = await FacebookLogin.login({ permissions: FACEBOOK_PERMISSIONS });
     if (result.accessToken) {
       logg(result.accessToken.token, 'Facebook access token');
+
       request.post(`${config.apiOrigin}${Api.longTermTokenPath}`, { accessToken: result.accessToken.token }).then((resp) => {
         logg(resp, 'microsites3 response');
+
         localStorage.setItem("jwtToken", resp.data.jwt_token);
-        localStorage.setItem("current_user", JSON.stringify({ email: resp.data.email }) );
+        localStorage.setItem("current_user", JSON.stringify({
+          email: resp.data.email,
+          n_unlocks: resp.data.n_unlocks,
+          jwt_token: resp.data.jwt_token,
+        }) );
       });
     } else {
       logg('canceled');
-      // Cancelled by user.
+      // Canceled by user.
     }
   };
 
@@ -65,7 +69,7 @@ const Account = (props) => {
     logg("logged out");
   };
 
-  return (
+  return (<React.Fragment>
     <Container maxWidth="md" >
       <Grid container spacing={2} className={classes.root} >
 
@@ -87,11 +91,11 @@ const Account = (props) => {
 
         <button onClick={logout} >Clear Token</button>
 
-        <a onClick={() => history.push("/en/account/my/videos")}>Videos</a>
+        <a onClick={() => props.history.push("/en/account/my/videos")}>Videos</a>
 
       </Grid>
     </Container>
-  );
+  </React.Fragment>);
 }
 
 export default Account;

@@ -119,12 +119,6 @@ const Account2 = (props) => {
             </div>
           </Grid>
 
-          <Grid item xs={12}>
-            <br /><br /><br />
-            <br /><br /><br />
-            <br /><br /><br />
-          </Grid>
-
         </Grid>
       </Container>
   );

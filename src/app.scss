@@ -1,3 +1,5 @@
+
+
 .menu-content {
   ion-content {
     --background: #f4f4f4;
@@ -25,4 +27,9 @@ ion-menu-button {
 
 body {
   font-size: 16px;
+}
+
+.z-index-100 {
+  position: relative;
+  z-index: 100;
 }

@@ -22,26 +22,22 @@ const SitesShow = (props) => {
     })
   }, []);
 
-  return (
-    <IonPage>
-      <IonContent>
-        <div className="home wrapper">
-          <div className="image-container">
-            <img className="image" src="/assets/hero.png" />
-          </div>
-          <div className="container">
-            <Newsitems newsitems={newsitems} />
-          </div>
-        </div>
-        <IonLoading
-          isOpen={showLoading}
-          onDidDismiss={() => setShowLoading(false)}
-          message={'Please wait...'}
-          duration={5000}
-        />
-      </IonContent>
-    </IonPage>
-  )
+  return <React.Fragment>
+    <div className="home wrapper">
+      <div className="image-container">
+        <img className="image" src="/assets/hero.png" />
+      </div>
+      <div className="container">
+        <Newsitems newsitems={newsitems} />
+      </div>
+    </div>
+    <IonLoading
+      isOpen={showLoading}
+      onDidDismiss={() => setShowLoading(false)}
+      message={'Please wait...'}
+      duration={5000}
+    />
+  </React.Fragment>;
 }
 
 export default SitesShow;
