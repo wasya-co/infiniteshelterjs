@@ -26,7 +26,7 @@ const MyAccountWidget = (props) => {
     if (!stripe || !elements) { return; }
     const cardElement = elements.getElement(CardElement);
 
-    let client_secret = await request.get(`${config.apiOrigin}${Api.payments2}`);
+    let client_secret = await request.get(`${config.apiOrigin}${Api.payments2}?jwt_token=${currentUser.jwt_token}`);
     client_secret = client_secret.data.client_secret;
     logg(client_secret, 'client_secret');
 

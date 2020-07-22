@@ -13,7 +13,7 @@ import "./users.scss";
 
 const { FacebookLogin } = Plugins;
 
-const FACEBOOK_PERMISSIONS = ['email']; // , 'user_birthday', 'user_photos', 'user_gender'];
+const FACEBOOK_PERMISSIONS = ['email'];
 
 const Api = {
   longTermTokenPath: '/api/users/long_term_token',

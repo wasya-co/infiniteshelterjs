@@ -10,13 +10,28 @@ import { logg, request } from "$shared";
 
 import "./newsitems.scss";
 
+const Api = {
+  doUnlock: ({ kind, id }) => `/api/payments/unlock?kind=${kind}&id=${id}`,
+};
+
 const NewsitemReport = (props) => {
   logg(props, "NewsitemReport");
+  const currentUser = JSON.parse(localStorage.getItem("current_user")) || {};
+
+  const [ isOpen, setIsOpen ] = useState(false);
 
   const { newsitem } = props;
   const slug = newsitem.reportname;
 
   const history = useHistory();
+
+  const doUnlock = async () => {
+    // @TODO: check how many unlocks I have, and offer to purchase more if not enough.
+    const path = Api.doUnlock({ kind: 'Report', id: newsitem.report_id,
+      jwt_token: currentUser.jwt_token });
+    const result = await request.post(`${config.apiOrigin}${path}`);
+    logg(result, 'result')
+  };
 
   return <React.Fragment>
 
@@ -28,10 +43,8 @@ const NewsitemReport = (props) => {
             className="title-heading"
             onClick={(e) => {
 
-              logg(e, 'navigate to report')
               if (newsitem.is_premium && !newsitem.is_purchased) {
-                // openPurchaseModal();
-                throw "unpurchased, unimplemented";
+                setIsOpen(true);
               } else {
                 history.push(`/en/reports/show/${slug}`)
               }
@@ -51,6 +64,11 @@ const NewsitemReport = (props) => {
         <p>Purchased? {JSON.stringify(newsitem.is_purchased)}</p>
       </div>
     </div>
+
+    <Modal ariaHideApp={false} isOpen={isOpen} >
+      <h1>Unlock this report (1 unlock)? <button onClick={() => setIsOpen(false) } >[x]</button></h1>
+      <button onClick={doUnlock}>Do it</button>
+    </Modal>
 
   </React.Fragment>;
 

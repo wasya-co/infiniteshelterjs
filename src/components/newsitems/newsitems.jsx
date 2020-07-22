@@ -17,7 +17,7 @@ const Newsitems = (props) => {
     <div className="newsitems">
       { newsitems.map((newsitem, i) => {
         const icon = ICONS[newsitem.premium_tier];
-        logg(newsitem, 'this one newsitem');
+        logg(newsitem, 'one newsitem');
 
         return (
           <div key={i} className={`items premium-${newsitem.premium_tier || 0}`}>
