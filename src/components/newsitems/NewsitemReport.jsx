@@ -11,7 +11,7 @@ import { logg, request } from "$shared";
 import "./newsitems.scss";
 
 const Api = {
-  doUnlock: ({ kind, id }) => `/api/payments/unlock?kind=${kind}&id=${id}`,
+  doUnlock: ({ kind, id, jwt_token }) => `/api/payments/unlock?kind=${kind}&id=${id}&jwt_token=${jwt_token}`,
 };
 
 const NewsitemReport = (props) => {
@@ -27,6 +27,9 @@ const NewsitemReport = (props) => {
 
   const doUnlock = async () => {
     // @TODO: check how many unlocks I have, and offer to purchase more if not enough.
+
+    logg(currentUser.jwt_token, 'here33')
+
     const path = Api.doUnlock({ kind: 'Report', id: newsitem.report_id,
       jwt_token: currentUser.jwt_token });
     const result = await request.post(`${config.apiOrigin}${path}`);
