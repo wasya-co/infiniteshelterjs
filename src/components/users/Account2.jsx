@@ -6,15 +6,11 @@ import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 
 import config from "config";
-import { logg, request } from "$shared";
+import { Api, logg, request } from "$shared";
 
 import "./users.scss";
 
 const { FacebookLogin } = Plugins;
-
-const Api = {
-  longTermTokenPath: '/api/users/long_term_token',
-};
 
 const useStyles = makeStyles((theme) => ({
   paper: {

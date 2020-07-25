@@ -29,7 +29,8 @@ import './app.scss';
 import { logg } from "$shared";
 import { Menu } from "$components/application";
 import { Cities, CityShow } from "$components/cities";
-import { GalleryShow } from "$components/galleries";
+import { GalleriesShow } from "$components/galleries";
+import { ReportsShow } from "$components/reports";
 import { SitesShow } from '$components/sites';
 import { Account, Account2, MyAccountWidget } from "$components/users";
 import { Videos } from "$components/videos";
@@ -86,11 +87,16 @@ const App = () => {
       <Container maxWidth="md" style={{ maxHeight: '90vh', overflow: 'auto' }} >
         <Switch id="main" main>
           <Route path="/en" exact ><SitesShow /></Route>
+          <Route path="/en/account" exact ><Account /></Route>
+          <Route path="/en/account/my/videos" exact ><Videos /></Route>
+
           <Route path="/en/cities" exact ><Cities /></Route>
           <Route path="/en/cities/travel-to/:name/show" ><CityShow /></Route>
-          <Route path="/en/account" exact ><Account /></Route>
-          <Route path="/en/galleries/show/:name" exact ><GalleryShow /></Route>
-          <Route path="/en/account/my/videos" exact ><Videos /></Route>
+
+          <Route path="/en/galleries/show/:slug" exact ><GalleriesShow /></Route>
+
+          <Route path="/en/reports/show/:slug" exact component={ReportsShow} />
+
           <Redirect from="/" to="/en" exact />
         </Switch>
       </Container>

@@ -6,7 +6,7 @@ import { IonPage, IonContent } from "@ionic/react";
 import { Container, Grid } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 
-import { logg, request } from "$shared";
+import { Api, logg, request } from "$shared";
 import config from "config";
 
 import "./users.scss";
@@ -14,10 +14,6 @@ import "./users.scss";
 const { FacebookLogin } = Plugins;
 
 const FACEBOOK_PERMISSIONS = ['email'];
-
-const Api = {
-  longTermTokenPath: '/api/users/long_term_token',
-};
 
 const useStyles = makeStyles((theme) => ({
   paper: {

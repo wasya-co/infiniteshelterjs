@@ -1,6 +1,6 @@
 import React from "react";
 
-const reportsNew = (props) => {
+const ReportsNew = (props) => {
   return (
 
     <div>
@@ -24,4 +24,4 @@ const reportsNew = (props) => {
   )
 }
 
-export default reportsNew;
+export default ReportsNew;

@@ -7,7 +7,7 @@ import getGallery from "./getGallery";
 import "./galleries.scss";
 
 
-const GalleryShow = (props) => {
+const GalleriesShow = (props) => {
 
   const [gallery, setGallery] = useState(null);
   const [showLoading, setShowLoading] = useState(false);
@@ -90,4 +90,4 @@ const GalleryShow = (props) => {
   );
 }
 
-export default GalleryShow;
+export default GalleriesShow;

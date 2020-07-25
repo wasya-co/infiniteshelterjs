@@ -5,9 +5,7 @@ import React, { useEffect, useState } from "react";
 import styled from 'styled-components'
 import config from "config";
 
-import { logg, request } from "$shared";
-import Api from "$src/Api";
-
+import { Api, logg, request } from "$shared";
 
 const useStyles = makeStyles((theme) => ({
 

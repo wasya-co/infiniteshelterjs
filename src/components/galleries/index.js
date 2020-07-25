@@ -1,2 +1,2 @@
 
-export { default as GalleryShow } from "./GalleryShow";
+export { default as GalleriesShow } from "./GalleriesShow";

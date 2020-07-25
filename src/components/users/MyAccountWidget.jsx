@@ -5,14 +5,11 @@ import { loadStripe } from '@stripe/stripe-js';
 
 import config from "config";
 
-import { logg, request } from "$shared";
+import { Api, logg, request } from "$shared";
 
 const stripePromise = loadStripe('pk_test_UnB4uh0vErYIishvckNYtF4c');
 
-const Api = {
-  myAccount: "/api/my/account",
-  payments2: "/api/payments2",
-};
+
 
 const MyAccountWidget = (props) => {
   const currentUser = JSON.parse(localStorage.getItem("current_user")) || {};

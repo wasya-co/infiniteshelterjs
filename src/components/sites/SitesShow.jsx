@@ -14,8 +14,9 @@ const SitesShow = (props) => {
   let [showLoading, setShowLoading] = useState(false);
 
   const currentUser = JSON.parse(localStorage.getItem("current_user")) || {};
+  const withToken = currentUser.jwt_token ? `jwt_token=${currentUser.jwt_token}` : '';
 
-  request.get(`${config.apiOrigin}/api/sites/view/${config.domain}?jwt_token=${currentUser.jwt_token}`).then(res => {
+  request.get(`${config.apiOrigin}/api/sites/view/${config.domain}?${withToken}`).then(res => {
     logg(res, 'res')
     logg(res.data.newsitems, 'got newsitems')
     setNewsitems(res.data.newsitems);
