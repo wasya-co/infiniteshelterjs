@@ -12,11 +12,20 @@ const Api = {
 
   reportsGet: (a) => {
     const currentUser = JSON.parse(localStorage.getItem("current_user")) || {};
-    let jwt = '';
+    let jwt = "";
     if (currentUser) {
       jwt = `jwt_token=${currentUser.jwt_token}`
     }
-    return `${config.apiOrigin}/api/reports/view/${a}?${jwt}`
+    return `${config.apiOrigin}/api/reports/view/${a}?${jwt}`;
+  },
+
+  getSite: (slug) => {
+    const currentUser = JSON.parse(localStorage.getItem("current_user")) || {};
+    let jwt = "";
+    if (currentUser) {
+      jwt = `jwt_token=${currentUser.jwt_token}`;
+    }
+    return `${config.apiOrigin}/api/sites/view/${slug}?${jwt}`;
   },
 
 }

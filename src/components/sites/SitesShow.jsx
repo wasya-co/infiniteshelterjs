@@ -3,8 +3,8 @@ import { IonPage, IonLoading, IonContent } from '@ionic/react';
 
 import config from "config";
 
-import { logg, request } from "$shared";
-import { getNewsitems, Newsitems } from "$components/newsitems";
+import { Api, logg, request } from "$shared";
+import { Newsitems } from "$components/newsitems";
 
 import "./sites.scss";
 
@@ -16,13 +16,16 @@ const SitesShow = (props) => {
   const currentUser = JSON.parse(localStorage.getItem("current_user")) || {};
   const withToken = currentUser.jwt_token ? `jwt_token=${currentUser.jwt_token}` : '';
 
-  request.get(`${config.apiOrigin}/api/sites/view/${config.domain}?${withToken}`).then(res => {
-    logg(res, 'res')
-    logg(res.data.newsitems, 'got newsitems')
-    setNewsitems(res.data.newsitems);
-  }).catch(e => {
-    logg(e, 'e1');
-  });
+  const getSite = async () => {
+    request.get(Api.getSite(config.domain)).then(r => r.data).then(data => {
+      setNewsitems(data.newsitems);
+    }).catch(e => {
+      logg(e, 'e1');
+    });
+  };
+  useEffect(() => {
+    getSite();
+  }, []);
 
   return <React.Fragment>
     <div className="home wrapper">
