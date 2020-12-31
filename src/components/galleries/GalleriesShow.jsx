@@ -1,89 +1,57 @@
-import React, { useEffect, useState } from "react";
 import { IonPage, IonContent, IonButton, IonImg, IonLoading } from "@ionic/react";
+import React, { useEffect, useState } from "react";
+import { Route, useLocation, useHistory, Switch } from 'react-router-dom';
 
-import MetaLine from "$components/metaline";
-
-import getGallery from "./getGallery";
+import { logg, request } from "$shared";
+import { Metaline } from "$components/application";
 import "./galleries.scss";
 
-
 const GalleriesShow = (props) => {
-
-  const [gallery, setGallery] = useState(null);
-  const [showLoading, setShowLoading] = useState(false);
+  logg(props, 'GalleriesShow')
   const { match } = props;
+
+  const [showLoading, setShowLoading] = useState(false);
+  const [gallery, setGallery] = useState(null);
 
   useEffect(() => {
     setShowLoading(true);
-    getGallery(match.params.name).then(res => {
+    const token = localStorage.getItem("jwtToken");
+    request.get(`/api/galleries/view/${match.params.slug}`, { params: { jwt_token: token } }).then(res => {
       setShowLoading(false);
       setGallery(res.data.gallery);
     })
   }, []);
 
-  function purchase() {
-
-  }
-
   return (
     <IonPage>
       <IonContent>
 
-        {
-          gallery ?
-            <div className="gallery-show">
+        { gallery &&  <div className="gallery-show">
+          <div className='narrow'>
+            <h1 className="heading">
+              <img src="/assets/newsfeed/photos_icon.png" />
+              <span className="title">{gallery.name}</span>
+            </h1>
+            <Metaline item={gallery} />
 
-              <div className='narrow'>
-                <h1 className="heading">
-                  <img src="/assets/newsfeed/photos_icon.png" />
-                  <span className="title">{gallery.name}</span>
-                </h1>
-                <MetaLine
-                  created_at={gallery.created_at}
-                  username={gallery.username}
-                  city={gallery.city || {}}
-                  tags={gallery.tags}>
-                </MetaLine>
-                {
-                  gallery.is_premium && !gallery.is_purchased ?
-                    <IonButton onClick={purchase}> Purchase </IonButton> : null
-                }
-
-                <div className="thumbs">
-                  {
-                    gallery.photos.map((ph, i) => {
-                      return (
-                        <div className='card' key={i}>
-                          <div className='card-inner'>
-                            <IonImg src={ph.thumb_url}></IonImg>
-                          </div>
-                        </div>
-                      )
-                    })
-                  }
-
+            <div className="thumbs">
+              { gallery.photos.map((ph, i) =>
+                <div className='card' key={i}>
+                  <div className='card-inner'>
+                    <IonImg src={ph.thumb_url}></IonImg>
+                  </div>
                 </div>
+              ) }
+            </div>
+          </div>
+          <div className="full-img-section">
+            { gallery.photos.map((ph, i) =>
+              <div className='item' key={i}>
+                <img src={ph.large_url} />
               </div>
-
-              <div className="full-img-section">
-                {
-                  gallery.photos.map((ph, i) => {
-                    return (
-                      <div className='item' key={i}>
-                        <img src={ph.large_url} />
-                      </div>)
-                  })
-                }
-              </div>
-
-
-            </div> : null}
-        <IonLoading
-          isOpen={showLoading}
-          onDidDismiss={() => setShowLoading(false)}
-          message={'Please wait...'}
-          duration={5000}
-        />
+            ) }
+          </div>
+        </div>}
 
       </IonContent>
     </IonPage>

@@ -5,6 +5,7 @@ import React, { useEffect, useState } from "react";
 import { IonPage, IonContent } from "@ionic/react";
 import { Container, Grid } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
+import { Link } from 'react-router-dom';
 
 import { Api, logg, request } from "$shared";
 import config from "config";
@@ -87,7 +88,10 @@ const Account = (props) => {
 
         <button onClick={logout} >Clear Token</button>
 
-        <a onClick={() => props.history.push("/en/account/my/videos")}>Videos</a>
+        <ul>
+          <Link to={"/en/account/my/galleries"} >My Galleries</Link>
+          <li><a onClick={() => props.history.push("/en/account/my/videos")}>My Videos</a></li>
+        </ul>
 
       </Grid>
     </Container>

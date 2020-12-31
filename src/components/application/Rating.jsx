@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { IonIcon } from "@ionic/react";
 import { starOutline, starHalf, star } from 'ionicons/icons';
-import "./rating.scss";
+import "./application.scss";
 
 const Rating = (props) => {
 
@@ -33,14 +33,8 @@ const Rating = (props) => {
   }, []);
 
   return (
-    <span className="rating-container">
-      {
-        rating.map((r, i) => {
-          return (
-            <IonIcon key={i} className="stars" icon={iconMapping[r]} ></IonIcon>
-          )
-        })
-      }
+    <span className="rating">
+      { rating.map((r, i) => <IonIcon key={i} className="stars" icon={iconMapping[r]} ></IonIcon>) }
     </span>
   )
 

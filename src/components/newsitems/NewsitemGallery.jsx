@@ -1,9 +1,12 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
-import MetaLine from "$components/metaline";
+
+import { Metaline } from "$components/application";
 import "./newsitems.scss";
+import { logg } from "$shared";
 
 const NewsitemGallery = (props) => {
+  logg(props, 'NewsitemGallery')
   const { data } = props;
 
   const history = useHistory();
@@ -16,21 +19,15 @@ const NewsitemGallery = (props) => {
     <div className='newsitems-gallery'>
       <div className="image-section">
         <div className="gallery">
-          {
-            (data.photos || [])
-              .slice(0, 3)
-              .map((photo, i) => {
-                return (
-                  <div className="grid-item" key={i}>
-                    <div
-                      className="image-item"
-                      style={{ backgroundImage: `url(${photo.large_url})` }}>
-                      { data.photos.length > 3 && i == 2 && <div className="number">+{data.photos.length - 3}</div> }
-                    </div>
-                  </div>
-                )
-              })
-          }
+          { (data.photos || []).slice(0, 3).map((photo, i) =>
+            <div className="grid-item" key={i}>
+              <div
+                className="image-item"
+                style={{ backgroundImage: `url(${photo.large_url})` }}>
+                { data.photos.length > 3 && i == 2 && <div className="number">+{data.photos.length - 3}</div> }
+              </div>
+            </div>
+          ) }
         </div>
       </div>
       <div>
@@ -38,15 +35,8 @@ const NewsitemGallery = (props) => {
           <img className="icon" src={"/assets/newsfeed/photos_icon.png"} alt='' />
           <span className="title-heading">{data.name}</span>
         </p>
-        <MetaLine
-          created_at={data.created_at}
-          username={data.username}
-          city={data.city || {}}
-          tags={data.tags}>
-        </MetaLine>
-        <p
-          className="subhead"
-          dangerouslySetInnerHTML={{ __html: data.subhead }}>
+        <Metaline item={data} />
+        <p className="subhead" dangerouslySetInnerHTML={{ __html: data.subhead }}>
         </p>
       </div>
     </div>

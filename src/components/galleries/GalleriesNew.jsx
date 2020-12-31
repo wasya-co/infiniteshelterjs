@@ -1,6 +1,6 @@
 import React from "react";
 
-const galleriesNew = (props) => {
+const GalleriesNew = (props) => {
   return (
 
     <div>
@@ -40,4 +40,4 @@ const galleriesNew = (props) => {
   )
 }
 
-export default galleriesNew
+export default GalleriesNew

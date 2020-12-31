@@ -10,6 +10,8 @@ The default namespace and default component name is "application". If you don't 
 = Develop =
  yarn install
 
+Go to https://tgm.mac:3002/en/account
+
 == How to implement a feature ==
 Once you get a Redmine ticket,
 

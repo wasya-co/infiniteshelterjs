@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { IonPage, IonContent, IonButton, IonImg, IonIcon } from "@ionic/react";
 import { funnel, bookmark, newspaperOutline, image, videocam } from 'ionicons/icons';
-import Rating from "../rating";
+import { Rating } from "$components/application";
 
 import "./venues.scss";
 

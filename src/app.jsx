@@ -34,6 +34,7 @@ import { ReportsShow } from "$components/reports";
 import { SitesShow } from '$components/sites';
 import { Account, Account2, MyAccountWidget } from "$components/users";
 import { Videos } from "$components/videos";
+import { Galleries, MyGalleries } from "$components/galleries";
 
 const MyDrawer = () => {
   const [drawerOpen, setDrawerOpen] = React.useState(false);
@@ -87,13 +88,15 @@ const App = () => {
       <Container maxWidth="md" style={{ maxHeight: '90vh', overflow: 'auto' }} >
         <Switch id="main" main>
           <Route path="/en" exact ><SitesShow /></Route>
+
           <Route path="/en/account" exact ><Account /></Route>
           <Route path="/en/account/my/videos" exact ><Videos /></Route>
+          <Route path="/en/account/my/galleries" exact ><MyGalleries /></Route>
 
           <Route path="/en/cities" exact ><Cities /></Route>
           <Route path="/en/cities/travel-to/:name/show" ><CityShow /></Route>
 
-          <Route path="/en/galleries/show/:slug" exact ><GalleriesShow /></Route>
+          <Route path="/en/galleries/show/:slug" exact component={GalleriesShow} />
 
           <Route path="/en/reports/show/:slug" exact component={ReportsShow} />
 

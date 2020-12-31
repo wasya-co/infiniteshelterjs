@@ -1,3 +1,2 @@
-import Venues from "./venues";
 
-export default Venues;
+export { default as Venues } from "./Venues";

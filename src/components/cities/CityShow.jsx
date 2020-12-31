@@ -1,14 +1,16 @@
 import React, { useEffect, useState } from "react";
+import { Route, useLocation, useHistory, Switch } from 'react-router-dom';
 import { IonPage, IonContent, IonIcon, IonLoading } from '@ionic/react';
 import { pin, newspaperOutline, image, videocam } from 'ionicons/icons';
-import { Route, useLocation, useHistory, Switch } from 'react-router-dom';
-import { Newsitems } from "$components/newsitems";
-import Venues from "../../components/venues";
 
+import { logg } from "$shared";
+import { Newsitems } from "$components/newsitems";
+import { Venues } from "$components/venues";
 import getCity from "./getCity";
 import "./cities.scss";
 
 const CityShow = (props) => {
+  logg(props, 'CityShow')
   let location = useLocation();
   const history = useHistory();
   const { match } = props;

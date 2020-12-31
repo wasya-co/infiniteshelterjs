@@ -4,7 +4,7 @@ import NewsitemReport from "./NewsitemReport";
 import NewsitemVideo from "./NewsitemVideo";
 import "./newsitems.scss";
 
-import { logg } from "$shared";
+import { Api, logg } from "$shared";
 
 const ICONS = {
   1: "/assets/newsfeed/sunglass.png",
@@ -17,7 +17,6 @@ const Newsitems = (props) => {
     <div className="newsitems">
       { newsitems.map((newsitem, i) => {
         const icon = ICONS[newsitem.premium_tier];
-        logg(newsitem, 'one newsitem');
 
         return (
           <div key={i} className={`items premium-${newsitem.premium_tier || 0}`}>

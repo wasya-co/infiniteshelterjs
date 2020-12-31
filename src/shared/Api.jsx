@@ -2,6 +2,11 @@
 import config from "config";
 
 const Api = {
+  doUnlock: ({ kind, id, jwt_token }) => {
+    const currentUser = JSON.parse(localStorage.getItem("current_user")) || {};
+    if (!currentUser) { throw "unauthorized"; }
+    return `/api/payments/unlock?kind=${kind}&id=${id}&jwt_token=${currentUser.jwt_token}`;
+  },
 
   longTermTokenPath: '/api/users/long_term_token',
 

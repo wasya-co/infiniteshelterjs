@@ -1,5 +1,7 @@
 import React from "react";
-import MetaLine from "$components/metaline";
+
+import { Metaline } from "$components/application";
+
 import "./newsitems.scss";
 
 const NewsitemVideo = (props) => {
@@ -21,12 +23,7 @@ const NewsitemVideo = (props) => {
           <img className="icon" src={icon} />
           <span className="title-heading">{data.name}</span>
         </p>
-        <MetaLine
-          created_at={data.created_at}
-          username={data.username}
-          city={data.city || {}}
-          tags={data.tags}>
-        </MetaLine>
+        <Metaline item={data} />
         <p
           className="subhead"
           dangerouslySetInnerHTML={{ __html: data.subhead }}>
