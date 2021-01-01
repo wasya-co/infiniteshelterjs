@@ -1,3 +1,3 @@
 
-export { default as Cities } from "./Cities";
-export { default as CityShow } from "./CityShow";
+export { default as CitiesList } from "./CitiesList";
+export { default as CitiesShow } from "./CitiesShow";

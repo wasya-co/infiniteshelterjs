@@ -28,7 +28,7 @@ import './app.scss';
 
 import { logg } from "$shared";
 import { Menu } from "$components/application";
-import { Cities, CityShow } from "$components/cities";
+import { CitiesList, CitiesShow } from "$components/cities";
 import { GalleriesShow } from "$components/galleries";
 import { ReportsShow } from "$components/reports";
 import { SitesShow } from '$components/sites';
@@ -93,8 +93,8 @@ const App = () => {
           <Route path="/en/account/my/videos" exact ><Videos /></Route>
           <Route path="/en/account/my/galleries" exact ><MyGalleries /></Route>
 
-          <Route path="/en/cities" exact ><Cities /></Route>
-          <Route path="/en/cities/travel-to/:name/show" ><CityShow /></Route>
+          <Route path="/en/cities" exact ><CitiesList /></Route>
+          <Route path="/en/cities/travel-to/:name/show" ><CitiesShow /></Route>
 
           <Route path="/en/galleries/show/:slug" exact component={GalleriesShow} />
 

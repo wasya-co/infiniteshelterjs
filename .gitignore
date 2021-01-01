@@ -1,11 +1,15 @@
 *trash
 *.swp
-/node_modules
+
+/android/app/src/main/assets/public
+
+/build
+/coverage
+
+node_modules
 /.pnp
 .pnp.js
 
-/coverage
-/build
 
 .DS_Store
 .env.local
