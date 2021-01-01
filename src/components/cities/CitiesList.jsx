@@ -3,7 +3,7 @@ import { IonPage, IonLoading, IonContent, IonIcon } from '@ionic/react';
 import { funnel, bookmark, newspaperOutline, image, videocam } from 'ionicons/icons';
 import { Link } from "react-router-dom";
 
-import { logg, Api } from "$shared";
+import { Api, AppRouter, logg, } from "$shared";
 import "./cities.scss";
 
 const Cities = (props) => {
@@ -12,30 +12,24 @@ const Cities = (props) => {
   const [showLoading, setShowLoading] = useState(false);
 
   useEffect(() => {
-
     setShowLoading(true);
     Api.getCities().then(res => {
       setShowLoading(false);
-      setFilteredCities(JSON.parse(JSON.stringify(res.data)));
-      setCities(res.data);
+      setFilteredCities(res);
+      setCities(res);
     });
-
   }, []);
 
 
   function filterHandler(ev) {
-
     let filteredCities = cities.filter(city => {
-      return city.name
-        .toLowerCase()
-        .indexOf(ev.target.value.trim().toLowerCase()) > -1;
+      return city.name.toLowerCase().indexOf(ev.target.value.trim().toLowerCase()) > -1;
     });
     setFilteredCities(filteredCities);
-
   }
 
   function navigateToCity(slug) {
-    props.history.push(`/en/cities/travel-to/${slug}/show/newsfeed`);
+    props.history.push();
   }
 
   function navigate(path) {
@@ -63,16 +57,17 @@ const Cities = (props) => {
       </div>
 
       <div className="container">
-        {
-          filteredCities.map((city, i) => {
-            return (
-              <div key={i} className="cities" onClick={navigateToCity.bind(this, city.slug)}>
+        { filteredCities.map((city, i) =>
+
+              <div key={i} className="cities" >
                 <div className="img-section">
                   <span className="bookmark" >
                     <IonIcon className="bookmark-icon" icon={bookmark}></IonIcon>
                   </span>
                   <img className="city-img" src={city.photo} />
-                  <span className="city-title">{city.name}</span>
+                  <Link to={AppRouter.cityPath(city.slug)} >
+                    <span className="city-title">{city.name}</span>
+                  </Link>
                 </div>
                 <div className="content-section">
                   <div className="content-item">
@@ -89,9 +84,8 @@ const Cities = (props) => {
                   </div>
                 </div>
               </div>
-            );
-          })
-        }
+
+        ) }
       </div>
 
     </div>

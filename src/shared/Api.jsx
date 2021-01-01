@@ -27,7 +27,7 @@ const Api = {
     return `${config.apiOrigin}/api/reports/view/${a}?${jwt}`;
   },
 
-  getCities: ()   => request.get(`${config.apiOrigin}/api/cities`),
+  getCities: ()   => request.get(`${config.apiOrigin}/api/cities`).then((r) => r.data),
   getCity: (slug) => request.get(`${config.apiOrigin}/api/cities/view/${slug}`),
 
   getSite: (slug) => {

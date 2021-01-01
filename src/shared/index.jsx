@@ -1,6 +1,6 @@
 
 export { default as Api } from "./Api";
-
+export { default as AppRouter } from "./AppRouter";
 
 /**
  * Usage: logg(someObject, 'label')

@@ -80,7 +80,8 @@ const CitiesShow = (props) => {
             <section>
               <Switch>
                 <Route exact path={`${match.url}/venues`} render={() => <Venues data={city.venues} />} />
-                <Route exact path={`${match.url}/newsfeed`} render={() => <Newsitems data={city.newsitems} />} />
+                <Route exact path={`${match.url}/newsfeed`}
+                  render={() => <Newsitems data={city.newsitems} /> } />
               </Switch>
             </section>
 

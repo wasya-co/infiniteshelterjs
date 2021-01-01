@@ -89,18 +89,18 @@ const App = () => {
         <Switch id="main" main>
           <Route path="/en" exact ><SitesShow /></Route>
 
-          <Route path="/en/account" exact ><Account /></Route>
-          <Route path="/en/account/my/videos" exact ><Videos /></Route>
-          <Route path="/en/account/my/galleries" exact ><MyGalleries /></Route>
+          <Route exact path="/en/account" component={Account} />
+          <Route exact path="/en/account/my/videos" component={Videos} />
+          <Route exact path="/en/account/my/galleries" component={MyGalleries} />
 
-          <Route path="/en/cities" exact ><CitiesList /></Route>
-          <Route path="/en/cities/travel-to/:name/show" ><CitiesShow /></Route>
+          <Route exact path="/en/cities"                      component={CitiesList} />
+          <Route       path="/en/cities/travel-to/:name/show" component={CitiesShow} />
 
-          <Route path="/en/galleries/show/:slug" exact component={GalleriesShow} />
+          <Route exact path="/en/galleries/show/:slug" component={GalleriesShow} />
 
-          <Route path="/en/reports/show/:slug" exact component={ReportsShow} />
+          <Route exact path="/en/reports/show/:slug" component={ReportsShow} />
 
-          <Redirect from="/" to="/en" exact />
+          <Redirect exact from="/" to="/en" />
         </Switch>
       </Container>
 

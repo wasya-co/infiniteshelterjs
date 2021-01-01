@@ -13,6 +13,8 @@ const ICONS = {
 const Newsitems = (props) => {
   const { newsitems } = props;
 
+  if (!newsitems) { return <div>No Newsitems</div>; }
+
   return (
     <div className="newsitems">
       { newsitems.map((newsitem, i) => {
