@@ -11,6 +11,7 @@ const ICONS = {
   2: "/assets/newsfeed/gem_premium.png"
 };
 const Newsitems = (props) => {
+  logg(props, 'Newsitems')
   const { newsitems } = props;
 
   if (!newsitems) { return <div>No Newsitems</div>; }

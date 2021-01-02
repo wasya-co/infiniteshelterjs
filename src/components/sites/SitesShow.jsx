@@ -9,23 +9,20 @@ import { Newsitems } from "$components/newsitems";
 import "./sites.scss";
 
 const SitesShow = (props) => {
+  logg(props, 'SitesShow')
 
   let [newsitems, setNewsitems] = useState([]);
   let [showLoading, setShowLoading] = useState(false);
 
-  const currentUser = JSON.parse(localStorage.getItem("current_user")) || {};
-  const withToken = currentUser.jwt_token ? `jwt_token=${currentUser.jwt_token}` : '';
-
-  const getSite = async () => {
-    request.get(Api.getSite(config.domain)).then(r => r.data).then(data => {
+  useEffect(() => {
+    Api.getSite(config.domain).then(data => {
       setNewsitems(data.newsitems);
     }).catch(e => {
       logg(e, 'e1');
     });
-  };
-  useEffect(() => {
-    getSite();
   }, []);
+
+
 
   return <React.Fragment>
     <div className="home wrapper">

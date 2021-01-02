@@ -87,7 +87,8 @@ const App = () => {
 
       <Container maxWidth="md" style={{ maxHeight: '90vh', overflow: 'auto' }} >
         <Switch id="main" main>
-          <Route path="/en" exact ><SitesShow /></Route>
+          <Redirect exact from="/" to="/en" />
+          <Route exact path="/en" ><SitesShow /></Route>
 
           <Route exact path="/en/account" component={Account} />
           <Route exact path="/en/account/my/videos" component={Videos} />
@@ -99,8 +100,6 @@ const App = () => {
           <Route exact path="/en/galleries/show/:slug" component={GalleriesShow} />
 
           <Route exact path="/en/reports/show/:slug" component={ReportsShow} />
-
-          <Redirect exact from="/" to="/en" />
         </Switch>
       </Container>
 

@@ -1,8 +1,13 @@
 
 import config from "config";
-import { request } from "$shared";
+import { logg, request } from "$shared";
 
-// @TODO: need to reparate just paths and constants from the semantic objects
+const _getWithToken = (url) => {
+  const token = localStorage.getItem("jwtToken");
+  return request.get(url, { params: { jwt_token: token } }).then((res) => {
+    return res.data;
+  });
+};
 
 const Api = {
   doUnlock: ({ kind, id, jwt_token }) => {
@@ -31,12 +36,7 @@ const Api = {
   getCity: (slug) => request.get(`${config.apiOrigin}/api/cities/view/${slug}`),
 
   getSite: (slug) => {
-    const currentUser = JSON.parse(localStorage.getItem("current_user")) || {};
-    let jwt = "";
-    if (currentUser) {
-      jwt = `jwt_token=${currentUser.jwt_token}`;
-    }
-    return `${config.apiOrigin}/api/sites/view/${slug}?${jwt}`;
+    return _getWithToken(`${config.apiOrigin}/api/sites/view/${slug}`)
   },
 
 }
