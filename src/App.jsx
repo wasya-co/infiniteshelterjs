@@ -1,6 +1,4 @@
-
 import { IonApp, IonButtons, IonMenuButton } from '@ionic/react';
-
 import { Container, Grid, GridList } from '@material-ui/core';
 import Drawer from '@material-ui/core/Drawer';
 import IconButton from '@material-ui/core/IconButton';
@@ -8,7 +6,6 @@ import MenuIcon from '@material-ui/icons/Menu';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
-
 import React from 'react';
 import { Link, Switch, BrowserRouter as Router, Redirect, Route, useHistory, withRouter } from 'react-router-dom';
 
@@ -26,7 +23,6 @@ import '@ionic/react/css/display.css';
 import './theme/variables.css';
 import './app.scss';
 
-import { logg } from "$shared";
 import { Menu } from "$components/application";
 import { CitiesList, CitiesShow } from "$components/cities";
 import { GalleriesShow } from "$components/galleries";
@@ -35,6 +31,7 @@ import { SitesShow } from '$components/sites';
 import { Account, Account2, MyAccountWidget } from "$components/users";
 import { Videos } from "$components/videos";
 import { Galleries, MyGalleries } from "$components/galleries";
+import { logg } from "$shared";
 
 const MyDrawer = () => {
   const [drawerOpen, setDrawerOpen] = React.useState(false);

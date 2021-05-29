@@ -42,8 +42,11 @@ const appPages = [
   }
 ];
 
+/**
+ * 20210529 - I think this is obsolete somehow, I'm using MyDrawer in App.jsx
+ *
+ */
 const Menu = () => {
-
   return (
     <IonMenu contentId="main" type="overlay">
       <IonHeader>
@@ -72,7 +75,7 @@ const Menu = () => {
         </IonList>
       </IonContent>
     </IonMenu>
-  );
-};
+  )
+}
 
 export default Menu;
