@@ -39,6 +39,7 @@
     ]
   },
   "devDependencies": {
+    "@babel/plugin-transform-runtime": "^7.14.3",
     "@capacitor/cli": "^2.2.0",
     "@ionic/cli": "^6.10.1",
     "@testing-library/jest-dom": "^4.2.4",
@@ -81,12 +82,11 @@
     ]
   },
   "scripts": {
-    "jest": "NODE_PATH=config/environments/test jest spec/ -t current",
+    "jest": "NODE_PATH=config/environments/test jest -t current",
     "start": "HTTPS=true NODE_PATH=config/environments/development PORT=3002 react-scripts start",
     "start_do": "HTTPS=true NODE_PATH=config/environments/production PORT=3002 react-scripts start",
     "build": "NODE_PATH=config/environments/production react-scripts build",
     "test": "NODE_PATH=config/environments/test jest",
-    "jest": "NODE_PATH=config/environments/test jest -t current",
     "eject": "react-scripts eject",
     "postinstall": "link-module-alias",
     "preinstall_trash": "command -v link-module-alias && link-module-alias clean || true",
