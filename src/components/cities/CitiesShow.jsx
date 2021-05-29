@@ -64,7 +64,6 @@ const CitiesShow = (props) => {
             </section> }
 
             <section className="section-three">
-
               <div className="menu-option" onClick={() => changeMenuHandler('newsfeed')}>
                 <img src="/assets/newsfeed-icon.svg" alt="Newsfeed" />
                 <p className={`${location.pathname.includes("newsfeed") ? "selected" : ""} menu-item`}>Newsfeed</p>
@@ -74,14 +73,13 @@ const CitiesShow = (props) => {
                 <img src="/assets/venue-icon.svg" alt="Venues" />
                 <p className={`${location.pathname.includes("venues") ? "selected" : ""} menu-item`}>Venues</p>
               </div>
-
             </section>
 
             <section>
               <Switch>
                 <Route exact path={`${match.url}/venues`} render={() => <Venues data={city.venues} />} />
                 <Route exact path={`${match.url}/newsfeed`}
-                  render={() => <Newsitems data={city.newsitems} /> } />
+                  render={() => <Newsitems newsitems={city.newsitems} /> } />
               </Switch>
             </section>
 
@@ -95,7 +93,7 @@ const CitiesShow = (props) => {
         />
       </IonContent>
     </IonPage>
-  );
+  )
 }
 
-export default CitiesShow;
+export default CitiesShow

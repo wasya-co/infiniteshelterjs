@@ -2,4 +2,5 @@
 0.0.1 20200705 - facebook login on android
 0.0.2 20200709 - let's wire payments real quick
       20201231 - be able to login to view my media
+0.0.3 20210529 - let's go, cleanup! (and take payments later on, very soon)
 
