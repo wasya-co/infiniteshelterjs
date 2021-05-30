@@ -13,13 +13,13 @@ set -ex
 yarn run build
 echo $(date) > redeploy
 git add . &&
-git commit -m "autobuild `date "+%Y%m%d"`"
+git commit -m "autobuild `date "+%Y%m%d"`" || echo 'nothing to commit'
 
 branch=`git branch | grep -e "^*" | cut -d' ' -f 2`
 git checkout master &&
 git merge "$branch" &&
 git add . &&
-git commit -m "autobuild `date "+%Y%m%d"`"
+git commit -m "autobuild `date "+%Y%m%d"`" || echo 'nothing to commit'
 git push origin master &&
 git checkout "$branch" &&
 # git merge master &&
