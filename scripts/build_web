@@ -25,7 +25,7 @@ git checkout "$branch" &&
 # git merge master &&
 # git push &&
 
-ssh do "cd /home/ubuntu/projects/guydjs && git pull && sudo apachectl -k restart"
+ssh do "cd /home/ubuntu/projects/guydjs && git pull && sudo apachectl -k restart && sudo pkill nginx && sudo nginx"
 
 set +e
 echo 'build tgm_ionic browser ok'

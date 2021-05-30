@@ -3,7 +3,9 @@
 
 /android/app/src/main/assets/public
 
-/build
+## this is what https://guyd.me uses...
+# /build
+
 /coverage
 
 node_modules

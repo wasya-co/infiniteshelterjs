@@ -20,7 +20,7 @@ Create a new feature branch. The branch name should either be a version (e.g. 0.
 Submit a PR to master.
 
 = Run =
- npm run start
+ yarn run start
 
 = Test =
 
@@ -28,14 +28,14 @@ This application is to be test-driven, and regression bugs should gain a test wh
 
 We use jest, enzyme. See package.json and scripts/ .
 
- npm run test
+ yarn run test
 
 = Deploy =
 
 == For Android ==
 From: https://capacitorjs.com/docs/android
 
- npm run build
+ yarn run build
  npx cap add android
  npx cap sync
  npx cap copy
@@ -60,5 +60,3 @@ keytool -exportcert -alias androiddebugkey -keystore ~/.android/debug.keystore |
 
 ionic cordova plugin add cordova-plugin-facebook4 --save --variable APP_ID="3016949928380365" --variable APP_NAME="Guyd"
 
-
-abba
