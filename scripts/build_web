@@ -8,7 +8,7 @@ else
   eee="${NODE_ENV}"
 fi
 
-set -e
+set -ex
 
 yarn run build
 echo $(date) > redeploy
