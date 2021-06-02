@@ -6,7 +6,7 @@ import MenuIcon from '@material-ui/icons/Menu'
 import List from '@material-ui/core/List'
 import ListItem from '@material-ui/core/ListItem'
 import ListItemIcon from '@material-ui/core/ListItemIcon'
-import React from 'react'
+import React, { Fragment as F } from 'react'
 import { Link, Switch, BrowserRouter as Router, Redirect, Route, useHistory, withRouter } from 'react-router-dom'
 import styled from 'styled-components'
 
@@ -24,7 +24,7 @@ import '@ionic/react/css/display.css'
 import './theme/variables.css'
 import './app.scss'
 
-import { Menu } from "$components/application"
+import { Menu, MenuBottom } from "$components/application"
 import { CitiesList, CitiesShow } from "$components/cities"
 import { GalleriesShow } from "$components/galleries"
 import { ReportsShow } from "$components/reports"
@@ -37,18 +37,51 @@ import { logg } from "$shared"
 const Root = styled.div`
   border: 1px solid cyan;
   background: #dedede;
+`;
+
+const BottomWrapper = styled.div`
+  border: 2px solid red;
 `
+
 const Container = styled(_Container)`
   border: 1px solid yellow;
 
-  maxHeight: 50vh;
-  height: 90vh;
+  // maxHeight: 50vh;
+  height: 80vh;
 
   overflow: auto;
+`;
 
-`
+const BottomDrawer = () => {
+  const [drawerOpen, setDrawerOpen] = React.useState(false)
+  const history = useHistory()
 
-const MyDrawer = () => {
+  return <F>
+    <BottomWrapper>
+      <IconButton
+        aria-label="open drawer"
+        onClick={() => setDrawerOpen(true)}
+        edge="start"
+        className="menu-btn"
+      ><MenuIcon /></IconButton>
+      <MenuBottom />
+    </BottomWrapper>
+
+    <Drawer anchor={"bottom"}
+      elevation={1}
+      open={drawerOpen} onClose={() => setDrawerOpen(false)}
+      BackdropProps={{ invisible: true }}
+      variant={"persistent"}
+    >
+      <div>
+        <MyAccountWidget />
+        <div onClick={() => setDrawerOpen(false)}>[X]</div>
+      </div>
+    </Drawer>
+  </F>
+};
+
+const MenuDrawer = () => {
   const [drawerOpen, setDrawerOpen] = React.useState(false)
   const history = useHistory()
 
@@ -96,7 +129,7 @@ const App = () => {
   return (
     <Root>
       <Router>
-        <MyDrawer />
+        <MenuDrawer />
 
         <Container maxWidth="md" >
           <Switch id="main" main>
@@ -115,6 +148,8 @@ const App = () => {
             <Route exact path="/en/reports/show/:slug" component={ReportsShow} />
           </Switch>
         </Container>
+
+        <BottomDrawer />
 
       </Router>
     </Root>
