@@ -1,2 +1,2 @@
 
-export { default as SitesShow } from "./SitesShow";
+export { default as SitesShow } from "./SitesShow"

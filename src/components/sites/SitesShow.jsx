@@ -1,45 +1,54 @@
-import React, { useEffect, useState } from "react";
-import { IonPage, IonLoading, IonContent } from '@ionic/react';
+import { IonPage, IonLoading, IonContent } from '@ionic/react'
+import React, { Fragment as F, useEffect, useState } from "react"
+import styled from 'styled-components'
 
-import config from "config";
+import config from "config"
+import { Api, logg, request } from "$shared"
+import { Newsitems } from "$components/newsitems"
+import "./sites.scss"
 
-import { Api, logg, request } from "$shared";
-import { Newsitems } from "$components/newsitems";
+const Container = styled.div`
+  overflow: scroll;
+`
 
-import "./sites.scss";
+const Root = styled.div`
+  padding: 0;
+  margin: 0;
+  height: 100vh;
+`
 
 const SitesShow = (props) => {
   logg(props, 'SitesShow')
 
-  let [newsitems, setNewsitems] = useState([]);
-  let [showLoading, setShowLoading] = useState(false);
+  let [newsitems, setNewsitems] = useState([])
+  let [showLoading, setShowLoading] = useState(false)
 
   useEffect(() => {
+    setShowLoading(true)
     Api.getSite(config.domain).then(data => {
-      setNewsitems(data.newsitems);
+      logg(data, 'data')
+      setNewsitems(data.newsitems)
     }).catch(e => {
-      logg(e, 'e1');
-    });
-  }, []);
+      logg(e, 'e1')
+    }).finally(() => {
+      setShowLoading(false)
+    })
+  }, [])
 
-
-
-  return <React.Fragment>
-    <div className="home wrapper">
+  return <F>
+    <Root>
       <div className="image-container">
         <img className="image" src="/assets/hero.png" />
       </div>
-      <div className="container">
-        <Newsitems newsitems={newsitems} />
-      </div>
-    </div>
+      <Newsitems newsitems={newsitems} />
+    </Root>
     <IonLoading
       isOpen={showLoading}
       onDidDismiss={() => setShowLoading(false)}
       message={'Please wait...'}
       duration={5000}
     />
-  </React.Fragment>;
+  </F>
 }
 
-export default SitesShow;
+export default SitesShow

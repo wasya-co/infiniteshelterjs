@@ -19,6 +19,7 @@ const GalleriesShow = (props) => {
     request.get(`/api/galleries/view/${match.params.slug}`, { params: { jwt_token: token } }).then(res => {
       setShowLoading(false);
       setGallery(res.data.gallery);
+      // @TODO: setFlash here?! If I"m accessing a gallery I haven't bought access to?
     })
   }, []);
 
@@ -35,7 +36,7 @@ const GalleriesShow = (props) => {
             <Metaline item={gallery} />
 
             <div className="thumbs">
-              { gallery.photos.map((ph, i) =>
+              { gallery.photos && gallery.photos.map((ph, i) =>
                 <div className='card' key={i}>
                   <div className='card-inner'>
                     <IonImg src={ph.thumb_url}></IonImg>
@@ -45,7 +46,7 @@ const GalleriesShow = (props) => {
             </div>
           </div>
           <div className="full-img-section">
-            { gallery.photos.map((ph, i) =>
+            { gallery.photos && gallery.photos.map((ph, i) =>
               <div className='item' key={i}>
                 <img src={ph.large_url} />
               </div>
