@@ -20,11 +20,11 @@ const Login = (props) => {
 const MyAccountWidget = (props) => {
   logg(props, 'MyAccountWidget')
 
-  const currentUser = JSON.parse(localStorage.getItem("current_user")) || {};
-  const stripe = useStripe();
-  const elements = useElements();
+  const currentUser = JSON.parse(localStorage.getItem("current_user")) || {}
+  const stripe = useStripe()
+  const elements = useElements()
 
-  const [purchaseModalIsOpen, setPurchaseModalIsOpen] = useState(false);
+  const [purchaseModalIsOpen, setPurchaseModalIsOpen] = useState(false)
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -55,7 +55,7 @@ const MyAccountWidget = (props) => {
 
   return <React.Fragment>
     { currentUser.email ? currentUser.email : <Login /> } &nbsp;
-    [&nbsp;{ typeof currentUser.n_unlocks === 'number' ? currentUser.n_unlocks : '?' } unlocks&nbsp;]&nbsp; &nbsp;
+    [&nbsp;{ typeof currentUser.n_stars === 'number' ? currentUser.n_stars : '?' } stars&nbsp;]&nbsp; &nbsp;
     <button onClick={() => setPurchaseModalIsOpen(true) }>buy</button>
 
     <Modal isOpen={purchaseModalIsOpen} ariaHideApp={false} style={{  width: '500px' }} >

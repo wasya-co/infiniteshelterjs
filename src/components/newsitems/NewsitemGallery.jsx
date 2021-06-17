@@ -1,3 +1,4 @@
+import _Box from '@material-ui/core/Box'
 import React from "react"
 import { useHistory } from "react-router-dom"
 import styled from 'styled-components'
@@ -6,9 +7,11 @@ import { Metaline } from "$components/application"
 import "./newsitems.scss"
 import { logg } from "$shared"
 
-const Card = styled.div`
-  background: #333333;
-  color: white;
+const Box = styled(_Box)`
+  margin-bottom: 1em;
+  padding: 1em;
+  background: white;
+  cursor: pointer;
 `
 
 const Image = styled.div`
@@ -28,11 +31,17 @@ const Image2 = styled.div`
 `
 
 const Images = styled.div`
-  border: 1px solid red;
+  position: relative;
 `
 
-const ImageLarge = styled.img``
-const ImageThumb1 = styled.img``
+const ImageLarge = styled.img`
+  width: 200px;
+`
+const ImageThumb1 = styled.img`
+  position: absolute;
+  left: 200px;
+  top: 0;
+`
 const ImageThumb2 = styled.img``
 
 const NewsitemGallery = (props) => {
@@ -45,10 +54,9 @@ const NewsitemGallery = (props) => {
     history.push(`/en/galleries/show/${gallery.slug}`)
   }
 
-
   return (
-    <Card>
-      <Images onClick={navigateToGallery} >
+    <Box boxShadow={2} onClick={navigateToGallery} >
+      <Images >
         { false && (gallery.photos || []).slice(0, 3).map((photo, i) =>
           <Image key={i}
             style={{ backgroundImage: `url(${photo.large_url})` }}>
@@ -56,7 +64,7 @@ const NewsitemGallery = (props) => {
           </Image>
         ) }
 
-        { gallery.photos[0] && <ImageLarge src={gallery.photos[0].large_url} /> }
+        { gallery.photos[0] && <ImageLarge src={gallery.photos[0].thumb_url} /> }
         { gallery.photos[1] && <ImageThumb1 src={gallery.photos[1].thumb_url} /> }
         { gallery.photos[2] && <ImageThumb2 src={gallery.photos[2].thumb_url} /> }
 
@@ -74,7 +82,7 @@ const NewsitemGallery = (props) => {
         <Metaline item={gallery} />
         <p className="subhead" dangerouslySetInnerHTML={{ __html: gallery.subhead }}></p>
       </div>
-    </Card>
+    </Box>
   )
 
 }

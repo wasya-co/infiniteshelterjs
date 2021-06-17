@@ -1,14 +1,22 @@
+import _Box from '@material-ui/core/Box'
 import React from "react";
+import styled from 'styled-components'
 
 import { Metaline } from "$components/application";
 
 import "./newsitems.scss";
 
+const Box = styled(_Box)`
+  margin-bottom: 1em;
+  padding: 1em;
+  background: white;
+`
+
 const NewsitemVideo = (props) => {
   const { data, icon = "/assets/newsfeed/video_icon.svg" } = props;
 
   return (
-    <div className='newsitems-video'>
+    <Box boxShadow={2} >
       <div className="image-section">
         {
           data.youtube_id ?
@@ -29,7 +37,7 @@ const NewsitemVideo = (props) => {
           dangerouslySetInnerHTML={{ __html: data.subhead }}>
         </p>
       </div>
-    </div>
+    </Box>
   )
 
 }

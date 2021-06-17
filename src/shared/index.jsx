@@ -1,6 +1,10 @@
+import styled from 'styled-components'
 
 export { default as Api } from "./Api";
 export { default as AppRouter } from "./AppRouter";
+
+export const Debug = styled.div`
+`
 
 /**
  * Usage: logg(someObject, 'label')

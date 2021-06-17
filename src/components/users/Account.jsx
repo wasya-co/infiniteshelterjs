@@ -48,11 +48,7 @@ const Account = (props) => {
         logg(resp, 'microsites3 response');
 
         localStorage.setItem("jwtToken", resp.data.jwt_token);
-        localStorage.setItem("current_user", JSON.stringify({
-          email: resp.data.email,
-          n_unlocks: resp.data.n_unlocks,
-          jwt_token: resp.data.jwt_token,
-        }) );
+        localStorage.setItem("current_user", JSON.stringify(resp.data) );
       });
     } else {
       logg('canceled');

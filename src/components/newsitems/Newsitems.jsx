@@ -13,7 +13,7 @@ const ICONS = {
 }
 
 const Wrapper = styled.div`
-  border: 1px solid blue;
+  margin-bottom: 2em;
 `
 
 const Newsitems = (props) => {

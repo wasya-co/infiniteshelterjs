@@ -3,13 +3,23 @@ import React, { Fragment as F, useEffect, useState } from "react"
 import styled from 'styled-components'
 
 import config from "config"
-import { Api, logg, request } from "$shared"
+import { Api, Debug, logg, request } from "$shared"
 import { Newsitems } from "$components/newsitems"
 import "./sites.scss"
 
 const Container = styled.div`
   overflow: scroll;
 `
+
+const _Hero = styled.div`
+  height: 370px;
+  text-align: center;
+
+  img {
+    max-width: 100%;
+  }
+`
+const Hero = () => <_Hero><img className="image" src="/assets/hero.png" /></_Hero>
 
 const Root = styled.div`
   padding: 0;
@@ -37,10 +47,9 @@ const SitesShow = (props) => {
 
   return <F>
     <Root>
-      <div className="image-container">
-        <img className="image" src="/assets/hero.png" />
-      </div>
+      <Hero />
       <Newsitems newsitems={newsitems} />
+      &nbsp;
     </Root>
     <IonLoading
       isOpen={showLoading}

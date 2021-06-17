@@ -32,29 +32,30 @@ import { SitesShow } from '$components/sites'
 import { Account, Account2, MyAccountWidget } from "$components/users"
 import { Videos } from "$components/videos"
 import { Galleries, MyGalleries } from "$components/galleries"
-import { logg } from "$shared"
+import { Debug, logg } from "$shared"
 
 const Root = styled.div`
-  border: 1px solid cyan;
   background: #dedede;
+  height: auto;
+  overflow: auto;
 `;
 
 const BottomWrapper = styled.div`
   border: 2px solid red;
+  height: 50px;
+
+  position: absolute;
+  bottom: 0;
 `
 
 const Container = styled(_Container)`
-  border: 1px solid yellow;
-
-  // maxHeight: 50vh;
-  height: 80vh;
-
-  overflow: auto;
+  height: auto;
 `;
 
 const BottomDrawer = () => {
   const [drawerOpen, setDrawerOpen] = React.useState(false)
   const history = useHistory()
+  console.log(history, 'history 2')
 
   return <F>
     <BottomWrapper>
@@ -81,12 +82,23 @@ const BottomDrawer = () => {
   </F>
 };
 
+const LeftWrapper = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+
+  background: white;
+
+  height: 50px;
+`
+
 const MenuDrawer = () => {
   const [drawerOpen, setDrawerOpen] = React.useState(false)
   const history = useHistory()
+  console.log(history, 'history')
 
-  return <React.Fragment>
-    <div className="z-index-100">
+  return <F>
+    <LeftWrapper>
       <IconButton
         aria-label="open drawer"
         onClick={() => setDrawerOpen(true)}
@@ -95,7 +107,7 @@ const MenuDrawer = () => {
       ><MenuIcon /></IconButton>
       <MyAccountWidget />
       <Menu />
-    </div>
+    </LeftWrapper>
 
     <Drawer anchor={"left"} open={drawerOpen} onClose={() => setDrawerOpen(false)} >
       <div>
@@ -121,15 +133,14 @@ const MenuDrawer = () => {
         </List>
       </div>
     </Drawer>
-  </React.Fragment>
+  </F>
 }
 
 const App = () => {
 
-  return (
+  return (<Router>
+    <MenuDrawer />
     <Root>
-      <Router>
-        <MenuDrawer />
 
         <Container maxWidth="md" >
           <Switch id="main" main>
@@ -149,11 +160,9 @@ const App = () => {
           </Switch>
         </Container>
 
-        <BottomDrawer />
-
-      </Router>
     </Root>
-  )
+    <BottomDrawer />
+  </Router>)
 }
 
 export default App
