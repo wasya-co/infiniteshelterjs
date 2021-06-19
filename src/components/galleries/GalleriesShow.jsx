@@ -1,5 +1,5 @@
 import { IonPage, IonContent, IonButton, IonImg, IonLoading } from "@ionic/react";
-import React, { useEffect, useState } from "react";
+import React, { Fragment as F, useEffect, useState } from "react";
 import { Route, useLocation, useHistory, Switch } from 'react-router-dom';
 
 import { logg, request } from "$shared";
@@ -11,7 +11,7 @@ const GalleriesShow = (props) => {
   const { match } = props;
 
   const [showLoading, setShowLoading] = useState(false);
-  const [gallery, setGallery] = useState(null);
+  const [gallery, setGallery] = useState({});
 
   useEffect(() => {
     setShowLoading(true);
@@ -23,11 +23,9 @@ const GalleriesShow = (props) => {
     })
   }, []);
 
-  return (
-    <IonPage>
-      <IonContent>
+  return (<F>
 
-        { gallery &&  <div className="gallery-show">
+        { <div className="gallery-show">
           <div className='narrow'>
             <h1 className="heading">
               <img src="/assets/newsfeed/photos_icon.png" />
@@ -54,9 +52,7 @@ const GalleriesShow = (props) => {
           </div>
         </div>}
 
-      </IonContent>
-    </IonPage>
-  );
+  </F>);
 }
 
 export default GalleriesShow;

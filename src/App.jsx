@@ -143,7 +143,7 @@ const App = () => {
     <Root>
 
         <Container maxWidth="md" >
-          <Switch id="main" main>
+          <Switch id="main" main >
             <Redirect exact from="/" to="/en" />
             <Route exact path="/en" ><SitesShow /></Route>
 

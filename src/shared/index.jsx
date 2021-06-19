@@ -31,3 +31,8 @@ export { logg };
 
 export { default as request } from "./request";
 
+export const Wrapper = styled.div`
+  height: 100vh;
+
+
+`

@@ -8,7 +8,7 @@ import { Newsitems } from "$components/newsitems"
 import "./sites.scss"
 
 const Container = styled.div`
-  overflow: scroll;
+  overflow: auto;
 `
 
 const _Hero = styled.div`
