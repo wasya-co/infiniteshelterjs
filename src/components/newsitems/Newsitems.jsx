@@ -1,38 +1,43 @@
-import React from "react";
-import NewsitemGallery from "./NewsitemGallery";
-import NewsitemReport from "./NewsitemReport";
-import NewsitemVideo from "./NewsitemVideo";
-import "./newsitems.scss";
+import React from "react"
+import styled from 'styled-components'
 
-import { Api, logg } from "$shared";
+import { Api, logg } from "$shared"
+import NewsitemGallery from "$components/newsitems/NewsitemGallery"
+import NewsitemReport from "$components/newsitems/NewsitemReport"
+import NewsitemVideo from "$components/newsitems/NewsitemVideo"
+import "./newsitems.scss"
 
 const ICONS = {
   1: "/assets/newsfeed/sunglass.png",
   2: "/assets/newsfeed/gem_premium.png"
 }
 
+const Wrapper = styled.div`
+  margin-bottom: 2em;
+`
+
 const Newsitems = (props) => {
   logg(props, 'Newsitems')
-  const { newsitems } = props;
+  const { newsitems } = props
 
-  if (!newsitems) { return <div>No Newsitems</div>; }
+  if (!newsitems || !newsitems.length) { return <div>No Newsitems</div> }
 
   return (
-    <div className="newsitems">
-      { newsitems.map((newsitem, i) => {
-        const icon = ICONS[newsitem.premium_tier];
+    <Wrapper>
+      { newsitems.map((newsitem, idx) => {
+        const premium_tier = newsitem.premium_tier || 0
+        const icon = ICONS[premium_tier]
 
         return (
-          <div key={i} className={`items premium-${newsitem.premium_tier || 0}`}>
-            { newsitem.item_type === "report" && <NewsitemReport newsitem={newsitem} /> }
+          <div key={idx} className={`items premium-${premium_tier}`}>
             { newsitem.item_type === "gallery" && <NewsitemGallery gallery={newsitem} icon={icon} /> }
+            { newsitem.item_type === "report" && <NewsitemReport newsitem={newsitem} /> }
             { newsitem.item_type === "video" && <NewsitemVideo data={newsitem} icon={icon} /> }
           </div>
         )
       }) }
-    </div>
+    </Wrapper>
   )
 }
 
-export default Newsitems;
-
+export default Newsitems

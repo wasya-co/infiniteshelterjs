@@ -1,7 +1,7 @@
 import { Plugins } from '@capacitor/core';
 import { FacebookLoginResponse } from '@capacitor-community/facebook-login';
 
-import React, { useEffect, useState } from "react";
+import React, { Fragment as F, useEffect, useState } from "react";
 import { IonPage, IonContent } from "@ionic/react";
 import { Container, Grid } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
@@ -48,11 +48,7 @@ const Account = (props) => {
         logg(resp, 'microsites3 response');
 
         localStorage.setItem("jwtToken", resp.data.jwt_token);
-        localStorage.setItem("current_user", JSON.stringify({
-          email: resp.data.email,
-          n_unlocks: resp.data.n_unlocks,
-          jwt_token: resp.data.jwt_token,
-        }) );
+        localStorage.setItem("current_user", JSON.stringify(resp.data) );
       });
     } else {
       logg('canceled');
@@ -66,8 +62,8 @@ const Account = (props) => {
     logg("logged out");
   };
 
-  return (<React.Fragment>
-    <Container maxWidth="md" >
+  return (<F>
+
       <Grid container spacing={2} className={classes.root} >
 
         <Grid item className={classes.redBorder} xs={12}>
@@ -94,8 +90,8 @@ const Account = (props) => {
         </ul>
 
       </Grid>
-    </Container>
-  </React.Fragment>);
+
+  </F>);
 }
 
 export default Account;

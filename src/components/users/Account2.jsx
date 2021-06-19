@@ -68,8 +68,10 @@ const Account2 = (props) => {
       logg(result.accessToken.token, 'Facebook access token');
       request.post(`${config.apiOrigin}${Api.longTermTokenPath}`, { accessToken: result.accessToken.token }).then((resp) => {
         logg(resp, 'microsites3 response');
+        logg( resp.data, 'n_stars better be here!')
+
         localStorage.setItem("jwtToken", resp.data.jwt_token);
-        localStorage.setItem("current_user", { email: resp.data });
+        localStorage.setItem("current_user", resp.data );
       });
     } else {
       logg('canceled');

@@ -3,4 +3,9 @@
 0.0.2 20200709 - let's wire payments real quick
       20201231 - be able to login to view my media
 0.0.3 20210529 - let's go, cleanup! (and take payments later on, very soon)
+      20210602 - let's go! Now I'm looking to show the bottom widget, my user
+                 well, logging in has been there for a while. Now, let's see
+								 if I have or don't have access to a premium newsitem.
 
+                 After that I'll only need to make a purchase to get a star,
+								 to feel good about today / this week.

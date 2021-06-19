@@ -1,22 +1,30 @@
-import React, { useState } from "react";
-import Modal from "react-modal";
-import { CardElement, Elements, useElements, useStripe, } from '@stripe/react-stripe-js';
-import { loadStripe } from '@stripe/stripe-js';
+import React, { Fragment as F, useState } from "react"
+import Modal from "react-modal"
+import { CardElement, Elements, useElements, useStripe, } from '@stripe/react-stripe-js'
+import { loadStripe } from '@stripe/stripe-js'
 
-import config from "config";
+import config from "config"
 
-import { Api, logg, request } from "$shared";
+import { Api, logg, request } from "$shared"
 
-const stripePromise = loadStripe('pk_test_UnB4uh0vErYIishvckNYtF4c');
+const stripePromise = loadStripe('pk_test_UnB4uh0vErYIishvckNYtF4c')
 
+const Login = (props) => {
+  logg(props, 'Login component')
 
+  return (<F>
+    <buttom>do login</buttom>
+  </F>)
+}
 
 const MyAccountWidget = (props) => {
-  const currentUser = JSON.parse(localStorage.getItem("current_user")) || {};
-  const stripe = useStripe();
-  const elements = useElements();
+  logg(props, 'MyAccountWidget')
 
-  const [purchaseModalIsOpen, setPurchaseModalIsOpen] = useState(false);
+  const currentUser = JSON.parse(localStorage.getItem("current_user")) || {}
+  const stripe = useStripe()
+  const elements = useElements()
+
+  const [purchaseModalIsOpen, setPurchaseModalIsOpen] = useState(false)
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -46,14 +54,17 @@ const MyAccountWidget = (props) => {
   };
 
   return <React.Fragment>
-    { currentUser.email }&nbsp;
-    [&nbsp;{ typeof currentUser.n_unlocks === 'number' ? currentUser.n_unlocks : '?' } unlocks&nbsp;]
+    { currentUser.email ? currentUser.email : <Login /> } &nbsp;
+    [&nbsp;{ typeof currentUser.n_stars === 'number' ? currentUser.n_stars : '?' } stars&nbsp;]&nbsp; &nbsp;
     <button onClick={() => setPurchaseModalIsOpen(true) }>buy</button>
 
-    <Modal isOpen={purchaseModalIsOpen} ariaHideApp={false} >
+    <Modal isOpen={purchaseModalIsOpen} ariaHideApp={false} style={{  width: '500px' }} >
       <h1>
         Purchase this
-        <span onClick={() => setPurchaseModalIsOpen(false) } >[x]</span>
+        <span onClick={() => {
+          logg('clicking...')
+          setPurchaseModalIsOpen(false)
+        } } >[x]</span>
       </h1>
 
       <form onSubmit={handleSubmit} >

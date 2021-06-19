@@ -3,7 +3,7 @@ import { Route, useLocation, useHistory, Switch } from 'react-router-dom';
 import { IonPage, IonContent, IonIcon, IonLoading } from '@ionic/react';
 import { pin, newspaperOutline, image, videocam } from 'ionicons/icons';
 
-import { Api, logg } from "$shared";
+import { Api, logg, Wrapper } from "$shared";
 import { Newsitems } from "$components/newsitems";
 import { Venues } from "$components/venues";
 import "./cities.scss";
@@ -30,8 +30,8 @@ const CitiesShow = (props) => {
   }
 
   return (
-    <IonPage>
-      <IonContent>
+    <Wrapper>
+
         { city && <div className='wrapper'>
           <div className='city-show'>
 
@@ -91,8 +91,8 @@ const CitiesShow = (props) => {
           message={'Please wait...'}
           duration={5000}
         />
-      </IonContent>
-    </IonPage>
+      &nbsp;
+    </Wrapper>
   )
 }
 

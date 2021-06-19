@@ -1,5 +1,5 @@
 import { IonPage, IonContent, IonButton, IonImg, IonLoading } from "@ionic/react";
-import React, { useEffect, useState } from "react";
+import React, { Fragment as F, useEffect, useState } from "react";
 import { Route, useLocation, useHistory, Switch } from 'react-router-dom';
 
 import { logg, request } from "$shared";
@@ -11,7 +11,7 @@ const GalleriesShow = (props) => {
   const { match } = props;
 
   const [showLoading, setShowLoading] = useState(false);
-  const [gallery, setGallery] = useState(null);
+  const [gallery, setGallery] = useState({});
 
   useEffect(() => {
     setShowLoading(true);
@@ -19,14 +19,13 @@ const GalleriesShow = (props) => {
     request.get(`/api/galleries/view/${match.params.slug}`, { params: { jwt_token: token } }).then(res => {
       setShowLoading(false);
       setGallery(res.data.gallery);
+      // @TODO: setFlash here?! If I"m accessing a gallery I haven't bought access to?
     })
   }, []);
 
-  return (
-    <IonPage>
-      <IonContent>
+  return (<F>
 
-        { gallery &&  <div className="gallery-show">
+        { <div className="gallery-show">
           <div className='narrow'>
             <h1 className="heading">
               <img src="/assets/newsfeed/photos_icon.png" />
@@ -35,7 +34,7 @@ const GalleriesShow = (props) => {
             <Metaline item={gallery} />
 
             <div className="thumbs">
-              { gallery.photos.map((ph, i) =>
+              { gallery.photos && gallery.photos.map((ph, i) =>
                 <div className='card' key={i}>
                   <div className='card-inner'>
                     <IonImg src={ph.thumb_url}></IonImg>
@@ -45,7 +44,7 @@ const GalleriesShow = (props) => {
             </div>
           </div>
           <div className="full-img-section">
-            { gallery.photos.map((ph, i) =>
+            { gallery.photos && gallery.photos.map((ph, i) =>
               <div className='item' key={i}>
                 <img src={ph.large_url} />
               </div>
@@ -53,9 +52,7 @@ const GalleriesShow = (props) => {
           </div>
         </div>}
 
-      </IonContent>
-    </IonPage>
-  );
+  </F>);
 }
 
 export default GalleriesShow;
