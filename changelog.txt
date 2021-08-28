@@ -9,3 +9,6 @@
 
                  After that I'll only need to make a purchase to get a star,
 								 to feel good about today / this week.
+master 2021-08-28 - looking good, adapting gameui into guyd.me, once im
+comfortable will resume auth and credit cards.
+

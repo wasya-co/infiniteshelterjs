@@ -6,8 +6,8 @@ import MenuIcon from '@material-ui/icons/Menu'
 import List from '@material-ui/core/List'
 import ListItem from '@material-ui/core/ListItem'
 import ListItemIcon from '@material-ui/core/ListItemIcon'
-import React, { Fragment as F } from 'react'
-import { Link, Switch, BrowserRouter as Router, Redirect, Route, useHistory, withRouter } from 'react-router-dom'
+import React, { Fragment as F, useState } from 'react'
+import { Link, Switch, BrowserRouter as Router, Redirect, Route as _Route, useHistory, withRouter } from 'react-router-dom'
 import styled from 'styled-components'
 
 import '@ionic/react/css/core.css'
@@ -27,12 +27,18 @@ import './app.scss'
 import { Menu, MenuBottom } from "$components/application"
 import { CitiesList, CitiesShow } from "$components/cities"
 import { GalleriesShow } from "$components/galleries"
+import { LocationsShow as LocationsShow } from "$components/locations"
 import { ReportsShow } from "$components/reports"
 import { SitesShow } from '$components/sites'
 import { Account, Account2, MyAccountWidget } from "$components/users"
 import { Videos } from "$components/videos"
 import { Galleries, MyGalleries } from "$components/galleries"
 import { Debug, logg } from "$shared"
+
+const C = {
+  layout_onecol: 'onecol',
+  layout_mapui: 'mapui',
+}
 
 const Root = styled.div`
   background: #dedede;
@@ -48,39 +54,10 @@ const BottomWrapper = styled.div`
   bottom: 0;
 `
 
-const Container = styled(_Container)`
-  height: auto;
-`;
-
-const BottomDrawer = () => {
-  const [drawerOpen, setDrawerOpen] = React.useState(false)
-  const history = useHistory()
-  console.log(history, 'history 2')
-
-  return <F>
-    <BottomWrapper>
-      <IconButton
-        aria-label="open drawer"
-        onClick={() => setDrawerOpen(true)}
-        edge="start"
-        className="menu-btn"
-      ><MenuIcon /></IconButton>
-      <MenuBottom />
-    </BottomWrapper>
-
-    <Drawer anchor={"bottom"}
-      elevation={1}
-      open={drawerOpen} onClose={() => setDrawerOpen(false)}
-      BackdropProps={{ invisible: true }}
-      variant={"persistent"}
-    >
-      <div>
-        <MyAccountWidget />
-        <div onClick={() => setDrawerOpen(false)}>[X]</div>
-      </div>
-    </Drawer>
-  </F>
-};
+const __Container = styled(_Container)`
+  height: 100vh;
+  overflow: scroll;
+`
 
 const LeftWrapper = styled.div`
   position: absolute;
@@ -124,6 +101,12 @@ const MenuDrawer = () => {
               history.push("/en/cities")
             } }>Cities</span>
           </ListItem>
+          <ListItem button key={2} >
+            <span onClick={() => {
+              setDrawerOpen(false)
+              history.push("/en/locations/show/map-1")
+            } }>Map 1</span>
+          </ListItem>
           <ListItem button key={3} >
             <span onClick={() => {
               setDrawerOpen(false)
@@ -136,13 +119,74 @@ const MenuDrawer = () => {
   </F>
 }
 
+const MapuiContainer = styled.div`
+  background: yellow;
+
+  overflow: hidden;
+  margin: 10px;
+  height: calc(100vh - 20px - ${props => props.bottomDrawerOpen ? '30px' : '0px' });
+
+`
+
 const App = () => {
+  const [ layout, setLayout ] = useState(C.layout_onecol)
+  const [ bottomDrawerOpen, setBottomDrawerOpen ] = React.useState(false)
+
+  // @TODO: animate opening it, nicely?
+  const BottomDrawer = () => {
+    const history = useHistory()
+
+    return <F>
+      <BottomWrapper>
+        <IconButton
+          aria-label="open drawer"
+          onClick={() => setBottomDrawerOpen(true)}
+          edge="start"
+          className="menu-btn"
+        ><MenuIcon /></IconButton>
+        <MenuBottom />
+      </BottomWrapper>
+
+      <Drawer anchor={"bottom"}
+        elevation={1}
+        open={bottomDrawerOpen} onClose={() => setBottomDrawerOpen(false)}
+        BackdropProps={{ invisible: true }}
+        variant={"persistent"}
+      >
+        <div>
+          <MyAccountWidget />
+          <div onClick={() => setBottomDrawerOpen(false)}>[X]</div>
+        </div>
+      </Drawer>
+    </F>
+  }
+
+  const Container = (props) => {
+    switch(layout) {
+      case C.layout_onecol:
+        // main case
+        return <__Container maxWidth="md" {...props} />
+
+      case C.layout_mapui:
+        return <MapuiContainer {...props} {...{bottomDrawerOpen, setBottomDrawerOpen}} />
+    }
+  }
+
+  const Route = (props) => {
+    logg(props, 'wrapperRoute props')
+    if (props.layout) {
+      setLayout(props.layout)
+    } else {
+      setLayout(C.layout_onecol)
+    }
+    return <_Route {...props} />
+  }
 
   return (<Router>
     <MenuDrawer />
     <Root>
 
-        <Container maxWidth="md" >
+        <Container>
           <Switch id="main" main >
             <Redirect exact from="/" to="/en" />
             <Route exact path="/en" ><SitesShow /></Route>
@@ -157,6 +201,9 @@ const App = () => {
             <Route exact path="/en/galleries/show/:slug" component={GalleriesShow} />
 
             <Route exact path="/en/reports/show/:slug" component={ReportsShow} />
+
+            <Route exact path="/en/locations/show/:slug" component={LocationsShow} layout={C.layout_mapui} />
+
           </Switch>
         </Container>
 
