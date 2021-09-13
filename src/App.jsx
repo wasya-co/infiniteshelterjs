@@ -6,7 +6,7 @@ import MenuIcon from '@material-ui/icons/Menu'
 import List from '@material-ui/core/List'
 import ListItem from '@material-ui/core/ListItem'
 import ListItemIcon from '@material-ui/core/ListItemIcon'
-import React, { Fragment as F, useState } from 'react'
+import React, { Fragment as F, useEffect, useState } from 'react'
 import { Link, Switch, BrowserRouter as Router, Redirect, Route as _Route, useHistory, withRouter } from 'react-router-dom'
 import styled from 'styled-components'
 
@@ -24,7 +24,7 @@ import '@ionic/react/css/display.css'
 import './theme/variables.css'
 import './app.scss'
 
-import { Menu, MenuBottom } from "$components/application"
+import { BottomDrawer, Menu, MenuBottom } from "$components/application"
 import { CitiesList, CitiesShow } from "$components/cities"
 import { GalleriesShow } from "$components/galleries"
 import { LocationsShow as LocationsShow } from "$components/locations"
@@ -33,12 +33,8 @@ import { SitesShow } from '$components/sites'
 import { Account, Account2, MyAccountWidget } from "$components/users"
 import { Videos } from "$components/videos"
 import { Galleries, MyGalleries } from "$components/galleries"
-import { Debug, logg } from "$shared"
+import { C, Debug, logg } from "$shared"
 
-const C = {
-  layout_onecol: 'onecol',
-  layout_mapui: 'mapui',
-}
 
 const Root = styled.div`
   background: #dedede;
@@ -46,13 +42,6 @@ const Root = styled.div`
   overflow: auto;
 `;
 
-const BottomWrapper = styled.div`
-  border: 2px solid red;
-  height: 50px;
-
-  position: absolute;
-  bottom: 0;
-`
 
 const __Container = styled(_Container)`
   height: 100vh;
@@ -82,32 +71,32 @@ const MenuDrawer = () => {
         edge="start"
         className="menu-btn"
       ><MenuIcon /></IconButton>
-      <MyAccountWidget />
+      { /* <MyAccountWidget /> */ }
       <Menu />
     </LeftWrapper>
 
     <Drawer anchor={"left"} open={drawerOpen} onClose={() => setDrawerOpen(false)} >
       <div>
         <List>
-          <ListItem button key={1} >
+          <ListItem button key={'newsfeed'} >
             <span onClick={() => {
               setDrawerOpen(false)
               history.push("/en")
             } }>Newsfeed</span>
           </ListItem>
-          <ListItem button key={2} >
+          <ListItem button key={'cities'} >
             <span onClick={() => {
               setDrawerOpen(false)
               history.push("/en/cities")
             } }>Cities</span>
           </ListItem>
-          <ListItem button key={2} >
+          <ListItem button key={'map 1'} >
             <span onClick={() => {
               setDrawerOpen(false)
               history.push("/en/locations/show/map-1")
             } }>Map 1</span>
           </ListItem>
-          <ListItem button key={3} >
+          <ListItem button key={'account'} >
             <span onClick={() => {
               setDrawerOpen(false)
               history.push("/en/account")
@@ -132,35 +121,6 @@ const App = () => {
   const [ layout, setLayout ] = useState(C.layout_onecol)
   const [ bottomDrawerOpen, setBottomDrawerOpen ] = React.useState(false)
 
-  // @TODO: animate opening it, nicely?
-  const BottomDrawer = () => {
-    const history = useHistory()
-
-    return <F>
-      <BottomWrapper>
-        <IconButton
-          aria-label="open drawer"
-          onClick={() => setBottomDrawerOpen(true)}
-          edge="start"
-          className="menu-btn"
-        ><MenuIcon /></IconButton>
-        <MenuBottom />
-      </BottomWrapper>
-
-      <Drawer anchor={"bottom"}
-        elevation={1}
-        open={bottomDrawerOpen} onClose={() => setBottomDrawerOpen(false)}
-        BackdropProps={{ invisible: true }}
-        variant={"persistent"}
-      >
-        <div>
-          <MyAccountWidget />
-          <div onClick={() => setBottomDrawerOpen(false)}>[X]</div>
-        </div>
-      </Drawer>
-    </F>
-  }
-
   const Container = (props) => {
     switch(layout) {
       case C.layout_onecol:
@@ -173,12 +133,15 @@ const App = () => {
   }
 
   const Route = (props) => {
-    logg(props, 'wrapperRoute props')
-    if (props.layout) {
-      setLayout(props.layout)
-    } else {
-      setLayout(C.layout_onecol)
-    }
+
+    useEffect(() => {
+      if (props.layout) {
+        setLayout(props.layout)
+      } else {
+        setLayout(C.layout_onecol)
+      }
+    }, [props.layout])
+
     return <_Route {...props} />
   }
 
@@ -186,7 +149,7 @@ const App = () => {
     <MenuDrawer />
     <Root>
 
-        <Container>
+        <Container >
           <Switch id="main" main >
             <Redirect exact from="/" to="/en" />
             <Route exact path="/en" ><SitesShow /></Route>
@@ -208,7 +171,7 @@ const App = () => {
         </Container>
 
     </Root>
-    <BottomDrawer />
+    <BottomDrawer bottomDrawerOpen={bottomDrawerOpen} setBottomDrawerOpen={setBottomDrawerOpen} />
   </Router>)
 }
 

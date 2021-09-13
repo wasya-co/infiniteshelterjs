@@ -45,7 +45,7 @@ const ImageThumb1 = styled.img`
 const ImageThumb2 = styled.img``
 
 const NewsitemGallery = (props) => {
-  logg(props, 'NewsitemGallery')
+  // logg(props, 'NewsitemGallery')
   const { gallery } = props;
 
   const history = useHistory()

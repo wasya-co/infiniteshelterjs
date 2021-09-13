@@ -12,3 +12,5 @@
 master 2021-08-28 - looking good, adapting gameui into guyd.me, once im
 comfortable will resume auth and credit cards.
 
+0.0.4 - 20210913 - lets iterate on auth and overall structure
+

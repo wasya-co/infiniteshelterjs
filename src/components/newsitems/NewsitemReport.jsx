@@ -1,13 +1,14 @@
-import React, { useState } from "react";
-import Modal from "react-modal";
-import { useHistory } from "react-router-dom";
+import React, { Fragment as F, useState } from "react"
+import Modal from "react-modal"
+import { useHistory } from "react-router-dom"
+import styled from 'styled-components'
 
-import config from "config";
+import config from "config"
 
-import { Metaline, } from "$components/application";
-import { Api, logg, request } from "$shared";
+import { Metaline, } from "$components/application"
+import { Api, logg, request } from "$shared"
 
-import "./newsitems.scss";
+import "./newsitems.scss"
 
 /**
  * Displays the appropriate icon.
@@ -17,7 +18,7 @@ import "./newsitems.scss";
  * @param [String] props.kind
  */
 const ItemIcon = (props) => {
-  logg(props, "ItemIcon");
+  // logg(props, "ItemIcon");
   if (props.isPurchased) {
     return <img className="icon" src="/assets/icons/glasses.png" alt='' />;
   }
@@ -32,8 +33,12 @@ const ItemIcon = (props) => {
   };
 };
 
+const Wrapper = styled.div`
+  border: 1px solid red;
+`
+
 const NewsitemReport = (props) => {
-  logg(props, "NewsitemReport");
+  // logg(props, "NewsitemReport");
 
   const { newsitem } = props;
   const slug = newsitem.reportname;
@@ -46,12 +51,12 @@ const NewsitemReport = (props) => {
     // @TODO: check how many unlocks I have, and offer to purchase more if not enough.
     const path = Api.doUnlock({ kind: 'Report', id: newsitem.report_id });
     const result = await request.post(`${config.apiOrigin}${path}`);
-    logg(result, 'result')
+    // logg(result, 'result')
   };
 
-  return <React.Fragment>
+  return <F>
 
-    <div className="newsitems-report">
+    <Wrapper>
       <div>
         <p className="title">
           <ItemIcon kind="Report" isPurchased={newsitem.is_purchased} premiumTier={newsitem.premium_tier} />
@@ -72,15 +77,14 @@ const NewsitemReport = (props) => {
         <Metaline item={newsitem} />
         <p className="subhead" dangerouslySetInnerHTML={{ __html: newsitem.subhead }} />
       </div>
-    </div>
+    </Wrapper>
 
     <Modal ariaHideApp={false} isOpen={isOpen} >
       <h1>Unlock this report (1 unlock)? <button onClick={() => setIsOpen(false) } >[x]</button></h1>
       <button onClick={doUnlock}>Do it</button>
     </Modal>
 
-  </React.Fragment>;
-
+  </F>
 }
 
 // const WrappedNewsitemReport = (props) => <Elements stripe={stripePromise}><NewsitemReport {...props} /></Elements>;

@@ -10,18 +10,19 @@ const _getWithToken = (url) => {
 };
 
 const Api = {
-  doUnlock: ({ kind, id, jwt_token }) => {
-    const currentUser = JSON.parse(localStorage.getItem("current_user")) || {};
-    if (!currentUser) { throw "unauthorized"; }
-    return `/api/payments/unlock?kind=${kind}&id=${id}&jwt_token=${currentUser.jwt_token}`;
+
+  doUnlock: ({ kind, id }) => {
+    const jwt_token = localStorage.getItem('jwt_token')
+    return `/api/payments/unlock?kind=${kind}&id=${id}&jwt_token=${jwt_token}`;
   },
 
+  loginPath: '/api/users/login.json',
   longTermTokenPath: '/api/users/long_term_token',
 
-  myAccount: "/api/my/account",
+  myAccount: () => "/api/my/account",
   myVideosPath: "/api/my/videos",
 
-  payments2: "/api/payments2",
+  paymentsPath: "/api/payments2",
 
   reportsGet: (a) => {
     const currentUser = JSON.parse(localStorage.getItem("current_user")) || {};

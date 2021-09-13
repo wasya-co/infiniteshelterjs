@@ -17,7 +17,6 @@ const Wrapper = styled.div`
 `
 
 const Newsitems = (props) => {
-  logg(props, 'Newsitems')
   const { newsitems } = props
 
   if (!newsitems || !newsitems.length) { return <div>No Newsitems</div> }
@@ -30,9 +29,9 @@ const Newsitems = (props) => {
 
         return (
           <div key={idx} className={`items premium-${premium_tier}`}>
-            { newsitem.item_type === "gallery" && <NewsitemGallery gallery={newsitem} icon={icon} /> }
-            { newsitem.item_type === "report" && <NewsitemReport newsitem={newsitem} /> }
-            { newsitem.item_type === "video" && <NewsitemVideo data={newsitem} icon={icon} /> }
+            { newsitem.item_type === "gallery" && <NewsitemGallery gallery={newsitem}  icon={icon} /> }
+            { newsitem.item_type === "report"  && <NewsitemReport  newsitem={newsitem} icon={icon} /> }
+            { newsitem.item_type === "video"   && <NewsitemVideo   data={newsitem}     icon={icon} /> }
           </div>
         )
       }) }

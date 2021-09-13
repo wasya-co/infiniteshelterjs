@@ -5,6 +5,7 @@ import styled from 'styled-components'
 
 import { logg, request } from "$shared"
 import { Metaline } from "$components/application"
+import { Newsitems } from "$components/newsitems"
 import "./locations.scss"
 
 const Left = styled.div`
@@ -24,9 +25,15 @@ const Description = ({ item }) => {
   return <_Description dangerouslySetInnerHTML={{ __html: item.description }} />
 }
 
-const Map = styled.div``
+const Map2 = (props) => {
+  const { location } = props
+
+  return (<div>
+    <img src={location.img_path} />
+  </div>)
+}
+
 const Markers = styled.div``
-const Newsitems = styled.div``
 const Right = styled.div`
   // border: 1px solid green;
 
@@ -39,7 +46,6 @@ const Row = styled.div`
 `
 
 const LocationsShow = (props) => {
-  logg(props, 'LocationsShow')
   const { match } = props;
 
   const [loading, setLoading] = useState(false);
@@ -47,10 +53,10 @@ const LocationsShow = (props) => {
 
   useEffect(() => {
     setLoading(true);
-    const token = localStorage.getItem("jwtToken");
+    const token = localStorage.getItem("jwt_token");
     request.get(`/api/maps/view/${match.params.slug}`, { params: { jwt_token: token } }).then(res => {
-      setLoading(false);
-      setLocation(res.data.map);
+      setLoading(false)
+      setLocation(res.data.map)
       // @TODO: setFlash here?! If I"m accessing a gallery I haven't bought access to?
     }).finally(() => {
       setLoading(false)
@@ -60,18 +66,14 @@ const LocationsShow = (props) => {
   return (<Row>
     <Left>
       { loading && <i>Loading Left...</i> }
-      { location && <F>
-        <Map>
-          <img src={location.img_path} />
-        </Map>
-      </F> }
+      { location && <Map2 location={location} /> }
     </Left>
     <Right>
       { loading && <i>Loading Right...</i> }
       { location && <F>
-        <Markers>markers: { location.markers.length }</Markers>
+        <Markers>markers ({ location.markers.length })</Markers>
         <Description item={location} />
-        { location.newsitems && <Newsitems>newsitems: { location.newsitems.length }</Newsitems> }
+        { location.newsitems && <Newsitems newsitems={location.newsitems} /> }
       </F> }
     </Right>
   </Row>)

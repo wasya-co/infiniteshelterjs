@@ -3,6 +3,14 @@ import styled from 'styled-components'
 export { default as Api } from "./Api";
 export { default as AppRouter } from "./AppRouter";
 
+export const C = {
+  jwt_token: 'jwt_token',
+  current_user: 'current_user',
+
+  layout_onecol: 'onecol',
+  layout_mapui: 'mapui',
+}
+
 export const Debug = styled.div`
 `
 

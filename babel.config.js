@@ -61,12 +61,7 @@ module.exports = function(api) {
           loose: true
         }
       ],
-      [
-        "@babel/plugin-proposal-object-rest-spread",
-        {
-          useBuiltIns: true
-        }
-      ],
+      [ "@babel/plugin-proposal-object-rest-spread", { useBuiltIns: true } ],
       [
         "@babel/plugin-transform-runtime",
         {
@@ -75,12 +70,7 @@ module.exports = function(api) {
           corejs: false
         }
       ],
-      [
-        "@babel/plugin-transform-regenerator",
-        {
-          async: false
-        }
-      ]
+      [ "@babel/plugin-transform-regenerator", { async: false } ]
     ].filter(Boolean)
   };
 };

@@ -1,4 +1,4 @@
 
 export { default as Account } from "./Account";
-export { default as Account2 } from "./Account2";
+// export { default as Account2 } from "./Account2";
 export { default as MyAccountWidget } from "./MyAccountWidget";

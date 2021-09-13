@@ -7,7 +7,7 @@ import { Container, Grid } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { Link } from 'react-router-dom';
 
-import { Api, logg, request } from "$shared";
+import { Api, C, logg, request } from "$shared";
 import config from "config";
 
 import "./users.scss";
@@ -34,33 +34,53 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Account = (props) => {
-  logg(props, 'Account');
   const classes = useStyles();
 
-  const doLogin = async (props) => {
-    logg(props, 'doLogin');
+  const [ email, setEmail ] = useState('')
+  const [ password, setPassword ] = useState('')
 
+  const doLogin = async (props) => {
     const result = await FacebookLogin.login({ permissions: FACEBOOK_PERMISSIONS });
     if (result.accessToken) {
-      logg(result.accessToken.token, 'Facebook access token');
+      logg(result.accessToken.token, 'Facebook access token')
 
       request.post(`${config.apiOrigin}${Api.longTermTokenPath}`, { accessToken: result.accessToken.token }).then((resp) => {
-        logg(resp, 'microsites3 response');
+        logg(resp, 'microsites3 response')
 
-        localStorage.setItem("jwtToken", resp.data.jwt_token);
-        localStorage.setItem("current_user", JSON.stringify(resp.data) );
-      });
+        localStorage.setItem(C.jwt_token, resp.data.jwt_token)
+        localStorage.setItem(C.current_user, JSON.stringify(resp.data) )
+      }).catch((err) => {
+        logg(err, `Could not post request to ${config.apiOrigin}${Api.longTermTokenPath}`)
+      })
     } else {
-      logg('canceled');
+      logg('canceled')
       // Canceled by user.
     }
-  };
+  }
+
+  const doLogin2 = async () => {
+    request.post(`${config.apiOrigin}${Api.loginPath}`, { email, password }).then((r) => r.data).then((resp) => {
+      logg(resp, 'resp')
+      localStorage.setItem('jwt_token', resp.jwt_token)
+      localStorage.setItem('current_user', JSON.stringify(resp.current_user))
+    })
+  }
 
   const logout = () => {
-    localStorage.removeItem("jwtToken");
-    localStorage.removeItem("current_user");
+    localStorage.removeItem(C.jwt_token);
+    localStorage.removeItem(C.current_user);
     logg("logged out");
   };
+
+  const currentUser = localStorage.getItem('current_user') ? JSON.parse(localStorage.getItem('current_user')) : null
+
+  /* useEffect(async () => {
+    // check jwt
+    const jwtToken = localStorage.getItem('jwt_token')
+    let response = await request.get(`${config.apiOrigin}${Api.myAccount()}?jwt_token=${jwtToken}`)
+    logg(response, 'ze3response')
+
+  }, []) */
 
   return (<F>
 
@@ -72,9 +92,15 @@ const Account = (props) => {
               <img src="/assets/accounts/default-avatar.png" alt="profile pic" />
             </Grid>
             <Grid item xs={6}>
-              <h4>Jamie Kavanaugh 22</h4>
-              <img src="/assets/accounts/edit.png" alt="edit pic" />
-              <p>Jamie_kv@gmail.com</p>
+              { !!currentUser && <F>
+                <h4>{currentUser.email}</h4>
+                <button onClick={logout} >Logout</button>
+              </F> || <F>
+                <h4>Not logged in</h4>
+                <input type='email' value={email} onChange={(e) => setEmail(e.target.value) } /><br />
+                <input type='password' value={password} onChange={(e) => setPassword(e.target.value) }/><br />
+                <button onClick={doLogin2} >Login</button>
+              </F> }
             </Grid>
           </Grid>
         </Grid>
