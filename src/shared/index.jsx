@@ -49,6 +49,7 @@ export const S = {
 }
 
 export const TwofoldContext = React.createContext({})
+export const ZoomContext = React.createContext({})
 
 export const Wrapper = styled.div`
   height: 100vh;

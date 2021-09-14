@@ -5,7 +5,7 @@ import styled from 'styled-components'
 const borderWidth = 20
 const bottomDrawerHeight = 100
 const MapuiContainer = styled.div`
-  background: yellow;
+  background: white;
 
   overflow: hidden;
   margin: 10px;
