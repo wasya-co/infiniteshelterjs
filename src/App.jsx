@@ -114,7 +114,7 @@ const MenuDrawer = () => {
 
 const App = () => {
   const [ layout, setLayout ] = useState(C.layout_onecol)
-  const [ bottomDrawerOpen, setBottomDrawerOpen ] = React.useState(true)
+  const [ bottomDrawerOpen, setBottomDrawerOpen ] = React.useState(false)
 
   const Container = (props) => {
     switch(layout) {
