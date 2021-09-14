@@ -25,7 +25,7 @@ import './theme/variables.css'
 import './app.scss'
 
 import { BottomDrawer, Menu, MenuBottom } from "$components/application"
-import { MapuiContainer } from "$components/application/MapuiLayout"
+import MapuiLayout from "$components/application/MapuiLayout"
 import { CitiesList, CitiesShow } from "$components/cities"
 import { GalleriesShow } from "$components/galleries"
 import { LocationsShow as LocationsShow } from "$components/locations"
@@ -114,7 +114,7 @@ const MenuDrawer = () => {
 
 const App = () => {
   const [ layout, setLayout ] = useState(C.layout_onecol)
-  const [ bottomDrawerOpen, setBottomDrawerOpen ] = React.useState(false)
+  const [ bottomDrawerOpen, setBottomDrawerOpen ] = React.useState(true)
 
   const Container = (props) => {
     switch(layout) {
@@ -122,7 +122,7 @@ const App = () => {
         // main case
         return <__Container maxWidth="md" {...props}/>
       case C.layout_mapui:
-        return <MapuiContainer {...props} {...{ bottomDrawerOpen, setBottomDrawerOpen }} />
+        return <MapuiLayout {...props} {...{ bottomDrawerOpen, setBottomDrawerOpen }} />
     }
   }
 

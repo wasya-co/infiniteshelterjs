@@ -9,13 +9,12 @@ import { Newsitems } from "$components/newsitems"
 import "./locations.scss"
 
 const Left = styled.div`
-  border: 1px solid blue;
+  // border: 1px solid blue;
 
   background: #cecece;
   flex: 50%;
   overflow: scroll;
-
-  height: calc(100vh - 140px - ${props => props.bottomDrawerOpen ? `${props.bottomDrawerHeight}px` : '0px' });
+  height: calc(100vh - 40px - ${p => p.bottomDrawerOpen ? `${p.bottomDrawerHeight-p.borderWidth}px` : '0px' });
 `
 
 const _Description = styled.div`
@@ -77,11 +76,11 @@ const LocationsShow = (props) => {
     }
   }, [])
 
-  const { bottomDrawerHeight } = S
+  const { borderWidth, bottomDrawerHeight } = S
   const { bottomDrawerOpen } = useContext(TwofoldContext)
 
   return (<Row>
-    <Left {...{ bottomDrawerOpen, bottomDrawerHeight }} >
+    <Left {...{ borderWidth, bottomDrawerOpen, bottomDrawerHeight }} >
 
       { loading && <i>Loading Left...</i> }
       { location && <Map2 location={location} /> }

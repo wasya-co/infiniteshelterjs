@@ -6,7 +6,7 @@ import styled from 'styled-components'
 
 import config from "config"
 
-import { Api, logg, request } from "$shared"
+import { Api, logg, S, request } from "$shared"
 
 const stripePromise = loadStripe('pk_test_qr1QPmSpLdBFt1F7itdWJOj3') // @TODO: this is active, but change.
 
@@ -17,7 +17,19 @@ const Login = (props) => {
 }
 
 const Root = styled.div`
+  // border: 1px solid red;
+
+  background: white;
   height: 100px;
+  width: calc(100vw - ${p => p.borderWidth*2}px);
+  padding: 1em;
+  margin-bottom: ${p => p.borderWidth}px;
+`
+
+const W = styled.div`
+  display: flex;
+  justify-content: center;
+  background: #dedede;
 `
 
 const MyAccountWidget = (props) => {
@@ -58,7 +70,9 @@ const MyAccountWidget = (props) => {
     }
   };
 
-  return <Root>
+  const { borderWidth } = S
+
+  return <W><Root {...{ borderWidth }} >
     { currentUser.email ? currentUser.email : <Login /> } &nbsp;
     [&nbsp;{ typeof currentUser.n_coins === 'number' ? currentUser.n_coins : '?' } stars&nbsp;]&nbsp; &nbsp;
     <button onClick={() => setPurchaseModalIsOpen(true) }>buy</button>
@@ -78,7 +92,7 @@ const MyAccountWidget = (props) => {
       </form>
 
     </Modal>
-  </Root>;
+  </Root></W>
 };
 
 const WrappedMyAccountWidget = (props) => <Elements stripe={stripePromise}><MyAccountWidget {...props} /></Elements>;

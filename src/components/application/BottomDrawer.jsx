@@ -10,10 +10,9 @@ import { MenuBottom } from "./"
 import { Account, Account2, MyAccountWidget } from "$components/users"
 
 const BottomWrapper = styled.div`
-  height: 100px;
-
-  position: absolute;
-  bottom: 0;
+  // height: 100px;
+  // position: absolute;
+  // bottom: 0;
 `
 
 const ButtonWrapper = styled.div`
@@ -49,9 +48,12 @@ const BottomDrawer = ({ bottomDrawerOpen, setBottomDrawerOpen }) => {
       BackdropProps={{ invisible: true }}
       variant={"persistent"}
     >
-      <div>
+      <div >
         <MyAccountWidget />
-        <div onClick={() => setBottomDrawerOpen(false)}>[X]</div>
+        <div
+          onClick={() => setBottomDrawerOpen(false)}
+          style={{ position: 'absolute', left: 0, bottom: 0 }}
+        >[X]</div>
       </div>
     </Drawer>
   </F>

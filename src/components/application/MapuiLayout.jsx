@@ -9,7 +9,7 @@ const MapuiContainer = styled.div`
 
   overflow: hidden;
   margin: 10px;
-  height: calc(100vh - ${p => p.borderWidth*2}px - ${p => p.bottomDrawerOpen ? `${p.bottomDrawerHeight}px` : '0px' });
+  height: calc(100vh - ${p => p.borderWidth*2}px - ${p => p.bottomDrawerOpen ? `${p.bottomDrawerHeight - p.borderWidth/2}px` : '0px' });
 `
 
 export {
@@ -17,7 +17,7 @@ export {
 }
 
 const MapuiLayout = (props) => {
-  return <MapuiContainer {...{ bottomDrawerHeight, borderWidth }} />
+  return <MapuiContainer {...props} {...{ bottomDrawerHeight, borderWidth }} />
 }
 
 export default MapuiLayout

@@ -44,6 +44,7 @@ export { logg };
 export { default as request } from "./request";
 
 export const S = {
+  borderWidth: 10,
   bottomDrawerHeight: 100,
 }
 
