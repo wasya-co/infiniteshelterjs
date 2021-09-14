@@ -1,6 +1,7 @@
 import { Container as _Container, Grid, GridList } from '@material-ui/core'
 
 import React, { Fragment as F, useEffect, useState } from 'react'
+import Modal from "react-modal"
 import { Link, Switch, BrowserRouter as Router, Redirect, Route as _Route, useHistory, withRouter } from 'react-router-dom'
 import styled from 'styled-components'
 
@@ -18,6 +19,7 @@ import '@ionic/react/css/display.css'
 import './theme/variables.css'
 import './app.scss'
 
+import config from "config"
 import { BottomDrawer, Menu, MenuBottom, MenuLeft } from "$components/application"
 import MapuiLayout from "$components/application/MapuiLayout"
 import { CitiesList, CitiesShow } from "$components/cities"
@@ -28,9 +30,7 @@ import { SitesShow } from '$components/sites'
 import { Account, Account2, MyAccountWidget } from "$components/users"
 import { Videos } from "$components/videos"
 import { Galleries, MyGalleries } from "$components/galleries"
-import { C, Debug, logg, TwofoldContext } from "$shared"
-
-
+import { Api, C, Debug, logg, request, TwofoldContext } from "$shared"
 
 const Root = styled.div`
   background: #dedede;
@@ -38,19 +38,15 @@ const Root = styled.div`
   overflow: auto;
 `;
 
-
 const __Container = styled(_Container)`
   height: 100vh;
   overflow: scroll;
-`
-
-
-
-
+`;
 
 const App = () => {
   const [ layout, setLayout ] = useState(C.layout_onecol)
   const [ bottomDrawerOpen, setBottomDrawerOpen ] = React.useState(false)
+  const [ itemToUnlock, setItemToUnlock ] = React.useState(false)
 
   const Container = (props) => {
     switch(layout) {
@@ -74,8 +70,19 @@ const App = () => {
     return <_Route {...props} />
   }
 
+  const doUnlock = async () => {
+    // @TODO: check how many unlocks I have, and offer to purchase more if not enough.
+    const path = Api.doUnlock({ kind: 'Report', id: itemToUnlock.report_id });
+    const result = await request.post(`${config.apiOrigin}${path}`);
+    logg(result, 'result of unlocking')
+  };
+
   return (<Router>
-    <TwofoldContext.Provider value={{ bottomDrawerOpen, layout, setBottomDrawerOpen, setLayout }} >
+    <TwofoldContext.Provider value={{
+        bottomDrawerOpen, setBottomDrawerOpen,
+        itemToUnlock, setItemToUnlock,
+        layout, setLayout,
+    }} >
       <MenuLeft />
       <Root>
         <Container >
@@ -101,6 +108,10 @@ const App = () => {
         </Container>
       </Root>
       <BottomDrawer />
+      <Modal ariaHideApp={false} isOpen={!!itemToUnlock} >
+        <h1>Unlock this item? <button onClick={() => setItemToUnlock(false) } >[x]</button></h1>
+        <button onClick={doUnlock}>Do it</button>
+      </Modal>
     </TwofoldContext.Provider>
   </Router>)
 }

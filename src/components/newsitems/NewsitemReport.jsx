@@ -1,13 +1,13 @@
 import _Box from '@material-ui/core/Box'
-import React, { Fragment as F, useState } from "react"
-import Modal from "react-modal"
+import React, { Fragment as F, useContext, useState } from "react"
+
 import { useHistory } from "react-router-dom"
 import styled from 'styled-components'
 
 import config from "config"
 import { NewsitemContainer } from "./"
 import { Metaline, } from "$components/application"
-import { Api, logg, request } from "$shared"
+import { Api, logg, request, TwofoldContext } from "$shared"
 
 import "./newsitems.scss"
 
@@ -51,20 +51,13 @@ const NewsitemReport = (props) => {
   const { newsitem } = props;
   const slug = newsitem.reportname;
 
-  const [ isOpen, setIsOpen ] = useState(false); // @TODO: which?
-
   const history = useHistory();
-
-  const doUnlock = async () => {
-    // @TODO: check how many unlocks I have, and offer to purchase more if not enough.
-    const path = Api.doUnlock({ kind: 'Report', id: newsitem.report_id });
-    const result = await request.post(`${config.apiOrigin}${path}`);
-    // logg(result, 'result')
-  };
+  const { setItemToUnlock } = useContext(TwofoldContext)
 
   const navigateToReport = () => {
     if (newsitem.is_premium && !newsitem.is_purchased) {
-      setIsOpen(true);
+      logg(newsitem, 'need to unlock this')
+      setItemToUnlock(newsitem)
     } else {
       history.push(`/en/reports/show/${slug}`)
     }
@@ -78,14 +71,7 @@ const NewsitemReport = (props) => {
         <Metaline {...newsitem} />
       </W2>
     </W>
-
     <p className="subhead" dangerouslySetInnerHTML={{ __html: newsitem.subhead }} />
-
-    <Modal ariaHideApp={false} isOpen={isOpen} >
-      <h1>Unlock this report (1 unlock)? <button onClick={() => setIsOpen(false) } >[x]</button></h1>
-      <button onClick={doUnlock}>Do it</button>
-    </Modal>
-
   </NewsitemContainer>)
 }
 

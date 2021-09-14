@@ -34,12 +34,13 @@ const W2 = styled.div`
 
 const MenuLeft= (props) => {
   // logg(props, 'MenuLeft')
-  const [drawerOpen, setDrawerOpen] = React.useState(true) // @TODO: revert
+  const [drawerOpen, setDrawerOpen] = React.useState(false)
   const [ loading, setLoading ] = useState(false)
   const history = useHistory()
   const [ currentUser, setCurrentUser ] = useState(false)
 
-  useEffect(() => {
+  // @TODO: re-instate
+  /* useEffect(() => {
     setLoading(true)
     Api.getMyAccount().then(data => {
       logg(data, 'getMyAccount')
@@ -49,7 +50,7 @@ const MenuLeft= (props) => {
     }).finally(() => {
       setLoading(false)
     })
-  }, [drawerOpen])
+  }, [drawerOpen]) */
 
   return <F>
     <LeftWrapper>

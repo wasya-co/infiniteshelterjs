@@ -1,9 +1,9 @@
 
 import config from "config";
-import { logg, request } from "$shared";
+import { C, logg, request } from "$shared";
 
 const _getWithToken = (url) => {
-  const token = localStorage.getItem("jwtToken");
+  const token = localStorage.getItem(C.jwt_token);
   return request.get(url, { params: { jwt_token: token } }).then((res) => {
     return res.data;
   });
