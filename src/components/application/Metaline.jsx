@@ -10,7 +10,7 @@ const W = styled.div`
 `
 
 const Metaline = (props) => {
-  logg(props, 'Metaline')
+  // logg(props, 'Metaline')
 
   const { created_at, username, city, tags = [] } = props;
 

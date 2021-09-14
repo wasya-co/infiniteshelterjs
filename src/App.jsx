@@ -1,11 +1,5 @@
-import { IonApp, IonButtons, IonMenuButton } from '@ionic/react'
 import { Container as _Container, Grid, GridList } from '@material-ui/core'
-import Drawer from '@material-ui/core/Drawer'
-import IconButton from '@material-ui/core/IconButton'
-import MenuIcon from '@material-ui/icons/Menu'
-import List from '@material-ui/core/List'
-import ListItem from '@material-ui/core/ListItem'
-import ListItemIcon from '@material-ui/core/ListItemIcon'
+
 import React, { Fragment as F, useEffect, useState } from 'react'
 import { Link, Switch, BrowserRouter as Router, Redirect, Route as _Route, useHistory, withRouter } from 'react-router-dom'
 import styled from 'styled-components'
@@ -24,7 +18,7 @@ import '@ionic/react/css/display.css'
 import './theme/variables.css'
 import './app.scss'
 
-import { BottomDrawer, Menu, MenuBottom } from "$components/application"
+import { BottomDrawer, Menu, MenuBottom, MenuLeft } from "$components/application"
 import MapuiLayout from "$components/application/MapuiLayout"
 import { CitiesList, CitiesShow } from "$components/cities"
 import { GalleriesShow } from "$components/galleries"
@@ -50,65 +44,7 @@ const __Container = styled(_Container)`
   overflow: scroll;
 `
 
-const LeftWrapper = styled.div`
-  position: absolute;
-  top: 0;
-  left: 0;
 
-  background: white;
-
-  height: 50px;
-`
-
-const MenuDrawer = () => {
-  const [drawerOpen, setDrawerOpen] = React.useState(false)
-  const history = useHistory()
-  console.log(history, 'history')
-
-  return <F>
-    <LeftWrapper>
-      <IconButton
-        aria-label="open drawer"
-        onClick={() => setDrawerOpen(true)}
-        edge="start"
-        className="menu-btn"
-      ><MenuIcon /></IconButton>
-      { /* <MyAccountWidget /> */ }
-      <Menu />
-    </LeftWrapper>
-
-    <Drawer anchor={"left"} open={drawerOpen} onClose={() => setDrawerOpen(false)} >
-      <div>
-        <List>
-          <ListItem button key={'newsfeed'} >
-            <span onClick={() => {
-              setDrawerOpen(false)
-              history.push("/en")
-            } }>Newsfeed</span>
-          </ListItem>
-          <ListItem button key={'cities'} >
-            <span onClick={() => {
-              setDrawerOpen(false)
-              history.push("/en/cities")
-            } }>Cities</span>
-          </ListItem>
-          <ListItem button key={'map 1'} >
-            <span onClick={() => {
-              setDrawerOpen(false)
-              history.push("/en/locations/show/map-1")
-            } }>Map 1</span>
-          </ListItem>
-          <ListItem button key={'account'} >
-            <span onClick={() => {
-              setDrawerOpen(false)
-              history.push("/en/account")
-            } }>Account</span>
-          </ListItem>
-        </List>
-      </div>
-    </Drawer>
-  </F>
-}
 
 
 
@@ -139,9 +75,9 @@ const App = () => {
   }
 
   return (<Router>
-    <MenuDrawer />
-    <Root>
-      <TwofoldContext.Provider value={{ bottomDrawerOpen, setBottomDrawerOpen }} >
+    <TwofoldContext.Provider value={{ bottomDrawerOpen, layout, setBottomDrawerOpen, setLayout }} >
+      <MenuLeft />
+      <Root>
         <Container >
           <Switch id="main" main >
 
@@ -163,9 +99,9 @@ const App = () => {
 
           </Switch>
         </Container>
-      </TwofoldContext.Provider>
-    </Root>
-    <BottomDrawer bottomDrawerOpen={bottomDrawerOpen} setBottomDrawerOpen={setBottomDrawerOpen} />
+      </Root>
+      <BottomDrawer />
+    </TwofoldContext.Provider>
   </Router>)
 }
 

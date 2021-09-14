@@ -2,12 +2,13 @@
 import Drawer from '@material-ui/core/Drawer'
 import IconButton from '@material-ui/core/IconButton'
 import MenuIcon from '@material-ui/icons/Menu'
-import React, { Fragment as F, useState } from 'react'
+import React, { Fragment as F, useContext, useState } from 'react'
 import { useHistory } from 'react-router-dom'
 import styled from 'styled-components'
 
 import { MenuBottom } from "./"
 import { Account, Account2, MyAccountWidget } from "$components/users"
+import { C, logg, TwofoldContext } from "$shared"
 
 const BottomWrapper = styled.div`
   // height: 100px;
@@ -23,7 +24,13 @@ const ButtonWrapper = styled.div`
 `
 
 // @TODO: animate opening it, nicely?
-const BottomDrawer = ({ bottomDrawerOpen, setBottomDrawerOpen }) => {
+const BottomDrawer = (props) => {
+  logg(props, 'BottomDrawer')
+  logg(useContext(TwofoldContext), 'TwofoldContext in BottomDrawer')
+
+  const { bottomDrawerOpen, layout, setBottomDrawerOpen } = useContext(TwofoldContext)
+
+  if (layout === C.layout_onecol) { return null; }
 
   return <F>
     <BottomWrapper>

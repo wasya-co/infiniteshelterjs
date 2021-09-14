@@ -16,6 +16,13 @@ const Api = {
     return `/api/payments/unlock?kind=${kind}&id=${id}&jwt_token=${jwt_token}`;
   },
 
+  getMyAccount: () => {
+    const jwt_token = localStorage.getItem('jwt_token')
+    return request.post(`/api/my/account`, {
+      jwt_token: jwt_token,
+    })
+  },
+
   loginPath: '/api/users/login.json',
   longTermTokenPath: '/api/users/long_term_token',
 

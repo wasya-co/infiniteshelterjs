@@ -28,7 +28,7 @@ const Root = styled.div`
 `
 
 const SitesShow = (props) => {
-  logg(props, 'SitesShow')
+  // logg(props, 'SitesShow')
 
   let [newsitems, setNewsitems] = useState([])
   let [showLoading, setShowLoading] = useState(false)
