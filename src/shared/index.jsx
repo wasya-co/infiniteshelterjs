@@ -1,3 +1,7 @@
+/*
+ *  $shared / index
+ */
+import React from 'react'
 import styled from 'styled-components'
 
 export { default as Api } from "./Api";
@@ -38,6 +42,12 @@ const logg = (a, b="", c=null) => {
 export { logg };
 
 export { default as request } from "./request";
+
+export const S = {
+  bottomDrawerHeight: 100,
+}
+
+export const TwofoldContext = React.createContext({})
 
 export const Wrapper = styled.div`
   height: 100vh;

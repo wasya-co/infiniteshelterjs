@@ -25,6 +25,7 @@ import './theme/variables.css'
 import './app.scss'
 
 import { BottomDrawer, Menu, MenuBottom } from "$components/application"
+import { MapuiContainer } from "$components/application/MapuiLayout"
 import { CitiesList, CitiesShow } from "$components/cities"
 import { GalleriesShow } from "$components/galleries"
 import { LocationsShow as LocationsShow } from "$components/locations"
@@ -33,12 +34,13 @@ import { SitesShow } from '$components/sites'
 import { Account, Account2, MyAccountWidget } from "$components/users"
 import { Videos } from "$components/videos"
 import { Galleries, MyGalleries } from "$components/galleries"
-import { C, Debug, logg } from "$shared"
+import { C, Debug, logg, TwofoldContext } from "$shared"
+
 
 
 const Root = styled.div`
   background: #dedede;
-  height: auto;
+  height: 100vh;
   overflow: auto;
 `;
 
@@ -108,14 +110,7 @@ const MenuDrawer = () => {
   </F>
 }
 
-const MapuiContainer = styled.div`
-  background: yellow;
 
-  overflow: hidden;
-  margin: 10px;
-  height: calc(100vh - 20px - ${props => props.bottomDrawerOpen ? '30px' : '0px' });
-
-`
 
 const App = () => {
   const [ layout, setLayout ] = useState(C.layout_onecol)
@@ -125,15 +120,13 @@ const App = () => {
     switch(layout) {
       case C.layout_onecol:
         // main case
-        return <__Container maxWidth="md" {...props} />
-
+        return <__Container maxWidth="md" {...props}/>
       case C.layout_mapui:
-        return <MapuiContainer {...props} {...{bottomDrawerOpen, setBottomDrawerOpen}} />
+        return <MapuiContainer {...props} {...{ bottomDrawerOpen, setBottomDrawerOpen }} />
     }
   }
 
   const Route = (props) => {
-
     useEffect(() => {
       if (props.layout) {
         setLayout(props.layout)
@@ -148,9 +141,10 @@ const App = () => {
   return (<Router>
     <MenuDrawer />
     <Root>
-
+      <TwofoldContext.Provider value={{ bottomDrawerOpen, setBottomDrawerOpen }} >
         <Container >
           <Switch id="main" main >
+
             <Redirect exact from="/" to="/en" />
             <Route exact path="/en" ><SitesShow /></Route>
 
@@ -169,7 +163,7 @@ const App = () => {
 
           </Switch>
         </Container>
-
+      </TwofoldContext.Provider>
     </Root>
     <BottomDrawer bottomDrawerOpen={bottomDrawerOpen} setBottomDrawerOpen={setBottomDrawerOpen} />
   </Router>)

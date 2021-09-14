@@ -2,6 +2,7 @@ import React, { Fragment as F, useState } from "react"
 import Modal from "react-modal"
 import { CardElement, Elements, useElements, useStripe, } from '@stripe/react-stripe-js'
 import { loadStripe } from '@stripe/stripe-js'
+import styled from 'styled-components'
 
 import config from "config"
 
@@ -10,18 +11,17 @@ import { Api, logg, request } from "$shared"
 const stripePromise = loadStripe('pk_test_qr1QPmSpLdBFt1F7itdWJOj3') // @TODO: this is active, but change.
 
 const Login = (props) => {
-  // logg(props, 'Login component')
-
   return (<F>
     <buttom>do login</buttom>
   </F>)
 }
 
-const MyAccountWidget = (props) => {
-  // logg(props, 'MyAccountWidget')
+const Root = styled.div`
+  height: 100px;
+`
 
+const MyAccountWidget = (props) => {
   const currentUser = JSON.parse(localStorage.getItem("current_user")) || {}
-  // logg(currentUser, 'cu2')
   const stripe = useStripe()
   const elements = useElements()
 
@@ -58,7 +58,7 @@ const MyAccountWidget = (props) => {
     }
   };
 
-  return <F>
+  return <Root>
     { currentUser.email ? currentUser.email : <Login /> } &nbsp;
     [&nbsp;{ typeof currentUser.n_coins === 'number' ? currentUser.n_coins : '?' } stars&nbsp;]&nbsp; &nbsp;
     <button onClick={() => setPurchaseModalIsOpen(true) }>buy</button>
@@ -78,7 +78,7 @@ const MyAccountWidget = (props) => {
       </form>
 
     </Modal>
-  </F>;
+  </Root>;
 };
 
 const WrappedMyAccountWidget = (props) => <Elements stripe={stripePromise}><MyAccountWidget {...props} /></Elements>;

@@ -10,33 +10,42 @@ import { MenuBottom } from "./"
 import { Account, Account2, MyAccountWidget } from "$components/users"
 
 const BottomWrapper = styled.div`
-  border: 2px solid red;
-  height: 50px;
+  height: 100px;
 
   position: absolute;
   bottom: 0;
 `
 
+const ButtonWrapper = styled.div`
+  // border: 1px solid yellow;
+  position: absolute;
+  bottom: -10px;
+  left: 10px;
+`
 
 // @TODO: animate opening it, nicely?
 const BottomDrawer = ({ bottomDrawerOpen, setBottomDrawerOpen }) => {
 
-  // const history = useHistory()
-
   return <F>
     <BottomWrapper>
-      <IconButton
-        aria-label="open drawer"
-        onClick={() => setBottomDrawerOpen(true)}
-        edge="start"
-        className="menu-btn"
-      ><MenuIcon /></IconButton>
+      <ButtonWrapper>
+        <IconButton
+          aria-label="open drawer"
+          onClick={() => setBottomDrawerOpen(true)}
+          edge="start"
+          className="menu-btn"
+        ><MenuIcon
+          fontSize="small"
+          style={{ color: 'white' }}
+        /></IconButton>
+      </ButtonWrapper>
       <MenuBottom />
     </BottomWrapper>
 
     <Drawer anchor={"bottom"}
       elevation={1}
-      open={bottomDrawerOpen} onClose={() => setBottomDrawerOpen(false)}
+      open={bottomDrawerOpen}
+      onClose={() => setBottomDrawerOpen(false)}
       BackdropProps={{ invisible: true }}
       variant={"persistent"}
     >

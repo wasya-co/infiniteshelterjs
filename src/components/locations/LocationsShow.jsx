@@ -1,19 +1,21 @@
 import { IonPage, IonContent, IonButton, IonImg, IonLoading } from "@ionic/react"
-import React, { Fragment as F, useEffect, useState } from "react"
+import React, { Fragment as F, useContext, useEffect, useRef, useState } from "react"
 import { Route, useLocation, useHistory, Switch } from 'react-router-dom'
 import styled from 'styled-components'
 
-import { logg, request } from "$shared"
+import { logg, request, S, TwofoldContext } from "$shared"
 import { Metaline } from "$components/application"
 import { Newsitems } from "$components/newsitems"
 import "./locations.scss"
 
 const Left = styled.div`
-  // border: 1px solid blue;
+  border: 1px solid blue;
 
+  background: #cecece;
   flex: 50%;
   overflow: scroll;
-  height: auto;
+
+  height: calc(100vh - 140px - ${props => props.bottomDrawerOpen ? `${props.bottomDrawerHeight}px` : '0px' });
 `
 
 const _Description = styled.div`
@@ -25,17 +27,21 @@ const Description = ({ item }) => {
   return <_Description dangerouslySetInnerHTML={{ __html: item.description }} />
 }
 
+const Div1 = styled.div`
+  text-align: center;
+
+`
 const Map2 = (props) => {
   const { location } = props
 
-  return (<div>
+  return (<Div1>
     <img src={location.img_path} />
-  </div>)
+  </Div1>)
 }
 
 const Markers = styled.div``
 const Right = styled.div`
-  // border: 1px solid green;
+  border: 1px solid green;
 
   flex: 50%;
   overflow: scroll;
@@ -46,25 +52,37 @@ const Row = styled.div`
 `
 
 const LocationsShow = (props) => {
+  logg(props, 'LocationsShow')
+
   const { match } = props;
 
   const [loading, setLoading] = useState(false);
   const [location, setLocation] = useState(null);
 
+  const mountedRef = useRef('init')
+
   useEffect(() => {
     setLoading(true);
     const token = localStorage.getItem("jwt_token");
     request.get(`/api/maps/view/${match.params.slug}`, { params: { jwt_token: token } }).then(res => {
-      setLoading(false)
+      if (!mountedRef.current) return null;
       setLocation(res.data.map)
+      setLoading(false)
       // @TODO: setFlash here?! If I"m accessing a gallery I haven't bought access to?
     }).finally(() => {
-      setLoading(false)
     })
-  }, []);
+
+    return () => {
+      mountedRef.current = false;
+    }
+  }, [])
+
+  const { bottomDrawerHeight } = S
+  const { bottomDrawerOpen } = useContext(TwofoldContext)
 
   return (<Row>
-    <Left>
+    <Left {...{ bottomDrawerOpen, bottomDrawerHeight }} >
+
       { loading && <i>Loading Left...</i> }
       { location && <Map2 location={location} /> }
     </Left>
