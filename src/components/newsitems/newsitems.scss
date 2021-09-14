@@ -1,4 +1,10 @@
 
+
+.icon {
+  object-fit: contain;
+  width: 100px;
+}
+
 .newsitems {
 
   div.items {
@@ -16,9 +22,7 @@
       border-radius: 0.7em;
     }
 
-    .icon {
-      height: 1.9em;
-    }
+
 
     .title-heading {
       padding: 1em;

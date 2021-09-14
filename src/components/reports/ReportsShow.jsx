@@ -1,7 +1,13 @@
+
 import React, { useEffect, useState } from "react";
+import styled from 'styled-components'
 
 import config from "config";
-import { Api, logg, request } from "$shared";
+import { Api, Box, logg, request } from "$shared";
+
+const W = styled.div`
+  padding: 2em 0;
+`
 
 const ReportsShow = (props) => {
   logg(props, "ReportsShow");
@@ -29,11 +35,13 @@ const ReportsShow = (props) => {
 
   // @TODO: logged in and access
 
-  return <React.Fragment>
-    <h1>Report {item.name}</h1>
-    <div className="description" dangerouslySetInnerHTML={{ __html: item.description }} />
-  </React.Fragment>;
-};
+  return (<W>
+    <Box boxShadow={2}>
+      <h1>Report {item.name}</h1>
+      <div className="description" dangerouslySetInnerHTML={{ __html: item.description }} />
+    </Box>
+  </W>)
+}
 
 // @TODO: wrap in login HOC
 export default ReportsShow;

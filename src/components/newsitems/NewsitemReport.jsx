@@ -1,10 +1,11 @@
+import _Box from '@material-ui/core/Box'
 import React, { Fragment as F, useState } from "react"
 import Modal from "react-modal"
 import { useHistory } from "react-router-dom"
 import styled from 'styled-components'
 
 import config from "config"
-
+import { NewsitemContainer } from "./"
 import { Metaline, } from "$components/application"
 import { Api, logg, request } from "$shared"
 
@@ -33,8 +34,15 @@ const ItemIcon = (props) => {
   };
 };
 
-const Wrapper = styled.div`
-  border: 1px solid red;
+const W = styled.div`
+  display: flex;
+  flex-direction: row;
+`
+
+const W2 = styled.div`
+  display: flex;
+  flex-direction: column;
+  padding: 0 1em;
 `
 
 const NewsitemReport = (props) => {
@@ -54,37 +62,31 @@ const NewsitemReport = (props) => {
     // logg(result, 'result')
   };
 
-  return <F>
+  const navigateToReport = () => {
+    if (newsitem.is_premium && !newsitem.is_purchased) {
+      setIsOpen(true);
+    } else {
+      history.push(`/en/reports/show/${slug}`)
+    }
+  }
 
-    <Wrapper>
-      <div>
-        <p className="title">
-          <ItemIcon kind="Report" isPurchased={newsitem.is_purchased} premiumTier={newsitem.premium_tier} />
-          <span
-            className="title-heading"
-            onClick={(e) => {
+  return (<NewsitemContainer onClick={navigateToReport} >
+    <W>
+      <ItemIcon kind="Report" isPurchased={newsitem.is_purchased} premiumTier={newsitem.premium_tier} />
+      <W2>
+        <h2 className="title-heading" >{newsitem.name}</h2>
+        <Metaline {...newsitem} />
+      </W2>
+    </W>
 
-              if (newsitem.is_premium && !newsitem.is_purchased) {
-                setIsOpen(true);
-              } else {
-                history.push(`/en/reports/show/${slug}`)
-              }
-
-            } }
-          >{newsitem.name}
-          </span>
-        </p>
-        <Metaline item={newsitem} />
-        <p className="subhead" dangerouslySetInnerHTML={{ __html: newsitem.subhead }} />
-      </div>
-    </Wrapper>
+    <p className="subhead" dangerouslySetInnerHTML={{ __html: newsitem.subhead }} />
 
     <Modal ariaHideApp={false} isOpen={isOpen} >
       <h1>Unlock this report (1 unlock)? <button onClick={() => setIsOpen(false) } >[x]</button></h1>
       <button onClick={doUnlock}>Do it</button>
     </Modal>
 
-  </F>
+  </NewsitemContainer>)
 }
 
 // const WrappedNewsitemReport = (props) => <Elements stripe={stripePromise}><NewsitemReport {...props} /></Elements>;

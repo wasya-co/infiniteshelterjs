@@ -1,11 +1,22 @@
 /*
  *  $shared / index
  */
+import _Box from '@material-ui/core/Box'
 import React from 'react'
 import styled from 'styled-components'
 
 export { default as Api } from "./Api";
 export { default as AppRouter } from "./AppRouter";
+
+export const Box = styled(_Box)`
+  margin-bottom: 1em;
+  padding: 1em;
+  background: white;
+  // cursor: pointer;
+
+  display: flex;
+  flex-direction: column;
+`
 
 export const C = {
   jwt_token: 'jwt_token',
