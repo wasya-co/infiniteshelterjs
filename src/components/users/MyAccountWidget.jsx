@@ -74,7 +74,7 @@ const MyAccountWidget = (props) => {
 
   return <W><Root {...{ borderWidth }} >
     { currentUser.email ? currentUser.email : <Login /> } &nbsp;
-    [&nbsp;{ typeof currentUser.n_coins === 'number' ? currentUser.n_coins : '?' } stars&nbsp;]&nbsp; &nbsp;
+    [&nbsp;{ typeof currentUser.n_unlocks === 'number' ? currentUser.n_unlocks : '?' } coins&nbsp;]&nbsp; &nbsp;
     <button onClick={() => setPurchaseModalIsOpen(true) }>buy</button>
 
     <Modal isOpen={purchaseModalIsOpen} ariaHideApp={false} style={{  width: '500px' }} >

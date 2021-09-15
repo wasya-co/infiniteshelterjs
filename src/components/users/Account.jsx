@@ -22,9 +22,6 @@ const useStyles = makeStyles((theme) => ({
     textAlign: 'center',
     color: theme.palette.text.secondary,
   },
-  redBorder: {
-    border: '1px solid red',
-  },
   root: {
     flexGrow: 1,
     overflow: 'scroll',
@@ -85,8 +82,7 @@ const Account = (props) => {
   return (<F>
 
       <Grid container spacing={2} className={classes.root} >
-
-        <Grid item className={classes.redBorder} xs={12}>
+        <Grid item xs={12}>
           <Grid container>
             <Grid item xs={6}>
               <img src="/assets/accounts/default-avatar.png" alt="profile pic" />
@@ -94,27 +90,22 @@ const Account = (props) => {
             <Grid item xs={6}>
               { !!currentUser && <F>
                 <h4>{currentUser.email}</h4>
-                <button onClick={logout} >Logout</button>
+                <ul>
+                  <Link to={"/en/account/my/galleries"} >My Galleries</Link>
+                  <li><a onClick={() => props.history.push("/en/account/my/videos")}>My Videos</a></li>
+                  <li><button onClick={logout} >Clear Token</button></li>
+                </ul>
               </F> || <F>
                 <h4>Not logged in</h4>
+                <button onClick={doLogin} >fb Login</button>
+                <br /><br /><br />
                 <input type='email' value={email} onChange={(e) => setEmail(e.target.value) } /><br />
                 <input type='password' value={password} onChange={(e) => setPassword(e.target.value) }/><br />
-                <button onClick={doLogin2} >Login</button>
+                <button onClick={doLogin2} >passwd Login</button>
               </F> }
             </Grid>
           </Grid>
         </Grid>
-
-        <br /><br /><br /><br />
-        <button onClick={doLogin} >Login</button>
-
-        <button onClick={logout} >Clear Token</button>
-
-        <ul>
-          <Link to={"/en/account/my/galleries"} >My Galleries</Link>
-          <li><a onClick={() => props.history.push("/en/account/my/videos")}>My Videos</a></li>
-        </ul>
-
       </Grid>
 
   </F>);

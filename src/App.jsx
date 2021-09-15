@@ -47,6 +47,7 @@ const App = () => {
   const [ layout, setLayout ] = useState(C.layout_onecol)
   const [ bottomDrawerOpen, setBottomDrawerOpen ] = React.useState(false)
   const [ itemToUnlock, setItemToUnlock ] = React.useState(false)
+  const [ zoom, setZoom ] = useState(1)
 
   const Container = (props) => {
     switch(layout) {
@@ -82,6 +83,7 @@ const App = () => {
         bottomDrawerOpen, setBottomDrawerOpen,
         itemToUnlock, setItemToUnlock,
         layout, setLayout,
+        zoom, setZoom,
     }} >
       <MenuLeft />
       <Root>

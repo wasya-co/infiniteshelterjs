@@ -85,6 +85,12 @@ const MenuLeft= (props) => {
               history.push("/en/locations/show/map-1")
             } }>Map 1</span>
           </ListItem>
+          <ListItem button key={'map 2'} >
+            <span onClick={() => {
+              setDrawerOpen(false)
+              history.push("/en/locations/show/map-2")
+            } }>Map 2</span>
+          </ListItem>
           <ListItem button key={'account'} >
             <span onClick={() => {
               setDrawerOpen(false)

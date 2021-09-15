@@ -30,7 +30,7 @@ const W1 = styled.div`
   // position: relative;
 `
 const ZoomCtrl = (props) => {
-  const { zoom, setZoom } = useContext(ZoomContext)
+  const { zoom, setZoom } = useContext(TwofoldContext)
 
   const zoomIn = () => {
     setZoom(zoom/2)
@@ -53,22 +53,33 @@ const ZoomCtrl = (props) => {
   </div>
 }
 const Div1 = styled.div`
+  // border: 3px solid green;
+
   text-align: center;
+  display: block;
+
   position: relative;
 `
+const Div3 = styled.div``
 const Map2 = (props) => {
   logg(props, 'Map2')
-
   const { location } = props
-  const [ zoom, setZoom ] = useState(1)
 
-  const w = 2000;
-  const h = 2000; // @TODO: soft-code
+  const { zoom, setZoom } = useContext(TwofoldContext)
+  logg(zoom, 'ze zoom')
+
+  const div1Ref = useRef(null)
+  const history = useHistory()
+
+  useEffect(() => {
+    div1Ref.current.scrollIntoView({ block: 'end' })
+  }, [])
 
   const markers = []
   props.location.markers.map((m, idx) => {
     const out = <div
       key={idx}
+      onClick={() => history.push(`/en/locations/show/${m.slug}`) }
       style={{
         position: 'absolute',
         top: m.y/zoom,
@@ -83,21 +94,34 @@ const Map2 = (props) => {
   })
 
   return (<W1>
-    <ZoomContext.Provider value={{ setZoom, zoom }} >
+
       <ZoomCtrl />
-      <Div1>
-        <img
-          src={location.img_path}
-          style={{ display: 'block',
-            maxWidth: `${w/zoom}px`,
-            maxHeight: `${h/zoom}px`,
-            width: 'auto', height: 'auto',
-            position: 'asbolute', top: 0, left: 0,
-          }}
-        />
-        { markers }
-      </Div1>
-    </ZoomContext.Provider>
+
+        <Div1 ref={div1Ref} >
+          <Div3 style={{
+              // border: '2px solid cyan',
+
+              display: 'inline-block',
+              position: 'relative',
+              width: `${location.w/zoom}px`,
+              height: `${location.h/zoom}px`,
+          }} >
+            <img
+              src={location.img_path}
+              style={{
+
+                // maxWidth: `${location.w/zoom}px`,
+                // maxHeight: `${location.h/zoom}px`,
+                // width: 'auto', height: 'auto',
+
+                width: `${location.w/zoom}px`,
+                height: `${location.h/zoom}px`,
+              }}
+            />
+            { markers }
+          </Div3>
+        </Div1>
+
   </W1>)
 }
 
@@ -150,9 +174,9 @@ const LocationsShow = (props) => {
     })
 
     return () => {
-      mountedRef.current = false;
+      // mountedRef.current = false;
     }
-  }, [])
+  }, [ match.params.slug ])
 
   const { borderWidth, bottomDrawerHeight } = S
   const { bottomDrawerOpen } = useContext(TwofoldContext)
