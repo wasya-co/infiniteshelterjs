@@ -2,10 +2,9 @@
   "appId": "co.wasya.guyd",
   "appName": "guyd",
   "bundledWebRuntime": false,
-  "npmClient": "npm",
+  "npmClient": "yarn",
   "webDir": "build",
   "android": {
     "allowMixedContent": true
-  },
-  "cordova": {}
+  }
 }
