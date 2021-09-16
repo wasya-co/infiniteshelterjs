@@ -6,6 +6,5 @@
   "webDir": "build",
   "android": {
     "allowMixedContent": true
-  },
-  "cordova": {}
+  }
 }
