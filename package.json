@@ -64,15 +64,7 @@
       "\\.(css|less|sass|scss)$": "<rootDir>/config/styleMock.js",
       "\\.(gif|ttf|eot|svg)$": "<rootDir>/config/fileMock.js"
     },
-    "roots": [
-      "src"
-    ],
-    "setupFiles": [
-      "./config/browserMock.js"
-    ],
-    "testMatch": [
-      "**/*_spec.jsx"
-    ],
+
     "transform": {
       "^.+\\.(js|jsx)$": "<rootDir>/node_modules/babel-jest"
     },
