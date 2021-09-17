@@ -30,7 +30,7 @@ import { SitesShow } from '$components/sites'
 import { Account, Account2, MyAccountWidget } from "$components/users"
 import { Videos } from "$components/videos"
 import { Galleries, MyGalleries } from "$components/galleries"
-import { Api, C, Debug, logg, request, TwofoldContext } from "$shared"
+import { Api, C, CollapsibleContext, Debug, logg, request, TwofoldContext } from "$shared"
 
 const Root = styled.div`
   background: #dedede;
@@ -85,6 +85,7 @@ const App = () => {
         layout, setLayout,
         zoom, setZoom,
     }} >
+
       <MenuLeft />
       <Root>
         <Container >
@@ -114,6 +115,7 @@ const App = () => {
         <h1>Unlock this item? <button onClick={() => setItemToUnlock(false) } >[x]</button></h1>
         <button onClick={doUnlock}>Do it</button>
       </Modal>
+
     </TwofoldContext.Provider>
   </Router>)
 }

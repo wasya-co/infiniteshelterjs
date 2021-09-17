@@ -27,6 +27,7 @@ export const C = {
 }
 
 export { default as Collapsible } from "./Collapsible"
+export const CollapsibleContext = React.createContext({})
 
 export const Debug = styled.div`
 `;
@@ -62,6 +63,7 @@ export const S = {
 }
 
 export const TwofoldContext = React.createContext({})
+
 export const ZoomContext = React.createContext({})
 
 export const Wrapper = styled.div`

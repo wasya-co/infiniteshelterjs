@@ -3,10 +3,12 @@ import React, { Fragment as F, useContext, useEffect, useRef, useState } from "r
 import { Route, useLocation, useHistory, Switch } from 'react-router-dom'
 import styled from 'styled-components'
 
-import { Collapsible, logg, request, S, TwofoldContext, ZoomContext } from "$shared"
+import { Breadcrumbs } from "./"
+import {
+  Collapsible, CollapsibleContext,
+  logg, request, S, TwofoldContext, ZoomContext } from "$shared"
 import { Metaline } from "$components/application"
 import { Newsitems } from "$components/newsitems"
-import "./locations.scss"
 
 const _Description = styled.div`
   // border: 1px solid red;
@@ -17,49 +19,23 @@ const Description = ({ item }) => {
   return <_Description dangerouslySetInnerHTML={{ __html: item.description }} />
 }
 
-const B = styled.div`
-  padding: 0.5em;
-`
-// the divider
-const B1 = styled.div`
-  padding: 0.5em 0;
-`
-const Breadcrumbs = (props) => {
-  logg(props, 'Breakcrumbs')
 
-  const history = useHistory()
-
-  const out = []
-  props.breadcrumbs.map((b, idx) => {
-    if (idx+1 === props.breadcrumbs.length) {
-      // last one
-      out.push(<B>{b.name}</B>)
-    } else {
-      out.push(<B
-        style={{ textDecoration: 'underline' }}
-        onClick={() => history.push(`/en/locations/show/${b.slug}`) }
-      >{b.name}</B>)
-      out.push(<B1>&gt;</B1>)
-    }
-  })
-  return <div style={{
-    zIndex: 200,
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    background: 'white',
-
-    display: 'flex',
-  }} >{out}</div>
-}
 const W1 = styled.div`
-  // border: 2px solid brown;
-
-  position: relative; /* required for mobile, so that zoomCtrl, etc are inside the collapsible div */
-
-  overflow: scroll;
-  max-height: 80vh;
+  position: relative;
 `
+const ZoomCtrlRoot = styled.div`
+  // border: 1px solid orange;
+
+  position: absolute;
+  top: 0;
+  left: calc(100vw - 80px);
+  background: white;
+  padding: 5px;
+
+  display: flex;
+  flex-direction: column;
+  z-index: 10;
+`;
 const ZoomCtrl = (props) => {
   const { zoom, setZoom } = useContext(TwofoldContext)
 
@@ -73,29 +49,22 @@ const ZoomCtrl = (props) => {
     setZoom(1)
   }
 
-  return <div style={{
-    position: 'absolute',
-    top: 0,
-    left: 'calc(50% - 20px)',
-    zIndex: 200,
-    background: 'white',
-    padding: '5px',
-
-    display: 'flex',
-    flexDirection: 'column',
-  }} >
+  return <ZoomCtrlRoot >
     <span onClick={zoomIn} >[+]</span>
     <span onClick={zoomOut} >[-]</span>
     <span onClick={zoomReset} >[1]</span>
-  </div>
+  </ZoomCtrlRoot>
 }
 const Div1 = styled.div`
-  // border: 3px solid green;
+  // border: 2px solid brown;
 
   text-align: center;
   display: block;
 
-  position: relative;
+  position: relative; /* required for mobile, so that zoomCtrl, etc are inside the collapsible div */
+
+  overflow: scroll;
+  max-height: 80vh;
 `
 const Div3 = styled.div``
 const Map2 = (props) => {
@@ -130,39 +99,30 @@ const Map2 = (props) => {
   })
 
   return (<W1>
-
     <ZoomCtrl />
+    <Div1 ref={div1Ref} >
+      <Div3 style={{
+          // border: '2px solid cyan',
 
-      <Div1 ref={div1Ref} >
-        <Div3 style={{
-            // border: '2px solid cyan',
-
-            display: 'inline-block',
-            position: 'relative',
+          display: 'inline-block',
+          position: 'relative',
+          width: `${location.w/zoom}px`,
+          height: `${location.h/zoom}px`,
+      }} >
+        <img
+          src={location.img_path}
+          style={{
             width: `${location.w/zoom}px`,
             height: `${location.h/zoom}px`,
-        }} >
-          <img
-            src={location.img_path}
-            style={{
-
-              // maxWidth: `${location.w/zoom}px`,
-              // maxHeight: `${location.h/zoom}px`,
-              // width: 'auto', height: 'auto',
-
-              width: `${location.w/zoom}px`,
-              height: `${location.h/zoom}px`,
-            }}
-          />
-          { markers }
-        </Div3>
-      </Div1>
+          }}
+        />
+        { markers }
+      </Div3>
+    </Div1>
   </W1>)
 }
 
 const Markers = (props) => {
-  logg(props, 'Markers')
-
   const out = []
   props.markers.map((m, idx) => {
     out.push(<div key={idx} style={{ margin: '10px' }} >
@@ -174,20 +134,23 @@ const Markers = (props) => {
 }
 
 const Row = styled.div`
+  // border: 2px solid cyan;
+
   display: flex;
   flex-direction: column;
 
   overflow: scroll;
-  height: 100vh;
+  height: calc(100vh - 40px); /* @TODO: why 40px?! */
 `
+
 
 const LocationsShow = (props) => {
   logg(props, 'LocationsShow')
 
   const { match } = props;
 
-  const [loading, setLoading] = useState(false);
-  const [location, setLocation] = useState(null);
+  const [loading, setLoading] = useState(false)
+  const [location, setLocation] = useState(null)
 
   const mountedRef = useRef('init')
 
@@ -207,24 +170,23 @@ const LocationsShow = (props) => {
     }
   }, [ match.params.slug ])
 
-  const { borderWidth, bottomDrawerHeight } = S
-  const { bottomDrawerOpen } = useContext(TwofoldContext)
-
   return (<Row>
+
     { loading && <i>Loading...</i> }
     { location && <Breadcrumbs {...location} /> }
-    <Collapsible label="Map" >
+    <Collapsible slug="map-sec" label="Map" >
       { location && <Map2 location={location} /> }
     </Collapsible>
-    <Collapsible label="Description">
+    <Collapsible slug="descr-sec" label="Description" >
       { location && <Description item={location} /> }
     </Collapsible>
-    <Collapsible label="Markers">
-      { location && location.markers && <Markers markers={location.markers} /> }
-    </Collapsible>
-    <Collapsible label="Newsitems">
-      { location && location.newsitems && <Newsitems newsitems={location.newsitems} /> }
-    </Collapsible>
+    { location && location.markers.length && <Collapsible slug="markers-sec" label="Markers">
+      <Markers markers={location.markers} />
+    </Collapsible> || null }
+    { location && location.newsitems.length && <Collapsible slug="news-sec" label="Newsitems">
+      <Newsitems newsitems={location.newsitems} />
+    </Collapsible> || null }
+
   </Row>)
 }
 

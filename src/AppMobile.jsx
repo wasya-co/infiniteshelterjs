@@ -30,7 +30,7 @@ import { SitesShow } from '$components/sites'
 import { Account, Account2, MyAccountWidget } from "$components/users"
 import { Videos } from "$components/videos"
 import { Galleries, MyGalleries } from "$components/galleries"
-import { Api, C, Debug, logg, request, TwofoldContext } from "$shared"
+import { Api, C, CollapsibleContext, Debug, logg, request, TwofoldContext } from "$shared"
 
 const Root = styled.div`
   background: #dedede;
@@ -78,6 +78,12 @@ const App = () => {
     logg(result, 'result of unlocking')
   };
 
+  const [ collapsibles, setCollapsibles ] = useState({
+    // 'map-sec': true,
+    'descr-sec': true,
+  })
+
+
   return (<Router>
     <TwofoldContext.Provider value={{
         bottomDrawerOpen, setBottomDrawerOpen,
@@ -85,35 +91,37 @@ const App = () => {
         layout, setLayout,
         zoom, setZoom,
     }} >
-      <MenuLeft />
-      <Root>
-        <Container >
-          <Switch id="main" main >
+      <CollapsibleContext.Provider value={{ collapsibles, setCollapsibles, }} >
+        <MenuLeft />
+        <Root>
+          <Container >
+            <Switch id="main" main >
 
-            <Redirect exact from="/" to="/en" />
-            <Route exact path="/en" ><SitesShow /></Route>
+              <Redirect exact from="/" to="/en" />
+              <Route exact path="/en" ><SitesShow /></Route>
 
-            <Route exact path="/en/account" component={Account} />
-            <Route exact path="/en/account/my/videos" component={Videos} />
-            <Route exact path="/en/account/my/galleries" component={MyGalleries} />
+              <Route exact path="/en/account" component={Account} />
+              <Route exact path="/en/account/my/videos" component={Videos} />
+              <Route exact path="/en/account/my/galleries" component={MyGalleries} />
 
-            <Route exact path="/en/cities"                      component={CitiesList} />
-            <Route       path="/en/cities/travel-to/:name/show" component={CitiesShow} />
+              <Route exact path="/en/cities"                      component={CitiesList} />
+              <Route       path="/en/cities/travel-to/:name/show" component={CitiesShow} />
 
-            <Route exact path="/en/galleries/show/:slug" component={GalleriesShow} />
+              <Route exact path="/en/galleries/show/:slug" component={GalleriesShow} />
 
-            <Route exact path="/en/reports/show/:slug" component={ReportsShow} />
+              <Route exact path="/en/reports/show/:slug" component={ReportsShow} />
 
-            <Route exact path="/en/locations/show/:slug" component={LocationsShow} layout={C.layout_mapui} />
+              <Route exact path="/en/locations/show/:slug" component={LocationsShow} layout={C.layout_mapui} />
 
-          </Switch>
-        </Container>
-      </Root>
-      <BottomDrawer />
-      <Modal ariaHideApp={false} isOpen={!!itemToUnlock} >
-        <h1>Unlock this item? <button onClick={() => setItemToUnlock(false) } >[x]</button></h1>
-        <button onClick={doUnlock}>Do it</button>
-      </Modal>
+            </Switch>
+          </Container>
+        </Root>
+        <BottomDrawer />
+        <Modal ariaHideApp={false} isOpen={!!itemToUnlock} >
+          <h1>Unlock this item? <button onClick={() => setItemToUnlock(false) } >[x]</button></h1>
+          <button onClick={doUnlock}>Do it</button>
+        </Modal>
+      </CollapsibleContext.Provider>
     </TwofoldContext.Provider>
   </Router>)
 }

@@ -6,7 +6,6 @@ import styled from 'styled-components'
 import { logg, request, S, TwofoldContext, ZoomContext } from "$shared"
 import { Metaline } from "$components/application"
 import { Newsitems } from "$components/newsitems"
-import "./locations.scss"
 
 const Left = styled.div`
   // border: 1px solid blue;
