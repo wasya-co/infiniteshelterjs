@@ -14,6 +14,12 @@ const B1 = styled.div`
 `
 const Root = styled.div`
   display: flex;
+  z-index: 50;
+
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: white;
 `;
 const Breadcrumbs = (props) => {
   logg(props, 'Breakcrumbs')
@@ -24,13 +30,14 @@ const Breadcrumbs = (props) => {
   props.breadcrumbs.map((b, idx) => {
     if (idx+1 === props.breadcrumbs.length) {
       // last one
-      out.push(<B>{b.name}</B>)
+      out.push(<B key={idx} >{b.name}</B>)
     } else {
       out.push(<B
+        key={idx}
         style={{ textDecoration: 'underline' }}
         onClick={() => history.push(`/en/locations/show/${b.slug}`) }
       >{b.name}</B>)
-      out.push(<B1>&gt;</B1>)
+      out.push(<B1 key={`${idx}-divider`} >&gt;</B1>)
     }
   })
   return <Root>{out}</Root>

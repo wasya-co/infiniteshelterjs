@@ -3,6 +3,7 @@ import React, { Fragment as F, useContext, useEffect, useRef, useState } from "r
 import { Route, useLocation, useHistory, Switch } from 'react-router-dom'
 import styled from 'styled-components'
 
+import { Breadcrumbs, MapPanel, } from "./"
 import { logg, request, S, TwofoldContext, ZoomContext } from "$shared"
 import { Metaline } from "$components/application"
 import { Newsitems } from "$components/newsitems"
@@ -32,137 +33,7 @@ const B = styled.div`
 const B1 = styled.div`
   padding: 0.5em 0;
 `
-const Breadcrumbs = (props) => {
-  logg(props, 'Breakcrumbs')
 
-  const history = useHistory()
-
-  const out = []
-  props.breadcrumbs.map((b, idx) => {
-    if (idx+1 === props.breadcrumbs.length) {
-      // last one
-      out.push(<B>{b.name}</B>)
-    } else {
-      out.push(<B
-        style={{ textDecoration: 'underline' }}
-        onClick={() => history.push(`/en/locations/show/${b.slug}`) }
-      >{b.name}</B>)
-      out.push(<B1>&gt;</B1>)
-    }
-  })
-  return <div style={{
-    zIndex: 200,
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    background: 'white',
-
-    display: 'flex',
-  }} >{out}</div>
-}
-const W1 = styled.div`
-  // position: relative;
-`
-const ZoomCtrl = (props) => {
-  const { zoom, setZoom } = useContext(TwofoldContext)
-
-  const zoomIn = () => {
-    setZoom(zoom/2)
-  }
-  const zoomOut = () => {
-    setZoom(zoom*2)
-  }
-  const zoomReset = () => {
-    setZoom(1)
-  }
-
-  return <div style={{
-    position: 'absolute',
-    top: 0,
-    left: 'calc(50% - 20px)',
-    zIndex: 200,
-    background: 'white',
-    padding: '5px',
-
-    display: 'flex',
-    flexDirection: 'column',
-  }} >
-    <span onClick={zoomIn} >[+]</span>
-    <span onClick={zoomOut} >[-]</span>
-    <span onClick={zoomReset} >[1]</span>
-  </div>
-}
-const Div1 = styled.div`
-  // border: 3px solid green;
-
-  text-align: center;
-  display: block;
-
-  position: relative;
-`
-const Div3 = styled.div``
-const Map2 = (props) => {
-  logg(props, 'Map2')
-  const { location } = props
-
-  const { zoom, setZoom } = useContext(TwofoldContext)
-
-  const div1Ref = useRef(null)
-  const history = useHistory()
-
-  useEffect(() => {
-    div1Ref.current.scrollIntoView({ block: 'end' })
-  }, [])
-
-  const markers = []
-  props.location.markers.map((m, idx) => {
-    const out = <div
-      key={idx}
-      onClick={() => history.push(`/en/locations/show/${m.slug}`) }
-      style={{
-        position: 'absolute',
-        top: m.y/zoom,
-        left: m.x/zoom,
-      }} ><img src={m.img_path} style={{
-        display: 'block',
-        maxWidth: `${m.w/zoom}px`,
-        maxHeight: `${m.h/zoom}px`,
-        width: 'auto', height: 'auto',
-      }} /></div>
-    markers.push(out)
-  })
-
-  return (<W1>
-    <Breadcrumbs {...props.location} />
-    <ZoomCtrl />
-
-      <Div1 ref={div1Ref} >
-        <Div3 style={{
-            // border: '2px solid cyan',
-
-            display: 'inline-block',
-            position: 'relative',
-            width: `${location.w/zoom}px`,
-            height: `${location.h/zoom}px`,
-        }} >
-          <img
-            src={location.img_path}
-            style={{
-
-              // maxWidth: `${location.w/zoom}px`,
-              // maxHeight: `${location.h/zoom}px`,
-              // width: 'auto', height: 'auto',
-
-              width: `${location.w/zoom}px`,
-              height: `${location.h/zoom}px`,
-            }}
-          />
-          { markers }
-        </Div3>
-      </Div1>
-
-  </W1>)
-}
 
 const Markers = (props) => {
   logg(props, 'Markers')
@@ -223,7 +94,8 @@ const LocationsShow = (props) => {
     <Left {...{ borderWidth, bottomDrawerOpen, bottomDrawerHeight }} >
 
       { loading && <i>Loading Left...</i> }
-      { location && <Map2 location={location} /> }
+      { location && <Breadcrumbs {...location} /> }
+      { location && <MapPanel map={location.map ? location.map : location} /> }
     </Left>
     <Right {...{ borderWidth, bottomDrawerOpen, bottomDrawerHeight }} >
       { loading && <i>Loading Right...</i> }
