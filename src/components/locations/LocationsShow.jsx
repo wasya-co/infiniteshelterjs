@@ -193,7 +193,6 @@ const Row = styled.div`
 
 const LocationsShow = (props) => {
   logg(props, 'LocationsShow')
-
   const { match } = props;
 
   const [loading, setLoading] = useState(false);
@@ -203,16 +202,18 @@ const LocationsShow = (props) => {
 
   useEffect(() => {
     setLoading(true);
-    const token = localStorage.getItem("jwt_token");
+    const token = localStorage.getItem("jwt_token")
     request.get(`/api/maps/view/${match.params.slug}`, { params: { jwt_token: token } }).then(res => {
-      if (!mountedRef.current) return null;
+      if (mountedRef.current === match.params.slug) return null;
       setLocation(res.data.map)
       setLoading(false)
       // @TODO: setFlash here?! If I"m accessing a gallery I haven't bought access to?
     }).finally(() => {
     })
 
-    return () => { mountedRef.current = false }
+    return () => {
+      mountedRef.current = match.params.slug
+    }
   }, [ match.params.slug ])
 
   const { borderWidth, bottomDrawerHeight } = S
