@@ -5,8 +5,8 @@ import _Box from '@material-ui/core/Box'
 import React from 'react'
 import styled from 'styled-components'
 
-export { default as Api } from "./Api";
-export { default as AppRouter } from "./AppRouter";
+export { default as Api } from "./Api"
+export { default as AppRouter } from "./AppRouter"
 
 export const Box = styled(_Box)`
   margin-bottom: 1em;
@@ -16,7 +16,7 @@ export const Box = styled(_Box)`
 
   display: flex;
   flex-direction: column;
-`
+`;
 
 export const C = {
   jwt_token: 'jwt_token',
@@ -26,8 +26,10 @@ export const C = {
   layout_mapui: 'mapui',
 }
 
+export { default as Collapsible } from "./Collapsible"
+
 export const Debug = styled.div`
-`
+`;
 
 /**
  * Usage: logg(someObject, 'label')
@@ -64,6 +66,4 @@ export const ZoomContext = React.createContext({})
 
 export const Wrapper = styled.div`
   height: 100vh;
-
-
-`
+`;
