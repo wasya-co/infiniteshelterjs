@@ -3,7 +3,7 @@ import { Route, useLocation, useHistory, Switch } from 'react-router-dom';
 import { IonPage, IonContent, IonIcon, IonLoading } from '@ionic/react';
 import { pin, newspaperOutline, image, videocam } from 'ionicons/icons';
 
-import { Api, logg, Wrapper } from "$shared";
+import { useApi, logg, Wrapper } from "$shared";
 import { Newsitems } from "$components/newsitems";
 import { Venues } from "$components/venues";
 import "./cities.scss";
@@ -17,9 +17,11 @@ const CitiesShow = (props) => {
   const [city, setCity] = useState(null);
   const [showLoading, setShowLoading] = useState(false);
 
+  const api = useApi()
+
   useEffect(() => {
     setShowLoading(true)
-    Api.getCity(match.params.name).then(res => {
+    api.getCity(match.params.name).then(res => {
       setCity(res.data.city);
       setShowLoading(false);
     })

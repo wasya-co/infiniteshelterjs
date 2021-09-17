@@ -6,7 +6,7 @@ import styled from 'styled-components'
 
 import config from "config"
 
-import { Api, logg, S, request } from "$shared"
+import { useApi, logg, S, request } from "$shared"
 
 const stripePromise = loadStripe('pk_test_qr1QPmSpLdBFt1F7itdWJOj3') // @TODO: this is active, but change.
 
@@ -33,6 +33,7 @@ const W = styled.div`
 `
 
 const MyAccountWidget = (props) => {
+  const api = useApi()
   const currentUser = JSON.parse(localStorage.getItem("current_user")) || {}
   const stripe = useStripe()
   const elements = useElements()
@@ -47,7 +48,7 @@ const MyAccountWidget = (props) => {
     const cardElement = elements.getElement(CardElement)
 
     const jwtToken = localStorage.getItem('jwt_token')
-    let client_secret = await request.get(`${config.apiOrigin}${Api.paymentsPath}?jwt_token=${jwtToken}`)
+    let client_secret = await request.get(`${config.apiOrigin}${api.paymentsPath}?jwt_token=${jwtToken}`)
     client_secret = client_secret.data.client_secret;
     logg(client_secret, 'client_secret');
 
@@ -62,7 +63,7 @@ const MyAccountWidget = (props) => {
       logg(result.error.message, 'error message')
     } else {
       if (result.paymentIntent.status === 'succeeded') {
-        let response = await request.get(`${config.apiOrigin}${Api.myAccount()}?jwt_token=${jwtToken}`)
+        let response = await request.get(`${config.apiOrigin}${api.myAccount()}?jwt_token=${jwtToken}`)
         logg(response, 'ze3response')
       } else {
         logg('something else');

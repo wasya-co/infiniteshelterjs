@@ -55,8 +55,8 @@ module.exports = {
   appBuild: resolveApp('build'),
   appPublic: resolveApp('public'),
   appHtml: resolveApp('public/index.html'),
-  // appIndexJs: resolveModule(resolveApp, 'src/index'), // @TODO: undo change
-  appIndexJs: resolveModule(resolveApp, 'src/index_android'),
+  // _vp_ 20210917
+  appIndexJs: (path) => resolveModule(resolveApp, path),
   appPackageJson: resolveApp('package.json'),
   appSrc: resolveApp('src'),
   appTsConfig: resolveApp('tsconfig.json'),

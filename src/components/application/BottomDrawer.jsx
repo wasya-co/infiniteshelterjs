@@ -25,8 +25,7 @@ const ButtonWrapper = styled.div`
 
 // @TODO: animate opening it, nicely?
 const BottomDrawer = (props) => {
-  logg(props, 'BottomDrawer')
-  logg(useContext(TwofoldContext), 'TwofoldContext in BottomDrawer')
+  // logg(props, 'BottomDrawer')
 
   const { bottomDrawerOpen, layout, setBottomDrawerOpen } = useContext(TwofoldContext)
 

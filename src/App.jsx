@@ -1,8 +1,9 @@
 import { Container as _Container, Grid, GridList } from '@material-ui/core'
-
 import React, { Fragment as F, useEffect, useState } from 'react'
-import Modal from "react-modal"
-import { Link, Switch, BrowserRouter as Router, Redirect, Route as _Route, useHistory, withRouter } from 'react-router-dom'
+import { Link, Switch, BrowserRouter as Router, Redirect, Route as _Route, useHistory, withRouter
+} from 'react-router-dom'
+import { ToastContainer, toast } from 'react-toastify'
+
 import styled from 'styled-components'
 
 import '@ionic/react/css/core.css'
@@ -17,10 +18,10 @@ import '@ionic/react/css/flex-utils.css'
 import '@ionic/react/css/display.css'
 
 import './theme/variables.css'
-import './app.scss'
+import 'react-toastify/dist/ReactToastify.css'
 
 import config from "config"
-import { BottomDrawer, Menu, MenuBottom, MenuLeft } from "$components/application"
+import { BottomDrawer, Menu, MenuBottom, MenuLeft, UnlockModal } from "$components/application"
 import MapuiLayout from "$components/application/MapuiLayout"
 import { CitiesList, CitiesShow } from "$components/cities"
 import { GalleriesShow } from "$components/galleries"
@@ -46,6 +47,7 @@ const __Container = styled(_Container)`
 const App = () => {
   const [ layout, setLayout ] = useState(C.layout_onecol)
   const [ bottomDrawerOpen, setBottomDrawerOpen ] = React.useState(false)
+  const [ currentUser, setCurrentUser ] = React.useState(localStorage.getItem('current_user') ? JSON.parse(localStorage.getItem('current_user')) : null)
   const [ itemToUnlock, setItemToUnlock ] = React.useState(false)
   const [ zoom, setZoom ] = useState(1)
 
@@ -71,16 +73,11 @@ const App = () => {
     return <_Route {...props} />
   }
 
-  const doUnlock = async () => {
-    // @TODO: check how many unlocks I have, and offer to purchase more if not enough.
-    const path = Api.doUnlock({ kind: 'Report', id: itemToUnlock.report_id });
-    const result = await request.post(`${config.apiOrigin}${path}`);
-    logg(result, 'result of unlocking')
-  };
-
   return (<Router>
+    <ToastContainer />
     <TwofoldContext.Provider value={{
         bottomDrawerOpen, setBottomDrawerOpen,
+        currentUser, setCurrentUser,
         itemToUnlock, setItemToUnlock,
         layout, setLayout,
         zoom, setZoom,
@@ -111,10 +108,7 @@ const App = () => {
         </Container>
       </Root>
       <BottomDrawer />
-      <Modal ariaHideApp={false} isOpen={!!itemToUnlock} >
-        <h1>Unlock this item? <button onClick={() => setItemToUnlock(false) } >[x]</button></h1>
-        <button onClick={doUnlock}>Do it</button>
-      </Modal>
+      <UnlockModal />
 
     </TwofoldContext.Provider>
   </Router>)

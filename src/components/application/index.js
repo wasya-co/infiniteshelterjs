@@ -5,4 +5,4 @@ export { default as MenuBottom } from "./MenuBottom"
 export { default as MenuLeft } from "./MenuLeft"
 export { default as Metaline } from "./Metaline"
 export { default as Rating } from "./Rating"
-
+export { default as UnlockModal } from "./UnlockModal"

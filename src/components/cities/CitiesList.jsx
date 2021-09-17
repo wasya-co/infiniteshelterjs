@@ -4,7 +4,7 @@ import React, { Fragment as F, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import styled from 'styled-components'
 
-import { Api, AppRouter, logg, Wrapper } from "$shared"
+import { useApi, AppRouter, logg, Wrapper } from "$shared"
 import "./cities.scss"
 
 
@@ -12,10 +12,11 @@ const Cities = (props) => {
   const [cities, setCities] = useState([]);
   const [filteredCities, setFilteredCities] = useState([]);
   const [showLoading, setShowLoading] = useState(false);
+  const api = useApi()
 
   useEffect(() => {
     setShowLoading(true);
-    Api.getCities().then(res => {
+    api.getCities().then(res => {
       setShowLoading(false);
       setFilteredCities(res);
       setCities(res);

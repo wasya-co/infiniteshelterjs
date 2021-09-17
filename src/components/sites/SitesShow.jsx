@@ -1,15 +1,10 @@
 import { IonPage, IonLoading, IonContent } from '@ionic/react'
-import React, { Fragment as F, useEffect, useState } from "react"
+import React, { Fragment as F, useEffect, useRef, useState } from "react"
 import styled from 'styled-components'
 
-import config from "config"
-import { Api, Debug, logg, request } from "$shared"
+import { useApi, Debug, logg, request } from "$shared"
 import { Newsitems } from "$components/newsitems"
 import "./sites.scss"
-
-const Container = styled.div`
-  overflow: auto;
-`
 
 const _Hero = styled.div`
   height: 370px;
@@ -33,16 +28,18 @@ const SitesShow = (props) => {
   let [newsitems, setNewsitems] = useState([])
   let [showLoading, setShowLoading] = useState(false)
 
+  const api = useApi()
+  const mountedRef = useRef('init')
+
   useEffect(() => {
-    setShowLoading(true)
-    Api.getSite(config.domain).then(data => {
-      logg(data, 'data')
+    // setShowLoading(true)
+    api.applicationHome().then(data => {
+      if (!mountedRef.current) return null;
       setNewsitems(data.newsitems)
-    }).catch(e => {
-      logg(e, 'e1')
-    }).finally(() => {
       setShowLoading(false)
     })
+
+    return () => { mountedRef.current = false }
   }, [])
 
   return <F>

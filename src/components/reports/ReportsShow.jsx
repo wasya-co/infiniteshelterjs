@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import styled from 'styled-components'
 
 import config from "config";
-import { Api, Box, logg, request } from "$shared";
+import { useApi, Box, logg, request } from "$shared";
 
 const W = styled.div`
   padding: 2em 0;
@@ -13,15 +13,16 @@ const ReportsShow = (props) => {
   logg(props, "ReportsShow");
 
   let [ item, setItem ] = useState({});
+  let api = useApi()
 
-  // @TODO: refactor to login-hoc
+  // @TODO: refactor
   const currentUser = JSON.parse(localStorage.getItem("current_user")) || {};
 
   // @TODO: not logged in and has access
   const getReport = async () => {
     logg(null, 'getting report...')
 
-    request.get(Api.reportsGet(props.match.params.slug)).then(r => r.data).then(data => {
+    request.get(api.reportsGet(props.match.params.slug)).then(r => r.data).then(data => {
       logg(data, 'got report')
       setItem(data.report);
     });

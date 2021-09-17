@@ -1,5 +1,5 @@
 import _Box from '@material-ui/core/Box'
-import React, { Fragment as F, useContext, useState } from "react"
+import React, { Fragment as F, useEffect, useContext, useState } from "react"
 
 import { useHistory } from "react-router-dom"
 import styled from 'styled-components'
@@ -52,7 +52,10 @@ const NewsitemReport = (props) => {
   const slug = newsitem.reportname;
 
   const history = useHistory();
-  const { setItemToUnlock } = useContext(TwofoldContext)
+  const { itemToUnlock, setItemToUnlock } = useContext(TwofoldContext)
+
+  // @TODO: revert
+  // useEffect(() => { itemToUnlock || setItemToUnlock(newsitem) }, [])
 
   const navigateToReport = () => {
     if (newsitem.is_premium && !newsitem.is_purchased) {

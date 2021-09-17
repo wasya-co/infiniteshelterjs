@@ -5,7 +5,7 @@ import React, { useEffect, useState } from "react";
 import styled from 'styled-components'
 import config from "config";
 
-import { Api, logg, request } from "$shared";
+import { useApi, logg, request } from "$shared";
 
 const useStyles = makeStyles((theme) => ({
 
@@ -31,7 +31,7 @@ const VideoItem = styled.div`
 
 const Video = (props) => {
   logg(props, 'Video');
-
+  const api = useApi()
 
   const { item: video } = props;
 
@@ -52,10 +52,11 @@ const Videos = () => {
   const jwtToken = localStorage.getItem("jwtToken");
 
   const classes = useStyles();
+  const api = useApi()
 
   useEffect(() => {
     logg('posting...');
-    request.post(Api.myVideosPath, { jwtToken: jwtToken }).then(r => r.data
+    request.post(api.myVideosPath, { jwtToken: jwtToken }).then(r => r.data
       ).then(({ videos }) => {
         logg(videos, 'data')
         setVideos(videos);

@@ -5,7 +5,8 @@ import _Box from '@material-ui/core/Box'
 import React from 'react'
 import styled from 'styled-components'
 
-export { default as Api } from "./Api"
+export { default as useApi } from "./Api"
+
 export { default as AppRouter } from "./AppRouter"
 
 export const Box = styled(_Box)`
@@ -16,6 +17,14 @@ export const Box = styled(_Box)`
 
   display: flex;
   flex-direction: column;
+`;
+
+export const Btn = styled.div`
+  border: 1px solid gray;
+  border-radius: 5px;
+
+  padding: .3em 1em;
+  cursor: pointer;
 `;
 
 export const C = {

@@ -212,9 +212,7 @@ const LocationsShow = (props) => {
     }).finally(() => {
     })
 
-    return () => {
-      // mountedRef.current = false;
-    }
+    return () => { mountedRef.current = false }
   }, [ match.params.slug ])
 
   const { borderWidth, bottomDrawerHeight } = S

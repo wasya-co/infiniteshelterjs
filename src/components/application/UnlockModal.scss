@@ -1,0 +1,21 @@
+
+.ReactModal__Overlay {
+  margin-top: 100vh;
+  transition: margin 2000ms ease-in-out;
+}
+
+.ReactModal__Overlay--after-open {
+  margin-top: 0;
+}
+
+.ReactModal__Overlay--before-close {
+}
+
+.ReactModal__Content {
+  // margin-top: 100vh;
+  // transition: margin 2000ms ease-in-out;
+}
+.ReactModal__Content--after-open {
+  // margin-top: 0;
+}
+.ReactModal__Content--before-close {}
