@@ -166,8 +166,8 @@
   },
   "scripts": {
     "jest": "NODE_PATH=config/environments/test jest -t current",
-    "start": "HTTPS=true NODE_PATH=config/environments/development_web PORT=3002 node scripts/start.js",
-    "start_m": "HTTPS=true NODE_PATH=config/environments/development_mobile PORT=3002 node scripts/start.js",
+    "start": "HTTPS=true HOST=tgm.mac NODE_PATH=config/environments/development_web PORT=3002 node scripts/start.js",
+    "start_m": "HTTPS=true HOST=tgm.mac NODE_PATH=config/environments/development_mobile PORT=3002 node scripts/start.js",
     "start_do": "HTTPS=true NODE_PATH=config/environments/production PORT=3002 node scripts/start.js",
     "build": "NODE_PATH=config/environments/production node scripts/build.js",
     "test": "NODE_PATH=config/environments/test jest",

@@ -20,7 +20,7 @@ const LeftWrapper = styled.div`
   left: 0;
 
   background: white;
-`
+`;
 
 const W1 = styled.div`
   height: 100vh;
@@ -28,16 +28,17 @@ const W1 = styled.div`
   flex-direction: column;
   justify-content: space-between;
   align-content: space-between;
-`
+`;
 const W2 = styled.div`
-`
+`;
 
 const MenuLeft= (props) => {
   // logg(props, 'MenuLeft')
   const [drawerOpen, setDrawerOpen] = React.useState(false)
   const [ loading, setLoading ] = useState(false)
   const history = useHistory()
-  const [ currentUser, setCurrentUser ] = useState(false)
+  const { currentUser, setCurrentUser } = useContext(TwofoldContext)
+  logg(currentUser, 'currentUser')
 
   // @TODO: re-instate
   /* useEffect(() => {
@@ -73,24 +74,26 @@ const MenuLeft= (props) => {
               history.push("/en")
             } }>Newsfeed</span>
           </ListItem>
-          <ListItem button key={'cities'} >
+          { /* <ListItem button key={'cities'} >
             <span onClick={() => {
               setDrawerOpen(false)
               history.push("/en/cities")
             } }>Cities</span>
-          </ListItem>
-          <ListItem button key={'map 1'} >
+          </ListItem> */ }
+          { /* <ListItem button key={'map 1'} >
             <span onClick={() => {
               setDrawerOpen(false)
-              history.push("/en/locations/show/world-1")
-            } }>The World</span>
-          </ListItem>
-          <ListItem button key={'map 2'} >
-            <span onClick={() => {
-              setDrawerOpen(false)
-              history.push("/en/locations/show/map-1")
-            } }>construct-1</span>
-          </ListItem>
+              history.push("/en/locations")
+            } }>The Directory</span>
+          </ListItem> */ }
+          { currentUser && currentUser.bookmarks.map((b, idx) => {
+            return <ListItem button key={idx} >
+              <span onClick={() => {
+                setDrawerOpen(false)
+                history.push(`/en/locations/show/${b.slug}`)
+              } }>{b.name}</span>
+            </ListItem>
+          }) }
           <ListItem button key={'account'} >
             <span onClick={() => {
               setDrawerOpen(false)
@@ -99,7 +102,8 @@ const MenuLeft= (props) => {
           </ListItem>
         </List>
         <W2>
-          { loading && 'Loading...' || <F>
+          { loading && 'Loading...' }
+          { currentUser && <F>
             {currentUser.email}<br />
             {currentUser.n_stars}<br />
             some action

@@ -31,8 +31,6 @@ const Account = (props) => {
 
   const { currentUser, setCurrentUser } = useContext(TwofoldContext)
 
-  logg(currentUser, 'cu')
-
   return (<F>
 
       <Grid container spacing={2} className={classes.root} >

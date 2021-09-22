@@ -1,5 +1,6 @@
 import { IonPage, IonContent, IonButton, IonImg, IonLoading } from "@ionic/react"
 import React, { Fragment as F, useContext, useEffect, useRef, useState } from "react"
+import Modal from "react-modal"
 import { Route, useLocation, useHistory, Switch } from 'react-router-dom'
 import styled from 'styled-components'
 
@@ -38,14 +39,41 @@ const B1 = styled.div`
 const Markers = (props) => {
   logg(props, 'Markers')
 
+  const history = useHistory()
+  const { showUrl, setShowUrl } = useContext(TwofoldContext)
+
+  const goto = (m) => {
+    if (m.url) {
+      setShowUrl(m.url);
+    }
+    else {
+      history.push(`/en/locations/show/${m.slug}`)
+    }
+  }
+
   const out = []
   props.markers.map((m, idx) => {
-    out.push(<div key={idx} style={{ margin: '10px' }} >
+    out.push(<div
+        key={idx}
+        style={{ margin: '10px' }}
+        onClick={() => goto(m)} >
       <img src={m.title_img_path} /><br />
       {m.name}
     </div>)
   })
   return <div style={{ display: 'flex' }} >{out}</div>
+}
+
+const IframeModal = (props) => {
+  const { showUrl, setShowUrl } = useContext(TwofoldContext)
+
+  return (<Modal ariaHideApp={false} isOpen={!!showUrl} >
+    <span onClick={() => {  setShowUrl(false) }} >[x]</span>
+
+    <iframe height="100%" style={{ width: "100%", height: "100%" }} scrolling={"yes"} src={props.src}
+      frameBorder="no" allowtransparency="true" allowFullScreen={true} >
+    </iframe>
+  </Modal>)
 }
 
 const Right = styled.div`
@@ -66,8 +94,9 @@ const LocationsShow = (props) => {
   logg(props, 'LocationsShow')
   const { match } = props;
 
-  const [loading, setLoading] = useState(false);
-  const [location, setLocation] = useState(null);
+  const [ loading, setLoading ] = useState(false)
+  const [ location, setLocation ] = useState(null)
+  const { showUrl, setShowUrl } = useContext(TwofoldContext)
 
   const mountedRef = useRef('init')
 
@@ -105,6 +134,7 @@ const LocationsShow = (props) => {
         { location.newsitems && <Newsitems newsitems={location.newsitems} /> }
       </F> }
     </Right>
+    { showUrl && <IframeModal src={showUrl} /> }
   </Row>)
 }
 

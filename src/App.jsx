@@ -1,5 +1,5 @@
 import { Container as _Container, Grid, GridList } from '@material-ui/core'
-import React, { Fragment as F, useEffect, useState } from 'react'
+import React, { Fragment as F, useEffect, useRef, useState } from 'react'
 import { Link, Switch, BrowserRouter as Router, Redirect, Route as _Route, useHistory, withRouter
 } from 'react-router-dom'
 import { ToastContainer, toast } from 'react-toastify'
@@ -31,7 +31,7 @@ import { SitesShow } from '$components/sites'
 import { Account, Account2, MyAccountWidget } from "$components/users"
 import { Videos } from "$components/videos"
 import { Galleries, MyGalleries } from "$components/galleries"
-import { Api, C, CollapsibleContext, Debug, logg, request, TwofoldContext } from "$shared"
+import { C, CollapsibleContext, Debug, logg, request, TwofoldContext, useApi, } from "$shared"
 
 const Root = styled.div`
   background: #dedede;
@@ -46,10 +46,28 @@ const __Container = styled(_Container)`
 
 const App = () => {
   const [ layout, setLayout ] = useState(C.layout_onecol)
-  const [ bottomDrawerOpen, setBottomDrawerOpen ] = React.useState(false)
-  const [ currentUser, setCurrentUser ] = React.useState(localStorage.getItem('current_user') ? JSON.parse(localStorage.getItem('current_user')) : null)
-  const [ itemToUnlock, setItemToUnlock ] = React.useState(false)
+  const [ bottomDrawerOpen, setBottomDrawerOpen ] = useState(false)
+  const [ currentUser, setCurrentUser ] = useState(false) // localStorage.getItem('current_user') ? JSON.parse(localStorage.getItem('current_user')) : null)
+  const [ itemToUnlock, setItemToUnlock ] = useState(false)
+  const [ showUrl, setShowUrl ] = useState(false)
   const [ zoom, setZoom ] = useState(1)
+  const api = useApi()
+
+  // const mountedRef = useRef('init')
+  useEffect(() => {
+    const fn = async () => {
+      // check jwt
+      const jwtToken = localStorage.getItem('jwt_token')
+      let response = await request.get(`${config.apiOrigin}${api.myAccount()}?jwt_token=${jwtToken}`
+      ).then((r) => {
+        setCurrentUser(r.data)
+      }).catch((e) => {
+        // logg(e, 'e12')
+        setCurrentUser(null)
+      })
+    }
+    fn()
+  }, [])
 
   const Container = (props) => {
     switch(layout) {
@@ -80,6 +98,7 @@ const App = () => {
         currentUser, setCurrentUser,
         itemToUnlock, setItemToUnlock,
         layout, setLayout,
+        showUrl, setShowUrl,
         zoom, setZoom,
     }} >
 
