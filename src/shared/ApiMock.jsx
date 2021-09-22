@@ -1,3 +1,7 @@
+/*
+ * shared / ApiMock
+ */
+
 import React, { useContext } from 'react'
 
 import config from "config"
@@ -48,4 +52,4 @@ const useApi = () => {
 
 }
 
-export default useApi
+export default useApi;

@@ -17,6 +17,7 @@ const Wrapper = styled.div`
 `
 
 const Newsitems = (props) => {
+  logg(props, 'Newsitems')
   const { newsitems } = props
 
   if (!newsitems || !newsitems.length) { return <div>No Newsitems</div> }
