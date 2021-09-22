@@ -74,12 +74,12 @@ const MenuLeft= (props) => {
               history.push("/en")
             } }>Newsfeed</span>
           </ListItem>
-          { /* <ListItem button key={'cities'} >
+          <ListItem button key={'cities'} >
             <span onClick={() => {
               setDrawerOpen(false)
               history.push("/en/cities")
             } }>Cities</span>
-          </ListItem> */ }
+          </ListItem>
           { /* <ListItem button key={'map 1'} >
             <span onClick={() => {
               setDrawerOpen(false)

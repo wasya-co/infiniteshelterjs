@@ -1,6 +1,7 @@
 import { Container as _Container, Grid, GridList } from '@material-ui/core'
 import React, { Fragment as F, useEffect, useRef, useState } from 'react'
-import { Link, Switch, BrowserRouter as Router, Redirect, Route as _Route, useHistory, withRouter
+import {
+  Link, Switch, BrowserRouter as Router, Redirect, Route as _Route, useHistory, withRouter
 } from 'react-router-dom'
 import { ToastContainer, toast } from 'react-toastify'
 

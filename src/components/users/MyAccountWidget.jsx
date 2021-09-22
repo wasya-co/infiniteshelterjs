@@ -1,4 +1,5 @@
-import React, { Fragment as F, useState } from "react"
+
+import React, { Fragment as F, useContext, useState } from "react"
 import Modal from "react-modal"
 import { CardElement, Elements, useElements, useStripe, } from '@stripe/react-stripe-js'
 import { loadStripe } from '@stripe/stripe-js'
@@ -6,13 +7,13 @@ import styled from 'styled-components'
 
 import config from "config"
 
-import { useApi, logg, S, request } from "$shared"
+import { logg, S, request, TwofoldContext, useApi } from "$shared"
 
 const stripePromise = loadStripe('pk_test_qr1QPmSpLdBFt1F7itdWJOj3') // @TODO: this is active, but change.
 
 const Login = (props) => {
   return (<F>
-    <buttom>do login</buttom>
+    <button>do login</button>
   </F>)
 }
 
@@ -34,7 +35,7 @@ const W = styled.div`
 
 const MyAccountWidget = (props) => {
   const api = useApi()
-  const currentUser = JSON.parse(localStorage.getItem("current_user")) || {}
+  const { currentUser, setCurrentUser } = useContext(TwofoldContext)
   const stripe = useStripe()
   const elements = useElements()
 
