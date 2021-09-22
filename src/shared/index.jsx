@@ -9,30 +9,7 @@ import {
 import styled from 'styled-components'
 
 export { default as useApi } from "./Api"
-
-// logged in
-export const AppMock = (props) => {
-
-  const { currentUser, setCurrentUser } = props
-  if (!currentUser) {
-    const defaultCurrentUser = { email: 'test@gmail.com' }
-    const [ currentUser, setCurrentUser ] = useState(defaultCurrentUser)
-  }
-
-  return <Router>
-    <TwofoldContext.Provider value={{
-      // bottomDrawerOpen, setBottomDrawerOpen,
-      currentUser, setCurrentUser,
-      // itemToUnlock, setItemToUnlock,
-      // layout, setLayout,
-      // showUrl, setShowUrl,
-      // zoom, setZoom,
-    }} >
-      { props.children }
-    </TwofoldContext.Provider>
-  </Router>
-}
-
+export { default as AppMock } from "./AppMock"
 export { default as AppRouter } from "./AppRouter"
 
 export const Box = styled(_Box)`
