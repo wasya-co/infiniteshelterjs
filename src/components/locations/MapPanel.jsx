@@ -4,8 +4,6 @@ import styled from 'styled-components'
 
 import { logg, TwofoldContext } from "$shared"
 
-
-
 const Div1 = styled.div`
   // border: 3px solid green;
 
@@ -17,7 +15,6 @@ const Div1 = styled.div`
 
 const Div3 = styled.div`
 `;
-
 
 const W1 = styled.div`
   // position: relative;
@@ -73,8 +70,8 @@ const MapPanel = (props) => {
       onClick={() => history.push(`/en/locations/show/${m.slug}`) }
       style={{
         position: 'absolute',
-        top: m.y/zoom,
-        left: m.x/zoom,
+        top: zoom > 1 ? ((m.y- m.centerOffsetY )/zoom) : ((m.y )/zoom- m.centerOffsetY),
+        left: zoom > 1 ? ((m.x- m.centerOffsetX )/zoom) : ((m.x )/zoom- m.centerOffsetX),
       }} ><img src={m.img_path} style={{
         display: 'block',
         maxWidth: `${m.w/zoom}px`,

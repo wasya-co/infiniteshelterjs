@@ -7,7 +7,7 @@ import { Container, Grid } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { Link } from 'react-router-dom';
 
-import { FbLogin, Logout, PasswdLogin } from "./"
+import { FbLogin, Logout, PasswordLogin } from "./"
 import { C, logg, TwofoldContext } from "$shared";
 
 import "./users.scss"
@@ -53,7 +53,7 @@ const Account = (props) => {
                   <h4>Not logged in</h4>
                   <FbLogin />
                   <br /><br />
-                  <PasswdLogin />
+                  <PasswordLogin />
 
                 </F> }
             </Grid>

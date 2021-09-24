@@ -49,13 +49,14 @@ export const Logout = () => {
   return <Btn onClick={doLogout}>Logout</Btn>
 }
 
-export const PasswdLogin = (props) => {
+export const PasswordLogin = (props) => {
+  logg(props, 'PasswordLogin')
   const api = useApi()
   const { currentUser, setCurrentUser } = useContext(TwofoldContext)
   const [ email, setEmail ] = useState('')
   const [ password, setPassword ] = useState('')
 
-  const doPasswdLogin = async (email, password) => {
+  const doPasswordLogin = async (email, password) => {
     request.post(`${config.apiOrigin}${api.loginPath}`, { email, password }).then((r) => r.data).then((resp) => {
       localStorage.setItem('jwt_token', resp.jwt_token)
       localStorage.setItem('current_user', JSON.stringify(resp))
@@ -66,10 +67,15 @@ export const PasswdLogin = (props) => {
       setCurrentUser(null)
     })
   }
+
   return <F>
     <input type='email' value={email} onChange={(e) => setEmail(e.target.value) } /><br />
-    <input type='password' value={password} onChange={(e) => setPassword(e.target.value) }/><br />
-    <Btn onClick={() => doPasswdLogin(email, password)}>Password Login</Btn>
+    <input type='password' value={password} onChange={(e) => setPassword(e.target.value) }
+      onKeyDown={(e) => {
+        if (e.key === 'Enter') { doPasswordLogin(email, password) }
+      }}
+    /><br />
+    <Btn onClick={() => doPasswordLogin(email, password)}>Password Login</Btn>
   </F>
 }
 

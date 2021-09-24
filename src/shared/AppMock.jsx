@@ -13,9 +13,15 @@ import styled from 'styled-components'
 import { logg, TwofoldContext } from "$shared"
 
 const AppMock = (props) => {
-  const { currentUser, setCurrentUser } = props
+  let { currentUser, setCurrentUser } = props
   const history = createMemoryHistory()
   history.push("/en/cities/travel-to/chicago") // @TODO: move where appropriate
+
+  const [ localCurrentUser, setLocalCurrentUser ] = useState(false)
+  if (!currentUser) {
+    currentUser = localCurrentUser
+    setCurrentUser = setLocalCurrentUser
+  }
 
   return <Router history={history} >
     <TwofoldContext.Provider value={{

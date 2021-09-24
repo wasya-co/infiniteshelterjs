@@ -6,7 +6,7 @@ import React, { useState } from "react"
 import { MyAccountWidget } from "$components/users"
 import { AppMock, logg } from "$shared"
 
-enzyme.configure({ adapter: new Adapter() });
+enzyme.configure({ adapter: new Adapter() })
 
 describe("MyAccountWidget", () => {
 

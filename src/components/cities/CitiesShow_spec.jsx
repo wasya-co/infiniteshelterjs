@@ -62,7 +62,7 @@ describe("CitiesShow", () => {
     expect(component).toBeTruthy()
   })
 
-  it("current - renders newsitems", async () => {
+  it("renders newsitems", async () => {
     // const history = createMemoryHistory()
     // history.push('/en/cities/travel-to/chicago')
     let component = await mount(<AppMock>
