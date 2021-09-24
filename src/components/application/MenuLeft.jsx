@@ -40,19 +40,6 @@ const MenuLeft= (props) => {
   const { currentUser, setCurrentUser } = useContext(TwofoldContext)
   logg(currentUser, 'currentUser')
 
-  // @TODO: re-instate
-  /* useEffect(() => {
-    setLoading(true)
-    Api.getMyAccount().then(data => {
-      logg(data, 'getMyAccount')
-      setCurrentUser(data.data)
-    }).catch(e => {
-      logg(e, 'e1a')
-    }).finally(() => {
-      setLoading(false)
-    })
-  }, [drawerOpen]) */
-
   return <F>
     <LeftWrapper>
       <IconButton
@@ -68,17 +55,19 @@ const MenuLeft= (props) => {
     <Drawer anchor={"left"} open={drawerOpen} onClose={() => setDrawerOpen(false)} >
       <W1>
         <List>
-          <ListItem button key={'newsfeed'} >
-            <span onClick={() => {
+          <ListItem button key={'newsfeed'}
+            onClick={() => {
               setDrawerOpen(false)
               history.push("/en")
-            } }>Newsfeed</span>
+            } } >
+            Newsfeed
           </ListItem>
-          <ListItem button key={'cities'} >
-            <span onClick={() => {
+          <ListItem button key={'cities'}
+            onClick={() => {
               setDrawerOpen(false)
               history.push("/en/cities")
-            } }>Cities</span>
+            } }>
+            <span >Cities</span>
           </ListItem>
           { /* <ListItem button key={'map 1'} >
             <span onClick={() => {
@@ -86,19 +75,21 @@ const MenuLeft= (props) => {
               history.push("/en/locations")
             } }>The Directory</span>
           </ListItem> */ }
-          { currentUser && currentUser.bookmarks.map((b, idx) => {
-            return <ListItem button key={idx} >
-              <span onClick={() => {
+          { currentUser && currentUser.bookmarks.map((b, idx) =>
+            <ListItem button key={idx}
+              onClick={() => {
                 setDrawerOpen(false)
                 history.push(`/en/locations/show/${b.slug}`)
-              } }>{b.name}</span>
+              } } >
+              <span >{b.name}</span>
             </ListItem>
-          }) }
-          <ListItem button key={'account'} >
-            <span onClick={() => {
+          ) }
+          <ListItem button key={'account'}
+            onClick={() => {
               setDrawerOpen(false)
               history.push("/en/account")
-            } }>Account</span>
+            } } >
+            <span >Account</span>
           </ListItem>
         </List>
         <W2>

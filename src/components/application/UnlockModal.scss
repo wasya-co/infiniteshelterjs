@@ -2,6 +2,8 @@
 .ReactModal__Overlay {
   margin-top: 100vh;
   transition: margin 2000ms ease-in-out;
+
+  z-index: 2;
 }
 
 .ReactModal__Overlay--after-open {

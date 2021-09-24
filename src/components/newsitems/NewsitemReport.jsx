@@ -1,13 +1,12 @@
-import _Box from '@material-ui/core/Box'
+
 import React, { Fragment as F, useEffect, useContext, useState } from "react"
 
 import { useHistory } from "react-router-dom"
 import styled from 'styled-components'
 
-import config from "config"
 import { NewsitemContainer } from "./"
 import { Metaline, } from "$components/application"
-import { Api, logg, request, TwofoldContext } from "$shared"
+import { Api, C, logg, request, TwofoldContext } from "$shared"
 
 import "./newsitems.scss"
 
@@ -52,17 +51,22 @@ const NewsitemReport = (props) => {
   const slug = newsitem.reportname;
 
   const history = useHistory();
-  const { itemToUnlock, setItemToUnlock } = useContext(TwofoldContext)
-
-  // @TODO: revert
-  // useEffect(() => { itemToUnlock || setItemToUnlock(newsitem) }, [])
+  const {
+    itemToUnlock, setItemToUnlock,
+    layout,
+    showItem, setShowItem,
+  } = useContext(TwofoldContext)
 
   const navigateToReport = () => {
     if (newsitem.is_premium && !newsitem.is_purchased) {
       logg(newsitem, 'need to unlock this')
       setItemToUnlock(newsitem)
     } else {
-      history.push(`/en/reports/show/${slug}`)
+      if (layout === C.layout_mapui) {
+        setShowItem(newsitem)
+      } else {
+        history.push(`/en/reports/show/${slug}`)
+      }
     }
   }
 

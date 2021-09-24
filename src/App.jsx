@@ -22,17 +22,17 @@ import './theme/variables.css'
 import 'react-toastify/dist/ReactToastify.css'
 
 import config from "config"
+import { C, CollapsibleContext, Debug, logg, request, TwofoldContext, useApi, } from "$shared"
 import { BottomDrawer, Menu, MenuBottom, MenuLeft, UnlockModal } from "$components/application"
 import MapuiLayout from "$components/application/MapuiLayout"
 import { CitiesList, CitiesShow } from "$components/cities"
-import { GalleriesShow } from "$components/galleries"
+// @TODO: MyGalleries doesn't look right...
+import { GalleriesShow, MyGalleries } from "$components/galleries"
 import { LocationsShow as LocationsShow } from "$components/locations"
 import { ReportsShow } from "$components/reports"
 import { SitesShow } from '$components/sites'
-import { Account, Account2, MyAccountWidget } from "$components/users"
+import { Account, LoginModal } from "$components/users"
 import { Videos } from "$components/videos"
-import { Galleries, MyGalleries } from "$components/galleries"
-import { C, CollapsibleContext, Debug, logg, request, TwofoldContext, useApi, } from "$shared"
 
 const Root = styled.div`
   background: #dedede;
@@ -46,10 +46,12 @@ const __Container = styled(_Container)`
 `;
 
 const App = () => {
-  const [ layout, setLayout ] = useState(C.layout_onecol)
   const [ bottomDrawerOpen, setBottomDrawerOpen ] = useState(false)
   const [ currentUser, setCurrentUser ] = useState(false) // localStorage.getItem('current_user') ? JSON.parse(localStorage.getItem('current_user')) : null)
   const [ itemToUnlock, setItemToUnlock ] = useState(false)
+  const [ layout, setLayout ] = useState(C.layout_onecol)
+  const [ loginModalOpen, setLoginModalOpen ] = useState(false)
+  const [ showItem, setShowItem ] = useState(false)
   const [ showUrl, setShowUrl ] = useState(false)
   const [ zoom, setZoom ] = useState(1)
   const api = useApi()
@@ -63,6 +65,9 @@ const App = () => {
         setCurrentUser(r.data)
       }).catch((e) => {
         logg(e, 'e12')
+        if (e.message === "Request failed with status code 401") {
+          setLoginModalOpen(true)
+        }
       })
     }
     fn()
@@ -97,6 +102,8 @@ const App = () => {
         currentUser, setCurrentUser,
         itemToUnlock, setItemToUnlock,
         layout, setLayout,
+        loginModalOpen, setLoginModalOpen,
+        showItem, setShowItem,
         showUrl, setShowUrl,
         zoom, setZoom,
     }} >
@@ -127,6 +134,7 @@ const App = () => {
       </Root>
       <BottomDrawer />
       <UnlockModal />
+      <LoginModal />
 
     </TwofoldContext.Provider>
   </Router>)

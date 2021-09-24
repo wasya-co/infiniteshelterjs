@@ -39,6 +39,8 @@ export const FbLogin = (props) => {
   return <Btn onClick={doFbLogin}>FB Login</Btn>
 }
 
+export { default as LoginModal } from "./LoginModal"
+
 export const Logout = () => {
   const { currentUser, setCurrentUser } = useContext(TwofoldContext)
   const doLogout = () => {
@@ -51,7 +53,10 @@ export const Logout = () => {
 
 export const PasswordLogin = (props) => {
   const api = useApi()
-  const { currentUser, setCurrentUser } = useContext(TwofoldContext)
+  const {
+    currentUser, setCurrentUser,
+    loginModalOpen, setLoginModalOpen,
+  } = useContext(TwofoldContext)
   const [ email, setEmail ] = useState('')
   const [ password, setPassword ] = useState('')
 
@@ -66,6 +71,7 @@ export const PasswordLogin = (props) => {
       // delete resp.bookmarks
 
       localStorage.setItem('current_user', JSON.stringify(resp))
+      setLoginModalOpen(false)
     }).catch((e) => {
       logg(e, 'e322')
       toast("Login failed")

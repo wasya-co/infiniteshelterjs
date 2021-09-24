@@ -1,14 +1,12 @@
 
-
-
-import React, { Fragment as F, useContext, useEffect, useState } from "react";
-import { IonPage, IonContent } from "@ionic/react";
-import { Container, Grid } from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
-import { Link } from 'react-router-dom';
+import React, { Fragment as F, useContext, useEffect, useState } from "react"
+import { IonPage, IonContent } from "@ionic/react"
+import { Container, Grid } from '@material-ui/core'
+import { makeStyles } from '@material-ui/core/styles'
+import { Link } from 'react-router-dom'
 
 import { FbLogin, Logout, PasswordLogin } from "./"
-import { C, logg, TwofoldContext } from "$shared";
+import { C, logg, TwofoldContext } from "$shared"
 
 import "./users.scss"
 

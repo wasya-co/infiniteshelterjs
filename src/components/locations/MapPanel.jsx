@@ -37,7 +37,7 @@ const ZoomCtrl = (props) => {
     position: 'absolute',
     top: 0,
     left: 'calc(50% - 20px)',
-    zIndex: 200,
+    zIndex: 1,
     background: 'white',
     padding: '5px',
 
@@ -51,10 +51,13 @@ const ZoomCtrl = (props) => {
 }
 
 const MapPanel = (props) => {
-  logg(props, 'MapPanel')
-  const { map, location} = props
+  // logg(props, 'MapPanel')
+  const { map } = props
 
-  const { zoom, setZoom } = useContext(TwofoldContext)
+  const {
+    showUrl, setShowUrl,
+    zoom, setZoom,
+  } = useContext(TwofoldContext)
 
   const div1Ref = useRef(null)
   const history = useHistory()
@@ -67,7 +70,7 @@ const MapPanel = (props) => {
   map.markers.map((m, idx) => {
     const out = <div
       key={idx}
-      onClick={() => history.push(`/en/locations/show/${m.slug}`) }
+      onClick={() => m.url ? setShowUrl(m.url) : history.push(`/en/locations/show/${m.slug}`) }
       style={{
         position: 'absolute',
         top: zoom > 1 ? ((m.y- m.centerOffsetY )/zoom) : ((m.y )/zoom- m.centerOffsetY),

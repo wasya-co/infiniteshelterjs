@@ -15,7 +15,7 @@ const Login = (props) => {
   return (<F>
     <button>do login</button>
   </F>)
-}
+};
 
 const Root = styled.div`
   // border: 1px solid red;
@@ -25,13 +25,13 @@ const Root = styled.div`
   width: calc(100vw - ${p => p.borderWidth*2}px);
   padding: 1em;
   margin-bottom: ${p => p.borderWidth}px;
-`
+`;
 
 const W = styled.div`
   display: flex;
   justify-content: center;
   background: #dedede;
-`
+`;
 
 const MyAccountWidget = (props) => {
   const api = useApi()
@@ -70,9 +70,11 @@ const MyAccountWidget = (props) => {
         logg('something else');
       }
     }
-  };
+  }
 
   const { borderWidth } = S
+
+  if (!currentUser) { return null }
 
   return <W><Root {...{ borderWidth }} >
     { currentUser.email ? currentUser.email : <Login /> } &nbsp;
@@ -95,7 +97,7 @@ const MyAccountWidget = (props) => {
 
     </Modal>
   </Root></W>
-};
+}
 
 const WrappedMyAccountWidget = (props) => <Elements stripe={stripePromise}><MyAccountWidget {...props} /></Elements>;
 
