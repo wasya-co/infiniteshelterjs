@@ -59,12 +59,10 @@ const App = () => {
     const fn = async () => {
       // check jwt
       const jwtToken = localStorage.getItem('jwt_token')
-      let response = await request.get(`${config.apiOrigin}${api.myAccount()}?jwt_token=${jwtToken}`
-      ).then((r) => {
+      await request.get(`${config.apiOrigin}${api.myAccount()}?jwt_token=${jwtToken}`).then((r) => {
         setCurrentUser(r.data)
       }).catch((e) => {
-        // logg(e, 'e12')
-        setCurrentUser(null)
+        logg(e, 'e12')
       })
     }
     fn()

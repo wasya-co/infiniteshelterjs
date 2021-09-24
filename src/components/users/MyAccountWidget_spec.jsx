@@ -1,12 +1,11 @@
 import Adapter from "enzyme-adapter-react-16"
-import * as enzyme from "enzyme"
-import { mount, shallow } from "enzyme"
+import { configure, mount } from "enzyme"
 import React, { useState } from "react"
 
 import { MyAccountWidget } from "$components/users"
 import { AppMock, logg } from "$shared"
 
-enzyme.configure({ adapter: new Adapter() })
+configure({ adapter: new Adapter() })
 
 describe("MyAccountWidget", () => {
 

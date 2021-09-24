@@ -9,6 +9,9 @@ var localStorageMock = (function() {
         setItem: function(key, value) {
             store[key] = value.toString();
         },
+        removeItem: function(key) {
+            delete store[key];
+        },
         clear: function() {
             store = {};
         }

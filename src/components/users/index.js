@@ -50,7 +50,6 @@ export const Logout = () => {
 }
 
 export const PasswordLogin = (props) => {
-  logg(props, 'PasswordLogin')
   const api = useApi()
   const { currentUser, setCurrentUser } = useContext(TwofoldContext)
   const [ email, setEmail ] = useState('')
@@ -58,9 +57,15 @@ export const PasswordLogin = (props) => {
 
   const doPasswordLogin = async (email, password) => {
     request.post(`${config.apiOrigin}${api.loginPath}`, { email, password }).then((r) => r.data).then((resp) => {
-      localStorage.setItem('jwt_token', resp.jwt_token)
-      localStorage.setItem('current_user', JSON.stringify(resp))
       setCurrentUser(resp)
+      localStorage.setItem('jwt_token', resp.jwt_token)
+
+      // @TODO: make sure this response has jwt_token.
+      // @TODO: this should be done differently.
+      // delete resp.jwt_token
+      // delete resp.bookmarks
+
+      localStorage.setItem('current_user', JSON.stringify(resp))
     }).catch((e) => {
       logg(e, 'e322')
       toast("Login failed")

@@ -1,27 +1,32 @@
-import React from 'react';
-import { configure, shallow } from 'enzyme';
-import App from '$src/App';
-import { logg } from "$shared";
-import Adapter from 'enzyme-adapter-react-16';
-configure({ adapter: new Adapter() });
+import React from 'react'
+import { configure, mount, shallow } from 'enzyme'
+import Adapter from 'enzyme-adapter-react-16'
 
-/* Object.defineProperty(window, 'matchMedia', {
+import App from './App'
+import { logg, request } from "$shared"
+
+configure({ adapter: new Adapter() })
+
+jest.mock('request')
+request.get = jest.fn()
+
+Object.defineProperty(window, 'matchMedia', {
   writable: true,
   value: jest.fn().mockImplementation(query => ({
     matches: false,
     media: query,
     onchange: null,
-    addListener: jest.fn(), // deprecated
-    removeListener: jest.fn(), // deprecated
+    addListener: jest.fn(), // Deprecated
+    removeListener: jest.fn(), // Deprecated
     addEventListener: jest.fn(),
     removeEventListener: jest.fn(),
     dispatchEvent: jest.fn(),
   })),
-}); */
-
-test('renders without crashing', () => {
-  const app = shallow(<App />);
-  logg(app, 'app');
-  expect(true).toBeTruthy();
-  // expect(baseElement).toBeDefined();
 });
+
+test('current - loads currentUser from api', () => {
+  localStorage.setItem('jwt_token', 'jwt-token')
+  let component = mount(<App />)
+  expect(component).toBeTruthy()
+  expect(request.get.mock.calls[0][0]).toEqual(`http://localhost:3000/api/my/account?jwt_token=jwt-token`)
+})
