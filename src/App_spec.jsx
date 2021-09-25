@@ -24,7 +24,7 @@ Object.defineProperty(window, 'matchMedia', {
   })),
 });
 
-test('current - loads currentUser from api', () => {
+test('loads currentUser from api', () => {
   localStorage.setItem('jwt_token', 'jwt-token')
   let component = mount(<App />)
   expect(component).toBeTruthy()

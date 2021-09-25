@@ -1,7 +1,7 @@
 import React from "react"
 import styled from 'styled-components'
 
-import { Api, logg } from "$shared"
+import { Api, C, logg } from "$shared"
 import NewsitemGallery from "$components/newsitems/NewsitemGallery"
 import NewsitemReport from "$components/newsitems/NewsitemReport"
 import NewsitemVideo from "$components/newsitems/NewsitemVideo"
@@ -30,9 +30,9 @@ const Newsitems = (props) => {
 
         return (
           <div key={idx} className={`items premium-${premium_tier}`}>
-            { newsitem.item_type === "gallery" && <NewsitemGallery gallery={newsitem}  icon={icon} /> }
-            { newsitem.item_type === "report"  && <NewsitemReport  newsitem={newsitem} icon={icon} /> }
-            { newsitem.item_type === "video"   && <NewsitemVideo   data={newsitem}     icon={icon} /> }
+            { newsitem.item_type === C.item_types.gallery && <NewsitemGallery item={newsitem} /> }
+            { newsitem.item_type === C.item_types.report  && <NewsitemReport  item={newsitem} /> }
+            { newsitem.item_type === C.item_types.video   && <NewsitemVideo   item={newsitem} /> }
           </div>
         )
       }) }

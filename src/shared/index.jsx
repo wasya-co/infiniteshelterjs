@@ -16,12 +16,15 @@ export const Box = styled(_Box)`
   margin-bottom: 1em;
   padding: 1em;
   background: white;
-  // cursor: pointer;
+  cursor: ${p => p.cursor ? p.cursor : 'auto'};
 
   display: flex;
   flex-direction: column;
 `;
 
+/**
+ * Just your regular shadowed box. Pointer cursor. TDD
+ */
 export const Btn = styled.div`
   border: 1px solid gray;
   border-radius: 5px;
@@ -36,6 +39,12 @@ export const C = {
 
   layout_onecol: 'onecol',
   layout_mapui: 'mapui',
+
+  item_types: {
+    gallery: 'Gallery',
+    report: 'Report',
+    video: 'Video',
+  },
 }
 
 export { default as Collapsible } from "./Collapsible"
@@ -43,6 +52,21 @@ export const CollapsibleContext = React.createContext({})
 
 export const Debug = styled.div`
 `;
+
+/**
+ * Like the rails inflector, has methods:
+ * tableize()
+ */
+export const inflector = {
+  tableize: (m) => {
+    switch(m) {
+      case 'Gallery':
+        return 'galleries'
+      default:
+      return `${m.toLowerCase()}s`
+    }
+  },
+}
 
 /**
  * Usage: logg(someObject, 'label')

@@ -1,7 +1,7 @@
 import { IonPage, IonLoading, IonContent, IonIcon } from '@ionic/react';
 import { funnel, bookmark, newspaperOutline, image, videocam } from 'ionicons/icons';
 import React, { Fragment as F, useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import styled from 'styled-components'
 
 import { useApi, AppRouter, logg, Wrapper } from "$shared"
@@ -13,6 +13,7 @@ const Cities = (props) => {
   const [filteredCities, setFilteredCities] = useState([]);
   const [showLoading, setShowLoading] = useState(false);
   const api = useApi()
+  const history = useHistory()
 
   useEffect(() => {
     setShowLoading(true);
@@ -21,24 +22,14 @@ const Cities = (props) => {
       setFilteredCities(res);
       setCities(res);
     });
-  }, []);
+  }, [])
 
-
-  function filterHandler(ev) {
+  const filterHandler = (ev) => {
     let filteredCities = cities.filter(city => {
       return city.name.toLowerCase().indexOf(ev.target.value.trim().toLowerCase()) > -1;
     });
     setFilteredCities(filteredCities);
   }
-
-  function navigateToCity(slug) {
-    props.history.push();
-  }
-
-  function navigate(path) {
-    logg(path, 'navigating');
-    props.history.push(path);
-  };
 
   return <F>
     <Wrapper className='cities' >
@@ -60,15 +51,13 @@ const Cities = (props) => {
       </div>
 
       <div className="container">
-        { filteredCities.map((city, i) => <div key={i} className="cities" >
+        { filteredCities.map((city, i) => <div key={i} className="cities" onClick={() => history.push(AppRouter.cityPath(city.slug)) } >
             <div className="img-section">
               <span className="bookmark" >
                 <IonIcon className="bookmark-icon" icon={bookmark}></IonIcon>
               </span>
               <img className="city-img" src={city.photo} />
-              <Link to={AppRouter.cityPath(city.slug)} >
-                <span className="city-title">{city.name}</span>
-              </Link>
+              <span className="city-title">{city.name}</span>
             </div>
             <div className="content-section">
               <div className="content-item">

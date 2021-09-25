@@ -4,7 +4,7 @@
 import React, { Fragment as F, useState } from "react"
 import styled from 'styled-components'
 
-import { Box } from "$shared"
+import { Box, inflector } from "$shared"
 
 export { default as NewsitemGallery } from "./NewsitemGallery"
 export { default as NewsitemReport } from "./NewsitemReport"
@@ -15,23 +15,10 @@ const ICONS = {
   2: "/assets/newsfeed/gem_premium.png"
 }
 
-/*
-export const W1 = styled(_Box)`
-  margin-bottom: 1em;
-  padding: 1em;
-  background: white;
-  cursor: pointer;
+export { default as ItemIcon } from "./ItemIcon"
 
-  display: flex;
-  flex-direction: column;
-`;
-*/
-
-
-
-const NewsitemContainer = ({ children, ...props }) => <Box boxShadow={2} {...props}>{children}</Box>
+export { default as NewsitemContainer } from "./NewsitemContainer"
 
 export {
   ICONS,
-  NewsitemContainer,
 }

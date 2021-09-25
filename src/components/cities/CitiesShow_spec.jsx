@@ -1,7 +1,6 @@
 import Adapter from "enzyme-adapter-react-16"
 import * as enzyme from "enzyme"
 import { mount } from "enzyme"
-// import { createMemoryHistory } from 'history'
 import React from "react"
 import { act } from "react-dom/test-utils"
 import {
@@ -10,16 +9,10 @@ import {
 
 
 import { CitiesShow } from "$components/cities"
-import { AppMock, logg, } from "$shared"
+import { AppMock, C, logg, } from "$shared"
 import useApi from "$shared/Api"
 
 enzyme.configure({ adapter: new Adapter() })
-
-/* jest.mock('react-router-dom', () => ({
-  useHistory: () => ({
-    push: jest.fn(),
-  }),
-})) */
 
 jest.mock('$shared/Api', () => {
   return {
@@ -31,7 +24,7 @@ jest.mock('$shared/Api', () => {
             resolve({
               data: {
                 city: {
-                  newsitems: [{ name: 'report-name-2', item_type: 'report' }]
+                  newsitems: [{ name: 'report-name-2', item_type: 'Report' }]
                 }
               }
             })
@@ -41,15 +34,6 @@ jest.mock('$shared/Api', () => {
     },
   }
 })
-
-/* jest.mock('react-router-dom', () => {
-  const originalModule = jest.requireActual('react-router-dom')
-  return {
-    __esModule: true,
-    ...originalModule,
-    useHistory: jest.fn(() => ({ location: { pathname: '/en/cities/travel-to/chicago', search: '', hash: '' } })),
-  }
-}) */
 
 const theseProps = { match: { url: '/en/cities/travel-to/chicago', params: '?' } }
 

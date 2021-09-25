@@ -1,6 +1,6 @@
 
 const AppRouter = {
-  cityPath: (slug) => `/en/cities/travel-to/${slug}/show/newsfeed`,
+  cityPath: (slug) => `/en/cities/travel-to/${slug}`,
 };
 
 export default AppRouter;
