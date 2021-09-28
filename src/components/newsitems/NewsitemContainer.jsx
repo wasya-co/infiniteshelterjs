@@ -31,7 +31,7 @@ const Title = styled.h2`
  * TDD
  */
 const NewsitemContainer = ({ children, ...props }) => {
-  logg(props, 'NewsitemContainer')
+  // logg(props, 'NewsitemContainer')
   const { item } = props
   const { item_type, slug } = item
 

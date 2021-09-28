@@ -46,22 +46,33 @@ const __Container = styled(_Container)`
 `;
 
 const App = () => {
+  logg(null, 'App renders')
+
   const [ bottomDrawerOpen, setBottomDrawerOpen ] = useState(false)
-  const [ currentUser, setCurrentUser ] = useState(false) // localStorage.getItem('current_user') ? JSON.parse(localStorage.getItem('current_user')) : null)
-  const [ itemToUnlock, setItemToUnlock ] = useState(false)
-  const [ layout, setLayout ] = useState(C.layout_onecol)
   const [ loginModalOpen, setLoginModalOpen ] = useState(false)
+  const [ currentUser, setCurrentUser ] = useState(false) // localStorage.getItem('current_user') ? JSON.parse(localStorage.getItem('current_user')) : null)
+  const [ itemToUnlock, _setItemToUnlock ] = useState({})
+  const setItemToUnlock = (item) => {
+    if (itemToUnlock.id !== item.id && !loginModalOpen) {
+      _setItemToUnlock(item)
+    }
+  }
+  const [ layout, setLayout ] = useState(C.layout_onecol)
+
   const [ showItem, setShowItem ] = useState(false)
   const [ showUrl, setShowUrl ] = useState(false)
   const [ zoom, setZoom ] = useState(1)
   const api = useApi()
 
-  // const mountedRef = useRef('init')
+  const mountedRef = useRef('init')
   useEffect(() => {
+    logg('this shoudl not run')
+
     const fn = async () => {
       // check jwt
       const jwtToken = localStorage.getItem('jwt_token')
       await request.get(`${config.apiOrigin}${api.myAccount()}?jwt_token=${jwtToken}`).then((r) => {
+        if (!mountedRef.current) { return }
         setCurrentUser(r.data)
       }).catch((e) => {
         logg(e, 'e12')
@@ -71,7 +82,8 @@ const App = () => {
       })
     }
     fn()
-  }, [])
+    return () => mountedRef.current = null
+  }, [currentUser]) // @TODO: currentUser here is appropriate?
 
   const Container = (props) => {
     switch(layout) {

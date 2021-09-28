@@ -34,17 +34,17 @@ export const Btn = styled.div`
 `;
 
 export const C = {
-  jwt_token: 'jwt_token',
   current_user: 'current_user',
-
-  layout_onecol: 'onecol',
-  layout_mapui: 'mapui',
+  jwt_token: 'jwt_token',
 
   item_types: {
     gallery: 'Gallery',
     report: 'Report',
     video: 'Video',
   },
+
+  layout_onecol: 'onecol',
+  layout_mapui: 'mapui',
 }
 
 export { default as Collapsible } from "./Collapsible"

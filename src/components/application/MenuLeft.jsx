@@ -33,12 +33,11 @@ const W2 = styled.div`
 `;
 
 const MenuLeft= (props) => {
-  // logg(props, 'MenuLeft')
+  logg(props, 'MenuLeft')
   const [drawerOpen, setDrawerOpen] = React.useState(false)
   const [ loading, setLoading ] = useState(false)
   const history = useHistory()
   const { currentUser, setCurrentUser } = useContext(TwofoldContext)
-  logg(currentUser, 'currentUser')
 
   return <F>
     <LeftWrapper>

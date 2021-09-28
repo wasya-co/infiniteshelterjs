@@ -12,7 +12,7 @@ import { C, logg } from "$shared"
  * @param [String] props.kind
  */
  export const ItemIcon = (props) => {
-  logg(props, "ItemIcon")
+  // logg(props, "ItemIcon")
   const { is_purchased, item_type, premium_tier } = props
 
   if (is_purchased) {
