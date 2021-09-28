@@ -6,13 +6,8 @@ import styled from 'styled-components'
 import './UnlockModal.scss'
 import config from 'config'
 import { Btn, C, logg, request, TwofoldContext, useApi, } from "$shared"
-import { doFbLogin, doPasswdLogin, FbLogin } from "$components/users"
 
 const Btn0 = styled.div`
-  // border: 1px solid gray;
-  // border-radius: 5px;
-  // padding: .2em;
-
   display: inline;
   cursor: pointer;
 `;
@@ -41,9 +36,9 @@ const UnlockModal = (props) => {
   const {
     currentUser, setCurrentUser,
     itemToUnlock, setItemToUnlock,
+    loginModalOpen, setLoginModalOpen,
   } = useContext(TwofoldContext)
   const usedTwofoldContext = useContext(TwofoldContext)
-  logg(usedTwofoldContext, 'useContext(TwofoldContext)')
 
   const api = useApi()
 
@@ -59,14 +54,11 @@ const UnlockModal = (props) => {
 
   const mountedRef = useRef('init')
   useEffect(() => {
-    logg(usedTwofoldContext, 'UnlockModal.useEffect()')
 
     const fn = async () => {
       const jwtToken = localStorage.getItem(C.jwt_token)
       await request.get(`${config.apiOrigin}${api.myAccount()}?jwt_token=${jwtToken}`).then((r) => {
         if (!mountedRef.current) { return }
-        logg('this runs all the time')
-
         setCurrentUser(r.data)
       }).catch((e) => {
         // logg(e, 'e12')
@@ -82,12 +74,12 @@ const UnlockModal = (props) => {
   return (<Modal style={modalStyle} ariaHideApp={false} isOpen={!!itemToUnlock.id} >
     <Header>
       <h1>Unlock this item?</h1>
-      <Btn0 onClick={() => setItemToUnlock({}) } >&times;</Btn0>
+      <Btn0 onClick={() => setItemToUnlock(false) } >&times;</Btn0>
     </Header>
     <p>To access this content, please unlock it first. It costs 1 (one) coin to unlock.</p>
     { !!currentUser
       && <p>You have <b>{currentUser.n_unlocks}</b> unlocks.</p>
-      || <p>You have to be logged in to unlock content. Please login.</p> }
+      || <p>You have to be logged in to unlock content. <a onClick={() => { setLoginModalOpen(true) ; setItemToUnlock(false) }}>Please login.</a></p> }
     <BtnRow>
       { !!currentUser && <Btn onClick={doUnlock} >Unlock</Btn> }
     </BtnRow>

@@ -22,32 +22,23 @@ const GalleriesShow = (props) => {
   const mountedRef = useRef('init')
 
   const getGallery = async () => {
-    setShowLoading(true)
-    logg(mountedRef.current, 'keeps happening 444')
-
     const token = localStorage.getItem(C.jwt_token)
     await request.get(`/api/galleries/view/${match.params.slug}`, { params: { jwt_token: token } }).then(res => {
-      logg(mountedRef, 'ze mountedRef')
-
       if (!mountedRef.current) { return }
-      logg(mountedRef.current, 'keeps happening 555')
-
       const gallery = res.data.gallery
       if (gallery.is_premium && !gallery.is_purchased) {
         setItemToUnlock(gallery)
       } else {
         setGallery(res.data.gallery)
       }
-      setShowLoading(false)
     })
-    logg('done not done')
   }
-
-  logg([gallery.id, itemToUnlock.id], 'what are these?')
 
   useEffect(() => {
     getGallery()
-    return () => mountedRef.current = null
+    return () => {
+      mountedRef.current = null
+    }
   }, [gallery.id, itemToUnlock.id] )
 
   return (<F>
