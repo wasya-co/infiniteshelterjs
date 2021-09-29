@@ -1,3 +1,5 @@
+
+
 import { Container as _Container, Grid, GridList } from '@material-ui/core'
 import React, { Fragment as F, useEffect, useRef, useState } from 'react'
 import {
@@ -45,12 +47,12 @@ const __Container = styled(_Container)`
   overflow: scroll;
 `;
 
-const App = () => {
-  logg(null, 'App renders')
+const AppDesktop = (props) => {
+  logg(props, 'AppDesktop renders')
+  const { currentUser, setCurrentUser } = props
 
   const [ bottomDrawerOpen, setBottomDrawerOpen ] = useState(false)
   const [ loginModalOpen, setLoginModalOpen ] = useState(false)
-  const [ currentUser, setCurrentUser ] = useState(false) // localStorage.getItem('current_user') ? JSON.parse(localStorage.getItem('current_user')) : null)
   const [ itemToUnlock, _setItemToUnlock ] = useState({})
   const setItemToUnlock = (item) => {
     if (itemToUnlock.id !== item.id && !loginModalOpen) {
@@ -64,26 +66,7 @@ const App = () => {
   const [ zoom, setZoom ] = useState(1)
   const api = useApi()
 
-  const mountedRef = useRef('init')
-  useEffect(() => {
-    logg('this shoudl not run')
 
-    const fn = async () => {
-      // check jwt
-      const jwtToken = localStorage.getItem('jwt_token')
-      await request.get(`${config.apiOrigin}${api.myAccount()}?jwt_token=${jwtToken}`).then((r) => {
-        if (!mountedRef.current) { return }
-        setCurrentUser(r.data)
-      }).catch((e) => {
-        logg(e, 'e12')
-        if (e.message === "Request failed with status code 401") {
-          setLoginModalOpen(true)
-        }
-      })
-    }
-    fn()
-    return () => mountedRef.current = null
-  }, [currentUser]) // @TODO: currentUser here is appropriate?
 
   const Container = (props) => {
     switch(layout) {
@@ -111,7 +94,7 @@ const App = () => {
     <ToastContainer />
     <TwofoldContext.Provider value={{
         bottomDrawerOpen, setBottomDrawerOpen,
-        currentUser, setCurrentUser,
+        currentUser, setCurrentUser, // @TODO: move this to an AppWrapper context
         itemToUnlock, setItemToUnlock,
         layout, setLayout,
         loginModalOpen, setLoginModalOpen,
@@ -152,4 +135,4 @@ const App = () => {
   </Router>)
 }
 
-export default App
+export default AppDesktop

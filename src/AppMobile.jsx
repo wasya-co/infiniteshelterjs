@@ -15,9 +15,7 @@ import '@ionic/react/css/text-alignment.css'
 import '@ionic/react/css/text-transformation.css'
 import '@ionic/react/css/flex-utils.css'
 import '@ionic/react/css/display.css'
-
 import './theme/variables.css'
-import './app.scss'
 
 import config from "config"
 import { BottomDrawer, Menu, MenuBottom, MenuLeft } from "$components/application"
@@ -27,10 +25,10 @@ import { GalleriesShow } from "$components/galleries"
 import { LocationsShowMobile as LocationsShow } from "$components/locations"
 import { ReportsShow } from "$components/reports"
 import { SitesShow } from '$components/sites'
-import { Account, Account2, MyAccountWidget } from "$components/users"
+import { Account } from "$components/users"
 import { Videos } from "$components/videos"
 import { Galleries, MyGalleries } from "$components/galleries"
-import { Api, C, CollapsibleContext, Debug, logg, request, TwofoldContext } from "$shared"
+import { useApi, C, CollapsibleContext, Debug, logg, request, TwofoldContext } from "$shared"
 
 const Root = styled.div`
   background: #dedede;
@@ -43,11 +41,15 @@ const __Container = styled(_Container)`
   overflow: scroll;
 `;
 
-const App = () => {
+const AppMobile = (props) => {
+  logg(props, 'AppMobile renders')
+  const { currentUser, setCurrentUser } = props
+
   const [ layout, setLayout ] = useState(C.layout_onecol)
   const [ bottomDrawerOpen, setBottomDrawerOpen ] = React.useState(false)
   const [ itemToUnlock, setItemToUnlock ] = React.useState(false)
   const [ zoom, setZoom ] = useState(1)
+  const api = useApi()
 
   const Container = (props) => {
     switch(layout) {
@@ -73,13 +75,15 @@ const App = () => {
 
   const doUnlock = async () => {
     // @TODO: check how many unlocks I have, and offer to purchase more if not enough.
-    const path = Api.doUnlock({ kind: 'Report', id: itemToUnlock.report_id });
+    const path = api.doUnlock({ kind: 'Report', id: itemToUnlock.report_id });
     const result = await request.post(`${config.apiOrigin}${path}`);
     logg(result, 'result of unlocking')
   };
 
+  /**
+   * These are the left tabs and right tabs, but they are all in-line
+   */
   const [ collapsibles, setCollapsibles ] = useState({
-    // 'map-sec': true,
     'descr-sec': true,
   })
 
@@ -87,6 +91,7 @@ const App = () => {
   return (<Router>
     <TwofoldContext.Provider value={{
         bottomDrawerOpen, setBottomDrawerOpen,
+        currentUser, setCurrentUser,
         itemToUnlock, setItemToUnlock,
         layout, setLayout,
         zoom, setZoom,
@@ -126,4 +131,4 @@ const App = () => {
   </Router>)
 }
 
-export default App
+export default AppMobile
