@@ -20,11 +20,13 @@ const Col = styled.div`
 const Row = styled.div`
   display: flex;
   flex-direction: row;
+  align-items: flex-start;
 
   // padding: 0 1em;
 `;
 
 const Title = styled.h2`
+  margin-top: 0;
 `;
 
 /**

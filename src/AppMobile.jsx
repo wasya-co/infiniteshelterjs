@@ -22,7 +22,7 @@ import { BottomDrawer, Menu, MenuBottom, MenuLeft } from "$components/applicatio
 import MapuiLayout from "$components/application/MapuiLayout"
 import { CitiesList, CitiesShow } from "$components/cities"
 import { GalleriesShow } from "$components/galleries"
-import { LocationsShowMobile as LocationsShow } from "$components/locations"
+import { LocationsShowMobile } from "$components/locations"
 import { ReportsShow } from "$components/reports"
 import { SitesShow } from '$components/sites'
 import { Account } from "$components/users"
@@ -116,7 +116,7 @@ const AppMobile = (props) => {
 
               <Route exact path="/en/reports/show/:slug" component={ReportsShow} />
 
-              <Route exact path="/en/locations/show/:slug" component={LocationsShow} layout={C.layout_mapui} />
+              <Route exact path="/en/locations/show/:slug" component={LocationsShowMobile} layout={C.layout_mapui} />
 
             </Switch>
           </Container>

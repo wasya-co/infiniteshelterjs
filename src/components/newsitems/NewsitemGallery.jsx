@@ -40,7 +40,11 @@ const ImageThumb1 = styled.img`
   top: 0;
 `;
 
-const ImageThumb2 = styled.img``;
+const ImageThumb2 = styled.img`
+  position: absolute;
+  left: 200px;
+  top: 100px;
+`;
 
 /**
  * TDD

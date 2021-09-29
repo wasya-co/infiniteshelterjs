@@ -49,10 +49,12 @@ const __Container = styled(_Container)`
 
 const AppDesktop = (props) => {
   logg(props, 'AppDesktop renders')
-  const { currentUser, setCurrentUser } = props
+  const {
+    currentUser, setCurrentUser,
+    loginModalOpen, setLoginModalOpen,
+  } = props
 
   const [ bottomDrawerOpen, setBottomDrawerOpen ] = useState(false)
-  const [ loginModalOpen, setLoginModalOpen ] = useState(false)
   const [ itemToUnlock, _setItemToUnlock ] = useState({})
   const setItemToUnlock = (item) => {
     if (itemToUnlock.id !== item.id && !loginModalOpen) {

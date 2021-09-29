@@ -122,15 +122,25 @@ const Map2 = (props) => {
   </W1>)
 }
 
+const Marker = styled.div`
+  margin: 10px;
+  width: 20vw;
+`;
+
 const Markers = (props) => {
+  logg(props, 'Markers')
+  const history = useHistory()
+
   const out = []
   props.markers.map((m, idx) => {
-    out.push(<div key={idx} style={{ margin: '10px' }} >
+    out.push(<Marker key={idx}
+      onClick={() => m.url ? window.location.href=m.url : history.push(`/en/locations/show/${m.slug}`) }
+    >
       <img src={m.title_img_path} /><br />
       {m.name}
-    </div>)
+    </Marker>)
   })
-  return <div style={{ display: 'flex' }} >{out}</div>
+  return <div style={{ display: 'flex', flexWrap: 'wrap' }} >{out}</div>
 }
 
 const Row = styled.div`
@@ -141,7 +151,7 @@ const Row = styled.div`
 
   overflow: scroll;
   height: calc(100vh - 40px); /* @TODO: why 40px?! */
-`
+`;
 
 
 const LocationsShow = (props) => {
@@ -174,9 +184,9 @@ const LocationsShow = (props) => {
 
     { loading && <i>Loading...</i> }
     { location && <Breadcrumbs {...location} /> }
-    <Collapsible slug="map-sec" label="Map" >
+    { /* <Collapsible slug="map-sec" label="Map" >
       { location && <Map2 location={location} /> }
-    </Collapsible>
+    </Collapsible> */ }
     <Collapsible slug="descr-sec" label="Description" >
       { location && <Description item={location} /> }
     </Collapsible>
