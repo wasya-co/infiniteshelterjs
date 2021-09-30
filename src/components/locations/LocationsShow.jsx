@@ -38,7 +38,7 @@ const Left = styled.div`
   flex: 50%;
   overflow: scroll;
 
-  // height: calc(100vh - 40px - ${p => p.bottomDrawerOpen ? `${p.bottomDrawerHeight-p.borderWidth}px` : '0px' });
+  height: calc(100vh - 40px - ${p => p.bottomDrawerOpen ? `${p.bottomDrawerHeight-p.borderWidth}px` : '0px' });
 `;
 
 const Right = styled.div`

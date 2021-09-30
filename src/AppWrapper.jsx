@@ -31,7 +31,7 @@ const AppWrapper = (props) => {
         }
       })
     }
-    fn()
+    if (config.requireLogin || typeof config.requireLogin === 'undefined') { fn() }
     return () => mountedRef.current = null
   }, [currentUser]) // @TODO: currentUser here is appropriate?
 

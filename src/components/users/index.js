@@ -64,12 +64,6 @@ export const PasswordLogin = (props) => {
     request.post(`${config.apiOrigin}${api.loginPath}`, { email, password }).then((r) => r.data).then((resp) => {
       setCurrentUser(resp)
       localStorage.setItem('jwt_token', resp.jwt_token)
-
-      // @TODO: make sure this response has jwt_token.
-      // @TODO: this should be done differently.
-      // delete resp.jwt_token
-      // delete resp.bookmarks
-
       localStorage.setItem('current_user', JSON.stringify(resp))
       setLoginModalOpen(false)
     }).catch((e) => {

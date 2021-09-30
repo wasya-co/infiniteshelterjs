@@ -28,7 +28,7 @@ import { SitesShow } from '$components/sites'
 import { Account } from "$components/users"
 import { Videos } from "$components/videos"
 import { Galleries, MyGalleries } from "$components/galleries"
-import { useApi, C, CollapsibleContext, Debug, logg, request, TwofoldContext } from "$shared"
+import { useApi, C, CollapsibleContext, Debug, logg, request, TwofoldContextProvider } from "$shared"
 
 const Root = styled.div`
   background: #dedede;
@@ -42,7 +42,7 @@ const __Container = styled(_Container)`
 `;
 
 const AppMobile = (props) => {
-  logg(props, 'AppMobile renders')
+  logg(props, 'AppMobile')
   const { currentUser, setCurrentUser } = props
 
   const [ layout, setLayout ] = useState(C.layout_onecol)
@@ -89,15 +89,9 @@ const AppMobile = (props) => {
 
 
   return (<Router>
-    <TwofoldContext.Provider value={{
-        bottomDrawerOpen, setBottomDrawerOpen,
-        currentUser, setCurrentUser,
-        itemToUnlock, setItemToUnlock,
-        layout, setLayout,
-        zoom, setZoom,
-    }} >
+    <TwofoldContextProvider {...props} {...{ layout, setLayout }} >
       <CollapsibleContext.Provider value={{ collapsibles, setCollapsibles, }} >
-        <MenuLeft />
+        <MenuLeft variant={C.variants.floating} />
         <Root>
           <Container >
             <Switch id="main" main >
@@ -127,7 +121,7 @@ const AppMobile = (props) => {
           <button onClick={doUnlock}>Do it</button>
         </Modal>
       </CollapsibleContext.Provider>
-    </TwofoldContext.Provider>
+    </TwofoldContextProvider>
   </Router>)
 }
 

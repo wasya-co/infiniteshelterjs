@@ -11,20 +11,32 @@ const Div1 = styled.div`
   display: block;
 
   position: relative;
+  overflow: scroll;
+
+  height: calc(100vh - ${p => p.breadcrumbsHeight} -
+    ${p => p.bottomDrawerOpen ?
+      `${p.bottomDrawerHeight} - 2*${p.borderWidth}`
+      : `4*${p.borderWidth}` }); /* @TODO: it's not really 4 borders, it's 1 on top, and 2 but thick (collapsed) on bottom. */
+
 `;
 
 const Div3 = styled.div`
+  // border: 2px solid cyan;
+
+  display: inline-block;
+  position: relative;
+
 `;
 
 const Root = styled.div`
   border: 1px solid red;
 
+  position: relative;
   overflow: scroll;
   height: calc(100vh - ${p => p.breadcrumbsHeight} -
     ${p => p.bottomDrawerOpen ?
       `${p.bottomDrawerHeight} - 2*${p.borderWidth}`
       : `4*${p.borderWidth}` }); /* @TODO: it's not really 4 borders, it's 1 on top, and 2 but thick (collapsed) on bottom. */
-  position: relative;
 `;
 
 const ZoomCtrl = (props) => {
@@ -68,10 +80,17 @@ const MapPanel = (props) => {
   } = useContext(TwofoldContext)
 
   const div1Ref = useRef(null)
+  logg(div1Ref, 'div1Ref')
+
   const history = useHistory()
 
   useEffect(() => {
-    // div1Ref.current.scrollIntoView({ block: 'end' })
+    // div1Ref.current.scrollIntoView({ block: 'end', inline: 'center' })
+    div1Ref.current.scroll({
+      top: 200,
+      left: 200,
+      behavior: 'smooth',
+     })
   }, [])
 
   const markers = []
@@ -95,25 +114,21 @@ const MapPanel = (props) => {
   return <Root {...S} {...{ bottomDrawerOpen }} className='MapPanel' >
     <ZoomCtrl />
 
-      <Div1 ref={div1Ref} >
-        <Div3 style={{
-            // border: '2px solid cyan',
-
-            display: 'inline-block',
-            position: 'relative',
+    <Div1 {...S} {...{ bottomDrawerOpen }} >
+      <Div3 ref={div1Ref} style={{
+        width: `${map.w/zoom}px`,
+        height: `${map.h/zoom}px`,
+      }} >
+        <img
+          src={map.img_path}
+          style={{
             width: `${map.w/zoom}px`,
             height: `${map.h/zoom}px`,
-        }} >
-          <img
-            src={map.img_path}
-            style={{
-              width: `${map.w/zoom}px`,
-              height: `${map.h/zoom}px`,
-            }}
-          />
-          { markers }
-        </Div3>
-      </Div1>
+          }}
+        />
+        { markers }
+      </Div3>
+    </Div1>
 
   </Root>
 }

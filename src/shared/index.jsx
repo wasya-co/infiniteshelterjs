@@ -45,6 +45,11 @@ export const C = {
 
   layout_onecol: 'onecol',
   layout_mapui: 'mapui',
+
+  variants: {
+    floating: 'floating',
+    inline: 'inline',
+  },
 }
 
 export { default as Collapsible } from "./Collapsible"

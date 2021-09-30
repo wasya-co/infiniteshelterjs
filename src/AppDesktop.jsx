@@ -48,7 +48,7 @@ const __Container = styled(_Container)`
 `;
 
 const AppDesktop = (props) => {
-  logg(props, 'AppDesktop renders')
+  logg(props, 'AppDesktop')
   const {
     currentUser, setCurrentUser,
     loginModalOpen, setLoginModalOpen,

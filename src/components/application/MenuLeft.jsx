@@ -1,10 +1,12 @@
 import { IonApp, IonButtons, IonMenuButton } from '@ionic/react'
 import Drawer from '@material-ui/core/Drawer'
+import Fab from '@material-ui/core/Fab'
 import IconButton from '@material-ui/core/IconButton'
 import MenuIcon from '@material-ui/icons/Menu'
 import List from '@material-ui/core/List'
 import ListItem from '@material-ui/core/ListItem'
 import ListItemIcon from '@material-ui/core/ListItemIcon'
+import PropTypes from 'prop-types'
 import React, { Fragment as F, useContext, useEffect, useState } from 'react'
 import { useHistory } from 'react-router-dom'
 import styled from 'styled-components'
@@ -12,7 +14,7 @@ import styled from 'styled-components'
 import { Menu } from "$components/application"
 import { Api, C, Debug, logg, TwofoldContext } from "$shared"
 
-const LeftWrapper = styled.div`
+const _LeftWrapper = styled.div`
   // border: 1px solid green;
 
   position: absolute;
@@ -21,6 +23,13 @@ const LeftWrapper = styled.div`
 
   background: white;
 `;
+const LeftWrapper = ({ children, ...props }) => {
+  if (props.variant === C.variants.floating) {
+    return <Fab style={{ position: 'absolute', margin: '.5em' }} aria-label='main menu'>{children}</Fab>
+  } else {
+    return <_LeftWrapper >{children}</_LeftWrapper>
+  }
+}
 
 const W1 = styled.div`
   height: 100vh;
@@ -33,21 +42,18 @@ const W2 = styled.div`
 `;
 
 const MenuLeft= (props) => {
-  // logg(props, 'MenuLeft')
+  logg(props, 'MenuLeft')
+
   const [ drawerOpen, setDrawerOpen ] = React.useState(false)
   const [ loading, setLoading ] = useState(false)
   const history = useHistory()
   const { currentUser, setCurrentUser } = useContext(TwofoldContext)
 
   return <F>
-    <LeftWrapper>
+    <LeftWrapper {...props} >
       <IconButton
-        aria-label="open drawer"
         onClick={() => setDrawerOpen(true)}
-        edge="start"
-        className="menu-btn"
       ><MenuIcon /></IconButton>
-      { /* <MyAccountWidget /> */ }
       <Menu />
     </LeftWrapper>
 
@@ -104,4 +110,7 @@ const MenuLeft= (props) => {
   </F>
 }
 
+MenuLeft.propTypes = {
+  variant: PropTypes.string,
+}
 export default MenuLeft

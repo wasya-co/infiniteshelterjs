@@ -8,30 +8,14 @@ import { Link } from 'react-router-dom'
 import { FbLogin, Logout, PasswordLogin } from "./"
 import { C, logg, TwofoldContext } from "$shared"
 
-import "./users.scss"
-
-const useStyles = makeStyles((theme) => ({
-  paper: {
-    padding: theme.spacing(2),
-    textAlign: 'center',
-    color: theme.palette.text.secondary,
-  },
-  root: {
-    flexGrow: 1,
-    overflow: 'scroll',
-    height: '100vh',
-  },
-
-}));
-
 const Account = (props) => {
-  const classes = useStyles()
+  logg(props, 'Account')
 
   const { currentUser, setCurrentUser } = useContext(TwofoldContext)
 
   return (<F>
 
-      <Grid container spacing={2} className={classes.root} >
+      <Grid container spacing={2} >
         <Grid item xs={12}>
           <Grid container>
             <Grid item xs={6}>

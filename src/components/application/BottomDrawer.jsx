@@ -7,28 +7,25 @@ import { useHistory } from 'react-router-dom'
 import styled from 'styled-components'
 
 import { MenuBottom } from "./"
-import { Account, Account2, MyAccountWidget } from "$components/users"
+import { Account, MyAccountWidget } from "$components/users"
 import { C, logg, TwofoldContext } from "$shared"
 
 const BottomWrapper = styled.div`
-  // height: 100px;
-  // position: absolute;
-  // bottom: 0;
-`
+;`
 
 const ButtonWrapper = styled.div`
   // border: 1px solid yellow;
   position: absolute;
   bottom: -10px;
   left: 10px;
-`
+`;
 
-// @TODO: animate opening it, nicely?
 const BottomDrawer = (props) => {
   // logg(props, 'BottomDrawer')
 
   const { bottomDrawerOpen, layout, setBottomDrawerOpen } = useContext(TwofoldContext)
 
+  // @TODO: move the component to layout_onecol then
   if (layout === C.layout_onecol) { return null; }
 
   return <F>
