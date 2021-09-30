@@ -66,7 +66,7 @@ const Div1 = styled.div`
   position: relative; /* required for mobile, so that zoomCtrl, etc are inside the collapsible div */
 
   overflow: scroll;
-  max-height: 80vh;
+  max-height: 80vh; // @TODO: huh?
 `;
 
 const Div3 = styled.div``;
@@ -171,8 +171,11 @@ const LocationsShowMobile = (props) => {
     setLoading(true);
     const token = localStorage.getItem("jwt_token");
     request.get(`/api/maps/view/${match.params.slug}`, { params: { jwt_token: token } }).then(res => {
-      if (!mountedRef.current) return null;
+      if (!mountedRef.current) { return null }
+
       setLocation(res.data.map)
+      logg(res.data.map, 'setLocation')
+
       setLoading(false)
       // @TODO: setFlash here?! If I"m accessing a gallery I haven't bought access to?
     }).finally(() => {
@@ -190,9 +193,9 @@ const LocationsShowMobile = (props) => {
     { /* <Collapsible slug="map-sec" label="Map" >
       { location && <Map2 location={location} /> }
     </Collapsible> */ }
-    { location && <Collapsible slug={C.collapsible.descr} label="Description" >
+    { location && location.description && <Collapsible slug={C.collapsible.descr} label="Description" >
       <Description item={location} />
-    </Collapsible> }
+    </Collapsible> || null }
     { location && location.markers.length && <Collapsible slug="markers-sec" label="Markers">
       <Markers markers={location.markers} />
     </Collapsible> || null }

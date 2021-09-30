@@ -2,6 +2,7 @@ import React, { useContext } from 'react'
 import { Route, useLocation, useHistory, Switch } from 'react-router-dom'
 import styled from 'styled-components'
 
+import config from 'config'
 import { C, logg, request, S, TwofoldContext } from "$shared"
 import { MenuLeft } from "$components/application"
 
@@ -16,7 +17,7 @@ const B1 = styled.div`
 `;
 
 const Root = styled.div`
-  border: 1px solid cyan;
+  border: ${p=>p.debug?'1':'0'}px solid cyan;
 
   display: flex;
   z-index: 1;
@@ -45,7 +46,7 @@ const Breadcrumbs = (props) => {
       out.push(<B1 key={`${idx}-divider`} >&gt;</B1>)
     }
   })
-  return <Root {...S} >
+  return <Root {...S} debug={config.debug} className="Breadcrumbs" >
     { layout === C.layout_mapui && <MenuLeft variant={C.variants.inline} /> }
     { out }
   </Root>

@@ -55,7 +55,7 @@ const AppMobile = (props) => {
     switch(layout) {
       case C.layout_onecol:
         // main case
-        return <__Container maxWidth="md" {...props}/>
+        return <__Container maxWidth="md" {...props} />
       case C.layout_mapui:
         return <MapuiLayout {...props} {...{ bottomDrawerOpen, setBottomDrawerOpen }} />
     }
@@ -84,8 +84,8 @@ const AppMobile = (props) => {
     <TwofoldContextProvider {...props} {...{ layout, setLayout }} >
       <CollapsibleContextProvider >
         { layout === C.layout_onecol && <MenuLeft variant={C.variants.floating} /> }
-        <Root>
-          <Container >
+        <Root className="Root" >
+          <Container className="Container" >
             <Switch id="main" main >
 
               <Redirect exact from="/" to="/en" />
@@ -102,7 +102,7 @@ const AppMobile = (props) => {
 
               <Route exact path="/en/reports/show/:slug" component={ReportsShow} />
 
-              <Route exact path="/en/locations/show/:slug" component={LocationsShowMobile} layout={C.layout_mapui} />
+              <Route exact path="/en/locations/show/:slug" component={LocationsShowMobile} />
 
             </Switch>
           </Container>

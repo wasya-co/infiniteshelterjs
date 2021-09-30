@@ -19,7 +19,7 @@ const _LeftWrapper = styled.div`
 `;
 const LeftWrapper = ({ children, ...props }) => {
   if (props.variant === C.variants.floating) {
-    return <Fab style={{ position: 'absolute', margin: '.5em' }} aria-label='main menu'>{children}</Fab>
+    return <Fab style={{ position: 'absolute', bottom: '0', margin: '.5em' }} aria-label='main menu'>{children}</Fab>
   } else {
     return <_LeftWrapper >{children}</_LeftWrapper>
   }

@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useRef } from 'react'
 import { Route, useLocation, useHistory, Switch } from 'react-router-dom'
 import styled from 'styled-components'
 
+import config from 'config'
 import { logg, S, TwofoldContext } from "$shared"
 
 const Div1 = styled.div`
@@ -29,7 +30,7 @@ const Div3 = styled.div`
 `;
 
 const Root = styled.div`
-  border: 1px solid red;
+  border: ${p=>p.debug?'1':'0'}px solid red;
 
   position: relative;
   overflow: scroll;
@@ -111,7 +112,7 @@ const MapPanel = (props) => {
     markers.push(out)
   })
 
-  return <Root {...S} {...{ bottomDrawerOpen }} className='MapPanel' >
+  return <Root {...S} {...{ bottomDrawerOpen }} debug={config.debug} className='MapPanel' >
     <ZoomCtrl />
 
     <Div1 {...S} {...{ bottomDrawerOpen }} >

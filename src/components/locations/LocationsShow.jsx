@@ -4,6 +4,7 @@ import Modal from "react-modal"
 import { Route, useLocation, useHistory, Switch } from 'react-router-dom'
 import styled from 'styled-components'
 
+import config from 'config'
 import { Breadcrumbs, ItemModal, MapPanel, MarkersList } from "./"
 import { logg, request, S, TwofoldContext, ZoomContext } from "$shared"
 import { Metaline } from "$components/application"
@@ -32,24 +33,26 @@ const IframeModal = (props) => {
 }
 
 const Left = styled.div`
-  // border: 1px solid blue;
+  border: ${p=>p.debug?'1':'0'}px solid blue;
 
   background: #dedede;
   flex: 50%;
   overflow: scroll;
 
-  height: calc(100vh - 40px - ${p => p.bottomDrawerOpen ? `${p.bottomDrawerHeight-p.borderWidth}px` : '0px' });
+  height: calc(100vh -
+    ${p => p.bottomDrawerOpen ? `calc(${p.bottomDrawerHeight}+3*${p.borderWidth})` : `calc(4*${p.borderWidth})` });
 `;
 
 const Right = styled.div`
-  // border: 1px solid green;
+  border: ${p=>p.debug?'1':'0'}px solid green;
 
   background: #dedede;
 
   padding: 1em;
   flex: 50%;
   overflow: scroll;
-  height: calc(100vh - ${p => p.bottomDrawerOpen ? p.bottomDrawerHeight : p.borderWidth}px - ${p => 3*p.borderWidth}px);
+  height: calc(100vh -
+    ${p => p.bottomDrawerOpen ? `calc(${p.bottomDrawerHeight}+3*${p.borderWidth})` : `calc(4*${p.borderWidth})` });
 `;
 
 const Row = styled.div`
@@ -86,16 +89,15 @@ const LocationsShow = (props) => {
     }
   }, [ match.params.slug ])
 
-  const { borderWidth, bottomDrawerHeight } = S
   const { bottomDrawerOpen } = useContext(TwofoldContext)
 
   return (<Row>
-    <Left className='Left' {...{ borderWidth, bottomDrawerOpen, bottomDrawerHeight }} >
+    <Left className='Left' {...{ bottomDrawerOpen }} {...S} debug={config.debug} >
       { loading && <i>Loading Left...</i> }
       { location && <Breadcrumbs {...location} /> }
       { location && <MapPanel map={location.map ? location.map : location} /> }
     </Left>
-    <Right {...{ borderWidth, bottomDrawerOpen, bottomDrawerHeight }} >
+    <Right className='Right' {...{ bottomDrawerOpen }} {...S} debug={config.debug} >
       { loading && <i>Loading Right...</i> }
       { location && <F>
         <MarkersList markers={location.markers} />

@@ -27,11 +27,13 @@ const AppWrapper = (props) => {
       }).catch((e) => {
         logg(e, 'e12')
         if (e.message === "Request failed with status code 401") {
-          setLoginModalOpen(true)
+          if (config.requireLogin || typeof config.requireLogin === 'undefined') {
+            setLoginModalOpen(true)
+          }
         }
       })
     }
-    if (config.requireLogin || typeof config.requireLogin === 'undefined') { fn() }
+    fn()
     return () => mountedRef.current = null
   }, [currentUser]) // @TODO: currentUser here is appropriate?
 

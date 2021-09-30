@@ -13,7 +13,9 @@ const ICONS = {
 }
 
 const Wrapper = styled.div`
-  margin-bottom: 2em;
+  // border: 2px solid yellow;
+
+  // margin-bottom: 2em;
 `
 
 const Newsitems = (props) => {

@@ -113,6 +113,9 @@ export { logg };
 
 export { default as request } from "./request";
 
+/**
+ * Style Constants
+ */
 export const S = {
   borderWidth: '10px',
   bottomDrawerHeight: '100px',

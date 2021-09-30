@@ -83,8 +83,7 @@ const AppDesktop = (props) => {
   return (<Router>
     <ToastContainer />
     <TwofoldContextProvider {...props} {...{ layout, setLayout }} >
-
-      <MenuLeft />
+      { layout === C.layout_onecol && <MenuLeft variant={C.variants.floating} /> }
       <Root>
         <Container >
           <Switch id="main" main >
