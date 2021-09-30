@@ -5,7 +5,7 @@ import styled from 'styled-components'
 
 import { Breadcrumbs } from "./"
 import {
-  Collapsible, CollapsibleContext,
+  C, Collapsible, CollapsibleContext,
   logg, request, S, TwofoldContext, ZoomContext } from "$shared"
 import { Metaline } from "$components/application"
 import { Newsitems } from "$components/newsitems"
@@ -14,15 +14,15 @@ const _Description = styled.div`
   // border: 1px solid red;
 
   padding: 10px;
-`
+`;
 const Description = ({ item }) => {
   return <_Description dangerouslySetInnerHTML={{ __html: item.description }} />
 }
 
-
 const W1 = styled.div`
   position: relative;
-`
+`;
+
 const ZoomCtrlRoot = styled.div`
   // border: 1px solid orange;
 
@@ -36,6 +36,7 @@ const ZoomCtrlRoot = styled.div`
   flex-direction: column;
   z-index: 10;
 `;
+
 const ZoomCtrl = (props) => {
   const { zoom, setZoom } = useContext(TwofoldContext)
 
@@ -55,6 +56,7 @@ const ZoomCtrl = (props) => {
     <span onClick={zoomReset} >[1]</span>
   </ZoomCtrlRoot>
 }
+
 const Div1 = styled.div`
   // border: 2px solid brown;
 
@@ -65,8 +67,10 @@ const Div1 = styled.div`
 
   overflow: scroll;
   max-height: 80vh;
-`
-const Div3 = styled.div``
+`;
+
+const Div3 = styled.div``;
+
 const Map2 = (props) => {
   logg(props, 'Map2')
   const { location } = props
@@ -153,9 +157,8 @@ const Row = styled.div`
   height: calc(100vh - 40px); /* @TODO: why 40px?! */
 `;
 
-
-const LocationsShow = (props) => {
-  logg(props, 'LocationsShow')
+const LocationsShowMobile = (props) => {
+  logg(props, 'LocationsShowMobile')
 
   const { match } = props;
 
@@ -180,16 +183,16 @@ const LocationsShow = (props) => {
     }
   }, [ match.params.slug ])
 
-  return (<Row>
+  return (<F>
 
     { loading && <i>Loading...</i> }
     { location && <Breadcrumbs {...location} /> }
     { /* <Collapsible slug="map-sec" label="Map" >
       { location && <Map2 location={location} /> }
     </Collapsible> */ }
-    <Collapsible slug="descr-sec" label="Description" >
-      { location && <Description item={location} /> }
-    </Collapsible>
+    { location && <Collapsible slug={C.collapsible.descr} label="Description" >
+      <Description item={location} />
+    </Collapsible> }
     { location && location.markers.length && <Collapsible slug="markers-sec" label="Markers">
       <Markers markers={location.markers} />
     </Collapsible> || null }
@@ -197,7 +200,7 @@ const LocationsShow = (props) => {
       <Newsitems newsitems={location.newsitems} />
     </Collapsible> || null }
 
-  </Row>)
+  </F>)
 }
 
-export default LocationsShow;
+export default LocationsShowMobile

@@ -16,12 +16,6 @@ import { Api, C, Debug, logg, TwofoldContext } from "$shared"
 
 const _LeftWrapper = styled.div`
   // border: 1px solid green;
-
-  position: absolute;
-  top: 0;
-  left: 0;
-
-  background: white;
 `;
 const LeftWrapper = ({ children, ...props }) => {
   if (props.variant === C.variants.floating) {
@@ -38,6 +32,7 @@ const W1 = styled.div`
   justify-content: space-between;
   align-content: space-between;
 `;
+
 const W2 = styled.div`
 `;
 

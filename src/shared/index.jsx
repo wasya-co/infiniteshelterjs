@@ -34,7 +34,11 @@ export const Btn = styled.div`
 `;
 
 export const C = {
+  collapsible: {
+    descr: "descr-sec",
+  },
   current_user: 'current_user',
+
   jwt_token: 'jwt_token',
 
   item_types: {
@@ -54,6 +58,17 @@ export const C = {
 
 export { default as Collapsible } from "./Collapsible"
 export const CollapsibleContext = React.createContext({})
+export const CollapsibleContextProvider = ({ children, ...props }) => {
+  logg(props, 'CollapsibleContextProvider')
+
+  const [ collapsibles, setCollapsibles ] = useState({
+    [C.collapsible.descr]: true,
+  })
+
+  return <CollapsibleContext.Provider value={{
+    collapsibles, setCollapsibles,
+  }} >{ children }</CollapsibleContext.Provider>
+}
 
 export const Debug = styled.div`
 `;

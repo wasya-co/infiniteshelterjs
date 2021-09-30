@@ -28,7 +28,7 @@ import { SitesShow } from '$components/sites'
 import { Account } from "$components/users"
 import { Videos } from "$components/videos"
 import { Galleries, MyGalleries } from "$components/galleries"
-import { useApi, C, CollapsibleContext, Debug, logg, request, TwofoldContextProvider } from "$shared"
+import { useApi, C, CollapsibleContextProvider, Debug, logg, request, TwofoldContextProvider } from "$shared"
 
 const Root = styled.div`
   background: #dedede;
@@ -80,18 +80,10 @@ const AppMobile = (props) => {
     logg(result, 'result of unlocking')
   };
 
-  /**
-   * These are the left tabs and right tabs, but they are all in-line
-   */
-  const [ collapsibles, setCollapsibles ] = useState({
-    'descr-sec': true,
-  })
-
-
   return (<Router>
     <TwofoldContextProvider {...props} {...{ layout, setLayout }} >
-      <CollapsibleContext.Provider value={{ collapsibles, setCollapsibles, }} >
-        <MenuLeft variant={C.variants.floating} />
+      <CollapsibleContextProvider >
+        { layout === C.layout_onecol && <MenuLeft variant={C.variants.floating} /> }
         <Root>
           <Container >
             <Switch id="main" main >
@@ -120,7 +112,7 @@ const AppMobile = (props) => {
           <h1>Unlock this item? <button onClick={() => setItemToUnlock(false) } >[x]</button></h1>
           <button onClick={doUnlock}>Do it</button>
         </Modal>
-      </CollapsibleContext.Provider>
+      </CollapsibleContextProvider>
     </TwofoldContextProvider>
   </Router>)
 }

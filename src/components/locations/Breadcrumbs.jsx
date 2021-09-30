@@ -1,8 +1,9 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { Route, useLocation, useHistory, Switch } from 'react-router-dom'
 import styled from 'styled-components'
 
-import { logg, request, S } from "$shared"
+import { C, logg, request, S, TwofoldContext } from "$shared"
+import { MenuLeft } from "$components/application"
 
 // one breadcrumb
 const B = styled.div`
@@ -26,6 +27,8 @@ const Root = styled.div`
 const Breadcrumbs = (props) => {
   logg(props, 'Breakcrumbs')
 
+  const { layout } = useContext(TwofoldContext)
+
   const history = useHistory()
 
   const out = []
@@ -42,7 +45,10 @@ const Breadcrumbs = (props) => {
       out.push(<B1 key={`${idx}-divider`} >&gt;</B1>)
     }
   })
-  return <Root {...S} >{out}</Root>
+  return <Root {...S} >
+    { layout === C.layout_mapui && <MenuLeft variant={C.variants.inline} /> }
+    { out }
+  </Root>
 }
 
 export default Breadcrumbs
