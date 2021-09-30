@@ -19,6 +19,8 @@ const Root = styled.div`
 
   display: flex;
   z-index: 1;
+
+  height: ${p => p.breadcrumbsHeight};
 `;
 
 const Breadcrumbs = (props) => {
@@ -40,7 +42,7 @@ const Breadcrumbs = (props) => {
       out.push(<B1 key={`${idx}-divider`} >&gt;</B1>)
     }
   })
-  return <Root>{out}</Root>
+  return <Root {...S} >{out}</Root>
 }
 
 export default Breadcrumbs

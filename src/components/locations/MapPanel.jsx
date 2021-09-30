@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useRef } from 'react'
 import { Route, useLocation, useHistory, Switch } from 'react-router-dom'
 import styled from 'styled-components'
 
-import { logg, TwofoldContext } from "$shared"
+import { logg, S, TwofoldContext } from "$shared"
 
 const Div1 = styled.div`
   // border: 3px solid green;
@@ -19,7 +19,12 @@ const Div3 = styled.div`
 const Root = styled.div`
   border: 1px solid red;
 
-  // position: relative;
+  overflow: scroll;
+  height: calc(100vh - ${p => p.breadcrumbsHeight} -
+    ${p => p.bottomDrawerOpen ?
+      `${p.bottomDrawerHeight} - 2*${p.borderWidth}`
+      : `4*${p.borderWidth}` }); /* @TODO: it's not really 4 borders, it's 1 on top, and 2 but thick (collapsed) on bottom. */
+  position: relative;
 `;
 
 const ZoomCtrl = (props) => {
@@ -38,7 +43,7 @@ const ZoomCtrl = (props) => {
   return <div style={{
     position: 'absolute',
     top: 0,
-    left: 'calc(50% - 20px)',
+    right: 0,
     zIndex: 1,
     background: 'white',
     padding: '5px',
@@ -57,6 +62,7 @@ const MapPanel = (props) => {
   const { map } = props
 
   const {
+    bottomDrawerOpen, setBottomDrawerOpen,
     showUrl, setShowUrl,
     zoom, setZoom,
   } = useContext(TwofoldContext)
@@ -65,7 +71,7 @@ const MapPanel = (props) => {
   const history = useHistory()
 
   useEffect(() => {
-    div1Ref.current.scrollIntoView({ block: 'end' })
+    // div1Ref.current.scrollIntoView({ block: 'end' })
   }, [])
 
   const markers = []
@@ -86,7 +92,7 @@ const MapPanel = (props) => {
     markers.push(out)
   })
 
-  return <Root>
+  return <Root {...S} {...{ bottomDrawerOpen }} className='MapPanel' >
     <ZoomCtrl />
 
       <Div1 ref={div1Ref} >

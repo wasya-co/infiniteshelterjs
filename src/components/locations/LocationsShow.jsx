@@ -9,14 +9,6 @@ import { logg, request, S, TwofoldContext, ZoomContext } from "$shared"
 import { Metaline } from "$components/application"
 import { Newsitems } from "$components/newsitems"
 
-const Left = styled.div`
-  // border: 1px solid blue;
-
-  background: #dedede;
-  flex: 50%;
-  overflow: scroll;
-  height: calc(100vh - 40px - ${p => p.bottomDrawerOpen ? `${p.bottomDrawerHeight-p.borderWidth}px` : '0px' });
-`;
 
 const _Description = styled.div`
   // border: 1px solid red;
@@ -26,17 +18,6 @@ const _Description = styled.div`
 const Description = ({ item }) => {
   return <_Description dangerouslySetInnerHTML={{ __html: item.description }} />
 }
-
-const B = styled.div`
-  padding: 0.5em;
-`;
-
-// the divider
-const B1 = styled.div`
-  padding: 0.5em 0;
-`;
-
-
 
 const IframeModal = (props) => {
   const { showUrl, setShowUrl } = useContext(TwofoldContext)
@@ -49,6 +30,16 @@ const IframeModal = (props) => {
     </iframe>
   </Modal>)
 }
+
+const Left = styled.div`
+  // border: 1px solid blue;
+
+  background: #dedede;
+  flex: 50%;
+  overflow: scroll;
+
+  // height: calc(100vh - 40px - ${p => p.bottomDrawerOpen ? `${p.bottomDrawerHeight-p.borderWidth}px` : '0px' });
+`;
 
 const Right = styled.div`
   // border: 1px solid green;
@@ -99,7 +90,7 @@ const LocationsShow = (props) => {
   const { bottomDrawerOpen } = useContext(TwofoldContext)
 
   return (<Row>
-    <Left className='left' {...{ borderWidth, bottomDrawerOpen, bottomDrawerHeight }} >
+    <Left className='Left' {...{ borderWidth, bottomDrawerOpen, bottomDrawerHeight }} >
       { loading && <i>Loading Left...</i> }
       { location && <Breadcrumbs {...location} /> }
       { location && <MapPanel map={location.map ? location.map : location} /> }

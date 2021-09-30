@@ -94,8 +94,9 @@ export { logg };
 export { default as request } from "./request";
 
 export const S = {
-  borderWidth: 10,
-  bottomDrawerHeight: 100,
+  borderWidth: '10px',
+  bottomDrawerHeight: '100px',
+  breadcrumbsHeight: '30px',
 }
 
 export const TwofoldContext = React.createContext({})
