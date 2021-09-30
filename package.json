@@ -6,7 +6,7 @@
   "dependencies": {
     "@babel/core": "7.9.0",
     "@capacitor-community/facebook-login": "^1.0.1",
-    "@capacitor/android": "^2.5.0",
+    "@capacitor/android": "^3.2.4",
     "@capacitor/device": "^1.0.3",
     "@capacitor/ios": "^2.0.0",
     "@ionic/react": "^5.0.7",
@@ -171,6 +171,7 @@
     "start": "HTTPS=true HOST=tgm.mac NODE_PATH=config/environments/development_web PORT=3002 node scripts/start.js",
     "start_m": "HTTPS=true HOST=tgm.mac NODE_PATH=config/environments/development_mobile PORT=3002 node scripts/start.js",
     "start_do": "HTTPS=true NODE_PATH=config/environments/production PORT=3002 node scripts/start.js",
+    "sync": "NODE_PATH=config/environments/production ionic capacitor sync",
     "build": "NODE_PATH=config/environments/production node scripts/build.js",
     "test": "NODE_PATH=config/environments/test jest",
     "postinstall": "link-module-alias",

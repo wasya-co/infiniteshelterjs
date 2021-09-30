@@ -15,9 +15,13 @@ export { default as Account } from "./Account"
 
 const { FacebookLogin } = Plugins
 
+
 const FACEBOOK_PERMISSIONS = ['email']
 
 export const FbLogin = (props) => {
+  logg(props, 'FbLogin')
+  logg(FacebookLogin, 'FacebookLogin')
+
   const api = useApi()
   const { currentUser, setCurrentUser } = useContext(TwofoldContext)
 
