@@ -1,10 +1,10 @@
 {
-  "appId": "co.wasya.guyd",
-  "appName": "guyd",
-  "bundledWebRuntime": false,
-  "npmClient": "yarn",
-  "webDir": "build",
-  "android": {
-    "allowMixedContent": true
-  }
+	"appId": "co.wasya.guyd",
+	"appName": "guyd",
+	"bundledWebRuntime": false,
+	"npmClient": "yarn",
+	"webDir": "build",
+	"android": {
+		"allowMixedContent": true
+	}
 }

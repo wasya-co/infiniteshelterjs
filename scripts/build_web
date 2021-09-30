@@ -2,7 +2,7 @@
 
 if [[ -z "${NODE_ENV}" ]]; then
   eee=production
-  # echo "Please set NODE_ENV = [ production | staging | development ] before running this script."
+  # echo "Please set NODE_ENV = [ production | staging | development_web | development_mobile ] before running this script."
   # exit 3
 else
   eee="${NODE_ENV}"
