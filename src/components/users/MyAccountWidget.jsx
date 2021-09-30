@@ -20,17 +20,15 @@ const Login = (props) => {
 const Root = styled.div`
   // border: 1px solid red;
 
+  display: flex;
+  justify-content: flex-start;
+  background: #dedede;
+
   background: white;
   height: 100px;
   width: calc(100vw - ${p => p.borderWidth*2}px);
   padding: 1em;
   margin-bottom: ${p => p.borderWidth}px;
-`;
-
-const W = styled.div`
-  display: flex;
-  justify-content: center;
-  background: #dedede;
 `;
 
 const MyAccountWidget = (props) => {
@@ -76,7 +74,7 @@ const MyAccountWidget = (props) => {
 
   if (!currentUser) { return null }
 
-  return <W><Root {...{ borderWidth }} >
+  return <Root {...{ borderWidth }} >
     { currentUser.email ? currentUser.email : <Login /> } &nbsp;
     [&nbsp;{ typeof currentUser.n_unlocks === 'number' ? currentUser.n_unlocks : '?' } coins&nbsp;]&nbsp; &nbsp;
     <button onClick={() => setPurchaseModalIsOpen(true) }>buy</button>
@@ -96,7 +94,7 @@ const MyAccountWidget = (props) => {
       </form>
 
     </Modal>
-  </Root></W>
+  </Root>
 }
 
 const WrappedMyAccountWidget = (props) => <Elements stripe={stripePromise}><MyAccountWidget {...props} /></Elements>;

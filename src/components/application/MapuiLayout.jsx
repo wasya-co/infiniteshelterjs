@@ -2,8 +2,6 @@
 import React from 'react'
 import styled from 'styled-components'
 
-const borderWidth = 20
-const bottomDrawerHeight = 100
 const MapuiContainer = styled.div`
   background: white;
 
@@ -17,7 +15,7 @@ export {
 }
 
 const MapuiLayout = (props) => {
-  return <MapuiContainer {...props} {...{ bottomDrawerHeight, borderWidth }} />
+  return <MapuiContainer {...props} />
 }
 
 export default MapuiLayout

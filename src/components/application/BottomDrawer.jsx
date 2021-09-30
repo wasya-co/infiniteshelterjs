@@ -32,7 +32,7 @@ const BottomDrawer = (props) => {
   if (layout === C.layout_onecol) { return null; }
 
   return <F>
-    <BottomWrapper>
+    <BottomWrapper className='BottomWrapper' >
       <ButtonWrapper>
         <IconButton
           aria-label="open drawer"
@@ -48,6 +48,7 @@ const BottomDrawer = (props) => {
     </BottomWrapper>
 
     <Drawer anchor={"bottom"}
+      className='Drawer'
       elevation={1}
       open={bottomDrawerOpen}
       onClose={() => setBottomDrawerOpen(false)}
