@@ -5,3 +5,9 @@ cp android/app/build/outputs/apk/debug/app-debug.apk ~/Dropbox
 
 set +e
 echo 'ok'
+
+# From: https://stackoverflow.com/questions/56014715/cant-complete-ionic-capacitor-add-android-command
+ npm install @capacitor/core @capacitor/cli
+ npx cap init
+
+

@@ -1,7 +1,0 @@
-<?xml version='1.0' encoding='utf-8'?>
-<resources>
-    <string name="app_name">guyd</string>
-    <string name="title_activity_main">guyd</string>
-    <string name="package_name">co.wasya.guyd</string>
-    <string name="custom_url_scheme">co.wasya.guyd</string>
-</resources>
