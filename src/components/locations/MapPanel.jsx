@@ -16,7 +16,9 @@ const Div1 = styled.div`
 const Div3 = styled.div`
 `;
 
-const W1 = styled.div`
+const Root = styled.div`
+  border: 1px solid red;
+
   // position: relative;
 `;
 
@@ -84,7 +86,7 @@ const MapPanel = (props) => {
     markers.push(out)
   })
 
-  return (<W1>
+  return <Root>
     <ZoomCtrl />
 
       <Div1 ref={div1Ref} >
@@ -107,7 +109,7 @@ const MapPanel = (props) => {
         </Div3>
       </Div1>
 
-  </W1>)
+  </Root>
 }
 
 export default MapPanel

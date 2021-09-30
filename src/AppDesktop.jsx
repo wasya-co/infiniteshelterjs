@@ -24,7 +24,7 @@ import './theme/variables.css'
 import 'react-toastify/dist/ReactToastify.css'
 
 import config from "config"
-import { C, CollapsibleContext, Debug, logg, request, TwofoldContext, useApi, } from "$shared"
+import { C, CollapsibleContext, Debug, logg, request, TwofoldContext, TwofoldContextProvider , useApi, } from "$shared"
 import { BottomDrawer, Menu, MenuBottom, MenuLeft, UnlockModal } from "$components/application"
 import MapuiLayout from "$components/application/MapuiLayout"
 import { CitiesList, CitiesShow } from "$components/cities"
@@ -54,29 +54,17 @@ const AppDesktop = (props) => {
     loginModalOpen, setLoginModalOpen,
   } = props
 
-  const [ bottomDrawerOpen, setBottomDrawerOpen ] = useState(false)
-  const [ itemToUnlock, _setItemToUnlock ] = useState({})
-  const setItemToUnlock = (item) => {
-    if (itemToUnlock.id !== item.id && !loginModalOpen) {
-      _setItemToUnlock(item)
-    }
-  }
-  const [ layout, setLayout ] = useState(C.layout_onecol)
-
-  const [ showItem, setShowItem ] = useState(false)
-  const [ showUrl, setShowUrl ] = useState(false)
-  const [ zoom, setZoom ] = useState(1)
   const api = useApi()
 
-
+  const [ layout, setLayout ] = useState(C.layout_onecol)
 
   const Container = (props) => {
     switch(layout) {
       case C.layout_onecol:
         // main case
-        return <__Container maxWidth="md" {...props}/>
+        return <__Container maxWidth="md" {...props} />
       case C.layout_mapui:
-        return <MapuiLayout {...props} {...{ bottomDrawerOpen, setBottomDrawerOpen }} />
+        return <MapuiLayout {...props} />
     }
   }
 
@@ -94,16 +82,7 @@ const AppDesktop = (props) => {
 
   return (<Router>
     <ToastContainer />
-    <TwofoldContext.Provider value={{
-        bottomDrawerOpen, setBottomDrawerOpen,
-        currentUser, setCurrentUser, // @TODO: move this to an AppWrapper context
-        itemToUnlock, setItemToUnlock,
-        layout, setLayout,
-        loginModalOpen, setLoginModalOpen,
-        showItem, setShowItem,
-        showUrl, setShowUrl,
-        zoom, setZoom,
-    }} >
+    <TwofoldContextProvider {...props} {...{ layout, setLayout }} >
 
       <MenuLeft />
       <Root>
@@ -133,7 +112,7 @@ const AppDesktop = (props) => {
       <UnlockModal />
       <LoginModal />
 
-    </TwofoldContext.Provider>
+    </TwofoldContextProvider>
   </Router>)
 }
 

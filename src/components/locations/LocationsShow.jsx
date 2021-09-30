@@ -23,7 +23,6 @@ const _Description = styled.div`
 
   padding: 10px;
 `;
-
 const Description = ({ item }) => {
   return <_Description dangerouslySetInnerHTML={{ __html: item.description }} />
 }
@@ -100,8 +99,7 @@ const LocationsShow = (props) => {
   const { bottomDrawerOpen } = useContext(TwofoldContext)
 
   return (<Row>
-    <Left {...{ borderWidth, bottomDrawerOpen, bottomDrawerHeight }} >
-
+    <Left className='left' {...{ borderWidth, bottomDrawerOpen, bottomDrawerHeight }} >
       { loading && <i>Loading Left...</i> }
       { location && <Breadcrumbs {...location} /> }
       { location && <MapPanel map={location.map ? location.map : location} /> }

@@ -7,20 +7,20 @@ import { logg, request, S } from "$shared"
 // one breadcrumb
 const B = styled.div`
   padding: 0.5em;
-`
+`;
+
 // the divider
 const B1 = styled.div`
   padding: 0.5em 0;
-`
-const Root = styled.div`
-  display: flex;
-  z-index: 50;
-
-  position: absolute;
-  top: 0;
-  left: 0;
-  background: white;
 `;
+
+const Root = styled.div`
+  border: 1px solid cyan;
+
+  display: flex;
+  z-index: 1;
+`;
+
 const Breadcrumbs = (props) => {
   logg(props, 'Breakcrumbs')
 

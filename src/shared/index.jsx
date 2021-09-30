@@ -99,6 +99,38 @@ export const S = {
 }
 
 export const TwofoldContext = React.createContext({})
+export const TwofoldContextProvider = ({ children, ...props }) => {
+  logg(props, 'TwofoldContextProvider')
+  const {
+    currentUser, setCurrentUser,
+    layout, setLayout,
+    loginModalOpen, setLoginModalOpen,
+  } = props
+
+  const [ bottomDrawerOpen, setBottomDrawerOpen ] = useState(false)
+  const [ itemToUnlock, _setItemToUnlock ] = useState({})
+  const setItemToUnlock = (item) => {
+    if (itemToUnlock.id !== item.id && !loginModalOpen) {
+      _setItemToUnlock(item)
+    }
+  }
+
+
+  const [ showItem, setShowItem ] = useState(false)
+  const [ showUrl, setShowUrl ] = useState(false)
+  const [ zoom, setZoom ] = useState(1)
+
+  return <TwofoldContext.Provider value={{
+    bottomDrawerOpen, setBottomDrawerOpen,
+    currentUser, setCurrentUser, // @TODO: move this to an AppWrapper context
+    itemToUnlock, setItemToUnlock,
+    layout, setLayout,
+    loginModalOpen, setLoginModalOpen,
+    showItem, setShowItem,
+    showUrl, setShowUrl,
+    zoom, setZoom,
+  }} >{ children }</TwofoldContext.Provider>
+}
 
 export const ZoomContext = React.createContext({})
 
