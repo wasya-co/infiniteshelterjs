@@ -147,14 +147,8 @@ const Markers = (props) => {
   return <div style={{ display: 'flex', flexWrap: 'wrap' }} >{out}</div>
 }
 
-const Row = styled.div`
-  // border: 2px solid cyan;
-
-  display: flex;
-  flex-direction: column;
-
-  overflow: scroll;
-  height: calc(100vh - 40px); /* @TODO: why 40px?! */
+const Root = styled.div`
+  margin-top: 2em;
 `;
 
 const LocationsShowMobile = (props) => {
@@ -186,7 +180,7 @@ const LocationsShowMobile = (props) => {
     }
   }, [ match.params.slug ])
 
-  return (<F>
+  return (<Root>
 
     { loading && <i>Loading...</i> }
     { location && <Breadcrumbs {...location} /> }
@@ -203,7 +197,7 @@ const LocationsShowMobile = (props) => {
       <Newsitems newsitems={location.newsitems} />
     </Collapsible> || null }
 
-  </F>)
+  </Root>)
 }
 
 export default LocationsShowMobile

@@ -1401,12 +1401,12 @@
   resolved "https://registry.yarnpkg.com/@bcoe/v8-coverage/-/v8-coverage-0.2.3.tgz#75a2e8b51cb758a7553d6804a5932d7aace75c39"
   integrity sha512-0hYQ8SB4Db5zvZB4axdMHGwEaQjkZzFjQiN9LVYvIFB2nSUHW9tYpxWriPrWDASIxiaXax83REcLxuSdnGPZtw==
 
-"@capacitor-community/facebook-login@^1.0.1":
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/@capacitor-community/facebook-login/-/facebook-login-1.1.0.tgz#b352ba6cc38495608115d726505ca3727f7ad969"
-  integrity sha512-LwEVip9byqvcKlj5G5pIHPd0/4KaCmY7gIWdR5JSCvPzUSXBX3TooTCGerl5xTC3Nw/eRT49d35WFMp11zE6mg==
+"@capacitor-community/facebook-login@^3.1.1":
+  version "3.1.1"
+  resolved "https://registry.yarnpkg.com/@capacitor-community/facebook-login/-/facebook-login-3.1.1.tgz#d37cff340671736c633411efb5d79b8eab4ee595"
+  integrity sha512-wlJ5H47V1rMyWJv/EHh+39izKnG/WFNjBvWo/pth8+cQoV0HzVc2CNtlXwV923lxRk7HDOEoDdaI/fvMkHUgkQ==
   dependencies:
-    "@capacitor/core" "^2.0.0"
+    "@capacitor/core" "^3.0.0"
 
 "@capacitor/android@^3.2.4":
   version "3.2.4"
@@ -1435,14 +1435,7 @@
     tslib "^2.1.0"
     xml2js "^0.4.23"
 
-"@capacitor/core@^2.0.0":
-  version "2.5.0"
-  resolved "https://registry.yarnpkg.com/@capacitor/core/-/core-2.5.0.tgz#86b202ed950846427f710fafbdbbd844b1d0cc56"
-  integrity sha512-WUkUnqqLtlEYn6tly8t6VR0ABlSVbXdlD/gBbYxx0P+gEqMF9b46uYb2YqyH+8HBDANzTweEySpLfhiSUvYS7w==
-  dependencies:
-    tslib "^1.9.0"
-
-"@capacitor/core@^3.2.4":
+"@capacitor/core@^3.0.0", "@capacitor/core@^3.2.4":
   version "3.2.4"
   resolved "https://registry.yarnpkg.com/@capacitor/core/-/core-3.2.4.tgz#8da5774f6237ccaa770b81caff3cffbecbf7e1e8"
   integrity sha512-TAo9u2XPN8IH3xqTjOfsUT8PYIC2vwimKIJoff/knZs19WnGATklfcWnXpxUecfm2VFMCggd80FRPgjPOS75Ag==
