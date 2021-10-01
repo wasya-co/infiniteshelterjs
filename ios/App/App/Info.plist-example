@@ -14,7 +14,7 @@
 	<key>FacebookAppID</key>
 	<string>3016949928380365</string>
     <key>FacebookClientToken</key>
-    <string>fd2d93daab57bae18a8c871b4657bb1b</string>
+    <string>YOUR_TOKEN</string>
 	<key>FacebookDisplayName</key>
 	<string>Guyd</string>
     <key>LSApplicationQueriesSchemes</key>
