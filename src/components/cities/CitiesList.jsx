@@ -1,12 +1,45 @@
-import { IonPage, IonLoading, IonContent, IonIcon } from '@ionic/react';
+import { IonPage, IonLoading, IonContent, IonIcon as _IonIcon } from '@ionic/react';
 import { funnel, bookmark, newspaperOutline, image, videocam } from 'ionicons/icons';
 import React, { Fragment as F, useEffect, useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import styled from 'styled-components'
 
-import { useApi, AppRouter, logg, Wrapper } from "$shared"
+import { useApi, AppRouter, logg, S, Wrapper } from "$shared"
 import "./cities.scss"
 
+const Counts = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin: 1em 0px;
+`;
+
+const Count = styled.div`
+  // border: 1px solid red;
+
+  display: flex;
+  justify-content: center;
+
+  width: 50%;
+  text-align: center;
+  position: relative;
+  padding: 0.1em;
+`;
+
+const IonIcon = styled(_IonIcon)`
+  font-size: 2em;
+  color: ${p=>p.darkGrey};
+`;
+
+const Number = styled.div`
+  // border: 1px solid green;
+
+  padding: 0.5em;
+
+  color: ${p=>p.lightGrey};
+  font-size: 0.9em;
+  font-weight: 600;
+`;
 
 const Cities = (props) => {
   const [cities, setCities] = useState([]);
@@ -35,20 +68,19 @@ const Cities = (props) => {
     <Wrapper className='cities' >
       <h1 className="heading" >Cities</h1>
 
-      <Link to={"/en/account"} >Account</Link>
-
       <div className="filter-section">
         <input className="filter-input" onChange={filterHandler} />
         <IonIcon className="filter-icon" icon={funnel}></IonIcon>
       </div>
 
-      <div className="bookmark-section">
+      { /* @TODO: re-add! */ }
+      { /* <div className="bookmark-section">
         <label className="switch">
           <input type="checkbox" onChange={() => { }} checked />
           <span className="slider round"></span>
         </label>
         <span className="bookmark-text">Show only bookmarked</span>
-      </div>
+      </div> */ }
 
       <div className="container">
         { filteredCities.map((city, i) => <div key={i} className="cities" onClick={() => history.push(AppRouter.cityPath(city.slug)) } >
@@ -59,20 +91,23 @@ const Cities = (props) => {
               <img className="city-img" src={city.photo} />
               <span className="city-title">{city.name}</span>
             </div>
-            <div className="content-section">
-              <div className="content-item">
-                <IonIcon className="icon" icon={newspaperOutline}></IonIcon>
-                <span className="count">{city.n_reports}</span>
-              </div>
-              <div className="content-item">
-                <IonIcon className="icon" icon={image}></IonIcon>
-                <span className="count">{city.n_galleries}</span>
-              </div>
-              <div className="content-item">
-                <IonIcon className="icon" icon={videocam}></IonIcon>
-                <span className="count">{city.n_videos}</span>
-              </div>
-            </div>
+            <Counts>
+              <Count>
+                <Number {...S} >{city.n_reports}</Number>
+                <IonIcon {...S} icon={newspaperOutline}></IonIcon>
+
+              </Count>
+              <Count>
+
+                <Number {...S} >{city.n_galleries}</Number>
+                <IonIcon {...S} icon={image}></IonIcon>
+              </Count>
+              <Count>
+
+                <Number {...S} >{city.n_videos}</Number>
+                <IonIcon {...S} icon={videocam}></IonIcon>
+              </Count>
+            </Counts>
           </div>
         ) }
       </div>

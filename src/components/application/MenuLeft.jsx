@@ -17,13 +17,6 @@ import { Api, C, Debug, logg, TwofoldContext } from "$shared"
 const _LeftWrapper = styled.div`
   // border: 1px solid green;
 `;
-const LeftWrapper = ({ children, ...props }) => {
-  if (props.variant === C.variants.floating) {
-    return <Fab style={{ position: 'absolute', bottom: '0', margin: '.5em' }} aria-label='main menu'>{children}</Fab>
-  } else {
-    return <_LeftWrapper >{children}</_LeftWrapper>
-  }
-}
 
 const W1 = styled.div`
   height: 100vh;
@@ -37,7 +30,7 @@ const W2 = styled.div`
 `;
 
 const MenuLeft= (props) => {
-  logg(props, 'MenuLeft')
+  // logg(props, 'MenuLeft')
 
   const [ drawerOpen, setDrawerOpen ] = React.useState(false)
   const [ loading, setLoading ] = useState(false)
@@ -45,12 +38,11 @@ const MenuLeft= (props) => {
   const { currentUser, setCurrentUser } = useContext(TwofoldContext)
 
   return <F>
-    <LeftWrapper {...props} >
-      <IconButton
-        onClick={() => setDrawerOpen(true)}
-      ><MenuIcon /></IconButton>
-      <Menu />
-    </LeftWrapper>
+
+    <Menu />
+    { props.variant === C.variants.floating &&
+      <Fab onClick={() => setDrawerOpen(true)} style={{ position: 'absolute', top: 0, left: 0, margin: '.5em' }} aria-label='main menu'><MenuIcon /></Fab>
+      || <MenuIcon onClick={() => setDrawerOpen(true)} /> }
 
     <Drawer anchor={"left"} open={drawerOpen} onClose={() => setDrawerOpen(false)} >
       <W1>
@@ -84,13 +76,13 @@ const MenuLeft= (props) => {
               <span >{b.name}</span>
             </ListItem>
           ) }
-          <ListItem button key={'account'}
+          { /* <ListItem button key={'account'}
             onClick={() => {
               setDrawerOpen(false)
               history.push("/en/account")
             } } >
             <span >Account</span>
-          </ListItem>
+          </ListItem> */ }
         </List>
         <W2>
           { loading && 'Loading...' }

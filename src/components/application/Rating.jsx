@@ -33,9 +33,9 @@ const Rating = (props) => {
   }, []);
 
   return (
-    <span className="rating">
+    <div className="rating">
       { rating.map((r, i) => <IonIcon key={i} className="stars" icon={iconMapping[r]} ></IonIcon>) }
-    </span>
+    </div>
   )
 
 }

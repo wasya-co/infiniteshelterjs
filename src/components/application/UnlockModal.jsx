@@ -25,7 +25,7 @@ const modalStyle = {
   overlay: {},
   content: {
     margin: 'auto',
-    width: '400px',
+    maxWidth: '400px',
 
   }
 }

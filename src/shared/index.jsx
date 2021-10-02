@@ -120,6 +120,10 @@ export const S = {
   borderWidth: '10px',
   bottomDrawerHeight: '100px',
   breadcrumbsHeight: '30px',
+
+  blue: '#6aa3e9',
+  darkGrey: '#605d5d',
+  lightGrey: '#988b8b',
 }
 
 export const TwofoldContext = React.createContext({})

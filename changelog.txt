@@ -16,4 +16,6 @@ comfortable will resume auth and credit cards.
 0.0.5 - lets place an ionic capacitor project on top of this.
         looks like i can actually build an apk with this?!
 0.0.6 - lets build better, refine content delivery.
-
+        this is good, for my own individual usage.
+0.0.7 - 2021-10-01 Removed everything non-pretty to position for MyLocalGuide.
+                   Would add login asap!

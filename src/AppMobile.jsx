@@ -18,14 +18,14 @@ import '@ionic/react/css/display.css'
 import './theme/variables.css'
 
 import config from "config"
-import { BottomDrawer, Menu, MenuBottom, MenuLeft } from "$components/application"
+import { BottomDrawer, Menu, MenuBottom, MenuLeft, UnlockModal } from "$components/application"
 import MapuiLayout from "$components/application/MapuiLayout"
 import { CitiesList, CitiesShow } from "$components/cities"
 import { GalleriesShow } from "$components/galleries"
 import { LocationsShowMobile } from "$components/locations"
 import { ReportsShow } from "$components/reports"
 import { SitesShow } from '$components/sites'
-import { Account } from "$components/users"
+import { Account, LoginModal } from "$components/users"
 import { Videos } from "$components/videos"
 import { Galleries, MyGalleries } from "$components/galleries"
 import { useApi, C, CollapsibleContextProvider, Debug, logg, request, TwofoldContextProvider } from "$shared"
@@ -96,7 +96,7 @@ const AppMobile = (props) => {
               <Route exact path="/en/account/my/galleries" component={MyGalleries} />
 
               <Route exact path="/en/cities"                      component={CitiesList} />
-              <Route       path="/en/cities/travel-to/:name/show" component={CitiesShow} />
+              <Route       path="/en/cities/travel-to/:name" component={CitiesShow} />
 
               <Route exact path="/en/galleries/show/:slug" component={GalleriesShow} />
 
@@ -108,10 +108,9 @@ const AppMobile = (props) => {
           </Container>
         </Root>
         <BottomDrawer />
-        <Modal ariaHideApp={false} isOpen={!!itemToUnlock} >
-          <h1>Unlock this item? <button onClick={() => setItemToUnlock(false) } >[x]</button></h1>
-          <button onClick={doUnlock}>Do it</button>
-        </Modal>
+        <UnlockModal />
+        <LoginModal />
+
       </CollapsibleContextProvider>
     </TwofoldContextProvider>
   </Router>)
