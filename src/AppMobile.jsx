@@ -89,13 +89,14 @@ const AppMobile = (props) => {
             <Switch id="main" main >
 
               <Redirect exact from="/" to="/en" />
-              <Route exact path="/en" ><SitesShow /></Route>
+              { /* <Route exact path="/en" ><SitesShow /></Route> */ }
+              <Route exact path="/en" component={CitiesList} />
 
               <Route exact path="/en/account" component={Account} />
               <Route exact path="/en/account/my/videos" component={Videos} />
               <Route exact path="/en/account/my/galleries" component={MyGalleries} />
 
-              <Route exact path="/en/cities"                      component={CitiesList} />
+              <Route exact path="/en/cities"                 component={CitiesList} />
               <Route       path="/en/cities/travel-to/:name" component={CitiesShow} />
 
               <Route exact path="/en/galleries/show/:slug" component={GalleriesShow} />

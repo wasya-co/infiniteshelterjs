@@ -47,13 +47,15 @@ const MenuLeft= (props) => {
     <Drawer anchor={"left"} open={drawerOpen} onClose={() => setDrawerOpen(false)} >
       <W1>
         <List>
-          <ListItem button key={'newsfeed'}
+
+          { /* <ListItem button key={'newsfeed'}
             onClick={() => {
               setDrawerOpen(false)
               history.push("/en")
             } } >
             Newsfeed
-          </ListItem>
+          </ListItem> */ }
+
           <ListItem button key={'cities'}
             onClick={() => {
               setDrawerOpen(false)
@@ -61,12 +63,14 @@ const MenuLeft= (props) => {
             } }>
             <span >Cities</span>
           </ListItem>
+
           { /* <ListItem button key={'map 1'} >
             <span onClick={() => {
               setDrawerOpen(false)
               history.push("/en/locations")
             } }>The Directory</span>
           </ListItem> */ }
+
           { currentUser && currentUser.bookmarks.map((b, idx) =>
             <ListItem button key={idx}
               onClick={() => {
@@ -76,6 +80,7 @@ const MenuLeft= (props) => {
               <span >{b.name}</span>
             </ListItem>
           ) }
+
           { /* <ListItem button key={'account'}
             onClick={() => {
               setDrawerOpen(false)
@@ -83,15 +88,16 @@ const MenuLeft= (props) => {
             } } >
             <span >Account</span>
           </ListItem> */ }
+
         </List>
-        <W2>
+        { /* <W2>
           { loading && 'Loading...' }
           { currentUser && <F>
             {currentUser.email}<br />
             {currentUser.n_stars}<br />
             some action
           </F> }
-        </W2>
+        </W2> */ }
       </W1>
     </Drawer>
   </F>
