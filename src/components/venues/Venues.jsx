@@ -31,7 +31,7 @@ const Venues = (props) => {
       </div>
       <div className="container">
 
-        { filteredVenues.map((venue, idx) =>  <div key={idx} className="venues">
+        { filteredVenues.map((venue, idx) => <div key={idx} className="venues">
           <div className="image-section">
             <img src={venue.photo} />
           </div>
@@ -42,19 +42,12 @@ const Venues = (props) => {
               <span className="reviews">5 reviews</span>
             </div>
             <div className="tags-section">
-              {
-                venue.tags.map((tag, idx) => {
-                  return (
-                    <span key={idx} className="tags">{tag.name}</span>
-                  )
-                })
-              }
+              { venue.tags.map((tag, idx) => <span key={idx} className="tags">{tag.name}</span> )}
             </div>
             <p className="description" dangerouslySetInnerHTML={{ __html: venue.subhead }}></p>
             { venue.address && <p className="address">{venue.address}</p> }
           </div>
-          { /* @TODO: re-add!
-          <img className="forward-arrow" src="/assets/16x16/arrow-right.png" /> */ }
+          <img className="forward-arrow" src="/assets/16x16/arrow-right.png" />
         </div> )}
 
       </div>

@@ -93,6 +93,7 @@ const Cities = (props) => {
             </div>
             <Counts>
               <Count>
+                { /* @TODO: wire in theme provider */ }
                 <Number {...S} >{city.n_reports}</Number>
                 <IonIcon {...S} icon={newspaperOutline}></IonIcon>
 

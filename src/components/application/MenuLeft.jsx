@@ -48,13 +48,13 @@ const MenuLeft= (props) => {
       <W1>
         <List>
 
-          { /* <ListItem button key={'newsfeed'}
+          <ListItem button key={'newsfeed'}
             onClick={() => {
               setDrawerOpen(false)
               history.push("/en")
             } } >
             Newsfeed
-          </ListItem> */ }
+          </ListItem>
 
           <ListItem button key={'cities'}
             onClick={() => {
@@ -81,13 +81,13 @@ const MenuLeft= (props) => {
             </ListItem>
           ) }
 
-          { /* <ListItem button key={'account'}
+          <ListItem button key={'account'}
             onClick={() => {
               setDrawerOpen(false)
               history.push("/en/account")
             } } >
             <span >Account</span>
-          </ListItem> */ }
+          </ListItem>
 
         </List>
         { /* <W2>

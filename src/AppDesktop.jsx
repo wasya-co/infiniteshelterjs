@@ -89,8 +89,7 @@ const AppDesktop = (props) => {
           <Switch id="main" main >
 
             <Redirect exact from="/" to="/en" />
-            { /* <Route exact path="/en" ><SitesShow /></Route> */ }
-            <Route exact path="/en" component={CitiesList} />
+            <Route exact path="/en" ><SitesShow /></Route>
 
             <Route exact path="/en/account" component={Account} />
             <Route exact path="/en/account/my/videos" component={Videos} />
