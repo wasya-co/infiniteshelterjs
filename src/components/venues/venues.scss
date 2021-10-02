@@ -1,7 +1,9 @@
+$darkGrey: #605d5d;
+$lightGrey: #988b8b;
+$blue: #6aa3e9;
+
+
 .venues-section {
-  $darkGrey: #605d5d;
-  $lightGrey: #988b8b;
-  $blue: #6aa3e9;
 
   div.filter-section {
     padding: 0 1em;
@@ -35,26 +37,8 @@
     padding-bottom: 2em;
 
     .venues {
-      padding: 1em;
-      border-bottom: 1px solid #e3d3d3;
-      box-shadow: 0px 1px 5px 1px #b3aeae;
-      display: flex;
-      background-color: white;
-      position: relative;
-
-      .image-section {
-        img {
-          width: 100%;
-          border-radius: 10px;
-        }
-      }
 
       .info-section {
-        padding-left: 1em;
-
-        .title {
-          margin-top: 0;
-        }
 
         .reviews {
           vertical-align: super;
@@ -64,14 +48,6 @@
         .description {
           color: $darkGrey;
           margin-bottom: 0;
-        }
-
-        .address {
-          white-space: nowrap;
-          overflow: hidden;
-          text-overflow: ellipsis;
-          color: $darkGrey;
-          font-size: 14px;
         }
 
         .tags {

@@ -28,7 +28,7 @@ const Count = styled.div`
 
 const IonIcon = styled(_IonIcon)`
   font-size: 2em;
-  color: ${p=>p.darkGrey};
+  color: ${p=>p.theme.darkGrey};
 `;
 
 const Number = styled.div`
@@ -36,7 +36,7 @@ const Number = styled.div`
 
   padding: 0.5em;
 
-  color: ${p=>p.lightGrey};
+  color: ${p=>p.theme.lightGrey};
   font-size: 0.9em;
   font-weight: 600;
 `;
@@ -94,19 +94,19 @@ const Cities = (props) => {
             <Counts>
               <Count>
                 { /* @TODO: wire in theme provider */ }
-                <Number {...S} >{city.n_reports}</Number>
-                <IonIcon {...S} icon={newspaperOutline}></IonIcon>
+                <Number >{city.n_reports}</Number>
+                <IonIcon icon={newspaperOutline}></IonIcon>
 
               </Count>
               <Count>
 
-                <Number {...S} >{city.n_galleries}</Number>
-                <IonIcon {...S} icon={image}></IonIcon>
+                <Number >{city.n_galleries}</Number>
+                <IonIcon icon={image}></IonIcon>
               </Count>
               <Count>
 
-                <Number {...S} >{city.n_videos}</Number>
-                <IonIcon {...S} icon={videocam}></IonIcon>
+                <Number >{city.n_videos}</Number>
+                <IonIcon icon={videocam}></IonIcon>
               </Count>
             </Counts>
           </div>

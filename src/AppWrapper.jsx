@@ -1,9 +1,10 @@
 
 import { Device } from '@capacitor/device'
 import React, { useContext, useEffect, useRef, useState, } from 'react'
+import { ThemeProvider } from 'styled-components'
 
 import config from 'config'
-import { C, logg, request, TwofoldContext, useApi } from "$shared"
+import { C, logg, request, S, useApi } from "$shared"
 import AppDesktop from './AppDesktop'
 import AppMobile from './AppMobile'
 
@@ -51,10 +52,13 @@ const AppWrapper = (props) => {
     currentUser, setCurrentUser,
     loginModalOpen, setLoginModalOpen,
   }
+
   if (!os) { return null }
-  return ("ios android".includes(os) ?
-    <AppMobile {...childProps} />
-    : <AppDesktop {...childProps} />)
+  return <ThemeProvider theme={S} >
+    { "ios android".includes(os) ?
+      <AppMobile {...childProps} />
+      : <AppDesktop {...childProps} /> }
+  </ThemeProvider>
 }
 
 export default AppWrapper
