@@ -11,7 +11,7 @@ import { Newsitems } from "$components/newsitems"
 
 const Marker = styled.div`
   margin: 10px;
-  width: 20vw;
+  max-width: 20vw;
 `;
 
 const MarkersList = (props) => {

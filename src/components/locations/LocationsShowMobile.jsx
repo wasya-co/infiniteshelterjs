@@ -113,6 +113,9 @@ const LocationsShowMobile = (props) => {
     }
   }, [ match.params.slug ])
 
+  // @TODO: this can probably be much improved. Take either markers of location.map, or location itself.
+  const markers = location ? location.markers.length ? location.markers : location.map.markers : null
+
   return (<Root className='Root' >
 
     { loading && <i>Loading...</i> }
@@ -121,8 +124,8 @@ const LocationsShowMobile = (props) => {
       { location && <MapNoZoom map={location.map || location} /> }
     </CollapsibleNoMargins> }
     { /* @TODO: recursively render map (not location) as appropriate all around in these collapsibles. */ }
-    { location && location.markers.length && <Collapsible slug="markers-sec" label={location.labels.markers} >
-      <MarkersList markers={location.map ? location.map.markers : location.markers} />
+    { markers && markers.length && <Collapsible slug="markers-sec" label={location.labels.marker} >
+      <MarkersList markers={markers} />
     </Collapsible> || null }
     { location && location.description && <Collapsible config={location.config.description} slug={C.collapsible.descr} label={location.labels.description} >
       <Description item={location} />
