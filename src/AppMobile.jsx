@@ -19,7 +19,7 @@ import './theme/variables.css'
 
 import config from "config"
 import { BottomDrawer, Menu, MenuBottom, MenuLeft, UnlockModal } from "$components/application"
-import MapuiLayout from "$components/application/MapuiLayout"
+import { MapuiMobileLayout } from "$components/application"
 import { CitiesList, CitiesShow } from "$components/cities"
 import { GalleriesShow } from "$components/galleries"
 import { LocationsShowMobile } from "$components/locations"
@@ -31,12 +31,16 @@ import { Galleries, MyGalleries } from "$components/galleries"
 import { useApi, C, CollapsibleContextProvider, Debug, logg, request, TwofoldContextProvider } from "$shared"
 
 const Root = styled.div`
+
+
   background: #dedede;
   height: 100vh;
   overflow: auto;
 `;
 
 const __Container = styled(_Container)`
+
+  padding: 0;
   height: 100vh;
   overflow: scroll;
 `;
@@ -57,7 +61,7 @@ const AppMobile = (props) => {
         // main case
         return <__Container maxWidth="md" {...props} />
       case C.layout_mapui:
-        return <MapuiLayout {...props} {...{ bottomDrawerOpen, setBottomDrawerOpen }} />
+        return <MapuiMobileLayout {...props} {...{ bottomDrawerOpen, setBottomDrawerOpen }} />
     }
   }
 
@@ -102,7 +106,7 @@ const AppMobile = (props) => {
 
               <Route exact path="/en/reports/show/:slug" component={ReportsShow} />
 
-              <Route exact path="/en/locations/show/:slug" component={LocationsShowMobile} />
+              <Route exact path="/en/locations/show/:slug" component={LocationsShowMobile} layout={C.layout_mapui} />
 
             </Switch>
           </Container>

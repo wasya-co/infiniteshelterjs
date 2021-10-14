@@ -5,7 +5,7 @@ import { Route, useLocation, useHistory, Switch } from 'react-router-dom'
 import styled from 'styled-components'
 
 import config from 'config'
-import { Breadcrumbs, ItemModal, MapPanel, MarkersList } from "./"
+import { Breadcrumbs, ItemModal, MapNoZoom, MapPanel, MarkersList } from "./"
 import { logg, request, S, TwofoldContext, ZoomContext } from "$shared"
 import { Metaline } from "$components/application"
 import { Newsitems } from "$components/newsitems"
@@ -95,12 +95,12 @@ const LocationsShow = (props) => {
     <Left className='Left' {...{ bottomDrawerOpen }} {...S} debug={config.debug} >
       { loading && <i>Loading Left...</i> }
       { location && <Breadcrumbs {...location} /> }
-      { location && <MapPanel map={location.map ? location.map : location} /> }
+      { location && <MapNoZoom map={location.map ? location.map : location} /> }
     </Left>
     <Right className='Right' {...{ bottomDrawerOpen }} {...S} debug={config.debug} >
       { loading && <i>Loading Right...</i> }
       { location && <F>
-        <MarkersList markers={location.markers} />
+        <MarkersList markers={location.map ? location.map.markers : location.markers} />
         <Description item={location} />
         { location.newsitems && location.newsitems.length && <Newsitems newsitems={location.newsitems} /> || null }
       </F> }

@@ -12,6 +12,8 @@ export { default as useApi } from "./Api"
 export { default as AppMock } from "./AppMock"
 export { default as AppRouter } from "./AppRouter"
 
+/* B */
+
 export const Box = styled(_Box)`
   margin-bottom: 1em;
   padding: 1em;
@@ -32,6 +34,8 @@ export const Btn = styled.div`
   padding: .3em 1em;
   cursor: pointer;
 `;
+
+/* C */
 
 export const C = {
   collapsible: {
@@ -70,8 +74,12 @@ export const CollapsibleContextProvider = ({ children, ...props }) => {
   }} >{ children }</CollapsibleContext.Provider>
 }
 
+/* D */
+
 export const Debug = styled.div`
 `;
+
+/* I */
 
 /**
  * Like the rails inflector, has methods:
@@ -87,6 +95,8 @@ export const inflector = {
     }
   },
 }
+
+/* L */
 
 /**
  * Usage: logg(someObject, 'label')
@@ -111,7 +121,11 @@ const logg = (a, b="", c=null) => {
 
 export { logg };
 
+/* R */
+
 export { default as request } from "./request";
+
+/* S */
 
 /**
  * Style Constants
@@ -126,6 +140,8 @@ export const S = {
   lightGrey: '#988b8b',
   red: 'red',
 }
+
+/* T */
 
 export const TwofoldContext = React.createContext({})
 export const TwofoldContextProvider = ({ children, ...props }) => {
@@ -144,7 +160,6 @@ export const TwofoldContextProvider = ({ children, ...props }) => {
     }
   }
 
-
   const [ showItem, setShowItem ] = useState(false)
   const [ showUrl, setShowUrl ] = useState(false)
   const [ zoom, setZoom ] = useState(1)
@@ -161,8 +176,15 @@ export const TwofoldContextProvider = ({ children, ...props }) => {
   }} >{ children }</TwofoldContext.Provider>
 }
 
-export const ZoomContext = React.createContext({})
+/* U */
+export { default as useWindowSize } from './useWindowSize'
+
+/* W */
 
 export const Wrapper = styled.div`
   height: 100vh;
 `;
+
+/* Z */
+
+export const ZoomContext = React.createContext({})

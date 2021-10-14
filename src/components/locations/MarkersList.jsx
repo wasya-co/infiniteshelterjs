@@ -9,9 +9,13 @@ import { logg, request, S, TwofoldContext, ZoomContext } from "$shared"
 import { Metaline } from "$components/application"
 import { Newsitems } from "$components/newsitems"
 
+const Marker = styled.div`
+  margin: 10px;
+  width: 20vw;
+`;
 
 const MarkersList = (props) => {
-  logg(props, 'Markers')
+  logg(props, 'MarkersList')
 
   const history = useHistory()
   const { showUrl, setShowUrl } = useContext(TwofoldContext)
@@ -27,15 +31,14 @@ const MarkersList = (props) => {
 
   const out = []
   props.markers.map((m, idx) => {
-    out.push(<div
-        key={idx}
-        style={{ margin: '10px' }}
-        onClick={() => goto(m)} >
+    out.push(<Marker key={idx}
+      onClick={() => goto(m) }
+    >
       <img src={m.title_img_path} /><br />
       {m.name}
-    </div>)
+    </Marker>)
   })
-  return <div style={{ display: 'flex' }} >{out}</div>
+  return <div style={{ display: 'flex', flexWrap: 'wrap' }} >{out}</div>
 }
 
 export default MarkersList

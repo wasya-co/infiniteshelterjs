@@ -3,12 +3,19 @@ import React, { Fragment as F, useContext, useEffect, useRef, useState } from "r
 import { Route, useLocation, useHistory, Switch } from 'react-router-dom'
 import styled from 'styled-components'
 
-import { Breadcrumbs } from "./"
+import { Breadcrumbs, MapNoZoom, MarkersList, } from "./"
 import {
   C, Collapsible, CollapsibleContext,
-  logg, request, S, TwofoldContext, ZoomContext } from "$shared"
+  logg, request, S, TwofoldContext,
+  useWindowSize,
+  ZoomContext } from "$shared"
 import { Metaline } from "$components/application"
 import { Newsitems } from "$components/newsitems"
+
+const CollapsibleNoMargins = styled(Collapsible)`
+  margin: 0;
+  padding: 0;
+`;
 
 const _Description = styled.div`
   // border: 1px solid red;
@@ -19,7 +26,9 @@ const Description = ({ item }) => {
   return <_Description dangerouslySetInnerHTML={{ __html: item.description }} />
 }
 
-const W1 = styled.div`
+const MapWrapper = styled.div`
+  // border: 1px solid red;
+
   position: relative;
 `;
 
@@ -69,9 +78,74 @@ const Div1 = styled.div`
   max-height: 80vh; // @TODO: huh?
 `;
 
-const Div3 = styled.div``;
+const Root = styled.div`
+  // border: 1px solid yellow;
 
-const Map2 = (props) => {
+  margin-top: 2em;
+`;
+
+const LocationsShowMobile = (props) => {
+  logg(props, 'LocationsShowMobile')
+
+  const { match } = props
+
+  const [loading, setLoading] = useState(false)
+  const [location, setLocation] = useState(null)
+
+  const mountedRef = useRef('init')
+
+  useEffect(() => {
+    setLoading(true);
+    const token = localStorage.getItem("jwt_token");
+    request.get(`/api/maps/view/${match.params.slug}`, { params: { jwt_token: token } }).then(res => {
+      if (!mountedRef.current) { return null }
+
+      setLocation(res.data.map)
+      logg(res.data.map, 'setLocation')
+
+      setLoading(false)
+      // @TODO: setFlash here?! If I"m accessing a gallery I haven't bought access to?
+    }).finally(() => {
+    })
+
+    return () => {
+      // mountedRef.current = false;
+    }
+  }, [ match.params.slug ])
+
+  return (<Root className='Root' >
+
+    { loading && <i>Loading...</i> }
+    { location && <Breadcrumbs {...location} /> }
+    { location && <CollapsibleNoMargins slug="map-sec" label={location.labels.map} className="CollapsibleNoMargins" >
+      { location && <MapNoZoom map={location.map || location} /> }
+    </CollapsibleNoMargins> }
+    { /* @TODO: recursively render map (not location) as appropriate all around in these collapsibles. */ }
+    { location && location.markers.length && <Collapsible slug="markers-sec" label={location.labels.markers} >
+      <MarkersList markers={location.map ? location.map.markers : location.markers} />
+    </Collapsible> || null }
+    { location && location.description && <Collapsible config={location.config.description} slug={C.collapsible.descr} label={location.labels.description} >
+      <Description item={location} />
+    </Collapsible> || null }
+    { location && location.newsitems.length && <Collapsible slug="news-sec" label={location.labels.newsitems} >
+      <Newsitems newsitems={location.newsitems} />
+    </Collapsible> || null }
+
+  </Root>)
+}
+
+export default LocationsShowMobile
+
+
+
+
+
+
+
+
+
+/* This is now in file MapPanel.jsx */
+/* const Map2 = (props) => {
   logg(props, 'Map2')
   const { location } = props
 
@@ -102,7 +176,7 @@ const Map2 = (props) => {
     markers.push(out)
   })
 
-  return (<W1>
+  return (<MapWrapper className="MapWrapper" >
     <ZoomCtrl />
     <Div1 ref={div1Ref} >
       <Div3 style={{
@@ -123,81 +197,5 @@ const Map2 = (props) => {
         { markers }
       </Div3>
     </Div1>
-  </W1>)
-}
-
-const Marker = styled.div`
-  margin: 10px;
-  width: 20vw;
-`;
-
-const Markers = (props) => {
-  logg(props, 'Markers')
-  const history = useHistory()
-
-  const out = []
-  props.markers.map((m, idx) => {
-    out.push(<Marker key={idx}
-      onClick={() => m.url ? window.location.href=m.url : history.push(`/en/locations/show/${m.slug}`) }
-    >
-      <img src={m.title_img_path} /><br />
-      {m.name}
-    </Marker>)
-  })
-  return <div style={{ display: 'flex', flexWrap: 'wrap' }} >{out}</div>
-}
-
-const Root = styled.div`
-  margin-top: 2em;
-`;
-
-const LocationsShowMobile = (props) => {
-  logg(props, 'LocationsShowMobile')
-
-  const { match } = props;
-
-  const [loading, setLoading] = useState(false)
-  const [location, setLocation] = useState(null)
-
-  const mountedRef = useRef('init')
-
-  useEffect(() => {
-    setLoading(true);
-    const token = localStorage.getItem("jwt_token");
-    request.get(`/api/maps/view/${match.params.slug}`, { params: { jwt_token: token } }).then(res => {
-      if (!mountedRef.current) { return null }
-
-      setLocation(res.data.map)
-      logg(res.data.map, 'setLocation')
-
-      setLoading(false)
-      // @TODO: setFlash here?! If I"m accessing a gallery I haven't bought access to?
-    }).finally(() => {
-    })
-
-    return () => {
-      // mountedRef.current = false;
-    }
-  }, [ match.params.slug ])
-
-  return (<Root>
-
-    { loading && <i>Loading...</i> }
-    { location && <Breadcrumbs {...location} /> }
-    { /* <Collapsible slug="map-sec" label="Map" >
-      { location && <Map2 location={location} /> }
-    </Collapsible> */ }
-    { location && location.description && <Collapsible slug={C.collapsible.descr} label="Description" >
-      <Description item={location} />
-    </Collapsible> || null }
-    { location && location.markers.length && <Collapsible slug="markers-sec" label="Markers">
-      <Markers markers={location.markers} />
-    </Collapsible> || null }
-    { location && location.newsitems.length && <Collapsible slug="news-sec" label="Newsitems">
-      <Newsitems newsitems={location.newsitems} />
-    </Collapsible> || null }
-
-  </Root>)
-}
-
-export default LocationsShowMobile
+  </MapWrapper>)
+} */

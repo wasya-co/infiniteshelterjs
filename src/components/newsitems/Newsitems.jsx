@@ -2,6 +2,7 @@ import React from "react"
 import styled from 'styled-components'
 
 import { Api, C, logg } from "$shared"
+import { GenericNewsitem } from "./"
 import NewsitemGallery from "$components/newsitems/NewsitemGallery"
 import NewsitemReport from "$components/newsitems/NewsitemReport"
 import NewsitemVideo from "$components/newsitems/NewsitemVideo"
@@ -35,6 +36,7 @@ const Newsitems = (props) => {
             { newsitem.item_type === C.item_types.gallery && <NewsitemGallery item={newsitem} /> }
             { newsitem.item_type === C.item_types.report  && <NewsitemReport  item={newsitem} /> }
             { newsitem.item_type === C.item_types.video   && <NewsitemVideo   item={newsitem} /> }
+            { !newsitem.item_type && <GenericNewsitem item={newsitem} /> }
           </div>
         )
       }) }

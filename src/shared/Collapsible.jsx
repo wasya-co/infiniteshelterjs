@@ -29,6 +29,7 @@ const Root = styled.div`
 
 const Collapsible = ({ children, ...props }) => {
   logg(props, 'Collapsible')
+  const { config } = props
 
   const ctx = useContext(CollapsibleContext)
   if (!ctx) { return null; }
@@ -38,10 +39,11 @@ const Collapsible = ({ children, ...props }) => {
     setCollapsibles({ ...collapsibles, [props.slug]: !collapsibles[props.slug] })
   }
 
-  const folded = !!collapsibles[props.slug]
+  const collapsible = typeof config === 'undefined' ? true : typeof config.collapsible === 'undefined' ? true : config.collapsible
+  const folded = collapsible ? !!collapsibles[props.slug] : false
 
-  return <Root>
-    <Label {...S} onClick={doToggle} >{folded ? <Lt /> : <Gt />} {props.label} </Label>
+  return <Root className={`Root ${props.className}`} >
+    { collapsible && props.label && <Label {...S} onClick={doToggle} >{folded ? <Lt /> : <Gt />} {props.label} </Label> }
     { !folded && <Inner>{ children }</Inner> }
   </Root>
 }
