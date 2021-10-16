@@ -24,8 +24,14 @@ import './theme/variables.css'
 import 'react-toastify/dist/ReactToastify.css'
 
 import config from "config"
-import { C, CollapsibleContext, Debug, logg, request, TwofoldContext, TwofoldContextProvider , useApi, } from "$shared"
-import { BottomDrawer, Menu, MenuBottom, MenuLeft, UnlockModal } from "$components/application"
+import {
+  C, CollapsibleContext, Debug, logg, request, TwofoldContext, TwofoldContextProvider , useApi,
+} from "$shared"
+import {
+  BottomDrawer,
+  MainHeader, Menu, MenuBottom, MenuLeft,
+  UnlockModal
+} from "$components/application"
 import MapuiLayout from "$components/application/MapuiLayout"
 import { CitiesList, CitiesShow } from "$components/cities"
 // @TODO: MyGalleries doesn't look right...
@@ -37,15 +43,13 @@ import { Account, LoginModal } from "$components/users"
 import { Videos } from "$components/videos"
 
 const Root = styled.div`
+  // border: 1px solid #741741;
+
   background: #dedede;
   height: 100vh;
   overflow: auto;
 `;
 
-const __Container = styled(_Container)`
-  height: 100vh;
-  overflow: scroll;
-`;
 
 const AppDesktop = (props) => {
   logg(props, 'AppDesktop')
@@ -62,7 +66,7 @@ const AppDesktop = (props) => {
     switch(layout) {
       case C.layout_onecol:
         // main case
-        return <__Container maxWidth="md" {...props} />
+        return <_Container maxWidth="md" {...props} />
       case C.layout_mapui:
         return <MapuiLayout {...props} />
     }
@@ -83,8 +87,12 @@ const AppDesktop = (props) => {
   return (<Router>
     <ToastContainer />
     <TwofoldContextProvider {...props} {...{ layout, setLayout }} >
-      { layout === C.layout_onecol && <MenuLeft variant={C.variants.floating} /> }
       <Root>
+
+        { /* This no more, if I want it to look like Financial Times */ }
+        { /* layout === C.layout_onecol && <MenuLeft variant={C.variants.floating} /> */ }
+        <MainHeader />
+
         <Container >
           <Switch id="main" main >
 
@@ -107,6 +115,7 @@ const AppDesktop = (props) => {
           </Switch>
         </Container>
       </Root>
+
       <BottomDrawer />
       <UnlockModal />
       <LoginModal />

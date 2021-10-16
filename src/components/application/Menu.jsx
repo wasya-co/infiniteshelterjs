@@ -57,25 +57,23 @@ const Menu = () => {
       <IonContent>
         <img src="/assets/hero.png" />
         <IonList id="inbox-list">
-          { appPages.map((appPage, index) =>
-            <IonMenuToggle key={index} autoHide={false}>
-              <IonItem
-                routerLink={appPage.url}
-                routerDirection="none"
-                lines="none"
-                detail={false}>
-                <IonIcon
-                  slot="start"
-                  ios={appPage.icon}
-                  md={appPage.icon} />
-                <IonLabel>{appPage.title}</IonLabel>
-              </IonItem>
-            </IonMenuToggle>
-          ) }
+          { appPages.map((appPage, index) => <IonMenuToggle key={index} autoHide={false}>
+            <IonItem
+              routerLink={appPage.url}
+              routerDirection="none"
+              lines="none"
+              detail={false}>
+              <IonIcon
+                slot="start"
+                ios={appPage.icon}
+                md={appPage.icon} />
+              <IonLabel>{appPage.title}</IonLabel>
+            </IonItem>
+          </IonMenuToggle>) }
         </IonList>
       </IonContent>
     </IonMenu>
   )
 }
 
-export default Menu;
+export default Menu

@@ -39,10 +39,12 @@ const MenuLeft= (props) => {
 
   return <F>
 
-    <Menu />
-    { props.variant === C.variants.floating &&
+    { /* <Menu /> */ }
+
+    { /* @TODO: probably remove from here, too many variations of the button, it gotta be separate */ }
+    { props.variant === C.variants.floating ?
       <Fab onClick={() => setDrawerOpen(true)} style={{ position: 'absolute', top: 0, left: 0, margin: '.5em' }} aria-label='main menu'><MenuIcon /></Fab>
-      || <MenuIcon onClick={() => setDrawerOpen(true)} /> }
+      : <MenuIcon onClick={() => setDrawerOpen(true)} /> }
 
     <Drawer anchor={"left"} open={drawerOpen} onClose={() => setDrawerOpen(false)} >
       <W1>

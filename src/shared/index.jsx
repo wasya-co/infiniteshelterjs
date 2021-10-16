@@ -75,10 +75,6 @@ export const CollapsibleContextProvider = ({ children, ...props }) => {
 }
 
 /* D */
-
-export const Debug = styled.div`
-`;
-
 /* I */
 
 /**

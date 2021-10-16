@@ -2,9 +2,9 @@ import { IonPage, IonLoading, IonContent } from '@ionic/react'
 import React, { Fragment as F, useEffect, useRef, useState } from "react"
 import styled from 'styled-components'
 
-import { useApi, Debug, logg, request } from "$shared"
+import { C, logg, useApi, } from "$shared"
+import { Features } from "./"
 import { Newsitems } from "$components/newsitems"
-import "./sites.scss"
 
 const _Hero = styled.div`
   height: 370px;
@@ -17,40 +17,38 @@ const _Hero = styled.div`
 const Hero = () => <_Hero><img className="image" src="/assets/hero.png" /></_Hero>
 
 const Root = styled.div`
-  padding: 0;
   margin: 0;
-  height: 100vh;
+  padding-bottom: 1em;
 `
 
 const SitesShow = (props) => {
-  // logg(props, 'SitesShow')
+  logg(props, 'SitesShow')
 
-  let [newsitems, setNewsitems] = useState([])
-  let [showLoading, setShowLoading] = useState(false)
+  let [ site, setSite ] = useState({ features: [], newsitems: [] })
+  let [ loading, setLoading ] = useState(false)
 
   const api = useApi()
   const mountedRef = useRef('init')
 
   useEffect(() => {
-    // setShowLoading(true)
     api.applicationHome().then(data => {
-      if (!mountedRef.current) return null;
-      setNewsitems(data.newsitems)
-      setShowLoading(false)
+      if (!mountedRef.current) { return null }
+      logg(data, 'setSite')
+      setSite(data)
+      setLoading(false)
     })
-
     return () => { mountedRef.current = false }
   }, [])
 
   return <F>
     <Root>
-      <Hero />
-      <Newsitems newsitems={newsitems} />
-      &nbsp;
+      { /* <Hero /> */ }
+      <Features features={site.features} />
+      <Newsitems newsitems={site.newsitems} />
     </Root>
     <IonLoading
-      isOpen={showLoading}
-      onDidDismiss={() => setShowLoading(false)}
+      isOpen={loading}
+      onDidDismiss={() => setLoading(false)}
       message={'Please wait...'}
       duration={5000}
     />
