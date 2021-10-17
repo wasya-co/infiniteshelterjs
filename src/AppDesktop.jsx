@@ -38,7 +38,8 @@ import { CitiesList, CitiesShow } from "$components/cities"
 import { GalleriesShow, MyGalleries } from "$components/galleries"
 import { LocationsShow as LocationsShow } from "$components/locations"
 import { ReportsShow } from "$components/reports"
-import { SitesShow } from '$components/sites'
+// import { SitesShow } from '$components/sites'
+import SitesShow from '$components/sites/SitesShow1'
 import { Account, LoginModal } from "$components/users"
 import { Videos } from "$components/videos"
 
@@ -91,7 +92,7 @@ const AppDesktop = (props) => {
 
         { /* This no more, if I want it to look like Financial Times */ }
         { /* layout === C.layout_onecol && <MenuLeft variant={C.variants.floating} /> */ }
-        <MainHeader />
+        { /* <MainHeader /> */ }
 
         <Container >
           <Switch id="main" main >

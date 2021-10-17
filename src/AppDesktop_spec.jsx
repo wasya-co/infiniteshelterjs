@@ -9,7 +9,9 @@ import { logg, request } from "$shared"
 configure({ adapter: new Adapter() })
 
 jest.mock('request')
-request.get = jest.fn()
+const getMock = jest.fn()
+getMock.mockReturnValue(new Promise(() => {}, () => {}))
+request.get = getMock
 
 Object.defineProperty(window, 'matchMedia', {
   writable: true,

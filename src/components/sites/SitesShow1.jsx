@@ -26,31 +26,60 @@ const Root = styled.div`
   padding-bottom: 1em;
 `
 
-const SitesShow = (props) => {
+// Currently a homepage, like a wp page.
+const SitesShow1 = (props) => {
   logg(props, 'SitesShow')
 
   let [ site, setSite ] = useState({ features: [], newsitems: [] })
+  let [ artTag, setArtTag ] = useState({ features: [] })
+  let [ homeRow1Tag, setHomeRow1Tag ] = useState({ features: [] })
+  let [ interestingLocationsTag, setInterestingLocationsTag ] = useState({ features: [] })
   let [ loading, setLoading ] = useState(false)
+
 
   const api = useApi()
   const mountedRef = useRef('init')
 
+  // loads all data
   useEffect(() => {
+    // setLoading(true)
+
     api.applicationHome().then(data => {
       if (!mountedRef.current) { return null }
       logg(data, 'setSite')
       setSite(data)
-      setLoading(false)
+      // setLoading(false)
     })
+
+    api.getTag({ slug: 'interesting-locations' }).then(data => {
+      if (!mountedRef.current) { return null }
+      logg(data, 'setInterestingLocations')
+      setInterestingLocationsTag(data)
+      // setLoading(false)
+    })
+
+    api.getTag({ slug: 'home-row-1' }).then(data => {
+      if (!mountedRef.current) { return null }
+      setHomeRow1Tag(data)
+    })
+
+    api.getTag({ slug: 'art' }).then(data => {
+      if (!mountedRef.current) { return null }
+      setArtTag(data)
+    })
+
     return () => { mountedRef.current = false }
   }, [])
 
   return <F>
     <Root>
-      { /* <Hero /> */ }
-      <MainHeader />
 
-      <Features features={site.features} />
+      <MainHeader />
+      { /* <Hero /> */ }
+
+      <Features features={interestingLocationsTag.features} label="Interesting Locations" />
+      <Features features={homeRow1Tag.features} label="Interesting Tags" />
+      <Features features={artTag.features} label="art" />
       <Newsitems newsitems={site.newsitems} />
     </Root>
     <IonLoading
@@ -62,4 +91,4 @@ const SitesShow = (props) => {
   </F>
 }
 
-export default SitesShow
+export default SitesShow1

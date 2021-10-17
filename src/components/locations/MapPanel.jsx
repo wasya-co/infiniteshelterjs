@@ -12,7 +12,7 @@ const Div1 = styled.div`
   display: block;
 
   position: relative;
-  overflow: scroll;
+  overflow: auto;
 
   height: calc(100vh - ${p => p.breadcrumbsHeight} -
     ${p => p.bottomDrawerOpen ?
@@ -33,7 +33,7 @@ const Root = styled.div`
   border: ${p=>p.debug?'1':'0'}px solid red;
 
   position: relative;
-  overflow: scroll;
+  overflow: auto;
   height: calc(100vh - ${p => p.breadcrumbsHeight} -
     ${p => p.bottomDrawerOpen ?
       `${p.bottomDrawerHeight} - 2*${p.borderWidth}`

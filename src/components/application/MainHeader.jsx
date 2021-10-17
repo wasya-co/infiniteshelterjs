@@ -11,8 +11,8 @@ const Header = styled.div`
 
   text-align: center;
   font-size: 2em;
-  padding: 2em 0;
-  line-height: 2em;
+
+
 `;
 
 const Root = styled.div`
@@ -20,6 +20,8 @@ const Root = styled.div`
 
   display: flex;
   justify-content: center;
+  line-height: 2em;
+  padding: 2em 0;
 `;
 
 const MainHeader = (props) => {

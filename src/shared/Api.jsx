@@ -39,6 +39,7 @@ const useApi = () => {
 
     getCities: ()   => request.get(`${config.apiOrigin}/api/cities`).then((r) => r.data),
     getCity: (slug) => request.get(`${config.apiOrigin}/api/cities/view/${slug}`),
+    getTag: (tag) => request.get(`${config.apiOrigin}/api/tags/view/${tag.slug}`).then((r) => r.data),
 
     applicationHome: async () => {
       const out = await request.get(`${config.apiOrigin}/api/sites/view/${config.domain}`, { params: { jwt_token: token } })
