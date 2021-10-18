@@ -199,6 +199,7 @@ const Account = (props) => {
         </Grid>
       </Grid>
 
+      <hr />
       { /* push notifications */ }
       { notifications.length && <IonList>
         { notifications.map((notif) => <IonItem key={notif.id}>
