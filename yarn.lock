@@ -1452,6 +1452,16 @@
   resolved "https://registry.yarnpkg.com/@capacitor/ios/-/ios-3.2.4.tgz#6b6c156d20a3bf143c56cd6184910f23eff9fdd1"
   integrity sha512-d9ECeZC2uknOGB/IHaapBvuUSpYoM0J202M8Fw4OBPAkc26ysvMreHoCWCB0nd0leks53biI6DJdS60/VbYTWg==
 
+"@capacitor/push-notifications@^1.0.6":
+  version "1.0.6"
+  resolved "https://registry.yarnpkg.com/@capacitor/push-notifications/-/push-notifications-1.0.6.tgz#eb1a2ae7f80189f023b36a4fc405176380d7f300"
+  integrity sha512-+lwRRPzVefzYxWMRQ2K4IC2V54ojXYU7sP3mBwZDk+iuM6yJVzlZ65U9HiJiw4qBeOgIIgTvX4y+TEL0L6MOQQ==
+
+"@capacitor/toast@^1.0.5":
+  version "1.0.5"
+  resolved "https://registry.yarnpkg.com/@capacitor/toast/-/toast-1.0.5.tgz#837a58069fffb3723dc53c6f15a60ca239eae92c"
+  integrity sha512-nW5+iwC8COsONsEOw64YpT48D47ItdUsJwHeWyOV2QaNZX16M0FCTshlb7o6ngKEheACklZ7bULwcHncymg1rw==
+
 "@cnakazawa/watch@^1.0.3":
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/@cnakazawa/watch/-/watch-1.0.4.tgz#f864ae85004d0fcab6f50be9141c4da368d1656a"

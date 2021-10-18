@@ -49,10 +49,12 @@ src/components is where most of the application lives. We're adapting concepts f
 
 The default namespace and default component name is "application". If you don't know where to put something and it doesn't belong to a resource, consider putting it there.
 
+
+
 = Develop =
  yarn install
 
-Go to https://tgm.mac:3002/en/account
+Go to https://tgm.mac:3002
 
 == How to implement a feature ==
 Once you get a Redmine ticket,
@@ -62,9 +64,6 @@ Create a new feature branch. The branch name should either be a version (e.g. 0.
 Submit a PR to master.
 
 = Run =
-
-See README.txt-private as well
-
  yarn run start
 
 

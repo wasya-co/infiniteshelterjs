@@ -1,16 +1,33 @@
 
+import { Capacitor } from '@capacitor/core'
+import {
+  ActionPerformed,
+  PushNotificationSchema, PushNotifications,
+} from '@capacitor/push-notifications'
+import { Toast } from "@capacitor/toast"
 import { ethers } from 'ethers'
 import React, { Fragment as F, useContext, useEffect, useState } from "react"
-import { IonPage, IonContent } from "@ionic/react"
+import {
+  IonButton, IonButtons,
+  IonCard, IonCardContent, IonContent,
+  IonFooter,
+  IonHeader,
+  IonItem,
+  IonLabel, IonListHeader, IonList,
+  IonMenuButton,
+  IonPage,
+  IonText, IonTitle, IonToolbar,
+} from '@ionic/react'
 import { Container, Grid } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
 import { Link } from 'react-router-dom'
-
 
 import { FbLogin, Logout, PasswordLogin } from "./"
 import { C, logg, TwofoldContext } from "$shared"
 import Greeter from '$src/artifacts/contracts/Greeter.sol/Greeter.json'
 import Token from '$src/artifacts/contracts/Token.sol/Token.json'
+
+const isPushNotificationsAvailable = Capacitor.isPluginAvailable('PushNotifications')
 
 // Update with the contract address logged out to the CLI when it was deployed
 const greeterAddress = "0x4bE9765Ca063E73E0aaEd227fd6731473508DbE0"
@@ -22,6 +39,56 @@ const Account = (props) => {
 
   const { currentUser, setCurrentUser } = useContext(TwofoldContext)
   const [ greeting, setGreetingValue ] = useState("")
+
+  const register = () => {
+    // Register with Apple / Google to receive push via APNS/FCM
+    PushNotifications.register()
+
+    // On success, we should be able to receive notifications
+    PushNotifications.addListener('registration', (token) => {
+      showToast('Push registration success')
+    })
+
+    // Some issue with our setup and push will not work
+    PushNotifications.addListener('registrationError', (error) => {
+      alert('Error on registration: ' + JSON.stringify(error))
+    })
+
+    // Show us the notification payload if the app is open on our device
+    PushNotifications.addListener('pushNotificationReceived', (notification) => {
+      setnotifications((notifications) =>
+        [...notifications, { id: notification.id, title: notification.title, body: notification.body, type: 'foreground' }]
+      )
+    })
+
+    // Method called when tapping on a notification
+    PushNotifications.addListener('pushNotificationActionPerformed', (notification) => {
+      setnotifications((notifications) =>
+        [...notifications, { id: notification.notification.data.id, title: notification.notification.data.title, body: notification.notification.data.body, type: 'action' }]
+      )
+    })
+  }
+
+  const showToast = async (msg) => await Toast.show({ text: msg })
+
+  useEffect(() => {
+    if (!isPushNotificationsAvailable) { return }
+
+    PushNotifications.checkPermissions().then((res) => {
+        if (res.receive === 'granted') {
+          register()
+        } else {
+          PushNotifications.requestPermissions().then((res) => {
+            if (res.receive === 'denied') {
+              showToast('Push Notification permission denied')
+            } else {
+              showToast('Push Notification permission granted')
+              register()
+            }
+          })
+        }
+      })
+  }, [])
 
   // request access to the user's MetaMask account
   async function requestAccount() {
@@ -79,8 +146,13 @@ const Account = (props) => {
     }
   }
 
-  return (<F>
-
+  return <IonPage>
+    <IonHeader>
+      <IonToolbar color="primary">
+          <IonTitle slot="start"> Push Notifications</IonTitle>
+      </IonToolbar>
+    </IonHeader>
+    <IonContent className="ion-padding">
       <Grid container spacing={2} >
         <Grid item xs={12}>
           <Grid container>
@@ -128,8 +200,15 @@ const Account = (props) => {
           </Grid>
         </Grid>
       </Grid>
-
-  </F>);
+    </IonContent>
+    <IonFooter>
+      <IonToolbar>
+        { isPushNotificationsAvailable && <IonButton
+          color="success" expand="full" onClick={register}>Register for Push</IonButton>
+          || <div><h1>Push notifications not available</h1></div> }
+      </IonToolbar>
+    </IonFooter>
+  </IonPage>
 }
 
-export default Account;
+export default Account
