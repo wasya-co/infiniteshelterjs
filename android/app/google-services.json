@@ -1,0 +1,69 @@
+{
+  "project_info": {
+    "project_number": "275513490279",
+    "firebase_url": "https://tgm2-75b9e.firebaseio.com",
+    "project_id": "tgm2-75b9e",
+    "storage_bucket": "tgm2-75b9e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:275513490279:android:527c7a659d09fdf0c3cdc2",
+        "android_client_info": {
+          "package_name": "co.wasya.guyd"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "275513490279-da7ksh5ju0kqcaao9nq2lkqt0e9vfope.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBLaZloFHbcPkDKliOx9uD5BHypgcgvLj8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "275513490279-da7ksh5ju0kqcaao9nq2lkqt0e9vfope.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:275513490279:android:c23470b73b81301fc3cdc2",
+        "android_client_info": {
+          "package_name": "com.piousbox.tgm"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "275513490279-da7ksh5ju0kqcaao9nq2lkqt0e9vfope.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBLaZloFHbcPkDKliOx9uD5BHypgcgvLj8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "275513490279-da7ksh5ju0kqcaao9nq2lkqt0e9vfope.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
