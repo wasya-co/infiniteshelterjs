@@ -1,11 +1,16 @@
 *trash
+*-private
 *.swp
+
+.env
 
 /android/app/src/main/assets/public
 
 ## this is what https://guyd.me uses...
 # /build
 
+/cache
+!/cache/.keep
 /coverage
 
 node_modules

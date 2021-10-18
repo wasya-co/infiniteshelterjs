@@ -19,3 +19,4 @@ comfortable will resume auth and credit cards.
         this is good, for my own individual usage.
 0.0.7 - 2021-10-01 Removed everything non-pretty to position for MyLocalGuide.
                    Would add login asap!
+0.0.8 - wire in ether
