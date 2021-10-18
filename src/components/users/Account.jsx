@@ -10,15 +10,18 @@ import { Link } from 'react-router-dom'
 import { FbLogin, Logout, PasswordLogin } from "./"
 import { C, logg, TwofoldContext } from "$shared"
 import Greeter from '$src/artifacts/contracts/Greeter.sol/Greeter.json'
+import Token from '$src/artifacts/contracts/Token.sol/Token.json'
 
 // Update with the contract address logged out to the CLI when it was deployed
-const greeterAddress = "your-contract-address"
+const greeterAddress = "0x4bE9765Ca063E73E0aaEd227fd6731473508DbE0"
+const tokenAddress = "0xffa52d00685aC60e65457922aEae2c2783c0cB0E"
 
 
 const Account = (props) => {
   logg(props, 'Account')
 
   const { currentUser, setCurrentUser } = useContext(TwofoldContext)
+  const [ greeting, setGreetingValue ] = useState("")
 
   // request access to the user's MetaMask account
   async function requestAccount() {
@@ -32,7 +35,8 @@ const Account = (props) => {
       const contract = new ethers.Contract(greeterAddress, Greeter.abi, provider)
       try {
         const data = await contract.greet()
-        console.log('data: ', data)
+        setGreetingValue(data)
+        // console.log('data: ', data)
       } catch (err) {
         console.log("Error: ", err)
       }
@@ -89,7 +93,7 @@ const Account = (props) => {
                 <br />
                 <button onClick={setGreeting}>Set Greeting</button>
                 <br />
-                <input onChange={e => setGreetingValue(e.target.value)} placeholder="Set greeting" />
+                <input value={greeting} onChange={e => setGreetingValue(e.target.value)} placeholder="Set greeting" />
               </div>
               <hr />
               <div>
