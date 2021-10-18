@@ -39,6 +39,7 @@ const Account = (props) => {
 
   const { currentUser, setCurrentUser } = useContext(TwofoldContext)
   const [ greeting, setGreetingValue ] = useState("")
+  const [notifications, setNotifications] = useState([])
 
   const register = () => {
     // Register with Apple / Google to receive push via APNS/FCM
@@ -55,16 +56,16 @@ const Account = (props) => {
     })
 
     // Show us the notification payload if the app is open on our device
-    PushNotifications.addListener('pushNotificationReceived', (notification) => {
-      setnotifications((notifications) =>
-        [...notifications, { id: notification.id, title: notification.title, body: notification.body, type: 'foreground' }]
+    PushNotifications.addListener('pushNotificationReceived', ({ nofitication: n }) => {
+      setNotifications((ns) =>
+        [...ns, { id: n.data.id, title: n.data.title, body: n.data.body, type: 'foreground' }]
       )
     })
 
     // Method called when tapping on a notification
-    PushNotifications.addListener('pushNotificationActionPerformed', (notification) => {
-      setnotifications((notifications) =>
-        [...notifications, { id: notification.notification.data.id, title: notification.notification.data.title, body: notification.notification.data.body, type: 'action' }]
+    PushNotifications.addListener('pushNotificationActionPerformed', ({ nofitication: n }) => {
+      setNotifications((ns) =>
+        [...ns, { id: n.data.id, title: n.data.title, body: n.data.body, type: 'action' }]
       )
     })
   }
@@ -200,6 +201,18 @@ const Account = (props) => {
           </Grid>
         </Grid>
       </Grid>
+
+      { notifications.length && <IonList>
+        { notifications.map((notif) => <IonItem key={notif.id}>
+          <IonLabel>
+            <IonText><h3 className="notif-title">{ notif.title }</h3></IonText>
+            <p>{ notif.body }</p>
+            { notif.type==='foreground' && <p>This data was received in foreground</p> }
+            { notif.type==='action' && <p>This data was received on tap</p> }
+          </IonLabel>
+        </IonItem>) }
+      </IonList> }
+
     </IonContent>
     <IonFooter>
       <IonToolbar>
