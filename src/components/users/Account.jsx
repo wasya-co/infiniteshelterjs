@@ -1,9 +1,6 @@
 
 import { Capacitor } from '@capacitor/core'
-import {
-  ActionPerformed,
-  PushNotificationSchema, PushNotifications,
-} from '@capacitor/push-notifications'
+import { PushNotifications } from '@capacitor/push-notifications'
 import { Toast } from "@capacitor/toast"
 import { ethers } from 'ethers'
 import React, { Fragment as F, useContext, useEffect, useState } from "react"
@@ -191,7 +188,7 @@ const Account = (props) => {
                   </ul>
                 </F>
                 || <F>
-                  <h4>Not logged in</h4>
+                  <h4>Not logged in 2</h4>
                   <FbLogin />
                   <br /><br />
                   <PasswordLogin />
@@ -202,6 +199,7 @@ const Account = (props) => {
         </Grid>
       </Grid>
 
+      { /* push notifications */ }
       { notifications.length && <IonList>
         { notifications.map((notif) => <IonItem key={notif.id}>
           <IonLabel>
@@ -211,7 +209,7 @@ const Account = (props) => {
             { notif.type==='action' && <p>This data was received on tap</p> }
           </IonLabel>
         </IonItem>) }
-      </IonList> }
+      </IonList> || 'no notifications so far' }
 
     </IonContent>
     <IonFooter>
