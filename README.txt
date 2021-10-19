@@ -75,22 +75,21 @@ We use jest, enzyme. See package.json and scripts/ .
 
  yarn run test
 
+See the android logs from the shell:
+
+ adb logcat
+
 = Deploy =
 
 == For Android ==
 From: https://capacitorjs.com/docs/android
+From: https://capacitor.ionicframework.com/docs/android/
 
  yarn run build
- npx cap add android
- npx cap sync
- npx cap copy
- npx cap open android
+ npx cap sync android
+ # npx cap open android
 
 After running above commands, android studio will get open then you can build app from there
-
-From: https://capacitor.ionicframework.com/docs/android/
- npx cap sync
- npx cap open android
 
 === Facebook Login ===
 

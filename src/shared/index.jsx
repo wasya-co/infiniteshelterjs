@@ -114,8 +114,11 @@ const logg = (a, b="", c=null) => {
 
   console.log(`+++ ${b}:`, a); // eslint-disable-line no-console
 };
-
-export { logg };
+// optimized for Android (e.g. it inspects and doesn't use window)
+const logg2 = (a, b="", c=null) => {
+  console.log(`+++ ${b}:`, a.inspect); // eslint-disable-line no-console
+};
+export { logg, logg2 };
 
 /* R */
 

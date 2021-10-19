@@ -20,7 +20,7 @@ import { makeStyles } from '@material-ui/core/styles'
 import { Link } from 'react-router-dom'
 
 import { FbLogin, Logout, PasswordLogin } from "./"
-import { C, logg, TwofoldContext } from "$shared"
+import { C, logg, logg2, TwofoldContext } from "$shared"
 import Greeter from '$src/artifacts/contracts/Greeter.sol/Greeter.json'
 import Token from '$src/artifacts/contracts/Token.sol/Token.json'
 
@@ -53,17 +53,22 @@ const Account = (props) => {
     })
 
     // Show us the notification payload if the app is open on our device
-    PushNotifications.addListener('pushNotificationReceived', ({ nofitication: n }) => {
-      setNotifications((ns) =>
-        [...ns, { id: n.data.id, title: n.data.title, body: n.data.body, type: 'foreground' }]
-      )
+    PushNotifications.addListener('pushNotificationReceived', (_n) => {
+      logg2(n, 'pushNotificationReceived')
+      const n = _n
+      setNotifications((ns) => {
+        logg2(n2, 'setNofitications')
+        return [...ns, { id: n.data.id, title: n.data.title, body: n.data.body, type: 'foreground' }]
+      })
     })
 
     // Method called when tapping on a notification
     PushNotifications.addListener('pushNotificationActionPerformed', ({ nofitication: n }) => {
-      setNotifications((ns) =>
-        [...ns, { id: n.data.id, title: n.data.title, body: n.data.body, type: 'action' }]
-      )
+      logg2(n, 'pushNotificationActionPerformed')
+      setNotifications((ns) => {
+        logg2(n2, 'setNofitications')
+        return [...ns, { ...n, type: 'action' }]
+      })
     })
   }
 
@@ -188,7 +193,7 @@ const Account = (props) => {
                   </ul>
                 </F>
                 || <F>
-                  <h4>Not logged in 2</h4>
+                  <h4>Not logged in 3</h4>
                   <FbLogin />
                   <br /><br />
                   <PasswordLogin />
