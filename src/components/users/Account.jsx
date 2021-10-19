@@ -54,11 +54,11 @@ const Account = (props) => {
 
     // Show us the notification payload if the app is open on our device
     PushNotifications.addListener('pushNotificationReceived', (_n) => {
-      logg2(n, 'pushNotificationReceived')
       const n = _n
+      logg2(n, 'pushNotificationReceived')
       setNotifications((ns) => {
-        logg2(n2, 'setNofitications')
-        return [...ns, { id: n.data.id, title: n.data.title, body: n.data.body, type: 'foreground' }]
+        logg2(ns, 'setNofitications')
+        return [...ns, { ...n, type: 'foreground' }]
       })
     })
 
@@ -66,7 +66,7 @@ const Account = (props) => {
     PushNotifications.addListener('pushNotificationActionPerformed', ({ nofitication: n }) => {
       logg2(n, 'pushNotificationActionPerformed')
       setNotifications((ns) => {
-        logg2(n2, 'setNofitications')
+        logg2(ns, 'setNofitications')
         return [...ns, { ...n, type: 'action' }]
       })
     })
@@ -193,7 +193,7 @@ const Account = (props) => {
                   </ul>
                 </F>
                 || <F>
-                  <h4>Not logged in 3</h4>
+                  <h4>Not logged in 4</h4>
                   <FbLogin />
                   <br /><br />
                   <PasswordLogin />
