@@ -36,30 +36,7 @@ export const Btn = styled.div`
 `;
 
 /* C */
-
-export const C = {
-  collapsible: {
-    descr: "descr-sec",
-  },
-  current_user: 'current_user',
-
-  jwt_token: 'jwt_token',
-
-  item_types: {
-    gallery: 'Gallery',
-    report: 'Report',
-    video: 'Video',
-  },
-
-  layout_onecol: 'onecol',
-  layout_mapui: 'mapui',
-
-  variants: {
-    floating: 'floating',
-    inline: 'inline',
-  },
-}
-
+export { default as C } from "./C"
 export { default as Collapsible } from "./Collapsible"
 export const CollapsibleContext = React.createContext({})
 export const CollapsibleContextProvider = ({ children, ...props }) => {
@@ -122,23 +99,10 @@ export { logg, logg2 };
 
 /* R */
 
-export { default as request } from "./request";
+export { default as request } from "./request"
 
 /* S */
-
-/**
- * Style Constants
- */
-export const S = {
-  borderWidth: '10px',
-  bottomDrawerHeight: '100px',
-  breadcrumbsHeight: '30px',
-
-  blue: '#6aa3e9',
-  darkGrey: '#605d5d',
-  lightGrey: '#988b8b',
-  red: 'red',
-}
+export { default as S } from "./S"
 
 /* T */
 
@@ -151,7 +115,7 @@ export const TwofoldContextProvider = ({ children, ...props }) => {
     loginModalOpen, setLoginModalOpen,
   } = props
 
-  const [ bottomDrawerOpen, setBottomDrawerOpen ] = useState(false)
+  const [ bottomDrawerOpen, setBottomDrawerOpen ] = useState(true)
   const [ itemToUnlock, _setItemToUnlock ] = useState({})
   const setItemToUnlock = (item) => {
     if (itemToUnlock.id !== item.id && !loginModalOpen) {

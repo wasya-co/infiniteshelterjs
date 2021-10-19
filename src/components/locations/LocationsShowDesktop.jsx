@@ -35,12 +35,12 @@ const IframeModal = (props) => {
 const Left = styled.div`
   border: ${p=>p.debug?'1':'0'}px solid blue;
 
-  background: #dedede;
+  background: ${p => p.background};
   flex: 50%;
-  overflow: scroll;
+  overflow: auto;
 
-  height: calc(100vh -
-    ${p => p.bottomDrawerOpen ? `calc(${p.bottomDrawerHeight}+3*${p.borderWidth})` : `calc(4*${p.borderWidth})` });
+  height: calc(100vh - ${p => `calc(2*${p.borderWidth})`}
+    - ${p => p.bottomDrawerOpen ? p.bottomDrawerOpenHeight : p.bottomDrawerClosedHeight });
 `;
 
 const Right = styled.div`
@@ -60,7 +60,7 @@ const Row = styled.div`
   position: relative;
 `;
 
-const LocationsShow = (props) => {
+const LocationsShowDesktop = (props) => {
   logg(props, 'LocationsShow')
   const { match } = props;
 
@@ -111,4 +111,4 @@ const LocationsShow = (props) => {
   </Row>)
 }
 
-export default LocationsShow
+export default LocationsShowDesktop

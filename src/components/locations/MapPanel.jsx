@@ -14,19 +14,19 @@ const Div1 = styled.div`
   position: relative;
   overflow: auto;
 
-  height: calc(100vh - ${p => p.breadcrumbsHeight} -
-    ${p => p.bottomDrawerOpen ?
-      `${p.bottomDrawerHeight} - 2*${p.borderWidth}`
-      : `4*${p.borderWidth}` }); /* @TODO: it's not really 4 borders, it's 1 on top, and 2 but thick (collapsed) on bottom. */
+  height: calc(100vh - ${p => `calc(2*${p.borderWidth})`}
+    - ${p => p.breadcrumbsHeight}
+    - ${p => p.bottomDrawerOpen ? p.bottomDrawerOpenHeight : p.bottomDrawerClosedHeight });
 
 `;
 
-const Div3 = styled.div`
+/* Same size as the map image.
+ * What scrolls is this div, not the image inside it.
+ */
+const Img = styled.div`
   // border: 2px solid cyan;
-
   display: inline-block;
   position: relative;
-
 `;
 
 const Root = styled.div`
@@ -34,10 +34,11 @@ const Root = styled.div`
 
   position: relative;
   overflow: auto;
-  height: calc(100vh - ${p => p.breadcrumbsHeight} -
-    ${p => p.bottomDrawerOpen ?
-      `${p.bottomDrawerHeight} - 2*${p.borderWidth}`
-      : `4*${p.borderWidth}` }); /* @TODO: it's not really 4 borders, it's 1 on top, and 2 but thick (collapsed) on bottom. */
+
+  height: calc(100vh - ${p => `calc(2*${p.borderWidth})`}
+    - ${p => p.breadcrumbsHeight}
+    - ${p => p.bottomDrawerOpen ? p.bottomDrawerOpenHeight : p.bottomDrawerClosedHeight });
+
 `;
 
 const ZoomCtrl = (props) => {
@@ -116,7 +117,7 @@ const MapPanel = (props) => {
     <ZoomCtrl />
 
     <Div1 {...S} {...{ bottomDrawerOpen }} >
-      <Div3 ref={div1Ref} style={{
+      <Img ref={div1Ref} style={{
         width: `${map.w/zoom}px`,
         height: `${map.h/zoom}px`,
       }} >
@@ -128,7 +129,7 @@ const MapPanel = (props) => {
           }}
         />
         { markers }
-      </Div3>
+      </Img>
     </Div1>
 
   </Root>

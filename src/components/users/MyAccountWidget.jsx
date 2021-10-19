@@ -32,6 +32,8 @@ const Root = styled.div`
 `;
 
 const MyAccountWidget = (props) => {
+  // logg(props, 'MyAccountWidget')
+
   const api = useApi()
   const { currentUser, setCurrentUser } = useContext(TwofoldContext)
   const stripe = useStripe()
@@ -70,11 +72,9 @@ const MyAccountWidget = (props) => {
     }
   }
 
-  const { borderWidth } = S
-
   if (!currentUser) { return null }
 
-  return <Root {...{ borderWidth }} >
+  return <Root {...S} >
     { currentUser.email ? currentUser.email : <Login /> } &nbsp;
     [&nbsp;{ typeof currentUser.n_unlocks === 'number' ? currentUser.n_unlocks : '?' } coins&nbsp;]&nbsp; &nbsp;
     <button onClick={() => setPurchaseModalIsOpen(true) }>buy</button>

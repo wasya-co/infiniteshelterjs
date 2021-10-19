@@ -21,6 +21,7 @@ import { Link } from 'react-router-dom'
 
 import { FbLogin, Logout, PasswordLogin } from "./"
 import { C, logg, logg2, TwofoldContext } from "$shared"
+import { MenuLeft } from "$components/application"
 import Greeter from '$src/artifacts/contracts/Greeter.sol/Greeter.json'
 import Token from '$src/artifacts/contracts/Token.sol/Token.json'
 
@@ -150,11 +151,10 @@ const Account = (props) => {
   }
 
   return <IonPage>
-    <IonHeader>
-      <IonToolbar color="primary">
-          <IonTitle slot="start"> Push Notifications</IonTitle>
-      </IonToolbar>
-    </IonHeader>
+    <Grid container>
+      <MenuLeft variant={C.variants.inline} />
+      <h1>Account</h1>
+    </Grid>
     <IonContent className="ion-padding">
       <Grid container spacing={2} >
         <Grid item xs={12}>

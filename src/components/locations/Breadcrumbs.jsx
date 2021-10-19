@@ -26,10 +26,9 @@ const Root = styled.div`
 `;
 
 const Breadcrumbs = (props) => {
-  logg(props, 'Breakcrumbs')
+  // logg(props, 'Breakcrumbs')
 
   const { layout } = useContext(TwofoldContext)
-
   const history = useHistory()
 
   const out = []

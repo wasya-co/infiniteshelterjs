@@ -36,7 +36,7 @@ import MapuiLayout from "$components/application/MapuiLayout"
 import { CitiesList, CitiesShow } from "$components/cities"
 // @TODO: MyGalleries doesn't look right...
 import { GalleriesShow, MyGalleries } from "$components/galleries"
-import { LocationsShow as LocationsShow } from "$components/locations"
+import { LocationsShowDesktop } from "$components/locations"
 import { ReportsShow } from "$components/reports"
 // import { SitesShow } from '$components/sites'
 import SitesShow from '$components/sites/SitesShow1'
@@ -97,7 +97,7 @@ const AppDesktop = (props) => {
         <Container >
           <Switch id="main" main >
 
-            <Redirect exact from="/" to="/en" />
+            <Redirect exact from="/" to="/en/locations/show/construct-0" />
             <Route exact path="/en" ><SitesShow /></Route>
 
             <Route exact path="/en/account" component={Account} />
@@ -111,7 +111,7 @@ const AppDesktop = (props) => {
 
             <Route exact path="/en/reports/show/:slug" component={ReportsShow} />
 
-            <Route exact path="/en/locations/show/:slug" component={LocationsShow} layout={C.layout_mapui} />
+            <Route exact path="/en/locations/show/:slug" component={LocationsShowDesktop} layout={C.layout_mapui} />
 
           </Switch>
         </Container>
