@@ -58,9 +58,9 @@ const AppMobile = (props) => {
   const Container = (props) => {
     switch(layout) {
       case C.layout_onecol:
-        // main case
         return <__Container maxWidth="md" {...props} />
       case C.layout_mapui:
+        // This is true right now (2021-10-20) for mobile even when it's one column
         return <MapuiMobileLayout {...props} {...{ bottomDrawerOpen, setBottomDrawerOpen }} />
     }
   }
@@ -89,10 +89,11 @@ const AppMobile = (props) => {
       <CollapsibleContextProvider >
         { layout === C.layout_onecol && <MenuLeft variant={C.variants.floating} /> }
         <Root className="Root" >
+
           <Container className="Container" >
             <Switch id="main" main >
 
-              <Redirect exact from="/" to="/en" />
+              <Redirect exact from="/" to="/en/locations/show/construct0" />
               <Route exact path="/en" ><SitesShow /></Route>
 
               <Route exact path="/en/account" component={Account} />
@@ -111,6 +112,7 @@ const AppMobile = (props) => {
             </Switch>
           </Container>
         </Root>
+
         <BottomDrawer />
         <UnlockModal />
         <LoginModal />

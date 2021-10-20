@@ -20,6 +20,10 @@ const Label = styled.div`
 
 const Root = styled.div`
   // background: #dedede;
+
+  border: 1px solid black;
+  border-radius: 5px;
+
   margin: .5em;
   padding: .5em;
 
@@ -33,16 +37,19 @@ const Collapsible = ({ children, ...props }) => {
 
   const ctx = useContext(CollapsibleContext)
   if (!ctx) { return null; }
+  logg(ctx, 'CollapsibleContext')
   const { collapsibles, setCollapsibles } = ctx
 
   const doToggle = () => {
     setCollapsibles({ ...collapsibles, [props.slug]: !collapsibles[props.slug] })
   }
 
-  const collapsible = typeof config === 'undefined' ? true : typeof config.collapsible === 'undefined' ? true : config.collapsible
+  const collapsible = typeof config === 'undefined' ? true
+    : typeof config.collapsible === 'undefined' ? true
+      : config.collapsible
   const folded = collapsible ? !!collapsibles[props.slug] : false
 
-  return <Root className={`Root ${props.className}`} >
+  return <Root className={`Collapsible ${props.className}`} >
     { collapsible && props.label && <Label {...S} onClick={doToggle} >{folded ? <Lt /> : <Gt />} {props.label} </Label> }
     { !folded && <Inner>{ children }</Inner> }
   </Root>

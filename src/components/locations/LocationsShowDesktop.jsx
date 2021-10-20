@@ -6,7 +6,7 @@ import styled from 'styled-components'
 
 import config from 'config'
 import { Breadcrumbs, ItemModal, MapPanel, MapPanelNoZoom, MarkersList } from "./"
-import { logg, request, S, TwofoldContext, ZoomContext } from "$shared"
+import { C, logg, request, S, TwofoldContext, ZoomContext } from "$shared"
 import { Metaline } from "$components/application"
 import { Newsitems } from "$components/newsitems"
 
@@ -46,19 +46,28 @@ const Left = styled.div`
 const Right = styled.div`
   border: ${p=>p.debug?'1':'0'}px solid green;
 
-  background: #dedede;
+  background: ${p => p.background};
 
   padding: 1em;
   flex: 50%;
-  overflow: scroll;
-  height: calc(100vh -
-    ${p => p.bottomDrawerOpen ? `calc(${p.bottomDrawerHeight}+3*${p.borderWidth})` : `calc(4*${p.borderWidth})` });
+  overflow-x: hidden;
+  overflox-y: auto;
+  height: calc(100vh - ${p => `calc(2*${p.borderWidth})`}
+    - ${p => p.bottomDrawerOpen ? p.bottomDrawerOpenHeight : p.bottomDrawerClosedHeight });
 `;
 
 const Row = styled.div`
   display: flex;
   position: relative;
 `;
+
+const WrappedMapPanel = (props) => {
+  if (props.map.config.map_panel_type === C.map_panel_types.MapPanelNoZoom) {
+    return <MapPanelNoZoom {...props} />
+  } else {
+    return <MapPanel {...props} />
+  }
+}
 
 const LocationsShowDesktop = (props) => {
   logg(props, 'LocationsShow')
@@ -95,8 +104,7 @@ const LocationsShowDesktop = (props) => {
     <Left className='Left' {...{ bottomDrawerOpen }} {...S} debug={config.debug} >
       { loading && <i>Loading Left...</i> }
       { location && <Breadcrumbs {...location} /> }
-      { /* location && <MapPanelNoZoom map={location.map ? location.map : location} /> */ }
-      { location && <MapPanel map={location.map ? location.map : location} /> }
+      { location && <WrappedMapPanel map={location.map ? location.map : location} /> }
     </Left>
     <Right className='Right' {...{ bottomDrawerOpen }} {...S} debug={config.debug} >
       { loading && <i>Loading Right...</i> }

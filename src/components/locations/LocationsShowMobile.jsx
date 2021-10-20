@@ -80,8 +80,6 @@ const Div1 = styled.div`
 
 const Root = styled.div`
   // border: 1px solid yellow;
-
-  margin-top: 2em;
 `;
 
 const LocationsShowMobile = (props) => {
@@ -120,14 +118,17 @@ const LocationsShowMobile = (props) => {
 
     { loading && <i>Loading...</i> }
     { location && <Breadcrumbs {...location} /> }
-    { location && <CollapsibleNoMargins slug="map-sec" label={location.labels.map} className="CollapsibleNoMargins" >
+    { location && <Collapsible slug="map-sec" label={location.labels.map} >
       { location && <MapPanelNoZoom map={location.map || location} /> }
-    </CollapsibleNoMargins> }
+    </Collapsible> }
     { /* @TODO: recursively render map (not location) as appropriate all around in these collapsibles. */ }
-    { markers && markers.length && <Collapsible slug="markers-sec" label={location.labels.marker} >
+    { markers && markers.length && <Collapsible slug="markers-sec" label={location.labels.markers} >
       <MarkersList markers={markers} />
     </Collapsible> || null }
-    { location && location.description && <Collapsible config={location.config.description} slug={C.collapsible.descr} label={location.labels.description} >
+    { location && location.description && <Collapsible
+        config={location.config.description}
+        slug={C.collapsible.descr}
+        label={location.labels.description} >
       <Description item={location} />
     </Collapsible> || null }
     { location && location.newsitems.length && <Collapsible slug="news-sec" label={location.labels.newsitems} >

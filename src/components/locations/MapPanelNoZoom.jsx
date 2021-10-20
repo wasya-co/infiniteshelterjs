@@ -31,7 +31,10 @@ const MapNoZoom = (props) => {
 
   const ref = useRef(null)
 
-  const { zoom, setZoom } = useContext(TwofoldContext)
+  const {
+    currentUser, setCurrentUser,
+    zoom, setZoom,
+  } = useContext(TwofoldContext)
 
   useEffect(() => {
     // console.log('width', ref.current ? ref.current.offsetWidth : 0);
@@ -58,6 +61,17 @@ const MapNoZoom = (props) => {
       }} /></div>
     markers.push(out)
   })
+
+  // and the avatar
+  /*
+  const avatar = <div key="-1"
+    style={{
+      position: 'absolute',
+      left: map.w/zoom/2-50,
+      bottom: 0,
+    }} ><img src={currentUser.profile_photo_url} /></div>
+  markers.push(avatar)
+  */
 
   return (<MapWrapperNoZoom className="MapWrapperNoZoom" ref={ref} >
 

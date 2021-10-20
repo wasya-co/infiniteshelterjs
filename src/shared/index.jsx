@@ -8,6 +8,9 @@ import {
 } from 'react-router-dom'
 import styled from 'styled-components'
 
+import C from "./C"
+
+/* A */
 export { default as useApi } from "./Api"
 export { default as AppMock } from "./AppMock"
 export { default as AppRouter } from "./AppRouter"
@@ -36,7 +39,7 @@ export const Btn = styled.div`
 `;
 
 /* C */
-export { default as C } from "./C"
+export { C }
 export { default as Collapsible } from "./Collapsible"
 export const CollapsibleContext = React.createContext({})
 export const CollapsibleContextProvider = ({ children, ...props }) => {
@@ -115,7 +118,7 @@ export const TwofoldContextProvider = ({ children, ...props }) => {
     loginModalOpen, setLoginModalOpen,
   } = props
 
-  const [ bottomDrawerOpen, setBottomDrawerOpen ] = useState(true)
+  const [ bottomDrawerOpen, setBottomDrawerOpen ] = useState(false)
   const [ itemToUnlock, _setItemToUnlock ] = useState({})
   const setItemToUnlock = (item) => {
     if (itemToUnlock.id !== item.id && !loginModalOpen) {

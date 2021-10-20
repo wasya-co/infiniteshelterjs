@@ -9,6 +9,19 @@ import config from "config"
 
 import { logg, S, request, TwofoldContext, useApi } from "$shared"
 
+const BuyBtn = styled.div`
+  border: 1px solid black;
+  padding: 5px;
+  cursor: pointer;
+`;
+
+const _Img = styled.div`
+  // border: 1px solid red;
+`;
+const Img = ({ src }) => {
+  return <_Img><img src={src} alt='' /></_Img>
+}
+
 const stripePromise = loadStripe('pk_test_qr1QPmSpLdBFt1F7itdWJOj3') // @TODO: this is active, but change.
 
 const Login = (props) => {
@@ -22,13 +35,14 @@ const Root = styled.div`
 
   display: flex;
   justify-content: flex-start;
-  background: #dedede;
+  align-items: center;
 
-  background: white;
-  height: 100px;
-  width: calc(100vw - ${p => p.borderWidth*2}px);
-  padding: 1em;
-  margin-bottom: ${p => p.borderWidth}px;
+  // background: #dedede;
+  // background: white;
+  // height: 100px;
+  // width: calc(100vw - ${p => p.borderWidth*2}px);
+  // padding: 1em;
+  // margin-bottom: ${p => p.borderWidth}px;
 `;
 
 const MyAccountWidget = (props) => {
@@ -75,9 +89,10 @@ const MyAccountWidget = (props) => {
   if (!currentUser) { return null }
 
   return <Root {...S} >
+    { currentUser.profile_photo_url && <Img src={currentUser.profile_photo_url} /> }
     { currentUser.email ? currentUser.email : <Login /> } &nbsp;
     [&nbsp;{ typeof currentUser.n_unlocks === 'number' ? currentUser.n_unlocks : '?' } coins&nbsp;]&nbsp; &nbsp;
-    <button onClick={() => setPurchaseModalIsOpen(true) }>buy</button>
+    <BuyBtn onClick={() => setPurchaseModalIsOpen(true) }>buy</BuyBtn>
 
     <Modal isOpen={purchaseModalIsOpen} ariaHideApp={false} style={{  width: '500px' }} >
       <h1>
