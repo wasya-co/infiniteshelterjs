@@ -20,7 +20,7 @@ const Metaline = (props) => {
 
   return (
     <W>
-      <span className="date"> On {(created_at || "").substring(0, 10)} </span>
+      { created_at && <span className="date"> On {(created_at || "").substring(0, 10)} </span>}
       { username && <>by <span className="user"> {username} </span></> }
       { city     && <>in <span className="city" onClick={navigateToCity}> {city.name} </span></> }
       { tags     && tags.map((tag, i) => <span key={i} className="tags">{tag.name}</span>) }
