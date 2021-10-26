@@ -37,7 +37,7 @@ import { CitiesList, CitiesShow } from "$components/cities"
 // @TODO: MyGalleries doesn't look right...
 import { GalleriesShow, MyGalleries } from "$components/galleries"
 import { LocationsShowDesktop } from "$components/locations"
-import { Three } from "$components/locations3"
+import Three from "$components/locations3/Loc4"
 import { ReportsShow } from "$components/reports"
 // import { SitesShow } from '$components/sites'
 import SitesShow from '$components/sites/SitesShow1'
