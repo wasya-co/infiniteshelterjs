@@ -1,46 +1,4 @@
 
-# Advanced Sample Hardhat Project
-
-```shell
-npx hardhat accounts
-npx hardhat compile
-npx hardhat clean
-npx hardhat test
-npx hardhat node
-npx hardhat help
-REPORT_GAS=true npx hardhat test
-npx hardhat coverage
-npx hardhat run scripts/deploy.js --network ropsten
-node scripts/deploy.js
-npx eslint '**/*.js'
-npx eslint '**/*.js' --fix
-npx prettier '**/*.{json,sol,md}' --check
-npx prettier '**/*.{json,sol,md}' --write
-npx solhint 'contracts/**/*.sol'
-npx solhint 'contracts/**/*.sol' --fix
-```
-
-# Etherscan verification
-
-To try out Etherscan verification, you first need to deploy a contract to an Ethereum network that's supported by Etherscan, such as Ropsten.
-
-In this project, copy the .env.example file to a file named .env, and then edit it to fill in the details. Enter your Etherscan API key, your Ropsten node URL (eg from Alchemy), and the private key of the account which will send the deployment transaction. With a valid .env file in place, first deploy your contract:
-
-```shell
-hardhat run --network ropsten scripts/deploy.js
-```
-
-Then, copy the deployment address and paste it in to replace `DEPLOYED_CONTRACT_ADDRESS` in this command:
-
-```shell
-npx hardhat verify --network ropsten DEPLOYED_CONTRACT_ADDRESS "Hello, Hardhat!"
-```
-
-
-
-
-
-
 = Discussion of Concepts =
 
 == Files ==
@@ -48,8 +6,6 @@ npx hardhat verify --network ropsten DEPLOYED_CONTRACT_ADDRESS "Hello, Hardhat!"
 src/components is where most of the application lives. We're adapting concepts from rails, and the components resemble rails resources. (A resource is basically the object that has a corresponding database table.) That means CRUD operations can be done by "actions" list, new, create, edit, update, destroy, show.
 
 The default namespace and default component name is "application". If you don't know where to put something and it doesn't belong to a resource, consider putting it there.
-
-
 
 = Develop =
  yarn install
@@ -91,7 +47,34 @@ From: https://capacitor.ionicframework.com/docs/android/
 
 After running above commands, android studio will get open then you can build app from there
 
-=== Facebook Login ===
+= Technical Implementation Details =
+
+== Ethereum ==
+
+```shell
+npx hardhat accounts
+npx hardhat compile
+npx hardhat clean
+npx hardhat test
+npx hardhat node
+npx hardhat help
+REPORT_GAS=true npx hardhat test
+npx hardhat coverage
+npx hardhat run scripts/deploy.js --network ropsten
+node scripts/deploy.js
+npx eslint '**/*.js'
+npx eslint '**/*.js' --fix
+npx prettier '**/*.{json,sol,md}' --check
+npx prettier '**/*.{json,sol,md}' --write
+npx solhint 'contracts/**/*.sol'
+npx solhint 'contracts/**/*.sol' --fix
+
+hardhat run --network ropsten scripts/deploy.js
+
+npx hardhat verify --network ropsten DEPLOYED_CONTRACT_ADDRESS "Hello, Hardhat!"
+```
+
+== Facebook Login ==
 
 From: https://ionicframework.com/docs/native/facebook
 

@@ -179,8 +179,11 @@
   },
   "scripts": {
     "build": "NODE_PATH=config/environments/production node scripts/build.js",
-    "do_mint": "node scripts/mint-nft.js",
     "jest": "NODE_PATH=config/environments/test jest -t current",
+    "nft_compile": "npx hardhat compile",
+    "nft_deploy": "node scripts/deploy.js",
+    "nft_mint": "node scripts/mint-nft.js",
+    "nft_test": "npx hardhat test",
     "postinstall": "link-module-alias",
     "resources": "cordova-res ios && cordova-res android && node scripts/resources.js",
     "start": "echo +++ +++\n\r'start_local , or start_devremote ?\n\r+++ +++'",

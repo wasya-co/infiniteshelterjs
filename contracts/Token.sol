@@ -1,12 +1,15 @@
-//SPDX-License-Identifier: MIT
+
+// SPDX-License-Identifier: MIT
+
 pragma solidity ^0.8.0;
 
 import "hardhat/console.sol";
 
 contract Token {
-  string public name = "Nader Dabit Token";
-  string public symbol = "NDT";
-  uint public totalSupply = 1000000;
+
+  string public name = "Pi 1 Token";
+  string public symbol = "PIO";
+  uint public totalSupply = 1000;
   mapping(address => uint) balances;
 
   constructor() {

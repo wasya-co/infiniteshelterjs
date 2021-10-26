@@ -14,19 +14,10 @@ async function main() {
   // manually to make sure everything is compiled
   // await hre.run('compile');
 
-  /*
-  const Greeter = await hre.ethers.getContractFactory("Greeter");
-  const greeter = await Greeter.deploy("Hello, Hardhat!");
-  await greeter.deployed();
-  console.log("Greeter deployed to:", greeter.address);
-  */
-
-
-  const Nft = await hre.ethers.getContractFactory("Nude1NFT");
+  const Nft = await hre.ethers.getContractFactory("Nude3NFT");
   const nft = await Nft.deploy();
   await nft.deployed();
-  console.log("Nft deployed to:", nft.address);
-
+  console.log("Nude3NFT deployed to:", nft.address);
 
 }
 
