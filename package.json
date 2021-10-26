@@ -180,6 +180,7 @@
   "scripts": {
     "build": "NODE_PATH=config/environments/production node scripts/build.js",
     "jest": "NODE_PATH=config/environments/test jest -t current",
+    "nft_cancel": "npx hardhat run scripts/nft-cancel.js --network ropsten",
     "nft_compile": "npx hardhat compile",
     "nft_deploy": "node scripts/deploy.js",
     "nft_mint": "node scripts/mint-nft.js",

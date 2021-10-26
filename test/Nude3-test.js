@@ -14,6 +14,8 @@ describe("Minting the token and returning it", function () {
     const transaction = await factoryContract.awardItem(PUBLIC_KEY, metadata); // Minting the token
     const tx = await transaction.wait() // Waiting for the token to be minted
 
+    console.log(tx, 'tx')
+
     const event = tx.events[0];
     const value = event.args[2];
     const tokenId = value.toNumber(); // Getting the tokenID
