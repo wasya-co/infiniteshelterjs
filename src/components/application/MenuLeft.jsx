@@ -57,6 +57,13 @@ const MenuLeft= (props) => {
             } } >Home (Construct 0)
           </ListItem>
 
+          <ListItem button key={'newsfeed'}
+            onClick={() => {
+              setDrawerOpen(false)
+              history.push("/three")
+            } } >Three
+          </ListItem>
+
           <ListItem button key={'cities'}
             onClick={() => {
               setDrawerOpen(false)
