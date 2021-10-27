@@ -3,7 +3,7 @@ import { IonPage, IonContent, IonButton, IonImg, IonLoading } from "@ionic/react
 import React, { Fragment as F, useContext, useEffect, useRef, useState } from "react"
 import { Route, useLocation, useHistory, Switch } from 'react-router-dom'
 
-import { C, logg, request, TwofoldContext } from "$shared"
+import { C, logg, request, TwofoldContext, BackBtn } from "$shared"
 import { Metaline } from "$components/application"
 import "./galleries.scss"
 
@@ -46,10 +46,11 @@ const GalleriesShow = (props) => {
     { <div className="gallery-show">
       <div className='narrow'>
         <h1 className="heading">
+          <BackBtn />
           <img src="/assets/newsfeed/photos_icon.png" />
           <span className="title">{gallery.name}</span>
         </h1>
-        <Metaline item={gallery} />
+        <Metaline {...gallery} />
 
         <div className="thumbs">
           { gallery.photos && gallery.photos.map((ph, i) =>
@@ -60,6 +61,7 @@ const GalleriesShow = (props) => {
             </div>
           ) }
         </div>
+        <div dangerouslySetInnerHTML={{ __html: gallery.description }}></div>
       </div>
       <div className="full-img-section">
         { gallery.photos && gallery.photos.map((ph, i) =>

@@ -7,6 +7,8 @@ import {
   Link, Switch, BrowserRouter as Router, Redirect, Route as _Route, useHistory, withRouter
 } from 'react-router-dom'
 import styled from 'styled-components'
+import { IonIcon } from '@ionic/react';
+import { arrowBack } from 'ionicons/icons';
 
 import C from "./C"
 
@@ -154,3 +156,16 @@ export const Wrapper = styled.div`
 /* Z */
 
 export const ZoomContext = React.createContext({})
+
+/* pretty print date */
+export const pp_date = (d) => (d || "" ).substring(0, 10)
+
+/* Back Button */
+const BackIcon = styled(IonIcon)`
+margin-right: 5px;
+cursor: pointer;
+`;
+export const BackBtn = () => {
+  const history = useHistory()
+  return <BackIcon onClick={history.goBack} icon={arrowBack}></BackIcon>
+}
