@@ -1,14 +1,16 @@
 
 import React, { Fragment as F, useEffect, useRef } from 'react'
-
 import { Canvas, extend } from 'react-three-fiber'
 import * as THREE from "three"
 import { OBJLoader } from "three/examples/jsm/loaders/OBJLoader"
-
 import styled from 'styled-components'
 
-import { logg } from "$shared"
+import { logg, S } from "$shared"
 import { PointerLockControls } from './PointerLockControls'
+
+const Blocker = styled.div`
+  height: calc(100% - ${p => p.breadcrumbsHeight});
+`;
 
 /**
  * Excellent documentation. From: https://threejs.org/examples/#misc_controls_pointerlock
@@ -212,12 +214,13 @@ const Loc4 = (props) => {
 
     //
 
-
+    logg(blockerRef.current.clientWidth, 'width')
+    logg(blockerRef.current.clientHeight, 'g')
 
 
     renderer = new THREE.WebGLRenderer({ antialias: true })
     renderer.setPixelRatio( window.devicePixelRatio )
-    renderer.setSize( 1000, 500 )
+    renderer.setSize( blockerRef.current.clientWidth, blockerRef.current.clientHeight )
     blockerRef.current.appendChild( renderer.domElement )
     window.addEventListener( 'resize', onWindowResize )
 
@@ -265,7 +268,7 @@ const Loc4 = (props) => {
 
   return <F>
     <div ref={instructionsRef} />
-    <div ref={blockerRef} />
+    <Blocker {...S} ref={blockerRef} />
   </F>
 }
 

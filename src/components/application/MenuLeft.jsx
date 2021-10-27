@@ -60,7 +60,7 @@ const MenuLeft= (props) => {
           <ListItem button key={'three'}
             onClick={() => {
               setDrawerOpen(false)
-              history.push("/three")
+              history.push("/en/locations/show/threev1")
             } } >Three
           </ListItem>
 

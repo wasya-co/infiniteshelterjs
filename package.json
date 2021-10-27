@@ -154,7 +154,7 @@
       "^.+\\.(js|jsx)$": "<rootDir>/node_modules/babel-jest"
     },
     "transformIgnorePatterns": [
-      "<rootDir>/node_modules/(?!@capacitor-community)"
+      "<rootDir>/node_modules/(?!(@capacitor-community|three)/)"
     ],
     "modulePaths": [],
     "moduleNameMapper": {
@@ -198,11 +198,6 @@
     "start_production": "HTTPS=true NODE_PATH=config/environments/production PORT=3002 node scripts/start.js",
     "sync": "NODE_PATH=config/environments/production ionic capacitor sync",
     "test": "NODE_PATH=config/environments/test jest"
-  },
-  "babel": {
-    "presets": [
-      "react-app"
-    ]
   },
   "eslintConfig": {
     "extends": "react-app"
