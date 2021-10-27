@@ -1,6 +1,5 @@
+/*
 
-// test/Box.test.js
-// Load dependencies
 const { expect } = require('chai');
 
 // Import utilities from Test Helpers
@@ -40,3 +39,4 @@ contract('Box', function ([ owner, other ]) {
     );
   });
 });
+*/

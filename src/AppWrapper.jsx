@@ -12,7 +12,7 @@ import AppMobile from './AppMobile'
  * Choses mobile vs desktop
  */
 const AppWrapper = (props) => {
-  logg(props, 'AppWrapper')
+  // logg(props, 'AppWrapper')
   const api = useApi()
 
 

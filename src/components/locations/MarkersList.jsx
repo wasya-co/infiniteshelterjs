@@ -15,7 +15,7 @@ const Marker = styled.div`
 `;
 
 const MarkersList = (props) => {
-  logg(props, 'MarkersList')
+  // logg(props, 'MarkersList')
 
   const history = useHistory()
   const { showUrl, setShowUrl } = useContext(TwofoldContext)

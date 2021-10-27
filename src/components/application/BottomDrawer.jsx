@@ -6,6 +6,9 @@ import MenuIcon from '@material-ui/icons/Menu'
 import React, { Fragment as F, useContext, useState } from 'react'
 import { useHistory } from 'react-router-dom'
 import styled from 'styled-components'
+import Web3 from 'web3'
+import { useWeb3React, Web3ReactProvider } from "@web3-react/core"
+import { InjectedConnector } from '@web3-react/injected-connector'
 
 import { Account, MyAccountWidget } from "$components/users"
 import { C, logg, S, TwofoldContext } from "$shared"
@@ -26,6 +29,10 @@ const Drawer = styled(_Drawer)`
     border-top: 0;
   }
 `;
+
+function getLibrary(provider) {
+  return new Web3(provider)
+}
 
 const Inner1 = styled.div`
   // border: 1px solid red;
@@ -80,7 +87,10 @@ const BottomDrawer = (props) => {
           <MenuIcon
             onClick={() => setBottomDrawerOpen(false)}
           />
-          <MyAccountWidget />
+
+          <Web3ReactProvider getLibrary={getLibrary}>
+            <MyAccountWidget />
+          </Web3ReactProvider>
 
         </Inner2>
       </Inner1>

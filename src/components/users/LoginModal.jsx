@@ -12,7 +12,7 @@ import { C, logg, TwofoldContext } from "$shared"
 
 
 const LoginModal = (props) => {
-  logg(props, 'LoginModal')
+  // logg(props, 'LoginModal')
   const { loginModalOpen, setLoginModalOpen } = useContext(TwofoldContext)
 
   return <Modal style={{ zIndex: 3 }} isOpen={loginModalOpen} >

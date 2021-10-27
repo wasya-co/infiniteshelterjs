@@ -74,8 +74,8 @@ const WrappedMapPanel = (props) => {
 }
 
 const LocationsShowDesktop = (props) => {
-  logg(props, 'LocationsShow')
-  const { match } = props;
+  // logg(props, 'LocationsShowDesktop')
+  const { match } = props
 
   const [ loading, setLoading ] = useState(false)
   const [ location, setLocation ] = useState(null)

@@ -9,7 +9,7 @@ import { Box, inflector, logg } from "$shared"
 /* G */
 
 export const GenericNewsitem = (props) => {
-  logg(props, 'GenericNewsitem')
+  // logg(props, 'GenericNewsitem')
   const { item } = props
   return <div dangerouslySetInnerHTML={{ __html: item.description }} />
 }

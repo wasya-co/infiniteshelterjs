@@ -10,6 +10,7 @@ import styled from 'styled-components'
 import { IonIcon } from '@ionic/react';
 import { arrowBack } from 'ionicons/icons';
 
+import config from 'config'
 import C from "./C"
 
 /* A */
@@ -45,7 +46,7 @@ export { C }
 export { default as Collapsible } from "./Collapsible"
 export const CollapsibleContext = React.createContext({})
 export const CollapsibleContextProvider = ({ children, ...props }) => {
-  logg(props, 'CollapsibleContextProvider')
+  // logg(props, 'CollapsibleContextProvider')
 
   const [ collapsibles, setCollapsibles ] = useState({
     [C.collapsible.descr]: true,
@@ -113,14 +114,14 @@ export { default as S } from "./S"
 
 export const TwofoldContext = React.createContext({})
 export const TwofoldContextProvider = ({ children, ...props }) => {
-  logg(props, 'TwofoldContextProvider')
+  // logg(props, 'TwofoldContextProvider')
   const {
     currentUser, setCurrentUser,
     layout, setLayout,
     loginModalOpen, setLoginModalOpen,
   } = props
 
-  const [ bottomDrawerOpen, setBottomDrawerOpen ] = useState(false)
+  const [ bottomDrawerOpen, setBottomDrawerOpen ] = useState(config.bottomDrawerOpen)
   const [ itemToUnlock, _setItemToUnlock ] = useState({})
   const setItemToUnlock = (item) => {
     if (itemToUnlock.id !== item.id && !loginModalOpen) {

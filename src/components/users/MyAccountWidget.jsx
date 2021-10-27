@@ -1,13 +1,23 @@
 
-import React, { Fragment as F, useContext, useState } from "react"
+import { ethers } from 'ethers'
+import React, { Fragment as F, useContext, useEffect, useState } from "react"
 import Modal from "react-modal"
 import { CardElement, Elements, useElements, useStripe, } from '@stripe/react-stripe-js'
 import { loadStripe } from '@stripe/stripe-js'
 import styled from 'styled-components'
+import Web3 from 'web3'
+import { useWeb3React, Web3ReactProvider } from "@web3-react/core"
+import { InjectedConnector } from '@web3-react/injected-connector'
 
 import config from "config"
-
 import { logg, S, request, TwofoldContext, useApi } from "$shared"
+import bodyNFT from '$src/artifacts/contracts/Body.sol/BodyNFT.json'
+
+/*
+ * ropsten, _vp_ 2021-10-26
+ * Dana, nude 1 (nude 3)
+ */
+const bodyAddress = '0x3e1a03a9e1682f4dd95413e0be69e5b7bccaf15d'
 
 const BuyBtn = styled.div`
   border: 1px solid black;
@@ -17,10 +27,15 @@ const BuyBtn = styled.div`
 
 const _Img = styled.div`
   // border: 1px solid red;
+
+  max-width: 100px;
+  max-height: 100px;
+
 `;
 const Img = ({ src }) => {
   return <_Img><img src={src} alt='' /></_Img>
 }
+const injected = new InjectedConnector() // { supportedChainIds: [1, 3, 4, 5, 42], })
 
 const stripePromise = loadStripe('pk_test_qr1QPmSpLdBFt1F7itdWJOj3') // @TODO: this is active, but change.
 
@@ -54,7 +69,16 @@ const MyAccountWidget = (props) => {
   const elements = useElements()
 
   const [purchaseModalIsOpen, setPurchaseModalIsOpen] = useState(false)
+  /*
+   * @TODO: avatar would be an object s.t. multiple styles/sizes are there,
+   * and it should be in a context - shared across threemap, and accountWidget.
+   */
+  const [ avatar, setAvatar ] = useState("")
 
+
+
+
+  // buy unlocks (coins?)
   const handleSubmit = async (event) => {
     event.preventDefault()
     logg('purchasing...')
@@ -86,13 +110,81 @@ const MyAccountWidget = (props) => {
     }
   }
 
-  if (!currentUser) { return null }
+  const { active, account, library, connector, activate, deactivate } = useWeb3React()
 
+  // gets NFT's of the account
+  useEffect(() => {
+    const fn = async () => {
+      logg(null, 'DOING EVERYTHING')
+
+      const a = await connect()
+      // const b = await requestAccount()
+      // const c = await myBodies()
+    }
+    fn()
+  }, [])
+
+  async function connect() {
+    try {
+      await activate(injected)
+    } catch (ex) {
+      logg(ex, 'could not connect')
+    }
+  }
+
+  async function disconnect() {
+    try {
+      deactivate()
+    } catch (ex) {
+      console.log(ex)
+    }
+  }
+
+  // request access to the user's MetaMask account
+  const requestAccount = async () => {
+    await window.ethereum.request({ method: 'eth_requestAccounts' })
+  }
+
+  const myBodies = async () => {
+    if (window.ethereum) {
+      await requestAccount()
+
+      const provider = new ethers.providers.Web3Provider(window.ethereum)
+      const signer = provider.getSigner()
+      const contract = new ethers.Contract(bodyAddress, bodyNFT.abi, signer)
+      const tokensOfOwner = await contract.tokensOfOwner(account)
+
+      // @TODO: this is only first, I need to support unlimited number of bodies connected to the account.
+      const i = 0
+      const result = await contract.tokenURI(tokensOfOwner[i])
+      request.get(result).then(r => r.data.image).then(r => {
+        setAvatar(r)
+      })
+    }
+  }
+
+  if (!currentUser) { return null }
   return <Root {...S} >
-    { currentUser.profile_photo_url && <Img src={currentUser.profile_photo_url} /> }
+
+    { /* currentUser.profile_photo_url && <Img src={currentUser.profile_photo_url} /> */ }
+    <Img src={avatar || currentUser.profile_photo_url} />
+
     { currentUser.email ? currentUser.email : <Login /> } &nbsp;
     [&nbsp;{ typeof currentUser.n_unlocks === 'number' ? currentUser.n_unlocks : '?' } coins&nbsp;]&nbsp; &nbsp;
     <BuyBtn onClick={() => setPurchaseModalIsOpen(true) }>buy</BuyBtn>
+
+    { /* ethers */ }
+    <div className="flex flex-col items-center justify-center">
+      { active ? <F>
+        <span>Connected with <b>{account}</b></span>
+        <button onClick={disconnect} >Disconnect</button>
+        <button onClick={myBodies} >myBodies</button>
+      </F> : <F>
+        <span>Not connected</span>
+        <button onClick={connect} >Connect to MetaMask</button>
+      </F> }
+    </div>
+
 
     <Modal isOpen={purchaseModalIsOpen} ariaHideApp={false} style={{  width: '500px' }} >
       <h1>
@@ -102,13 +194,12 @@ const MyAccountWidget = (props) => {
           setPurchaseModalIsOpen(false)
         } } >[x]</span>
       </h1>
-
       <form onSubmit={handleSubmit} >
         <CardElement />
         <button type="submit" disabled={!stripe} >Pay</button>
       </form>
-
     </Modal>
+
   </Root>
 }
 

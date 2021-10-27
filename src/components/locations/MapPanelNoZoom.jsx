@@ -22,8 +22,8 @@ const MapWrapperNoZoom = styled.div`
   scroll: none;
 `;
 
-const MapNoZoom = (props) => {
-  logg(props, 'Map2')
+const MapPanelNoZoom = (props) => {
+  // logg(props, 'MapPanelNoZoom')
   const { map } = props
 
   const history = useHistory()
@@ -94,4 +94,4 @@ const MapNoZoom = (props) => {
   </MapWrapperNoZoom>)
 }
 
-export default MapNoZoom
+export default MapPanelNoZoom

@@ -14,10 +14,13 @@ async function main() {
   // manually to make sure everything is compiled
   // await hre.run('compile');
 
-  const Nft = await hre.ethers.getContractFactory("Nude3NFT");
+  const factoryName = 'BodyNFT'
+  console.log(`Factory name: ${factoryName}`)
+
+  const Nft = await hre.ethers.getContractFactory(factoryName);
   const nft = await Nft.deploy();
   await nft.deployed();
-  console.log("Nude3NFT deployed to:", nft.address);
+  console.log(`${factoryName} deployed to:`, nft.address);
 
 }
 

@@ -39,6 +39,7 @@ const Account = (props) => {
   const [ greeting, setGreetingValue ] = useState("")
   const [notifications, setNotifications] = useState([])
 
+  // push notifications
   const register = () => {
     // Register with Apple / Google to receive push via APNS/FCM
     PushNotifications.register()
@@ -75,6 +76,7 @@ const Account = (props) => {
 
   const showToast = async (msg) => await Toast.show({ text: msg })
 
+  // push notifications
   useEffect(() => {
     if (!isPushNotificationsAvailable) { return }
 

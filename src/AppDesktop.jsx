@@ -54,7 +54,7 @@ const Root = styled.div`
 
 
 const AppDesktop = (props) => {
-  logg(props, 'AppDesktop')
+  // logg(props, 'AppDesktop')
   const {
     currentUser, setCurrentUser,
     loginModalOpen, setLoginModalOpen,

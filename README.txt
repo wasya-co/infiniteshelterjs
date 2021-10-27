@@ -87,3 +87,8 @@ keytool -exportcert -alias androiddebugkey -keystore ~/.android/debug.keystore |
 
 ionic cordova plugin add cordova-plugin-facebook4 --save --variable APP_ID="3016949928380365" --variable APP_NAME="Guyd"
 
+== Metamask Login ==
+
+From: https://medium.com/coinmonks/web3-react-connect-users-to-metamask-or-any-wallet-from-your-frontend-241fd538ed39
+
+

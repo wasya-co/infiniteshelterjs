@@ -31,7 +31,7 @@ const modalStyle = {
 }
 
 const UnlockModal = (props) => {
-  logg(props, 'UnlockModal')
+  // logg(props, 'UnlockModal')
 
   const {
     currentUser, setCurrentUser,
