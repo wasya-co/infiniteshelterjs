@@ -1,12 +1,10 @@
 
 import React, { Fragment as F, useEffect, useRef } from 'react'
-import ReactDOM from 'react-dom'
 
 import { Canvas, extend } from 'react-three-fiber'
 import * as THREE from "three"
-import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
-import { Box, Plane } from "@react-three/drei"
-import { Physics, useBox, usePlane } from "@react-three/cannon"
+import { OBJLoader } from "three/examples/jsm/loaders/OBJLoader"
+
 import styled from 'styled-components'
 
 import { logg } from "$shared"
@@ -18,7 +16,10 @@ import { PointerLockControls } from './PointerLockControls'
 
 
 const Loc4 = (props) => {
-  let camera, scene, raycaster, renderer, controls
+  let camera, controls,
+    object, objects = [],
+    raycaster, renderer,
+    scene
 
   const blockerRef = useRef(null)
   const instructionsRef = useRef(null)
@@ -26,8 +27,6 @@ const Loc4 = (props) => {
     init()
     animate()
   }, [])
-
-  const objects = []
 
   let moveForward = false
   let moveBackward = false
@@ -74,8 +73,6 @@ const Loc4 = (props) => {
     scene.add( controls.getObject() )
 
     const onKeyDown = (event) => {
-      logg(event, 'onKeyDown')
-
       switch ( event.code ) {
         case 'ArrowUp':
         case 'KeyW':
@@ -152,6 +149,7 @@ const Loc4 = (props) => {
     scene.add( floor )
 
     // objects
+    /*
     const boxGeometry = new THREE.BoxGeometry( 20, 20, 20 ).toNonIndexed()
     position = boxGeometry.attributes.position
     const colorsBox = []
@@ -171,6 +169,51 @@ const Loc4 = (props) => {
       scene.add( box )
       objects.push( box )
     }
+    */
+
+    // load OBJ
+
+    // manager
+
+    const loadModel = () => {
+      object.traverse( function ( child ) {
+        if ( child.isMesh ) child.material.map = texture
+      } )
+      object.position.y = - 95
+      scene.add( object )
+    }
+    const manager = new THREE.LoadingManager( loadModel )
+    manager.onProgress = function ( item, loaded, total ) {
+      console.log( item, loaded, total )
+    }
+
+    // texture
+
+    const textureLoader = new THREE.TextureLoader( manager )
+    const texture = textureLoader.load( 'textures/uv_grid_opengl.jpg' )
+
+    // model
+
+    function onProgress( xhr ) {
+      if ( xhr.lengthComputable ) {
+        const percentComplete = xhr.loaded / xhr.total * 100
+        console.log( 'model ' + Math.round( percentComplete, 2 ) + '% downloaded' )
+      }
+    }
+
+    const onError = (e) => {
+      logg(e, 'onError')
+    }
+
+    const loader = new OBJLoader( manager );
+    loader.load( '/assets/scenes/desert-location/desert-location.obj', function ( obj ) {
+      object = obj
+    }, onProgress, onError )
+
+    //
+
+
+
 
     renderer = new THREE.WebGLRenderer({ antialias: true })
     renderer.setPixelRatio( window.devicePixelRatio )

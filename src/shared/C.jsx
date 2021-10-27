@@ -25,6 +25,7 @@ const C = {
   map_panel_types: {
     MapPanel: "MapPanel",
     MapPanelNoZoom: "MapPanelNoZoom",
+    ThreePanelV1: "ThreePanelV1",
   },
 
   // v

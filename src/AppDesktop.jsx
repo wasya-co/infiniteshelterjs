@@ -101,7 +101,6 @@ const AppDesktop = (props) => {
             { /* <Redirect exact from="/" to="/en/locations/show/construct0" /> */ }
             <Redirect exact from="/" to="/en" />
             <Route exact path="/en" ><SitesShow /></Route>
-            <Route exact path="/three" ><Three /></Route>
 
             <Route exact path="/en/account" component={Account} />
             <Route exact path="/en/account/my/videos" component={Videos} />

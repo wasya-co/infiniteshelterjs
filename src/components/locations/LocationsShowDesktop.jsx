@@ -6,6 +6,7 @@ import styled from 'styled-components'
 
 import config from 'config'
 import { Breadcrumbs, ItemModal, MapPanel, MapPanelNoZoom, MarkersList } from "./"
+import { ThreePanelV1 } from "$components/locations3"
 import { C, logg, request, S, TwofoldContext, ZoomContext } from "$shared"
 import { Metaline } from "$components/application"
 import { Newsitems } from "$components/newsitems"
@@ -62,10 +63,13 @@ const Row = styled.div`
 `;
 
 const WrappedMapPanel = (props) => {
-  if (props.map.config.map_panel_type === C.map_panel_types.MapPanelNoZoom) {
-    return <MapPanelNoZoom {...props} />
-  } else {
-    return <MapPanel {...props} />
+  switch (props.map.config.map_panel_type) {
+    case C.map_panel_types.MapPanelNoZoom:
+      return <MapPanelNoZoom {...props} />
+    case C.map_panel_types.ThreePanelV1:
+      return <ThreePanelV1 {...props} />
+    default:
+      return <MapPanel {...props} />
   }
 }
 
