@@ -27,7 +27,7 @@ Object.defineProperty(window, 'matchMedia', {
   })),
 });
 
-it("renders", () => {
+it("current - renders", () => {
   let component = shallow(<App />);
   expect(component).toBeTruthy();
 })

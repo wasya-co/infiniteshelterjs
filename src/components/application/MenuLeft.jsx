@@ -57,7 +57,7 @@ const MenuLeft= (props) => {
             } } >Home (Construct 0)
           </ListItem>
 
-          <ListItem button key={'newsfeed'}
+          <ListItem button key={'three'}
             onClick={() => {
               setDrawerOpen(false)
               history.push("/three")
