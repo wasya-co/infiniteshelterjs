@@ -14,6 +14,7 @@ const Blocker = styled.div`
 
 /**
  * Excellent documentation. From: https://threejs.org/examples/#misc_controls_pointerlock
+ * Right now the unit is 1cm, 1/10 of a meter.
  */
 
 
@@ -43,7 +44,15 @@ const Loc4 = (props) => {
   const color = new THREE.Color()
 
   function init() {
-    camera = new THREE.PerspectiveCamera( 75, 2, 1, 1000 )
+    /*
+    // PerspectiveCamera( fov : Number, aspect : Number, near : Number, far : Number )
+    // fov — Camera frustum vertical field of view.
+    // aspect — Camera frustum aspect ratio.
+    // near — Camera frustum near plane.
+    // far — Camera frustum far plane.
+    */
+    // camera = new THREE.PerspectiveCamera( 75, 2, 1, 100 )
+    camera = new THREE.PerspectiveCamera( 75, 2, 1, 300 )
     camera.position.y = 10
 
     scene = new THREE.Scene()
@@ -126,7 +135,8 @@ const Loc4 = (props) => {
     raycaster = new THREE.Raycaster( new THREE.Vector3(), new THREE.Vector3( 0, - 1, 0 ), 0, 10 )
 
     // floor
-    let floorGeometry = new THREE.PlaneGeometry( 2000, 2000, 100, 100 )
+    // @TODO: it's not aligned to parcels the way I want
+    let floorGeometry = new THREE.PlaneGeometry( 460, 680, 100, 100 )
     floorGeometry.rotateX( - Math.PI / 2 )
 
     // vertex displacement
@@ -139,6 +149,9 @@ const Loc4 = (props) => {
       position.setXYZ( i, vertex.x, vertex.y, vertex.z )
     }
     floorGeometry = floorGeometry.toNonIndexed() // ensure each face has unique vertices
+    floorGeometry.x = -200
+    floorGeometry.y = -200
+    floorGeometry.z = -200
     position = floorGeometry.attributes.position
     const colorsFloor = []
     for ( let i = 0, l = position.count; i < l; i ++ ) {
@@ -177,11 +190,18 @@ const Loc4 = (props) => {
 
     // manager
 
+    // this is specifically for tiny-house-1
     const loadModel = () => {
-      object.traverse( function ( child ) {
-        if ( child.isMesh ) child.material.map = texture
-      } )
-      object.position.y = - 95
+      object.traverse((child) => {
+        if ( child.isMesh ) {
+          child.material.map = texture
+          child.geometry.scale(10, 10, 10)
+        }
+      })
+      object.position.x = 100
+      object.position.y = 10
+      object.position.z = 100
+
       scene.add( object )
     }
     const manager = new THREE.LoadingManager( loadModel )
@@ -196,31 +216,72 @@ const Loc4 = (props) => {
 
     // model
 
-    function onProgress( xhr ) {
+    // tiny-house-1
+    const loader = new OBJLoader( manager )
+    loader.load( '/assets/scenes/tiny-house-1/tiny-house-1.obj', ( obj ) => {
+      object = obj
+    }, ( xhr ) => {
       if ( xhr.lengthComputable ) {
         const percentComplete = xhr.loaded / xhr.total * 100
         console.log( 'model ' + Math.round( percentComplete, 2 ) + '% downloaded' )
       }
-    }
-
-    const onError = (e) => {
+    }, (e) => {
       logg(e, 'onError')
-    }
+    } )
 
-    const loader = new OBJLoader( manager );
-    loader.load( '/assets/scenes/desert-location/desert-location.obj', function ( obj ) {
-      object = obj
-    }, onProgress, onError )
+
+    // some delimiters for the first 6 parcels!
+    let geometry = new THREE.BoxGeometry( 10, 10, 10 )
+    let material = new THREE.MeshBasicMaterial( {color: 0x00ff00} )
+    let cube = new THREE.Mesh( geometry, material )
+    cube.position.x = 0
+    cube.position.y = 5
+    cube.position.z = 0
+    scene.add( cube )
+    const items = [
+      { color: 0xff0000, x: 1, y: 0, z: 0 },
+      { color: 0x00ff00, x: 0, y: 1, z: 0 },
+      { color: 0x0000ff, x: 0, y: 0, z: 1 }
+    ]
+    items.map((item, idx) => {
+      logg(item, 'item')
+      const { color, x, y, z } = item
+      geometry = new THREE.BoxGeometry( 1 + x*10, 1 + y*10, 1 + z*10 )
+      material = new THREE.MeshBasicMaterial({ color: color })
+      cube = new THREE.Mesh( geometry, material )
+      cube.position.x = x*5
+      cube.position.y = 10+y*5
+      cube.position.z = z*5
+      scene.add( cube )
+    })
+
+    const parcels = [
+      { color: 0xff0000, x: 100, y: 1, z: 100 },
+      { color: 0x00ff00, x: 100, y: 1, z: 320 },
+      { color: 0x0000ff, x: -120, y: 1, z: 320 },
+
+      { color: 0x660000, x: -120, y: 1, z: 100 },
+      { color: 0x006600, x: -120, y: 1, z: -120 },
+      { color: 0x000066, x: 100, y: 1, z: -120 },
+    ]
+    parcels.map((item, idx) => {
+      const { color, x, y, z } = item
+      const g = new THREE.BoxGeometry( 200, 2, 200 )
+      const m = new THREE.MeshBasicMaterial({color: color})
+      const p = new THREE.Mesh( g, m )
+      p.position.x = x
+      p.position.y = y
+      p.position.z = z
+      scene.add( p )
+    })
 
     //
 
-    logg(blockerRef.current.clientWidth, 'width')
-    logg(blockerRef.current.clientHeight, 'g')
-
 
     renderer = new THREE.WebGLRenderer({ antialias: true })
-    renderer.setPixelRatio( window.devicePixelRatio )
-    renderer.setSize( blockerRef.current.clientWidth, blockerRef.current.clientHeight )
+    // renderer.setPixelRatio( window.devicePixelRatio )
+    renderer.setPixelRatio(1)
+    renderer.setSize( 800, 400 )
     blockerRef.current.appendChild( renderer.domElement )
     window.addEventListener( 'resize', onWindowResize )
 
