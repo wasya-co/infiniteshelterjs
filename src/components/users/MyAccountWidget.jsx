@@ -112,13 +112,14 @@ const MyAccountWidget = (props) => {
 
   const { active, account, library, connector, activate, deactivate } = useWeb3React()
 
-  useEffect(() => {
+  /* useEffect(() => {
     const fn = async () => {
       await connect()
       await myBodies()
     }
     fn()
-  })
+  }) */
+
   async function connect() {
     try {
       await activate(injected)
