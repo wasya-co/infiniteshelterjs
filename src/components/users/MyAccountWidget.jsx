@@ -112,18 +112,13 @@ const MyAccountWidget = (props) => {
 
   const { active, account, library, connector, activate, deactivate } = useWeb3React()
 
-  // gets NFT's of the account
   useEffect(() => {
     const fn = async () => {
-      logg(null, 'DOING EVERYTHING')
-
-      const a = await connect()
-      // const b = await requestAccount()
-      // const c = await myBodies()
+      await connect()
+      await myBodies()
     }
     fn()
-  }, [])
-
+  })
   async function connect() {
     try {
       await activate(injected)
@@ -148,18 +143,19 @@ const MyAccountWidget = (props) => {
   const myBodies = async () => {
     if (window.ethereum) {
       await requestAccount()
+      if (account) {
+        const provider = new ethers.providers.Web3Provider(window.ethereum)
+        const signer = provider.getSigner()
+        const contract = new ethers.Contract(bodyAddress, bodyNFT.abi, signer)
+        const tokensOfOwner = await contract.tokensOfOwner(account)
 
-      const provider = new ethers.providers.Web3Provider(window.ethereum)
-      const signer = provider.getSigner()
-      const contract = new ethers.Contract(bodyAddress, bodyNFT.abi, signer)
-      const tokensOfOwner = await contract.tokensOfOwner(account)
-
-      // @TODO: this is only first, I need to support unlimited number of bodies connected to the account.
-      const i = 0
-      const result = await contract.tokenURI(tokensOfOwner[i])
-      request.get(result).then(r => r.data.image).then(r => {
-        setAvatar(r)
-      })
+        // @TODO: this is only first, I need to support unlimited number of bodies connected to the account.
+        const i = 0
+        const result = await contract.tokenURI(tokensOfOwner[i])
+        request.get(result).then(r => r.data.image).then(r => {
+          setAvatar(r)
+        })
+      }
     }
   }
 
