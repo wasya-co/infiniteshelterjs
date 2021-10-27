@@ -1,12 +1,11 @@
 
-import { IonPage, IonContent, IonButton, IonImg, IonLoading, IonIcon } from "@ionic/react"
+import { IonPage, IonContent, IonButton, IonImg, IonLoading } from "@ionic/react"
 import React, { Fragment as F, useContext, useEffect, useRef, useState } from "react"
 import { Route, useLocation, useHistory, Switch } from 'react-router-dom'
-import { arrowBack } from 'ionicons/icons';
 
-import { C, logg, request, TwofoldContext } from "$shared"
+import { C, logg, request, TwofoldContext, BackBtn } from "$shared"
 import { Metaline } from "$components/application"
-import "./galleries.scss";
+import "./galleries.scss"
 
 const GalleriesShow = (props) => {
   logg(props, 'GalleriesShow')
@@ -35,10 +34,6 @@ const GalleriesShow = (props) => {
     })
   }
 
-  const goBack = () => {
-    props.history.goBack();
-  }
-
   useEffect(() => {
     getGallery()
     return () => {
@@ -51,7 +46,7 @@ const GalleriesShow = (props) => {
     { <div className="gallery-show">
       <div className='narrow'>
         <h1 className="heading">
-          <IonIcon onClick={goBack} className="back-icon" icon={arrowBack}></IonIcon>
+          <BackBtn />
           <img src="/assets/newsfeed/photos_icon.png" />
           <span className="title">{gallery.name}</span>
         </h1>
@@ -66,7 +61,7 @@ const GalleriesShow = (props) => {
             </div>
           ) }
         </div>
-        <div className="description" dangerouslySetInnerHTML={{ __html: gallery.description }}></div>
+        <div dangerouslySetInnerHTML={{ __html: gallery.description }}></div>
       </div>
       <div className="full-img-section">
         { gallery.photos && gallery.photos.map((ph, i) =>
