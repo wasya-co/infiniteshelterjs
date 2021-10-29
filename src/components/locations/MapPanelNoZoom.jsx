@@ -13,7 +13,7 @@ import {
 const Div3 = styled.div``;
 
 const W = styled.div`
-  border: ${p => p.theme.thinBorderWidth} solid black;
+  border: ${p => p.theme.thinBorder};
   border-radius: ${p => p.theme.thinBorderRadius};
 
   display: inline-block;
@@ -31,12 +31,17 @@ const MapPanelNoZoom = (props) => {
   const history = useHistory()
 
   const {
-    zoom, setZoom,
+    bottomDrawerOpen,
     mapPanelWidth, mapPanelHeight,
+    zoom, setZoom,
   } = useContext(TwofoldContext)
+
+  logg(bottomDrawerOpen, 'bottomDrawerOpen')
 
   // _vp_ 20211029 only sets the zoom (in panelNoZoom) to full-panel
   // max width or height - fancy!
+  // responds to bottomDrawer!
+  // @TODO: make Left and Right arbitrarily resizable.
   useEffect(() => {
     let nextZoomByWidth = mapPanelWidth/map.w
     let nextZoomByHeight = mapPanelHeight/map.h

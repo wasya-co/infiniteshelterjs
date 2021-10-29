@@ -122,7 +122,12 @@ export const TwofoldContextProvider = ({ children, ...props }) => {
   } = props
 
   /* B */
-  const [ bottomDrawerOpen, setBottomDrawerOpen ] = useState(config.bottomDrawerOpen)
+  // @TODO: does localStorage work like this on mobile?
+  const [ bottomDrawerOpen, _setBottomDrawerOpen ] = useState(JSON.parse(localStorage.getItem(C.bottomDrawerOpen)))
+  const setBottomDrawerOpen = (m) => {
+    localStorage.setItem(C.bottomDrawerOpen, JSON.stringify(m))
+    _setBottomDrawerOpen(m)
+  }
 
   /* I */
   const [ itemToUnlock, _setItemToUnlock ] = useState({})

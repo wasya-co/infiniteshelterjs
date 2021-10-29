@@ -4,8 +4,6 @@ module.exports = {
   // "apiOrigin": "https://manager.piousbox.com",
   "appIndexPath": "src/index",
 
-  "bottomDrawerOpen": false,
-
   "domain": "tgm.piousbox.com", // required! 20210831
   // "debug": true,
   "debug": false,

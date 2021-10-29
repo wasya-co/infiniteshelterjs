@@ -21,3 +21,8 @@ it('useWindowSize', () => {
   expect(1).toEqual(2) // not implemented
 })
 
+describe('TwofoldContext', () => {
+  it('gets bottomDrawerOpen from localStorage', () => {
+    throw 'not implemented'
+  })
+})

@@ -1,5 +1,6 @@
 
 import { ethers } from 'ethers'
+import PropTypes from 'prop-types'
 import React, { Fragment as F, useContext, useEffect, useState } from "react"
 import Modal from "react-modal"
 import { CardElement, Elements, useElements, useStripe, } from '@stripe/react-stripe-js'
@@ -45,8 +46,8 @@ const Login = (props) => {
   </F>)
 };
 
-const Root = styled.div`
-  // border: 1px solid red;
+const W = styled.div`
+  border: 2px solid black;
 
   display: flex;
   justify-content: flex-start;
@@ -55,9 +56,9 @@ const Root = styled.div`
   // background: #dedede;
   // background: white;
   // height: 100px;
-  // width: calc(100vw - ${p => p.borderWidth*2}px);
+  // width: calc(100vw - 2*${p => p.theme.borderWidth});
   // padding: 1em;
-  // margin-bottom: ${p => p.borderWidth}px;
+  // margin-bottom: ${p => p.theme.borderWidth};
 `;
 
 const MyAccountWidget = (props) => {
@@ -74,9 +75,6 @@ const MyAccountWidget = (props) => {
    * and it should be in a context - shared across threemap, and accountWidget.
    */
   const [ avatar, setAvatar ] = useState("")
-
-
-
 
   // buy unlocks (coins?)
   const handleSubmit = async (event) => {
@@ -161,7 +159,7 @@ const MyAccountWidget = (props) => {
   }
 
   if (!currentUser) { return null }
-  return <Root {...S} >
+  return <W className="MyAccountWidget" >
 
     { /* currentUser.profile_photo_url && <Img src={currentUser.profile_photo_url} /> */ }
     <Img src={avatar || currentUser.profile_photo_url} />
@@ -197,9 +195,13 @@ const MyAccountWidget = (props) => {
       </form>
     </Modal>
 
-  </Root>
+  </W>
+}
+
+// no props?!
+MyAccountWidget.propTypes = {
 }
 
 const WrappedMyAccountWidget = (props) => <Elements stripe={stripePromise}><MyAccountWidget {...props} /></Elements>;
 
-export default WrappedMyAccountWidget;
+export default WrappedMyAccountWidget

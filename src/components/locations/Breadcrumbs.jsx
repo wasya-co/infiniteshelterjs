@@ -16,10 +16,11 @@ const B1 = styled.div`
   padding: 0.5em 0;
 `;
 
-const Root = styled.div`
+const W = styled.div`
   border: ${p=>p.debug?'1':'0'}px solid cyan;
 
   display: flex;
+  align-items: center;
   z-index: 1;
 
   height: ${p => p.theme.breadcrumbsHeight};
@@ -45,10 +46,10 @@ const Breadcrumbs = (props) => {
       out.push(<B1 key={`${idx}-divider`} >&gt;</B1>)
     }
   })
-  return <Root debug={config.debug} className="Breadcrumbs" >
+  return <W debug={config.debug} className="Breadcrumbs" >
     { layout === C.layout_mapui && <MenuLeft variant={C.variants.inline} /> }
     { out }
-  </Root>
+  </W>
 }
 
 export default Breadcrumbs

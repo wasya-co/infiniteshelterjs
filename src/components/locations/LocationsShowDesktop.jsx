@@ -14,14 +14,14 @@ import {
 import { Metaline } from "$components/application"
 import { Newsitems } from "$components/newsitems"
 
-
-const _Description = styled.div`
+// @TODO: move into shared
+const _D = styled.div`
   // border: 1px solid red;
 
   padding: 10px;
 `;
 const Description = ({ item }) => {
-  return <_Description dangerouslySetInnerHTML={{ __html: item.description }} />
+  return <_D dangerouslySetInnerHTML={{ __html: item.description }} />
 }
 
 const IframeModal = (props) => {
@@ -37,15 +37,16 @@ const IframeModal = (props) => {
 }
 
 const Left = styled.div`
-  border: ${p=>p.debug?'1':'0'}px solid blue;
+  // border: 1px solid blue;
+  // logg: ${p => logg(p, 'p')};
 
-  box-sizing: content-box;
-  -moz-box-sizing: content-box;
-  -webkit-box-sizing: content-box;
+  // box-sizing: content-box;
+  // -moz-box-sizing: content-box;
+  // -webkit-box-sizing: content-box;
 
   background: ${p => p.theme.colors.background};
   flex: 50%;
-  overflow: auto;
+  overflow: hidden;
 
   display: flex;
   flex-direction: column;
@@ -133,7 +134,7 @@ const LocationsShowDesktop = (props) => {
       setMapPanelWidth(mapPanelRef.current.offsetWidth)
       setMapPanelHeight(mapPanelRef.current.offsetHeight)
     }
-  }, [mapPanelRef.current, windowWidth, windowHeight])
+  }, [bottomDrawerOpen, mapPanelRef.current, windowWidth, windowHeight])
   /*
    * @TODO: add arbitrary panel resizing
    */

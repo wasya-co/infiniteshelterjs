@@ -1,34 +1,38 @@
 
 // Constants
 const C = {
-  // c
+
+  // B
+  bottomDrawerOpen: 'bottom-drawer-open',
+
+  // C
   collapsible: {
     descr: "descr-sec",
   },
   current_user: 'current_user',
 
-  // i
+  // I
   item_types: {
     gallery: 'Gallery',
     report: 'Report',
     video: 'Video',
   },
 
-  // j
+  // J
   jwt_token: 'jwt_token',
 
-  // l
+  // L
   layout_onecol: 'onecol',
   layout_mapui: 'mapui',
 
-  // m
+  // M
   map_panel_types: {
     MapPanel: "MapPanel",
     MapPanelNoZoom: "MapPanelNoZoom",
     ThreePanelV1: "ThreePanelV1",
   },
 
-  // v
+  // V
   variants: {
     floating: 'floating',
     inline: 'inline',

@@ -16,9 +16,10 @@ const S = {
   // Twofold layout
   borderWidth: '10px',
   bottomDrawerClosedHeight: '20px',
-  bottomDrawerOpenHeight: '110px',
+  bottomDrawerOpenHeight: '115px',
   breadcrumbsHeight: '30px',
 
+  thinBorder: '2px solid black',
   thinBorderWidth: '2px',
   thinBorderRadius: '5px',
 
