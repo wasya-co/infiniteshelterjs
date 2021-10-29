@@ -6,7 +6,11 @@ import styled from 'styled-components'
 import config from 'config'
 import { Breadcrumbs, ItemModal, MapPanel, MapPanelNoZoom, MarkersList } from "./"
 import { ThreePanelV1 } from "$components/locations3"
-import { C, logg, request, S, TwofoldContext, ZoomContext } from "$shared"
+import {
+  C, logg, request, S, TwofoldContext,
+  useWindowSize,
+  ZoomContext,
+} from "$shared"
 import { Metaline } from "$components/application"
 import { Newsitems } from "$components/newsitems"
 
@@ -39,9 +43,12 @@ const Left = styled.div`
   -moz-box-sizing: content-box;
   -webkit-box-sizing: content-box;
 
-  background: ${p => p.theme.background};
+  background: ${p => p.theme.colors.background};
   flex: 50%;
   overflow: auto;
+
+  display: flex;
+  flex-direction: column;
 
   height: calc(100vh - ${p => `calc(2*${p.theme.borderWidth})`}
     - ${p => p.bottomDrawerOpen ? p.theme.bottomDrawerOpenHeight : p.theme.bottomDrawerClosedHeight });
@@ -50,14 +57,14 @@ const Left = styled.div`
 const Right = styled.div`
   border: ${p=>p.debug?'1':'0'}px solid green;
 
-  background: ${p => p.background};
+  background: ${p => p.theme.colors.background};
 
   padding: 1em;
   flex: 50%;
   overflow-x: hidden;
   overflox-y: auto;
-  height: calc(100vh - ${p => `calc(2*${p.borderWidth})`}
-    - ${p => p.bottomDrawerOpen ? p.bottomDrawerOpenHeight : p.bottomDrawerClosedHeight });
+  height: calc(100vh - ${p => `calc(2*${p.theme.borderWidth})`}
+    - ${p => p.bottomDrawerOpen ? p.theme.bottomDrawerOpenHeight : p.theme.bottomDrawerClosedHeight });
 `;
 
 const Row = styled.div`
@@ -68,40 +75,45 @@ const Row = styled.div`
 `;
 
 const W = styled.div`
-  border: ${p => p.theme.thinBorderWidth} solid black;
-  border-radius: ${p => p.theme.thinBorderRadius};
+  overflow: hidden;
 
-  box-sizing: content-box;
-  -moz-box-sizing: content-box;
-  -webkit-box-sizing: content-box;
+  flex-grow: 1;
 `;
-const WrappedMapPanel = (props) => {
+const WrappedMapPanel = React.forwardRef((props, ref) => {
   switch (props.map.config.map_panel_type) {
     case C.map_panel_types.MapPanelNoZoom:
-      return <W><MapPanelNoZoom withZoom={false} {...props} /></W>
+      return <W ref={ref} className="WrappedMapPanel" ><MapPanelNoZoom withZoom={false} {...props} /></W>
     case C.map_panel_types.ThreePanelV1:
       return <W><ThreePanelV1 {...props} /></W>
     default:
       return <W><MapPanel {...props} /></W>
   }
-}
+})
 
 const LocationsShowDesktop = (props) => {
   // logg(props, 'LocationsShowDesktop')
   const { match } = props
 
+  const [ windowWidth, windowHeight ] = useWindowSize()
+
   const [ loading, setLoading ] = useState(false)
   const [ location, setLocation ] = useState(null)
   const {
+    bottomDrawerOpen,
+    mapPanelWidth, setMapPanelWidth,
+    mapPanelHeight, setMapPanelHeight,
     showItem, setShowItem,
     showUrl, setShowUrl,
   } = useContext(TwofoldContext)
 
   const mountedRef = useRef('init')
+  const mapPanelRef = useRef(null)
 
   useEffect(() => {
-    setLoading(true);
+    setLoading(true)
     const token = localStorage.getItem("jwt_token")
+
+    // Load the map
     request.get(`/api/maps/view/${match.params.slug}`, { params: { jwt_token: token } }).then(res => {
       if (mountedRef.current === match.params.slug) return null;
       setLocation(res.data.map)
@@ -115,13 +127,28 @@ const LocationsShowDesktop = (props) => {
     }
   }, [ match.params.slug ])
 
-  const { bottomDrawerOpen } = useContext(TwofoldContext)
+  // set mapPanel sizes
+  useEffect(() => {
+    if (mapPanelRef.current) {
+      setMapPanelWidth(mapPanelRef.current.offsetWidth)
+      setMapPanelHeight(mapPanelRef.current.offsetHeight)
+    }
+  }, [mapPanelRef.current, windowWidth, windowHeight])
+  /*
+   * @TODO: add arbitrary panel resizing
+   */
+
+  /*
+   * @TODO: store resize config in localstorage
+   */
 
   return (<Row>
     <Left className='Left' {...{ bottomDrawerOpen }} debug={config.debug} >
-      { loading && <i>Loading Left...</i> }
       { location && <Breadcrumbs {...location} /> }
-      { location && <WrappedMapPanel map={location.map ? location.map : location} /> }
+      { location && <WrappedMapPanel
+        map={location.map ? location.map : location}
+        ref={mapPanelRef}
+      /> }
     </Left>
     <Right className='Right' {...{ bottomDrawerOpen }} {...S} debug={config.debug} >
       { loading && <i>Loading Right...</i> }

@@ -3,45 +3,47 @@ import React, { Fragment as F, useContext, useEffect, useRef, useState } from "r
 import { Route, useLocation, useHistory, Switch } from 'react-router-dom'
 import styled from 'styled-components'
 
-import { Breadcrumbs } from "./"
 import {
   C, Collapsible, CollapsibleContext,
   logg, request, S, TwofoldContext,
-  useWindowSize,
-  ZoomContext } from "$shared"
-import { Metaline } from "$components/application"
-import { Newsitems } from "$components/newsitems"
+  ZoomContext,
+} from "$shared"
 
 
 const Div3 = styled.div``;
 
-const MapWrapperNoZoom = styled.div`
-  scroll: none;
+const W = styled.div`
+  border: ${p => p.theme.thinBorderWidth} solid black;
+  border-radius: ${p => p.theme.thinBorderRadius};
+
+  display: inline-block;
 `;
 
 /*
- * @TODO: merge this into MapPanel, have zoom={false} as a prop
- * But I couldn't do it in 10 mins... It's a bit complicated?
+ * _vp_ 2021-09 @TODO: merge this into MapPanel, have zoom={false} as a prop
+ * But I couldn't do it in 10 mins... It's a bit complicated?\\
+ * _vp_ 2021-10-29 But actually this component is getting more work than the zoom one right now...
  */
 const MapPanelNoZoom = (props) => {
   // logg(props, 'MapPanelNoZoom')
   const { map } = props
 
   const history = useHistory()
-  const [windowWidth, windowHeight] = useWindowSize()
-
-  const ref = useRef(null)
 
   const {
     zoom, setZoom,
+    mapPanelWidth, mapPanelHeight,
   } = useContext(TwofoldContext)
 
+  // _vp_ 20211029 only sets the zoom (in panelNoZoom) to full-panel
+  // max width or height - fancy!
   useEffect(() => {
-    // console.log('width', ref.current ? ref.current.offsetWidth : 0);
-    if (ref.current) {
-      setZoom(map.w/ref.current.offsetWidth)
-    }
-  }, [ref.current, windowWidth])
+    let nextZoomByWidth = mapPanelWidth/map.w
+    let nextZoomByHeight = mapPanelHeight/map.h
+    let nextZoom = Math.min(nextZoomByWidth, nextZoomByHeight)
+    nextZoom = nextZoom - 0.01 // image should not overlap with the border... 1% slack added.
+    setZoom(nextZoom)
+  }, [mapPanelWidth, mapPanelHeight])
 
 
   const markers = []
@@ -51,27 +53,29 @@ const MapPanelNoZoom = (props) => {
       onClick={() => history.push(`/en/locations/show/${m.slug}`) }
       style={{
         position: 'absolute',
-        top: m.y/zoom,
-        left: m.x/zoom,
+        top: m.y*zoom,
+        left: m.x*zoom,
+        zIndex: 2,
       }} ><img src={m.img_path} style={{
         display: 'block',
-        maxWidth: `${m.w/zoom}px`,
-        maxHeight: `${m.h/zoom}px`,
+        maxWidth: `${m.w*zoom}px`,
+        maxHeight: `${m.h*zoom}px`,
         width: 'auto', height: 'auto',
       }} /></div>
     markers.push(out)
   })
 
-  return <MapWrapperNoZoom className="MapWrapperNoZoom" ref={ref} >
-      <Div3 style={{
+  return <W className="MapPanelNoZoom" >
+      <Div3
+        style={{
           display: 'inline-block',
           position: 'relative',
       }} >
         <img
           src={map.img_path}
           style={{
-            width: `${map.w/zoom}px`,
-            height: `${map.h/zoom}px`,
+            width: `${map.w*zoom}px`,
+            height: `${map.h*zoom}px`,
 
             position: 'relative',
             zIndex: 1,
@@ -79,7 +83,7 @@ const MapPanelNoZoom = (props) => {
         />
         { markers }
       </Div3>
-  </MapWrapperNoZoom>
+  </W>
 }
 
 export default MapPanelNoZoom

@@ -121,7 +121,10 @@ export const TwofoldContextProvider = ({ children, ...props }) => {
     loginModalOpen, setLoginModalOpen,
   } = props
 
+  /* B */
   const [ bottomDrawerOpen, setBottomDrawerOpen ] = useState(config.bottomDrawerOpen)
+
+  /* I */
   const [ itemToUnlock, _setItemToUnlock ] = useState({})
   const setItemToUnlock = (item) => {
     if (itemToUnlock.id !== item.id && !loginModalOpen) {
@@ -129,18 +132,33 @@ export const TwofoldContextProvider = ({ children, ...props }) => {
     }
   }
 
+  /* M */
+  const [ mapPanelWidth, setMapPanelWidth ] = useState(null)
+  const [ mapPanelHeight, setMapPanelHeight ] = useState(null)
+
+  /* S */
   const [ showItem, setShowItem ] = useState(false)
   const [ showUrl, setShowUrl ] = useState(false)
+
+  /* Z */
   const [ zoom, setZoom ] = useState(1)
 
   return <TwofoldContext.Provider value={{
     bottomDrawerOpen, setBottomDrawerOpen,
+
     currentUser, setCurrentUser, // @TODO: move this to an AppWrapper context
+
     itemToUnlock, setItemToUnlock,
+
     layout, setLayout,
     loginModalOpen, setLoginModalOpen,
+
+    mapPanelHeight, setMapPanelHeight,
+    mapPanelWidth, setMapPanelWidth,
+
     showItem, setShowItem,
     showUrl, setShowUrl,
+
     zoom, setZoom,
   }} >{ children }</TwofoldContext.Provider>
 }

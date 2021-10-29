@@ -4,6 +4,15 @@
  */
 const S = {
 
+  colors: {
+    background: '#dedede',
+    blue: '#6aa3e9',
+    darkGrey: '#605d5d',
+    lightGrey: '#988b8b',
+    red: 'red',
+  },
+
+
   // Twofold layout
   borderWidth: '10px',
   bottomDrawerClosedHeight: '20px',
@@ -13,12 +22,6 @@ const S = {
   thinBorderWidth: '2px',
   thinBorderRadius: '5px',
 
-  // colors
-  background: '#dedede',
-  blue: '#6aa3e9',
-  darkGrey: '#605d5d',
-  lightGrey: '#988b8b',
-  red: 'red',
 }
 
 export default S

@@ -22,7 +22,7 @@ const Root = styled.div`
   display: flex;
   z-index: 1;
 
-  height: ${p => p.breadcrumbsHeight};
+  height: ${p => p.theme.breadcrumbsHeight};
 `;
 
 const Breadcrumbs = (props) => {
@@ -45,7 +45,7 @@ const Breadcrumbs = (props) => {
       out.push(<B1 key={`${idx}-divider`} >&gt;</B1>)
     }
   })
-  return <Root {...S} debug={config.debug} className="Breadcrumbs" >
+  return <Root debug={config.debug} className="Breadcrumbs" >
     { layout === C.layout_mapui && <MenuLeft variant={C.variants.inline} /> }
     { out }
   </Root>

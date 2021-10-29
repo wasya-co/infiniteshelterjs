@@ -17,3 +17,7 @@ describe('inflector', () => {
 
 })
 
+it('useWindowSize', () => {
+  expect(1).toEqual(2) // not implemented
+})
+
