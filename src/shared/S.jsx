@@ -10,6 +10,9 @@ const S = {
   bottomDrawerOpenHeight: '110px',
   breadcrumbsHeight: '30px',
 
+  thinBorderWidth: '2px',
+  thinBorderRadius: '5px',
+
   // colors
   background: '#dedede',
   blue: '#6aa3e9',

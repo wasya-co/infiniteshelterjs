@@ -15,13 +15,14 @@ import { Newsitems } from "$components/newsitems"
 
 const Div3 = styled.div``;
 
-/* @TOO: merge this into MapPanel, have zoom={false} as a prop */
 const MapWrapperNoZoom = styled.div`
-  // border: 1px solid green;
-
   scroll: none;
 `;
 
+/*
+ * @TODO: merge this into MapPanel, have zoom={false} as a prop
+ * But I couldn't do it in 10 mins... It's a bit complicated?
+ */
 const MapPanelNoZoom = (props) => {
   // logg(props, 'MapPanelNoZoom')
   const { map } = props
@@ -32,7 +33,6 @@ const MapPanelNoZoom = (props) => {
   const ref = useRef(null)
 
   const {
-    currentUser, setCurrentUser,
     zoom, setZoom,
   } = useContext(TwofoldContext)
 
@@ -62,22 +62,8 @@ const MapPanelNoZoom = (props) => {
     markers.push(out)
   })
 
-  // and the avatar
-  /*
-  const avatar = <div key="-1"
-    style={{
-      position: 'absolute',
-      left: map.w/zoom/2-50,
-      bottom: 0,
-    }} ><img src={currentUser.profile_photo_url} /></div>
-  markers.push(avatar)
-  */
-
-  return (<MapWrapperNoZoom className="MapWrapperNoZoom" ref={ref} >
-
+  return <MapWrapperNoZoom className="MapWrapperNoZoom" ref={ref} >
       <Div3 style={{
-          // border: '2px solid cyan',
-
           display: 'inline-block',
           position: 'relative',
       }} >
@@ -86,12 +72,14 @@ const MapPanelNoZoom = (props) => {
           style={{
             width: `${map.w/zoom}px`,
             height: `${map.h/zoom}px`,
+
+            position: 'relative',
+            zIndex: 1,
           }}
         />
         { markers }
       </Div3>
-
-  </MapWrapperNoZoom>)
+  </MapWrapperNoZoom>
 }
 
 export default MapPanelNoZoom

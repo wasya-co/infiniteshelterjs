@@ -5,9 +5,7 @@ import styled from 'styled-components'
 import { C, logg, useApi, } from "$shared"
 import { Features } from "./"
 import {
-  BottomDrawer,
-  MainHeader, Menu, MenuBottom, MenuLeft,
-  UnlockModal
+  MainHeader,
 } from "$components/application"
 import { Newsitems } from "$components/newsitems"
 

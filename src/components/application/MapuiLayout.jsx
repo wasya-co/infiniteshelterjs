@@ -3,6 +3,8 @@ import React from 'react'
 import styled from 'styled-components'
 
 const MapuiContainer = styled.div`
+  // border: 1px solid purple;
+
   background: white;
 
   overflow: hidden;

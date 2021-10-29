@@ -4,7 +4,9 @@ import React, { Fragment as F, useEffect, useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import styled from 'styled-components'
 
-import { useApi, AppRouter, logg, S, Wrapper } from "$shared"
+import { useApi, AppRouter,
+  logg, // eslint-disable-line no-unused-vars
+  Wrapper } from "$shared"
 import "./cities.scss"
 
 const Counts = styled.div`

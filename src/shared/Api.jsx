@@ -1,7 +1,9 @@
 import React, { useContext } from 'react'
 
 import config from "config"
-import { C, logg, request, TwofoldContext } from "$shared"
+import { C,
+  logg, // eslint-disable-line no-unused-vars
+request, TwofoldContext } from "$shared"
 
 const useApi = () => {
   const { currentUser, setCurrentUser } = useContext(TwofoldContext)

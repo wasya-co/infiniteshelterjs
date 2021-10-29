@@ -22,7 +22,7 @@ const ButtonWrapper = styled.div`
 
 const Drawer = styled(_Drawer)`
   .MuiDrawer-paper {
-    background: ${p=>p.background};
+    background: ${p=>p.theme.background};
   }
 
   .MuiDrawer-paperAnchorDockedBottom {
@@ -37,9 +37,9 @@ function getLibrary(provider) {
 const Inner1 = styled.div`
   // border: 1px solid red;
 
-  background: ${p=>p.background};
-  height: calc(${p=>p.bottomDrawerOpenHeight} + 1*${p=>p.borderHeight});
-  margin: ${p=>p.borderWidth};
+  background: ${p=>p.theme.background};
+  height: calc(${p=>p.theme.bottomDrawerOpenHeight} + 1*${p=>p.theme.borderHeight});
+  margin: ${p=>p.theme.borderWidth};
 `;
 
 // TODO: I may not need this
@@ -80,10 +80,9 @@ const BottomDrawer = (props) => {
       onClose={() => setBottomDrawerOpen(false)}
       BackdropProps={{ invisible: true }}
       variant={"persistent"}
-      {...S}
     >
-      <Inner1 {...S} >
-        <Inner2 {...S} >
+      <Inner1 >
+        <Inner2 >
           <MenuIcon
             onClick={() => setBottomDrawerOpen(false)}
           />

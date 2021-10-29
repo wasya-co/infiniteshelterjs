@@ -1,7 +1,6 @@
 import { IonPage, IonContent, IonButton, IonImg, IonLoading } from "@ionic/react"
 import React, { Fragment as F, useContext, useEffect, useRef, useState } from "react"
 import Modal from "react-modal"
-import { Route, useLocation, useHistory, Switch } from 'react-router-dom'
 import styled from 'styled-components'
 
 import config from 'config'
@@ -36,12 +35,16 @@ const IframeModal = (props) => {
 const Left = styled.div`
   border: ${p=>p.debug?'1':'0'}px solid blue;
 
-  background: ${p => p.background};
+  box-sizing: content-box;
+  -moz-box-sizing: content-box;
+  -webkit-box-sizing: content-box;
+
+  background: ${p => p.theme.background};
   flex: 50%;
   overflow: auto;
 
-  height: calc(100vh - ${p => `calc(2*${p.borderWidth})`}
-    - ${p => p.bottomDrawerOpen ? p.bottomDrawerOpenHeight : p.bottomDrawerClosedHeight });
+  height: calc(100vh - ${p => `calc(2*${p.theme.borderWidth})`}
+    - ${p => p.bottomDrawerOpen ? p.theme.bottomDrawerOpenHeight : p.theme.bottomDrawerClosedHeight });
 `;
 
 const Right = styled.div`
@@ -58,18 +61,28 @@ const Right = styled.div`
 `;
 
 const Row = styled.div`
+  // border: 1px solid magenta;
+
   display: flex;
   position: relative;
 `;
 
+const W = styled.div`
+  border: ${p => p.theme.thinBorderWidth} solid black;
+  border-radius: ${p => p.theme.thinBorderRadius};
+
+  box-sizing: content-box;
+  -moz-box-sizing: content-box;
+  -webkit-box-sizing: content-box;
+`;
 const WrappedMapPanel = (props) => {
   switch (props.map.config.map_panel_type) {
     case C.map_panel_types.MapPanelNoZoom:
-      return <MapPanelNoZoom {...props} />
+      return <W><MapPanelNoZoom withZoom={false} {...props} /></W>
     case C.map_panel_types.ThreePanelV1:
-      return <ThreePanelV1 {...props} />
+      return <W><ThreePanelV1 {...props} /></W>
     default:
-      return <MapPanel {...props} />
+      return <W><MapPanel {...props} /></W>
   }
 }
 
@@ -105,7 +118,7 @@ const LocationsShowDesktop = (props) => {
   const { bottomDrawerOpen } = useContext(TwofoldContext)
 
   return (<Row>
-    <Left className='Left' {...{ bottomDrawerOpen }} {...S} debug={config.debug} >
+    <Left className='Left' {...{ bottomDrawerOpen }} debug={config.debug} >
       { loading && <i>Loading Left...</i> }
       { location && <Breadcrumbs {...location} /> }
       { location && <WrappedMapPanel map={location.map ? location.map : location} /> }

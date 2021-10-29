@@ -3,7 +3,7 @@ import React, { Fragment as F, useContext, useEffect, useRef, useState } from "r
 import { Route, useLocation, useHistory, Switch } from 'react-router-dom'
 import styled from 'styled-components'
 
-import { Breadcrumbs, MapPanelNoZoom, MarkersList, } from "./"
+import { Breadcrumbs, MarkersList, } from "./"
 import {
   C, Collapsible, CollapsibleContext,
   logg, request, S, TwofoldContext,
@@ -119,7 +119,7 @@ const LocationsShowMobile = (props) => {
     { loading && <i>Loading...</i> }
     { location && <Breadcrumbs {...location} /> }
     { location && <Collapsible slug="map-sec" label={location.labels.map} >
-      { location && <MapPanelNoZoom map={location.map || location} /> }
+      { location && <MapPanel withZoom={false} map={location.map || location} /> }
     </Collapsible> }
     { /* @TODO: recursively render map (not location) as appropriate all around in these collapsibles. */ }
     { markers && markers.length && <Collapsible slug="markers-sec" label={location.labels.markers} >

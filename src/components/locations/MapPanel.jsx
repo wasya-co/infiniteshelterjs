@@ -1,9 +1,10 @@
+import PropTypes from 'prop-types'
 import React, { useContext, useEffect, useRef } from 'react'
-import { Route, useLocation, useHistory, Switch } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 import styled from 'styled-components'
 
 import config from 'config'
-import { logg, S, TwofoldContext } from "$shared"
+import { logg, TwofoldContext } from "$shared"
 
 const Div1 = styled.div`
   // border: 3px solid green;
@@ -14,9 +15,9 @@ const Div1 = styled.div`
   position: relative;
   overflow: auto;
 
-  height: calc(100vh - ${p => `calc(2*${p.borderWidth})`}
-    - ${p => p.breadcrumbsHeight}
-    - ${p => p.bottomDrawerOpen ? p.bottomDrawerOpenHeight : p.bottomDrawerClosedHeight });
+  height: calc(100vh - ${p => `calc(2*${p.theme.borderWidth})`}
+    - ${p => p.theme.breadcrumbsHeight}
+    - ${p => p.bottomDrawerOpen ? p.theme.bottomDrawerOpenHeight : p.theme.bottomDrawerClosedHeight });
 
 `;
 
@@ -35,9 +36,9 @@ const Root = styled.div`
   position: relative;
   overflow: auto;
 
-  height: calc(100vh - ${p => `calc(2*${p.borderWidth})`}
-    - ${p => p.breadcrumbsHeight}
-    - ${p => p.bottomDrawerOpen ? p.bottomDrawerOpenHeight : p.bottomDrawerClosedHeight });
+  height: calc(100vh - ${p => `calc(2*${p.theme.borderWidth})`}
+    - ${p => p.theme.breadcrumbsHeight}
+    - ${p => p.bottomDrawerOpen ? p.theme.bottomDrawerOpenHeight : p.theme.bottomDrawerClosedHeight });
 
 `;
 
@@ -73,7 +74,7 @@ const ZoomCtrl = (props) => {
 
 const MapPanel = (props) => {
   // logg(props, 'MapPanel')
-  const { map } = props
+  const { map, withZoom=true } = props
 
   const {
     bottomDrawerOpen, setBottomDrawerOpen,
@@ -82,7 +83,6 @@ const MapPanel = (props) => {
   } = useContext(TwofoldContext)
 
   const div1Ref = useRef(null)
-  logg(div1Ref, 'div1Ref')
 
   const history = useHistory()
 
@@ -113,10 +113,10 @@ const MapPanel = (props) => {
     markers.push(out)
   })
 
-  return <Root {...S} {...{ bottomDrawerOpen }} debug={config.debug} className='MapPanel' >
-    <ZoomCtrl />
+  return <Root {...{ bottomDrawerOpen }} debug={config.debug} className='MapPanel' >
+    { withZoom && <ZoomCtrl /> }
 
-    <Div1 {...S} {...{ bottomDrawerOpen }} >
+    <Div1 {...{ bottomDrawerOpen }} >
       <Img ref={div1Ref} style={{
         width: `${map.w/zoom}px`,
         height: `${map.h/zoom}px`,
@@ -135,4 +135,8 @@ const MapPanel = (props) => {
   </Root>
 }
 
+MapPanel.propTypes = {
+  map: PropTypes.object.isRequired,
+  withZoom: PropTypes.bool, // @TODO: I don't like it, I'd like it to be inside a config obj.
+}
 export default MapPanel
