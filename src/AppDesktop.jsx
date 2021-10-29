@@ -25,9 +25,6 @@ import 'react-toastify/dist/ReactToastify.css'
 
 import config from "config"
 import {
-  C, CollapsibleContext, Debug, logg, request, TwofoldContext, TwofoldContextProvider , useApi,
-} from "$shared"
-import {
   BottomDrawer,
   MainHeader, Menu, MenuBottom, MenuLeft,
   UnlockModal
@@ -43,6 +40,10 @@ import { ReportsShow } from "$components/reports"
 import SitesShow from '$components/sites/SitesShow1'
 import { Account, LoginModal } from "$components/users"
 import { Videos } from "$components/videos"
+import {
+  C, CollapsibleContext, CollapsibleContextProvider,
+  Debug, logg, request, TwofoldContext, TwofoldContextProvider , useApi,
+} from "$shared"
 
 const Root = styled.div`
   // border: 1px solid #741741;
@@ -89,40 +90,42 @@ const AppDesktop = (props) => {
   return (<Router>
     <ToastContainer />
     <TwofoldContextProvider {...props} {...{ layout, setLayout }} >
-      <Root>
+      <CollapsibleContextProvider >
+        <Root>
 
-        { /* This no more, if I want it to look like Financial Times */ }
-        { /* layout === C.layout_onecol && <MenuLeft variant={C.variants.floating} /> */ }
-        { /* <MainHeader /> */ }
+          { /* This no more, if I want it to look like Financial Times */ }
+          { /* layout === C.layout_onecol && <MenuLeft variant={C.variants.floating} /> */ }
+          { /* <MainHeader /> */ }
 
-        <Container >
-          <Switch id="main" main >
+          <Container >
+            <Switch id="main" main >
 
-            { /* <Redirect exact from="/" to="/en/locations/show/construct0" /> */ }
-            <Redirect exact from="/" to="/en" />
-            <Route exact path="/en" ><SitesShow /></Route>
+              { /* <Redirect exact from="/" to="/en/locations/show/construct0" /> */ }
+              <Redirect exact from="/" to="/en" />
+              <Route exact path="/en" ><SitesShow /></Route>
 
-            <Route exact path="/en/account" component={Account} />
-            <Route exact path="/en/account/my/videos" component={Videos} />
-            <Route exact path="/en/account/my/galleries" component={MyGalleries} />
+              <Route exact path="/en/account" component={Account} />
+              <Route exact path="/en/account/my/videos" component={Videos} />
+              <Route exact path="/en/account/my/galleries" component={MyGalleries} />
 
-            <Route exact path="/en/cities"                 component={CitiesList} />
-            <Route       path="/en/cities/travel-to/:name" component={CitiesShow} />
+              <Route exact path="/en/cities"                 component={CitiesList} />
+              <Route       path="/en/cities/travel-to/:name" component={CitiesShow} />
 
-            <Route exact path="/en/galleries/show/:slug" component={GalleriesShow} />
+              <Route exact path="/en/galleries/show/:slug" component={GalleriesShow} />
 
-            <Route exact path="/en/reports/show/:slug" component={ReportsShow} />
+              <Route exact path="/en/reports/show/:slug" component={ReportsShow} />
 
-            <Route exact path="/en/locations/show/:slug" component={LocationsShowDesktop} layout={C.layout_mapui} />
+              <Route exact path="/en/locations/show/:slug" component={LocationsShowDesktop} layout={C.layout_mapui} />
 
-          </Switch>
-        </Container>
-      </Root>
+            </Switch>
+          </Container>
+        </Root>
 
-      <BottomDrawer />
-      <UnlockModal />
-      <LoginModal />
+        <BottomDrawer />
+        <UnlockModal />
+        <LoginModal />
 
+      </CollapsibleContextProvider>
     </TwofoldContextProvider>
   </Router>)
 }

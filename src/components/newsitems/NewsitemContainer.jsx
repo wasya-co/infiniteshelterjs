@@ -7,7 +7,14 @@ import styled from 'styled-components'
 
 import { ItemIcon } from "./"
 import { Metaline, } from "$components/application"
-import { Api, Box, C, inflector, logg, request, TwofoldContext } from "$shared"
+import {
+  C, Card,
+  inflector,
+  logg,
+  request,
+  TwofoldContext,
+  WidgetContainer,
+} from "$shared"
 
 
 const Col = styled.div`
@@ -19,22 +26,31 @@ const Col = styled.div`
 
 const Row = styled.div`
   display: flex;
-  flex-direction: row;
   align-items: flex-start;
-
-  // padding: 0 1em;
 `;
 
 const Title = styled.h2`
   margin-top: 0;
 `;
 
+const W = (props) => {
+  const { children, navigateToItem, variant } = props
+  // @TODO: better management of navigateToItem
+
+  switch (variant) {
+    case C.variants.bordered:
+      return <WidgetContainer {...props} onClick={navigateToItem} cursor="pointer" >{ children }</WidgetContainer>
+    default:
+      return <Card boxShadow={2} {...props} onClick={navigateToItem} cursor="pointer" ></Card>
+  }
+}
+
 /**
  * TDD
  */
 const NewsitemContainer = ({ children, ...props }) => {
   // logg(props, 'NewsitemContainer')
-  const { item } = props
+  const { item, variant } = props
   const { item_type, slug } = item
 
   const history = useHistory()
@@ -57,7 +73,7 @@ const NewsitemContainer = ({ children, ...props }) => {
     }
   }
 
-  return <Box boxShadow={2} {...props} onClick={navigateToItem} cursor="pointer" >
+  return <W {...{ navigateToItem, variant }} >
     { children }
     <Row>
       <ItemIcon {...item} />
@@ -67,10 +83,11 @@ const NewsitemContainer = ({ children, ...props }) => {
       </Col>
     </Row>
     <p className="subhead" dangerouslySetInnerHTML={{ __html: item.subhead }} />
-  </Box>
+  </W>
 }
 
 NewsitemContainer.propTypes = {
   item: PropTypes.object.isRequired,
+  variant: PropTypes.string,
 }
 export default NewsitemContainer

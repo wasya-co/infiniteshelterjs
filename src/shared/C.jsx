@@ -3,13 +3,23 @@
 const C = {
 
   // B
-  bottomDrawerOpen: 'bottom-drawer-open',
+  bottomDrawerOpen: 'bottom-drawer-open', // localStorage
 
   // C
   collapsible: {
-    descr: "descr-sec",
+    description: "descr-sec",
+    markers: "markers-sec",
   },
+  collapsibles: 'collapsibles', // localStorage
   current_user: 'current_user',
+
+  // F
+  foldedCenter: 'folded-center',
+  foldedLeft: 'folded-left', // twofoldContext
+  foldedRight: 'folded-right',
+
+  // H
+  horizontal: 'horizontal',
 
   // I
   item_types: {
@@ -32,10 +42,16 @@ const C = {
     ThreePanelV1: "ThreePanelV1",
   },
 
+  // T
+  twofoldPercent: 'twofold-percent', // localStorage
+
   // V
   variants: {
-    floating: 'floating',
-    inline: 'inline',
+    bordered: 'bordered', // for Newsitems
+    floating: 'floating', // for main-menu btn
+    inline: 'inline',     // for main-menu btn
+    transparent: 'transparent', // for markers on Right
   },
+  vertical: 'vertical',
 }
 export default C

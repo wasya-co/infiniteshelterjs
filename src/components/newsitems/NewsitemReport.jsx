@@ -14,12 +14,13 @@ import "./newsitems.scss"
 
 const NewsitemReport = (props) => {
   // logg(props, "NewsitemReport");
-  const { item } = props
-  return (<NewsitemContainer item={item} />)
+  const { item, variant, } = props
+  return (<NewsitemContainer item={item} variant={variant} />)
 }
 
 NewsitemReport.propTypes = {
   item: PropTypes.object.isRequired,
+  variant: PropTypes.string,
 }
 export default NewsitemReport
 

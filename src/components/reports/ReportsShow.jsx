@@ -2,17 +2,20 @@
 import React, { useEffect, useState } from "react";
 import styled from 'styled-components'
 
-import config from "config";
-import { useApi, Box, logg, request } from "$shared";
+import config from "config"
+import { useApi, Card as Box, logg, request } from "$shared"
 
 const W = styled.div`
   padding: 2em 0;
 `
 
+/**
+ * Default
+ */
 const ReportsShow = (props) => {
-  logg(props, "ReportsShow");
+  // logg(props, "ReportsShow")
 
-  let [ item, setItem ] = useState({});
+  let [ item, setItem ] = useState({})
   let api = useApi()
 
   // @TODO: refactor
@@ -45,4 +48,4 @@ const ReportsShow = (props) => {
 }
 
 // @TODO: wrap in login HOC
-export default ReportsShow;
+export default ReportsShow

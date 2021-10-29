@@ -1,4 +1,10 @@
-import React, { useContext } from 'react'
+
+import {
+  IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonToggle, IonList, IonItem,
+  IonLabel, IonItemDivider,
+} from '@ionic/react'
+import PropTypes from 'prop-types'
+import React, { Fragment as F, useContext } from 'react'
 import { Route, useLocation, useHistory, Switch } from 'react-router-dom'
 import styled from 'styled-components'
 
@@ -6,15 +12,36 @@ import config from 'config'
 import { C, logg, request, S, TwofoldContext } from "$shared"
 import { MenuLeft } from "$components/application"
 
-// one breadcrumb
+/* B */
+
+// One breadcrumb
 const B = styled.div`
   padding: 0.5em;
 `;
 
-// the divider
+// The divider
 const B1 = styled.div`
   padding: 0.5em 0;
 `;
+
+/* D */
+
+const WDayNight = styled.div`
+  border: 1px solid green;
+  margin-left: 1em;
+  margin-right: 10em;
+`;
+const DayNightToggle = (props) => {
+  return <WDayNight>
+    <IonLabel>Day</IonLabel>
+    <IonToggle value="DayNight" />
+    <IonLabel>Night</IonLabel>
+  </WDayNight>
+}
+
+
+
+/* W */
 
 const W = styled.div`
   border: ${p=>p.debug?'1':'0'}px solid cyan;
@@ -26,6 +53,14 @@ const W = styled.div`
   height: ${p => p.theme.breadcrumbsHeight};
 `;
 
+const WBreadcrumbs = styled.div`
+  flex-grow: 1;
+`;
+
+
+/**
+ * Default
+ */
 const Breadcrumbs = (props) => {
   // logg(props, 'Breakcrumbs')
 
@@ -46,10 +81,20 @@ const Breadcrumbs = (props) => {
       out.push(<B1 key={`${idx}-divider`} >&gt;</B1>)
     }
   })
+
   return <W debug={config.debug} className="Breadcrumbs" >
     { layout === C.layout_mapui && <MenuLeft variant={C.variants.inline} /> }
-    { out }
+    <WBreadcrumbs>{ out }</WBreadcrumbs>
+    <DayNightToggle />
   </W>
 }
 
+Breadcrumbs.propTypes = {
+  breadcrumbs: PropTypes.arrayOf(
+    PropTypes.shape({
+      name: PropTypes.string.isRequired,
+      slug: PropTypes.string.isRequired,
+    }),
+  ),
+}
 export default Breadcrumbs

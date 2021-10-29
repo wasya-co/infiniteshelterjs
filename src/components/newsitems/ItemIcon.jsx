@@ -1,8 +1,17 @@
 
 import PropTypes from 'prop-types'
 import React from 'react'
+import styled from 'styled-components'
 
 import { C, logg } from "$shared"
+
+const W = styled.div`
+  padding: 10px;
+  width: 100px;
+  height: 100px;
+
+  box-sizing: border-box;
+`;
 
 /**
  * Displays the appropriate icon.
@@ -23,13 +32,13 @@ import { C, logg } from "$shared"
   }
   switch (item_type) {
     case C.item_types.gallery:
-      return <img className="icon" src="/assets/icons/gallery.png" alt='' />
+      return <W><img className="icon" src="/assets/icons/gallery.png" alt='' /></W>
     case C.item_types.report:
-      return <img className="icon" src="/assets/icons/report.png" alt='' />
+      return <W><img className="icon" src="/assets/icons/report.png" alt='' /></W>
     case C.item_types.video:
-      return <img className="icon" src="/assets/newsfeed/video_icon.svg" alt='' />
+      return <W><img className="icon" src="/assets/newsfeed/video_icon.svg" alt='' /></W>
     default:
-      return "unknown kind"
+      return <W>[unknown kind]</W>
   }
 }
 

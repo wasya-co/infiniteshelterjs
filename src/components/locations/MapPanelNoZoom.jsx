@@ -36,8 +36,6 @@ const MapPanelNoZoom = (props) => {
     zoom, setZoom,
   } = useContext(TwofoldContext)
 
-  logg(bottomDrawerOpen, 'bottomDrawerOpen')
-
   // _vp_ 20211029 only sets the zoom (in panelNoZoom) to full-panel
   // max width or height - fancy!
   // responds to bottomDrawer!

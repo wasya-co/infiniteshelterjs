@@ -7,8 +7,8 @@ import {
   Link, Switch, BrowserRouter as Router, Redirect, Route as _Route, useHistory, withRouter
 } from 'react-router-dom'
 import styled from 'styled-components'
-import { IonIcon } from '@ionic/react';
-import { arrowBack } from 'ionicons/icons';
+import { IonIcon } from '@ionic/react'
+import { arrowBack } from 'ionicons/icons'
 
 import config from 'config'
 import C from "./C"
@@ -20,15 +20,17 @@ export { default as AppRouter } from "./AppRouter"
 
 /* B */
 
-export const Box = styled(_Box)`
-  margin-bottom: 1em;
-  padding: 1em;
-  background: white;
-  cursor: ${p => p.cursor ? p.cursor : 'auto'};
-
-  display: flex;
-  flex-direction: column;
+/**
+ * Back Button
+ */
+const BackIcon = styled(IonIcon)`
+  margin-right: 5px;
+  cursor: pointer;
 `;
+export const BackBtn = () => {
+  const history = useHistory()
+  return <BackIcon onClick={history.goBack} icon={arrowBack}></BackIcon>
+}
 
 /**
  * Just your regular shadowed box. Pointer cursor. TDD
@@ -41,16 +43,48 @@ export const Btn = styled.div`
   cursor: pointer;
 `;
 
+
 /* C */
+
 export { C }
+
+/**
+ * A Card
+ */
+export const Card = styled(_Box)`
+  margin-bottom: 1em;
+  padding: 1em;
+  background: white;
+  cursor: ${p => p.cursor ? p.cursor : 'auto'};
+
+  display: flex;
+  flex-direction: column;
+`;
+
 export { default as Collapsible } from "./Collapsible"
 export const CollapsibleContext = React.createContext({})
+/**
+ * @TODO: test-driven
+ */
 export const CollapsibleContextProvider = ({ children, ...props }) => {
   // logg(props, 'CollapsibleContextProvider')
 
-  const [ collapsibles, setCollapsibles ] = useState({
+  let defaultCollapsibles = {
     [C.collapsible.descr]: true,
-  })
+  }
+  let tmp
+  if (tmp = localStorage.getItem(C.collapsibles)) {
+    try {
+      defaultCollapsibles = JSON.parse(tmp)
+    } catch (err) {
+      logg(err, 'Could not parse collapsibles from localStorage')
+    }
+  }
+  const [ collapsibles, _setCollapsibles ] = useState(defaultCollapsibles)
+  const setCollapsibles = (m) => {
+    localStorage.setItem(C.collapsibles, JSON.stringify(m))
+    _setCollapsibles(m)
+  }
 
   return <CollapsibleContext.Provider value={{
     collapsibles, setCollapsibles,
@@ -103,6 +137,13 @@ const logg2 = (a, b="", c=null) => {
 };
 export { logg, logg2 };
 
+/* P */
+
+/**
+ * pretty print date
+ */
+export const pp_date = (d) => (d || "" ).substring(0, 10)
+
 /* R */
 
 export { default as request } from "./request"
@@ -123,11 +164,15 @@ export const TwofoldContextProvider = ({ children, ...props }) => {
 
   /* B */
   // @TODO: does localStorage work like this on mobile?
+  // @TODO: try and catch
   const [ bottomDrawerOpen, _setBottomDrawerOpen ] = useState(JSON.parse(localStorage.getItem(C.bottomDrawerOpen)))
   const setBottomDrawerOpen = (m) => {
     localStorage.setItem(C.bottomDrawerOpen, JSON.stringify(m))
     _setBottomDrawerOpen(m)
   }
+
+  /* F */
+  const [ folded, setFolded ] = useState()
 
   /* I */
   const [ itemToUnlock, _setItemToUnlock ] = useState({})
@@ -145,6 +190,17 @@ export const TwofoldContextProvider = ({ children, ...props }) => {
   const [ showItem, setShowItem ] = useState(false)
   const [ showUrl, setShowUrl ] = useState(false)
 
+  /* T */
+  let tmp, defaultTwofoldPercent = 0.5
+  if (tmp = localStorage.getItem(C.twofoldPercent)) {
+    try {
+      defaultTwofoldPercent = JSON.parse(tmp)
+    } catch (err) {
+      logg(err, 'cannot get twofoldPercent from localStorage')
+    }
+  }
+  const [ twofoldPercent, setTwofoldPercent ] = useState(0.5)
+
   /* Z */
   const [ zoom, setZoom ] = useState(1)
 
@@ -152,6 +208,8 @@ export const TwofoldContextProvider = ({ children, ...props }) => {
     bottomDrawerOpen, setBottomDrawerOpen,
 
     currentUser, setCurrentUser, // @TODO: move this to an AppWrapper context
+
+    folded, setFolded,
 
     itemToUnlock, setItemToUnlock,
 
@@ -164,6 +222,8 @@ export const TwofoldContextProvider = ({ children, ...props }) => {
     showItem, setShowItem,
     showUrl, setShowUrl,
 
+    twofoldPercent, setTwofoldPercent,
+
     zoom, setZoom,
   }} >{ children }</TwofoldContext.Provider>
 }
@@ -173,6 +233,21 @@ export { default as useWindowSize } from './useWindowSize'
 
 /* W */
 
+const _WC = styled.div`
+  border: ${p => p.theme.thinBorder};
+  border-radius: ${p => p.theme.thinBorderRadius};
+
+  background: white;
+  padding: 10px;
+
+  margin-bottom: 1em;
+`;
+export const WidgetContainer = (props) => {
+  const { children } = props
+
+  return <_WC>{ children }</_WC>
+}
+
 export const Wrapper = styled.div`
   height: 100vh;
 `;
@@ -181,15 +256,5 @@ export const Wrapper = styled.div`
 
 export const ZoomContext = React.createContext({})
 
-/* pretty print date */
-export const pp_date = (d) => (d || "" ).substring(0, 10)
 
-/* Back Button */
-const BackIcon = styled(IonIcon)`
-margin-right: 5px;
-cursor: pointer;
-`;
-export const BackBtn = () => {
-  const history = useHistory()
-  return <BackIcon onClick={history.goBack} icon={arrowBack}></BackIcon>
-}
+

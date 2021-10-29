@@ -9,6 +9,7 @@ import { useWeb3React, Web3ReactProvider } from "@web3-react/core"
 import { InjectedConnector } from '@web3-react/injected-connector'
 
 import { C, logg, S, TwofoldContext, } from "$shared"
+import { LongLine } from "$components/TwofoldLayout"
 import { MyAccountWidget } from "$components/users"
 
 
@@ -29,19 +30,6 @@ const Drawer = styled(_Drawer)`
 function getLibrary(provider) {
   return new Web3(provider)
 }
-
-const LongLine = styled.div`
-  border: ${p => p.theme.thinBorder};
-  border-radius: ${p => p.theme.thinBorderRadius};
-
-  flex-grow: 1;
-
-  height: 10px;
-
-  padding: 2px;
-  background: white;
-
-`;
 
 const Inner0 = styled.div`
   display: flex;
@@ -102,7 +90,7 @@ const BottomDrawer = (props) => {
         fontSize="small"
         style={{ color: 'black' }}
       /></IconButton>
-      <LongLine />
+      <LongLine orientation={C.horizontal} />
     </WClosed>
 
 

@@ -9,11 +9,22 @@ import { logg, request, S, TwofoldContext, ZoomContext } from "$shared"
 import { Metaline } from "$components/application"
 import { Newsitems } from "$components/newsitems"
 
+/* M */
 const Marker = styled.div`
   margin: 10px;
   max-width: 20vw;
 `;
 
+/* W */
+const W = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+`;
+
+/**
+ * Default
+ * @TODO: test-driven
+ */
 const MarkersList = (props) => {
   // logg(props, 'MarkersList')
 
@@ -38,7 +49,9 @@ const MarkersList = (props) => {
       {m.name}
     </Marker>)
   })
-  return <div style={{ display: 'flex', flexWrap: 'wrap' }} >{out}</div>
+  return <W >
+    {out}
+  </W>
 }
 
 export default MarkersList
