@@ -1,6 +1,5 @@
 
 import React, { Fragment as F, useEffect, useRef } from 'react'
-import { Canvas, extend } from 'react-three-fiber'
 import * as THREE from "three"
 import { OBJLoader } from "three/examples/jsm/loaders/OBJLoader"
 import styled from 'styled-components'

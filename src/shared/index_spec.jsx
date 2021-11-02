@@ -1,7 +1,11 @@
 
 import React from 'react'
 
-import { Box, inflector } from './'
+import {
+  Box,
+  inflector,
+  WBordered,
+} from './'
 
 test('Box', () => {
   const box = <Box />
@@ -17,12 +21,17 @@ describe('inflector', () => {
 
 })
 
-it('useWindowSize', () => {
-  expect(1).toEqual(2) // not implemented
+it.skip('useWindowSize', () => {
+  throw 'not implemented'
 })
 
 describe('TwofoldContext', () => {
-  it('gets bottomDrawerOpen from localStorage', () => {
+  it.skip('gets bottomDrawerOpen from localStorage', () => {
     throw 'not implemented'
   })
+})
+
+it('WBordered', () => {
+  const w = <WBordered />
+  expect(w).toBeTruthy()
 })

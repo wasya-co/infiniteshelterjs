@@ -25,17 +25,21 @@ const B1 = styled.div`
 `;
 
 /* D */
-
+const L = styled.div`
+  margin-top: .5em;
+`;
 const WDayNight = styled.div`
-  border: 1px solid green;
-  margin-left: 1em;
-  margin-right: 10em;
+  // border: 1px solid green;
+
+  display: flex;
+
+  margin: 0 1em;
 `;
 const DayNightToggle = (props) => {
   return <WDayNight>
-    <IonLabel>Day</IonLabel>
+    <L>Day</L>
     <IonToggle value="DayNight" />
-    <IonLabel>Night</IonLabel>
+    <L>Night</L>
   </WDayNight>
 }
 

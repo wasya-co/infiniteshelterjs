@@ -292,10 +292,13 @@ const LocationsShowDesktop = (props) => {
 
         { markers && markers.length && <Collapsible
             config={{ collapsible: false }}
+
             slug={C.collapsible.markers}
             variant={C.variants.transparent}
         >
-          <MarkersList markers={markers} />
+          <MarkersList markers={markers}
+            variant={C.variants.bordered}
+          />
         </Collapsible> || null }
 
         { location.description && <Collapsible

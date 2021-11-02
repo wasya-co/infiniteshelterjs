@@ -6,18 +6,13 @@ import styled from 'styled-components'
 import {
   C, Collapsible, CollapsibleContext,
   logg, request, S, TwofoldContext,
+  WBordered,
   ZoomContext,
 } from "$shared"
 
 
 const Div3 = styled.div``;
 
-const W = styled.div`
-  border: ${p => p.theme.thinBorder};
-  border-radius: ${p => p.theme.thinBorderRadius};
-
-  display: inline-block;
-`;
 
 /*
  * _vp_ 2021-09 @TODO: merge this into MapPanel, have zoom={false} as a prop
@@ -68,7 +63,7 @@ const MapPanelNoZoom = (props) => {
     markers.push(out)
   })
 
-  return <W className="MapPanelNoZoom" >
+  return <WBordered className="MapPanelNoZoom" >
       <Div3
         style={{
           display: 'inline-block',
@@ -86,7 +81,7 @@ const MapPanelNoZoom = (props) => {
         />
         { markers }
       </Div3>
-  </W>
+  </WBordered>
 }
 
 export default MapPanelNoZoom

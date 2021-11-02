@@ -1,14 +1,15 @@
 /*
  *  $shared / index
  */
+// alphabetized
+import { arrowBack } from 'ionicons/icons'
+import { IonIcon } from '@ionic/react'
 import _Box from '@material-ui/core/Box'
 import React, { useState } from 'react'
 import {
   Link, Switch, BrowserRouter as Router, Redirect, Route as _Route, useHistory, withRouter
 } from 'react-router-dom'
 import styled from 'styled-components'
-import { IonIcon } from '@ionic/react'
-import { arrowBack } from 'ionicons/icons'
 
 import config from 'config'
 import C from "./C"
@@ -242,6 +243,41 @@ const _WC = styled.div`
 
   margin-bottom: 1em;
 `;
+
+/**
+ * Wrapper Bordered. This expects a list? _vp_ 2021-11-02
+ */
+export const WBordered = styled.div`
+  border: ${p => p.theme.thinBorder};
+  border-radius: ${p => p.theme.thinBorderRadius};
+  background: white;
+  padding: .5em;
+
+  // display: flex;
+  // flex-wrap: wrap;
+
+  margin-bottom: 1em;
+`;
+
+/**
+ * Wrapper Bordered Item. Is padded, margined.
+ */
+export const WBorderedItem = styled.div`
+  border: ${p => p.theme.thinBorder};
+  border-radius: ${p => p.theme.thinBorderRadius};
+  background: white;
+
+  margin: 0 .5em .5em 0;
+  padding: .5em;
+
+  text-align: center;
+
+  width: 18%;
+  max-width: 140px;
+  min-width: 120px;
+`;
+
+
 export const WidgetContainer = (props) => {
   const { children } = props
 

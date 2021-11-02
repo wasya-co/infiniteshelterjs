@@ -100,8 +100,8 @@ const AppDesktop = (props) => {
           <Container >
             <Switch id="main" main >
 
-              { /* <Redirect exact from="/" to="/en/locations/show/construct0" /> */ }
-              <Redirect exact from="/" to="/en" />
+              <Redirect exact from="/" to="/en/locations/show/construct0" />
+              { /* <Redirect exact from="/" to="/en" /> */ }
               <Route exact path="/en" ><SitesShow /></Route>
 
               <Route exact path="/en/account" component={Account} />

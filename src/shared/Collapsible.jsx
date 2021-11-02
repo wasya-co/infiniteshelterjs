@@ -7,6 +7,7 @@ import {
   C, CollapsibleContext,
   logg,
   S,
+  WBordered, WBorderedItem,
 } from '$shared'
 
 const Gt = () => <span>&nbsp;&gt;&nbsp;&nbsp;</span>
@@ -14,6 +15,8 @@ const Gt = () => <span>&nbsp;&gt;&nbsp;&nbsp;</span>
 const Inner = styled.div`
   // border: 2px solid red;
   // max-height: 100vh;
+
+  clear: left;
 `;
 
 const Lt = () => <span>&nbsp;&lt;&nbsp;&nbsp;</span>
@@ -23,41 +26,31 @@ const Label = styled.div`
   margin-bottom: ${p => p.theme.borderWidth};
 `;
 
-
-const WBordered = styled.div`
-  border: ${p => p.theme.thinBorder};
-  border-radius: ${p => p.theme.thinBorderRadius};
-  background: white;
-
-  margin: .5em;
-  margin-bottom: 1em;
-  padding: .5em;
-`;
-
-const WDefault = styled.div`
+const WTransparent = styled.div`
   background: #dedede;
 
-  margin: .5em;
-  margin-bottom: 1em;
-  padding: .5em;
-`;
+  margin: 0 0.5 1em .5em;
+  padding: 0 .5em .5em .5em;
 
-const W = ({ children, variant }) => {
+`;
+const W = ({ children, variant, ...props }) => {
   switch (variant) {
     case C.variants.bordered:
-      return <WBordered>{children}</WBordered>
+      return <WBordered {...props} >{children}</WBordered>
     default:
-      return <WDefault>{children}</WDefault>
+      return <WTransparent {...props} >{children}</WTransparent>
   }
 }
 
 
 /**
- * @TODO: test-driven
+ * Collapsible
+ *
+ * @TODO: test-driven _vp_ 2021-10-29
  */
 const Collapsible = ({ children, ...props }) => {
   // logg(props, 'Collapsible')
-  const { config, variant, } = props
+  const { className='', config, variant, } = props
 
   const ctx = useContext(CollapsibleContext)
   if (!ctx) { return null }
@@ -70,7 +63,7 @@ const Collapsible = ({ children, ...props }) => {
       : config.collapsible
   const folded = collapsible ? !!collapsibles[props.slug] : false
 
-  return <W variant={variant} className={`Collapsible ${props.className}`} >
+  return <W variant={variant} className={`Collapsible ${className}`} >
     { props.label &&  collapsible && <Label onClick={doToggle} >{folded ? <Lt /> : <Gt />} {props.label}</Label> }
     { props.label && !collapsible && <Label >{props.label}</Label> }
     { !folded && <Inner>{ children }</Inner> }
@@ -78,6 +71,7 @@ const Collapsible = ({ children, ...props }) => {
 }
 
 Collapsible.propTypes = {
+  className: PropTypes.string,
   config: PropTypes.shape({
     collapsible: PropTypes.bool,
   }),
