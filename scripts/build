@@ -1,4 +1,5 @@
 #!/bin/bash
 
 echo "Android builds from Android studio."
-echo "./scripts/build_web ?"
+echo "./scripts/build_web_guydme ?"
+echo "./scripts/build_web_ish ?"

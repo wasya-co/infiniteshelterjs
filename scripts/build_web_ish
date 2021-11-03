@@ -10,7 +10,7 @@ fi
 
 set -ex
 
-yarn run build
+yarn run build_ish
 echo $(date) > redeploy
 git add . &&
 git commit -m "autobuild `date "+%Y%m%d"`" || echo 'nothing to commit'
@@ -22,10 +22,8 @@ git add . &&
 git commit -m "autobuild `date "+%Y%m%d"`" || echo 'nothing to commit'
 git push origin master &&
 git checkout "$branch" &&
-# git merge master &&
-# git push &&
 
-ssh do "cd /home/ubuntu/projects/guydjs && git pull && sudo apachectl -k restart && sudo pkill nginx && sudo nginx"
+ssh do "cd /home/ubuntu/projects/ishjs && git pull && sudo apachectl -k restart && sudo pkill nginx && sudo nginx"
 
 set +e
-echo 'build tgm_ionic browser ok'
+echo 'build_web_ish ok'

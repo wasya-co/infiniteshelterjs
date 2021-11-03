@@ -1,0 +1,31 @@
+#!/bin/bash
+
+if [[ -z "${NODE_ENV}" ]]; then
+  eee=production
+  # echo "Please set NODE_ENV = [ production | staging | development_web | development_mobile ] before running this script."
+  # exit 3
+else
+  eee="${NODE_ENV}"
+fi
+
+set -ex
+
+yarn run build_guydme
+echo $(date) > redeploy
+git add . &&
+git commit -m "autobuild `date "+%Y%m%d"`" || echo 'nothing to commit'
+
+branch=`git branch | grep -e "^*" | cut -d' ' -f 2`
+git checkout master &&
+git merge "$branch" &&
+git add . &&
+git commit -m "autobuild `date "+%Y%m%d"`" || echo 'nothing to commit'
+git push origin master &&
+git checkout "$branch" &&
+# git merge master &&
+# git push &&
+
+ssh do "cd /home/ubuntu/projects/guydjs && git pull && sudo apachectl -k restart && sudo pkill nginx && sudo nginx"
+
+set +e
+echo 'build tgm_ionic browser ok'
