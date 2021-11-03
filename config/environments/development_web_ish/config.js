@@ -8,7 +8,7 @@ module.exports = {
   // "debug": true,
   "debug": false,
 
-  "homeLocation": "/en/locations/show/threev1",
+  "homeLocation": "/en/locations/show/ish",
 
   "requireLogin": false,
 };

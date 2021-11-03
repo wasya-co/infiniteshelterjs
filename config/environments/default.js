@@ -1,11 +1,11 @@
 
 module.exports = {
   "apiOrigin": "http://localhost:3001",
-  // "apiOrigin": "https://manager.piousbox.com",
+  "appIndexPath": "src/index",
 
   "domain": "tgm.piousbox.com", // required! 20210831
 
-  "appIndexPath": "src/index",
+  "homeLocation": "/must-start-with-slash",
 
   "requireLogin": false,
 };

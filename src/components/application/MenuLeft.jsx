@@ -11,6 +11,7 @@ import React, { Fragment as F, useContext, useEffect, useState } from 'react'
 import { useHistory } from 'react-router-dom'
 import styled from 'styled-components'
 
+import config from 'config'
 import { Menu } from "$components/application"
 import { Api, C, Debug, logg, TwofoldContext } from "$shared"
 
@@ -53,15 +54,22 @@ const MenuLeft= (props) => {
           <ListItem button key={'newsfeed'}
             onClick={() => {
               setDrawerOpen(false)
-              history.push("/en/locations/show/construct0")
-            } } >Home (Construct 0)
+              history.push(config.homeLocation)
+            } } >Home
+          </ListItem>
+
+          { /* <ListItem button key={'three'}
+            onClick={() => {
+              setDrawerOpen(false)
+              history.push("/en/locations/show/threev1")
+            } } >Three
           </ListItem>
 
           <ListItem button key={'three'}
             onClick={() => {
               setDrawerOpen(false)
-              history.push("/en/locations/show/threev1")
-            } } >Three
+              history.push("/en/locations/show/construct03d")
+            } } >Construct0 3D
           </ListItem>
 
           <ListItem button key={'cities'}
@@ -72,7 +80,7 @@ const MenuLeft= (props) => {
             <span >Cities</span>
           </ListItem>
 
-          { /* <ListItem button key={'map 1'} >
+          <ListItem button key={'map 1'} >
             <span onClick={() => {
               setDrawerOpen(false)
               history.push("/en/locations")

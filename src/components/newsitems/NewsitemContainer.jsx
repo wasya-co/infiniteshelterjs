@@ -16,6 +16,7 @@ import {
   WidgetContainer,
 } from "$shared"
 
+// alphabetized
 
 const Col = styled.div`
   display: flex;
@@ -34,6 +35,7 @@ const Title = styled.h2`
 `;
 
 const W = (props) => {
+  logg(props, 'W')
   const { children, navigateToItem, variant } = props
   // @TODO: better management of navigateToItem
 
@@ -46,7 +48,7 @@ const W = (props) => {
 }
 
 /**
- * TDD
+ * NewsitemContainer
  */
 const NewsitemContainer = ({ children, ...props }) => {
   // logg(props, 'NewsitemContainer')
@@ -62,6 +64,8 @@ const NewsitemContainer = ({ children, ...props }) => {
   } = useContext(TwofoldContext)
 
   const navigateToItem = () => {
+    logg('navigating')
+
     if (item.is_premium && !item.is_purchased) {
       setItemToUnlock(item)
     } else {

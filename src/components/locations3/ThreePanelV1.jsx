@@ -17,7 +17,7 @@ const Blocker = styled.div`
  */
 
 
-const Loc4 = (props) => {
+const Loc = (props) => {
   let camera, controls,
     object, objects = [],
     raycaster, renderer,
@@ -332,4 +332,4 @@ const Loc4 = (props) => {
   </F>
 }
 
-export default Loc4
+export default Loc

@@ -234,16 +234,6 @@ export { default as useWindowSize } from './useWindowSize'
 
 /* W */
 
-const _WC = styled.div`
-  border: ${p => p.theme.thinBorder};
-  border-radius: ${p => p.theme.thinBorderRadius};
-
-  background: white;
-  padding: 10px;
-
-  margin-bottom: 1em;
-`;
-
 /**
  * Wrapper Bordered. This expects a list? _vp_ 2021-11-02
  */
@@ -278,10 +268,8 @@ export const WBorderedItem = styled.div`
 `;
 
 
-export const WidgetContainer = (props) => {
-  const { children } = props
-
-  return <_WC>{ children }</_WC>
+export const WidgetContainer = ({ children, ...props }) => {
+  return <WBordered {...props} >{ children }</WBordered>
 }
 
 export const Wrapper = styled.div`

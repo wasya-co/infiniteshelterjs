@@ -34,7 +34,7 @@ import { CitiesList, CitiesShow } from "$components/cities"
 // @TODO: MyGalleries doesn't look right...
 import { GalleriesShow, MyGalleries } from "$components/galleries"
 import { LocationsShowDesktop } from "$components/locations"
-import Three from "$components/locations3/Loc4"
+import Three from "$components/locations3/ThreePanelV1"
 import { ReportsShow } from "$components/reports"
 // import { SitesShow } from '$components/sites'
 import SitesShow from '$components/sites/SitesShow1'
@@ -100,8 +100,7 @@ const AppDesktop = (props) => {
           <Container >
             <Switch id="main" main >
 
-              <Redirect exact from="/" to="/en/locations/show/construct0" />
-              { /* <Redirect exact from="/" to="/en" /> */ }
+              <Redirect exact from="/" to={config.homeLocation} />
               <Route exact path="/en" ><SitesShow /></Route>
 
               <Route exact path="/en/account" component={Account} />

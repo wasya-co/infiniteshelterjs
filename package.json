@@ -189,21 +189,23 @@
   },
   "scripts": {
     "build": "NODE_PATH=config/environments/production node scripts/build.js",
-    "jest": "NODE_PATH=config/environments/test jest -t current",
-    "nft_cancel": "npx hardhat run scripts/nft-cancel.js --network ropsten",
+    "jest":  "NODE_PATH=config/environments/test       jest -t current",
+    "nft_cancel":  "npx hardhat run scripts/nft-cancel.js --network ropsten",
     "nft_compile": "npx hardhat compile",
-    "nft_deploy": "npx hardhat run scripts/nft-deploy.js --network ropsten",
-    "nft_mint": "npx hardhat run scripts/nft-mint.js --network ropsten",
-    "nft_test": "npx hardhat test",
+    "nft_deploy":  "npx hardhat run scripts/nft-deploy.js --network ropsten",
+    "nft_mint":    "npx hardhat run scripts/nft-mint.js   --network ropsten",
+    "nft_test":    "npx hardhat test",
     "postinstall": "link-module-alias",
     "resources": "cordova-res ios && cordova-res android && node scripts/resources.js",
     "start": "echo +++ +++\n\r'start_local , or start_devremote ?\n\r+++ +++'",
-    "start_local": "HTTPS=true HOST=tgm.mac NODE_PATH=config/environments/development_web PORT=3002 node scripts/start.js",
-    "start_devremote": "HTTPS=true HOST=tgm.mac NODE_PATH=config/environments/devremote PORT=3003 node scripts/start.js",
-    "start_mobile_trash": "HTTPS=true HOST=tgm.mac NODE_PATH=config/environments/development_mobile PORT=3002 node scripts/start.js",
-    "start_production": "HTTPS=true NODE_PATH=config/environments/production PORT=3002 node scripts/start.js",
+    "start_devremote":         "HTTPS=true HOST=tgm.mac PORT=3002 NODE_PATH=config/environments/devremote              node scripts/start.js",
+    "start_local":             "HTTPS=true HOST=tgm.mac PORT=3002 NODE_PATH=config/environments/development_web        node scripts/start.js",
+    "start_local_guydme":      "HTTPS=true HOST=tgm.mac PORT=3002 NODE_PATH=config/environments/development_web_guydme node scripts/start.js",
+    "start_local_ish":         "HTTPS=true HOST=tgm.mac PORT=3002 NODE_PATH=config/environments/development_web_ish    node scripts/start.js",
+    "start_mobile_trash":      "HTTPS=true HOST=tgm.mac PORT=3002 NODE_PATH=config/environments/development_mobile     node scripts/start.js",
+    "start_production_guydme": "HTTPS=true HOST=tgm.mac PORT=3002 NODE_PATH=config/environments/production_guydme      node scripts/start.js",
     "sync": "NODE_PATH=config/environments/production ionic capacitor sync",
-    "test": "NODE_PATH=config/environments/test jest"
+    "test": "NODE_PATH=config/environments/test       jest"
   },
   "eslintConfig": {
     "extends": "react-app"

@@ -5,9 +5,11 @@ import React, { Fragment as F, useContext, useEffect, useRef, useState } from "r
 import Modal from "react-modal"
 import styled from 'styled-components'
 
-import config from 'config'
+import { CitiesList } from "$components/cities"
 import { Breadcrumbs, ItemModal, MapPanel, MapPanelNoZoom, MarkersList } from "./"
-import { ThreePanelV1 } from "$components/locations3"
+import {
+  ThreePanelV1, ThreePanelV2,
+} from "$components/locations3"
 import { Newsitems } from "$components/newsitems"
 import { LongLine } from "$components/TwofoldLayout"
 import {
@@ -148,7 +150,7 @@ const Left = styled.div`
 `;
 
 // From: https://codepen.io/charlyarg/pen/GByKja
-const _C = styled.div`
+const _Circle = styled.div`
   position: fixed;
   z-index: 999;
   overflow: show;
@@ -160,7 +162,7 @@ const _C = styled.div`
   width: 50px;
   height: 50px;
 `;
-const Loading = (p) => <_C><_CircularProgress /></_C>
+const Loading = (p) => <_Circle><_CircularProgress /></_Circle>
 
 /* R */
 
@@ -196,8 +198,10 @@ const WrappedMapPanel = React.forwardRef((props, ref) => {
       return <W ref={ref} className="WrappedMapPanel" ><MapPanelNoZoom withZoom={false} {...props} /></W>
     case C.map_panel_types.ThreePanelV1:
       return <W><ThreePanelV1 {...props} /></W>
+      case C.map_panel_types.ThreePanelV2:
+        return <W><ThreePanelV2 {...props} /></W>
     default:
-      return <W><MapPanel {...props} /></W>
+      return <W ref={ref} className="WrapperMapPanel" ><MapPanel {...props} /></W>
   }
 })
 
@@ -214,7 +218,12 @@ const LocationsShowDesktop = (props) => {
   const [ location, setLocation ] = useState(null)
   let markers
   if (location) {
-    markers = location.map ? location.map.markers : location.markers
+    /*
+     * @TODO: test-drive this.
+     * * if map is different from location, the location's markers still show, not the (parent) map's
+     */
+    // markers = location.map ? location.map.markers : location.markers
+    markers = location.markers
   }
 
   const {
@@ -308,6 +317,14 @@ const LocationsShowDesktop = (props) => {
         >
           <Description item={location} />
         </Collapsible> || null }
+
+        { match.params.slug === C.locations.earth && <Collapsible
+            label={"Cities"}
+            slug={C.collapsible.extra1}
+            variant={C.variants.transparent}
+        >
+          <CitiesList />
+        </Collapsible> }
 
         { location.newsitems && location.newsitems.length && <Newsitems variant={C.variants.bordered} newsitems={location.newsitems} /> || null }
 

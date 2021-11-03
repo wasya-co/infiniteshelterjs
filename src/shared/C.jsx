@@ -8,6 +8,9 @@ const C = {
   // C
   collapsible: {
     description: "descr-sec",
+    extra1: "extra1-sec",
+    extra2: "extra2-sec",
+    extra3: "extra3-sec",
     markers: "markers-sec",
   },
   collapsibles: 'collapsibles', // localStorage
@@ -34,12 +37,16 @@ const C = {
   // L
   layout_onecol: 'onecol',
   layout_mapui: 'mapui',
+  locations: {
+    earth: 'earth',
+  },
 
   // M
   map_panel_types: {
     MapPanel: "MapPanel",
     MapPanelNoZoom: "MapPanelNoZoom",
     ThreePanelV1: "ThreePanelV1",
+    ThreePanelV2: "ThreePanelV2",
   },
 
   // T
