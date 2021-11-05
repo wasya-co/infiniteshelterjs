@@ -101,7 +101,7 @@ const ZoomCtrl = (props) => {
  *
  */
 const LocationsShowMobile = (props) => {
-  logg(props, 'LocationsShowMobile')
+  // logg(props, 'LocationsShowMobile')
   const { match } = props
 
   const {
@@ -138,8 +138,10 @@ const LocationsShowMobile = (props) => {
     }
   }, [ match.params.slug ])
 
+
   // @TODO: this can probably be much improved. Take either markers of location.map, or location itself.
-  const markers = location ? location.markers.length ? location.markers : location.map.markers : null
+  // @TODO: why is this a redirect to /null ?!
+  const markers = [] // location ? location.markers.length ? location.markers : location.map.markers : null
 
   // set mapPanel sizes
   useEffect(() => {
@@ -185,9 +187,9 @@ const LocationsShowMobile = (props) => {
       <Newsitems newsitems={location.newsitems} />
     </Collapsible> || null }
 
-    { showUrl && <IframeModal src={showUrl} /> }
+    { showUrl  && <IframeModal src={showUrl} /> }
     { showItem && <ItemModal item={showItem} /> }
-    { loading && <Loading /> }
+    { loading  && <Loading /> }
 
   </W>)
 }

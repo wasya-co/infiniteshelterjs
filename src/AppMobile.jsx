@@ -2,7 +2,9 @@ import { Container as _Container, Grid, GridList } from '@material-ui/core'
 
 import React, { Fragment as F, useEffect, useState } from 'react'
 import Modal from "react-modal"
-import { Link, Switch, BrowserRouter as Router, Redirect, Route as _Route, useHistory, withRouter } from 'react-router-dom'
+import {
+  Switch, BrowserRouter as Router, Redirect, Route as _Route,
+} from 'react-router-dom'
 import styled from 'styled-components'
 
 import '@ionic/react/css/core.css'
