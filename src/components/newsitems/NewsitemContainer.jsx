@@ -35,7 +35,6 @@ const Title = styled.h2`
 `;
 
 const W = (props) => {
-  logg(props, 'W')
   const { children, navigateToItem, variant } = props
   // @TODO: better management of navigateToItem
 

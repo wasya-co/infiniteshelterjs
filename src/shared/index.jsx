@@ -4,6 +4,7 @@
 // alphabetized
 import { arrowBack } from 'ionicons/icons'
 import { IonIcon } from '@ionic/react'
+import { CircularProgress as _CircularProgress } from '@material-ui/core'
 import _Box from '@material-ui/core/Box'
 import React, { useState } from 'react'
 import {
@@ -111,6 +112,22 @@ export const inflector = {
 }
 
 /* L */
+
+
+// From: https://codepen.io/charlyarg/pen/GByKja
+const _Circle = styled.div`
+  position: fixed;
+  z-index: 999;
+  overflow: show;
+  margin: auto;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  width: 50px;
+  height: 50px;
+`;
+export const Loading = (p) => <_Circle><_CircularProgress /></_Circle>
 
 /**
  * Usage: logg(someObject, 'label')

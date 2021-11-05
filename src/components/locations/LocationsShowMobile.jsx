@@ -3,14 +3,35 @@ import React, { Fragment as F, useContext, useEffect, useRef, useState } from "r
 import { Route, useLocation, useHistory, Switch } from 'react-router-dom'
 import styled from 'styled-components'
 
-import { Breadcrumbs, MarkersList, } from "./"
 import {
-  C, Collapsible, CollapsibleContext,
-  logg, request, S, TwofoldContext,
-  useWindowSize,
-  ZoomContext } from "$shared"
+  Breadcrumbs,
+  ItemModal,
+  MapPanel, MapPanelNoZoom, MarkersList,
+  WrappedMapPanel,
+} from "./"
 import { Metaline } from "$components/application"
 import { Newsitems } from "$components/newsitems"
+import {
+  C, Collapsible, CollapsibleContext,
+  Loading, logg,
+  request,
+  S,
+  TwofoldContext,
+  useWindowSize,
+  ZoomContext,
+} from "$shared"
+
+const Div1 = styled.div`
+  // border: 2px solid brown;
+
+  text-align: center;
+  display: block;
+
+  position: relative; /* required for mobile, so that zoomCtrl, etc are inside the collapsible div */
+
+  overflow: scroll;
+  max-height: 80vh; // @TODO: huh?
+`;
 
 const CollapsibleNoMargins = styled(Collapsible)`
   margin: 0;
@@ -31,6 +52,15 @@ const MapWrapper = styled.div`
 
   position: relative;
 `;
+
+
+/* W */
+
+const W = styled.div`
+  // border: 1px solid yellow;
+`;
+
+/* Z */
 
 const ZoomCtrlRoot = styled.div`
   // border: 1px solid orange;
@@ -66,140 +96,100 @@ const ZoomCtrl = (props) => {
   </ZoomCtrlRoot>
 }
 
-const Div1 = styled.div`
-  // border: 2px solid brown;
-
-  text-align: center;
-  display: block;
-
-  position: relative; /* required for mobile, so that zoomCtrl, etc are inside the collapsible div */
-
-  overflow: scroll;
-  max-height: 80vh; // @TODO: huh?
-`;
-
-const Root = styled.div`
-  // border: 1px solid yellow;
-`;
-
+/**
+ * LocationsShowMobile
+ *
+ */
 const LocationsShowMobile = (props) => {
   logg(props, 'LocationsShowMobile')
-
   const { match } = props
 
+  const {
+    bottomDrawerOpen,
+    folded, setFolded,
+    mapPanelWidth, setMapPanelWidth,
+    mapPanelHeight, setMapPanelHeight,
+    showItem, setShowItem,
+    showUrl, setShowUrl,
+    twofoldPercent,
+  } = useContext(TwofoldContext)
+
+  const [ windowWidth, windowHeight ] = useWindowSize()
+
   const [loading, setLoading] = useState(false)
-  const [location, setLocation] = useState(null)
+  const [location, setLocation ] = useState(null)
 
   const mountedRef = useRef('init')
+  const mapPanelRef = useRef(null)
 
   useEffect(() => {
-    setLoading(true);
-    const token = localStorage.getItem("jwt_token");
+    setLoading(true)
+    const token = localStorage.getItem("jwt_token")
     request.get(`/api/maps/view/${match.params.slug}`, { params: { jwt_token: token } }).then(res => {
-      if (!mountedRef.current) { return null }
-
+      if (mountedRef.current === match.params.slug) return null
       setLocation(res.data.map)
-      logg(res.data.map, 'setLocation')
-
       setLoading(false)
       // @TODO: setFlash here?! If I"m accessing a gallery I haven't bought access to?
     }).finally(() => {
     })
 
     return () => {
-      // mountedRef.current = false;
+      mountedRef.current = match.params.slug
     }
   }, [ match.params.slug ])
 
   // @TODO: this can probably be much improved. Take either markers of location.map, or location itself.
   const markers = location ? location.markers.length ? location.markers : location.map.markers : null
 
-  return (<Root className='Root' >
+  // set mapPanel sizes
+  useEffect(() => {
+    if (mapPanelRef.current) {
+      setMapPanelWidth(mapPanelRef.current.offsetWidth)
+      setMapPanelHeight(mapPanelRef.current.offsetHeight)
+    }
+  }, [bottomDrawerOpen, folded, mapPanelRef.current, twofoldPercent, windowWidth, windowHeight])
+
+  return (<W className='LocationsShowMobile' >
 
     { loading && <i>Loading...</i> }
     { location && <Breadcrumbs {...location} /> }
-    { location && <Collapsible slug="map-sec" label={location.labels.map} >
-      { location && <MapPanel withZoom={false} map={location.map || location} /> }
+    { location && <Collapsible
+        label={location.labels.map}
+        slug={C.collapsible.map}
+    >
+      <WrappedMapPanel
+        map={location.map || location}
+        ref={mapPanelRef}
+        slug={match.params.slug}
+        withZoom={false}
+      />
     </Collapsible> }
     { /* @TODO: recursively render map (not location) as appropriate all around in these collapsibles. */ }
-    { markers && markers.length && <Collapsible slug="markers-sec" label={location.labels.markers} >
+    { markers && markers.length && <Collapsible
+        label={location.labels.markers}
+        slug={C.collapsible.markers}
+    >
       <MarkersList markers={markers} />
     </Collapsible> || null }
     { location && location.description && <Collapsible
         config={location.config.description}
-        slug={C.collapsible.descr}
-        label={location.labels.description} >
+        label={location.labels.description}
+        slug={C.collapsible.description}
+    >
       <Description item={location} />
     </Collapsible> || null }
-    { location && location.newsitems.length && <Collapsible slug="news-sec" label={location.labels.newsitems} >
+    { location && location.newsitems.length && <Collapsible
+        label={location.labels.newsitems}
+        slug="news-sec"
+    >
       <Newsitems newsitems={location.newsitems} />
     </Collapsible> || null }
 
-  </Root>)
+    { showUrl && <IframeModal src={showUrl} /> }
+    { showItem && <ItemModal item={showItem} /> }
+    { loading && <Loading /> }
+
+  </W>)
 }
 
 export default LocationsShowMobile
-
-
-
-
-
-
-
-
-
-/* This is now in file MapPanel.jsx */
-/* const Map2 = (props) => {
-  logg(props, 'Map2')
-  const { location } = props
-
-  const { zoom, setZoom } = useContext(TwofoldContext)
-
-  const div1Ref = useRef(null)
-  const history = useHistory()
-
-  useEffect(() => {
-    div1Ref.current.scrollIntoView({ block: 'end' })
-  }, [])
-
-  const markers = []
-  props.location.markers.map((m, idx) => {
-    const out = <div
-      key={idx}
-      onClick={() => history.push(`/en/locations/show/${m.slug}`) }
-      style={{
-        position: 'absolute',
-        top: m.y/zoom,
-        left: m.x/zoom,
-      }} ><img src={m.img_path} style={{
-        display: 'block',
-        maxWidth: `${m.w/zoom}px`,
-        maxHeight: `${m.h/zoom}px`,
-        width: 'auto', height: 'auto',
-      }} /></div>
-    markers.push(out)
-  })
-
-  return (<MapWrapper className="MapWrapper" >
-    <ZoomCtrl />
-    <Div1 ref={div1Ref} >
-      <Div3 style={{
-          // border: '2px solid cyan',
-
-          display: 'inline-block',
-          position: 'relative',
-          width: `${location.w/zoom}px`,
-          height: `${location.h/zoom}px`,
-      }} >
-        <img
-          src={location.img_path}
-          style={{
-            width: `${location.w/zoom}px`,
-            height: `${location.h/zoom}px`,
-          }}
-        />
-        { markers }
-      </Div3>
-    </Div1>
-  </MapWrapper>)
-} */

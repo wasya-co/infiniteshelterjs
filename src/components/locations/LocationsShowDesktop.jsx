@@ -1,12 +1,17 @@
 
-import { CircularProgress as _CircularProgress } from '@material-ui/core'
+
 import { ChevronLeft, ChevronRight, Menu as MenuIcon, } from '@material-ui/icons'
 import React, { Fragment as F, useContext, useEffect, useRef, useState } from "react"
 import Modal from "react-modal"
 import styled from 'styled-components'
 
+import {
+  Breadcrumbs,
+  ItemModal,
+  MapPanel, MapPanelNoZoom, MarkersList,
+  WrappedMapPanel,
+} from "./"
 import { CitiesList } from "$components/cities"
-import { Breadcrumbs, ItemModal, MapPanel, MapPanelNoZoom, MarkersList } from "./"
 import {
   ThreePanelV1, ThreePanelV2,
 } from "$components/locations3"
@@ -14,7 +19,7 @@ import { Newsitems } from "$components/newsitems"
 import { LongLine } from "$components/TwofoldLayout"
 import {
   C, Collapsible,
-  logg,
+  Loading, logg,
   request,
   TwofoldContext,
   useWindowSize,
@@ -149,20 +154,6 @@ const Left = styled.div`
     - ${p => p.bottomDrawerOpen ? p.theme.bottomDrawerOpenHeight : p.theme.bottomDrawerClosedHeight });
 `;
 
-// From: https://codepen.io/charlyarg/pen/GByKja
-const _Circle = styled.div`
-  position: fixed;
-  z-index: 999;
-  overflow: show;
-  margin: auto;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  right: 0;
-  width: 50px;
-  height: 50px;
-`;
-const Loading = (p) => <_Circle><_CircularProgress /></_Circle>
 
 /* R */
 
@@ -185,33 +176,9 @@ const Row = styled.div`
   position: relative;
 `;
 
-/* W */
-
-const W = styled.div`
-  overflow: hidden;
-
-  flex-grow: 1;
-`;
-const WrappedMapPanel = React.forwardRef((props, ref) => {
-  switch (props.map.config.map_panel_type) {
-    case C.map_panel_types.MapPanelNoZoom:
-      return <W ref={ref} className="WrappedMapPanel" ><MapPanelNoZoom withZoom={false} {...props} /></W>
-    case C.map_panel_types.ThreePanelV1:
-      switch (props.slug) {
-        case 'threev1':
-          return <W><ThreePanelV1 {...props} /></W>
-        case 'threev2':
-          return <W><ThreePanelV2 {...props} /></W>
-        default:
-          throw 'this 3d panel is not implemented'
-      }
-    default:
-      return <W ref={ref} className="WrapperMapPanel" ><MapPanel {...props} /></W>
-  }
-})
 
 /**
- * Default
+ * LocationsShowDesktop
  */
 const LocationsShowDesktop = (props) => {
   // logg(props, 'LocationsShowDesktop')
@@ -250,7 +217,7 @@ const LocationsShowDesktop = (props) => {
     const token = localStorage.getItem("jwt_token")
 
     request.get(`/api/maps/view/${match.params.slug}`, { params: { jwt_token: token } }).then(res => {
-      if (mountedRef.current === match.params.slug) return null;
+      if (mountedRef.current === match.params.slug) return null
       setLocation(res.data.map)
       setLoading(false)
       // @TODO: setFlash here?! If I"m accessing a gallery I haven't bought access to?
@@ -277,8 +244,6 @@ const LocationsShowDesktop = (props) => {
 
   const foldedLeft = folded === C.foldedLeft
   const foldedRight = folded === C.foldedRight
-
-  logg(match.params.slug, 'match')
 
   return <Row>
     { !foldedLeft && <Left

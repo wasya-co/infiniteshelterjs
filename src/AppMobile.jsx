@@ -93,8 +93,7 @@ const AppMobile = (props) => {
           <Container className="Container" >
             <Switch id="main" main >
 
-              { /* <Redirect exact from="/" to="/en/locations/show/construct0" /> */ }
-              <Redirect exact from="/" to="/en" />
+              <Redirect exact from="/" to={config.homeLocation} />
               <Route exact path="/en" ><SitesShow /></Route>
 
               <Route exact path="/en/account" component={Account} />

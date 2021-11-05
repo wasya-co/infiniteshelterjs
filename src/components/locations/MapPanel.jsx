@@ -140,3 +140,5 @@ MapPanel.propTypes = {
   withZoom: PropTypes.bool, // @TODO: I don't like it, I'd like it to be inside a config obj.
 }
 export default MapPanel
+
+

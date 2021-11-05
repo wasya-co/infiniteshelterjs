@@ -5,13 +5,20 @@ import styled from 'styled-components'
 
 import {
   C, Collapsible, CollapsibleContext,
-  logg, request, S, TwofoldContext,
+  logg,
+  request,
+  S,
+  TwofoldContext,
   WBordered,
   ZoomContext,
 } from "$shared"
 
 
-const Div3 = styled.div``;
+// W
+const W1 = styled.div`
+  display: inline-block;
+  position: relative;
+`;
 
 
 /*
@@ -20,16 +27,19 @@ const Div3 = styled.div``;
  * _vp_ 2021-10-29 But actually this component is getting more work than the zoom one right now...
  */
 const MapPanelNoZoom = (props) => {
-  // logg(props, 'MapPanelNoZoom')
+  logg(props, 'MapPanelNoZoom')
   const { map } = props
 
   const history = useHistory()
 
+  const ctx = useContext(TwofoldContext)
+  logg(ctx, 'TwofoldContext')
   const {
     bottomDrawerOpen,
     mapPanelWidth, mapPanelHeight,
     zoom, setZoom,
-  } = useContext(TwofoldContext)
+  } = ctx
+
 
   // _vp_ 20211029 only sets the zoom (in panelNoZoom) to full-panel
   // max width or height - fancy!
@@ -64,23 +74,19 @@ const MapPanelNoZoom = (props) => {
   })
 
   return <WBordered className="MapPanelNoZoom" >
-      <Div3
+    <W1 >
+      <img
+        src={map.img_path}
         style={{
-          display: 'inline-block',
-          position: 'relative',
-      }} >
-        <img
-          src={map.img_path}
-          style={{
-            width: `${map.w*zoom}px`,
-            height: `${map.h*zoom}px`,
+          width: `${map.w*zoom}px`,
+          height: `${map.h*zoom}px`,
 
-            position: 'relative',
-            zIndex: 1,
-          }}
-        />
-        { markers }
-      </Div3>
+          position: 'relative',
+          zIndex: 1,
+        }}
+      />
+      { markers }
+    </W1>
   </WBordered>
 }
 
