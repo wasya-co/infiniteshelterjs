@@ -193,7 +193,7 @@ const Loc = (props) => {
 
     // The construct
     const loader = new OBJLoader( manager )
-    loader.load( '/assets/scenes/construct0/construct0-4-0.obj', ( obj ) => {
+    loader.load( '/assets/scenes/weird/weird.obj', ( obj ) => {
       object = obj
     }, ( xhr ) => {
       if ( xhr.lengthComputable ) {
@@ -272,9 +272,30 @@ const Loc = (props) => {
     requestAnimationFrame( animate )
     const time = performance.now()
     if ( controls.isLocked === true ) {
-      raycaster.ray.origin.copy( controls.getObject().position )
-      raycaster.ray.origin.y -= 10
-      const intersections = raycaster.intersectObjects( objects, false )
+
+      // collision, herehere
+      objects = [ object ]
+
+      var cameraDirection = controls.getDirection(new THREE.Vector3(0, 0, 0)).clone()
+
+      // hmmm unneeded
+      // let mouse = new THREE.Vector2()
+      // mouse.x = ( cameraDirection.x / window.innerWidth ) * 2 - 1;
+	    // mouse.y = - ( cameraDirection.y / window.innerHeight ) * 2 + 1;
+
+      /* for standing on things */
+      // raycaster.ray.origin.copy( controls.getObject().position )
+      // raycaster.ray.origin.y -= 10
+
+      raycaster = new THREE.Raycaster( camera.position, cameraDirection )
+      const intersections = raycaster.intersectObjects( objects, true )
+      logg(intersections, 'intersections')
+      if (intersections.length) {
+        if (intersections[0].distance < 5) {
+          moveForward = false
+        }
+      }
+
       const onObject = intersections.length > 0
       const delta = ( time - prevTime ) / 1000
       velocity.x -= velocity.x * 10.0 * delta

@@ -46,7 +46,6 @@ const C = {
     MapPanel: "MapPanel",
     MapPanelNoZoom: "MapPanelNoZoom",
     ThreePanelV1: "ThreePanelV1",
-    ThreePanelV2: "ThreePanelV2",
   },
 
   // T

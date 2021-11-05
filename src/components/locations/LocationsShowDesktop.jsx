@@ -197,9 +197,14 @@ const WrappedMapPanel = React.forwardRef((props, ref) => {
     case C.map_panel_types.MapPanelNoZoom:
       return <W ref={ref} className="WrappedMapPanel" ><MapPanelNoZoom withZoom={false} {...props} /></W>
     case C.map_panel_types.ThreePanelV1:
-      return <W><ThreePanelV1 {...props} /></W>
-      case C.map_panel_types.ThreePanelV2:
-        return <W><ThreePanelV2 {...props} /></W>
+      switch (props.slug) {
+        case 'threev1':
+          return <W><ThreePanelV1 {...props} /></W>
+        case 'threev2':
+          return <W><ThreePanelV2 {...props} /></W>
+        default:
+          throw 'this 3d panel is not implemented'
+      }
     default:
       return <W ref={ref} className="WrapperMapPanel" ><MapPanel {...props} /></W>
   }
@@ -273,6 +278,8 @@ const LocationsShowDesktop = (props) => {
   const foldedLeft = folded === C.foldedLeft
   const foldedRight = folded === C.foldedRight
 
+  logg(match.params.slug, 'match')
+
   return <Row>
     { !foldedLeft && <Left
         className='Left'
@@ -285,6 +292,7 @@ const LocationsShowDesktop = (props) => {
       { location && <WrappedMapPanel
         map={location.map ? location.map : location}
         ref={mapPanelRef}
+        slug={match.params.slug}
       /> }
     </Left> }
 
