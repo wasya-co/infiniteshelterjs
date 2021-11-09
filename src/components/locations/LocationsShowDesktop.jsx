@@ -65,7 +65,6 @@ const Handle = (props) => {
 
   const [ offsetX, setOffsetX ] = useState()
   const [ dragging, setDragging ] = useState(false)
-  logg(dragging, 'dragging')
 
   const foldLeft = () => {
     if (folded === C.foldedRight) {
@@ -274,7 +273,6 @@ const LocationsShowDesktop = (props) => {
 
         { markers && markers.length && <Collapsible
             config={{ collapsible: false }}
-
             slug={C.collapsible.markers}
             variant={C.variants.transparent}
         >
@@ -291,15 +289,9 @@ const LocationsShowDesktop = (props) => {
           <Description item={location} />
         </Collapsible> || null }
 
-        { match.params.slug === C.locations.earth && <Collapsible
-            label={"Cities"}
-            slug={C.collapsible.extra1}
-            variant={C.variants.transparent}
-        >
-          <CitiesList />
-        </Collapsible> }
-
-        { location.newsitems && location.newsitems.length && <Newsitems variant={C.variants.bordered} newsitems={location.newsitems} /> || null }
+        { location.newsitems && location.newsitems.length && <Newsitems
+            variant={C.variants.bordered} newsitems={location.newsitems}
+        /> || null }
 
       </F> || null }
     </Right>

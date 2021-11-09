@@ -58,15 +58,17 @@ const W = styled.div`
 `;
 
 const WBreadcrumbs = styled.div`
+  display: flex;
+  flex-direction: row;
   flex-grow: 1;
 `;
 
 
 /**
- * Default
+ * Breadcrumbs
  */
 const Breadcrumbs = (props) => {
-  // logg(props, 'Breakcrumbs')
+  logg(props, 'Breakcrumbs')
 
   const { layout } = useContext(TwofoldContext)
   const history = useHistory()

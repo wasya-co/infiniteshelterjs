@@ -19,6 +19,13 @@ const getMock = jest.fn()
 getMock.mockReturnValue(new Promise(() => {}, () => {}))
 request.get = getMock
 
+jest.mock("react-router-dom", () => ({
+  ...jest.requireActual("react-router-dom"),
+  useLocation: () => ({
+    pathname: "localhost:3001/example/path"
+  })
+}));
+
 Object.defineProperty(window, 'matchMedia', {
   writable: true,
   value: jest.fn().mockImplementation(query => ({
