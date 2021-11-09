@@ -141,7 +141,7 @@ const LocationsShowMobile = (props) => {
 
   // @TODO: this can probably be much improved. Take either markers of location.map, or location itself.
   // @TODO: why is this a redirect to /null ?!
-  const markers = [] // location ? location.markers.length ? location.markers : location.map.markers : null
+  const markers = location.markers // location ? location.markers.length ? location.markers : location.map.markers : null
 
   // set mapPanel sizes
   useEffect(() => {
@@ -154,6 +154,7 @@ const LocationsShowMobile = (props) => {
   return (<W className='LocationsShowMobile' >
 
     { loading && <i>Loading...</i> }
+
     { location && <Breadcrumbs {...location} /> }
     { location && <Collapsible
         label={location.labels.map}
@@ -166,6 +167,7 @@ const LocationsShowMobile = (props) => {
         withZoom={false}
       />
     </Collapsible> }
+
     { /* @TODO: recursively render map (not location) as appropriate all around in these collapsibles. */ }
     { markers && markers.length && <Collapsible
         label={location.labels.markers}
