@@ -141,7 +141,10 @@ const LocationsShowMobile = (props) => {
 
   // @TODO: this can probably be much improved. Take either markers of location.map, or location itself.
   // @TODO: why is this a redirect to /null ?!
-  const markers = location.markers // location ? location.markers.length ? location.markers : location.map.markers : null
+  let markers = []
+  if (location) {
+    markers = location.markers // location ? location.markers.length ? location.markers : location.map.markers : null
+  }
 
   // set mapPanel sizes
   useEffect(() => {
