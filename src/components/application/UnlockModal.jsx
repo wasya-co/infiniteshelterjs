@@ -1,10 +1,12 @@
 
-import Modal from "react-modal"
+import PropTypes from 'prop-types'
 import React, { useContext, useEffect, useRef, } from 'react'
+import Modal from "react-modal"
+import { useHistory } from 'react-router-dom'
 import styled from 'styled-components'
 
-import './UnlockModal.scss'
 import config from 'config'
+import './UnlockModal.scss'
 import { Btn, C, logg, request, TwofoldContext, useApi, } from "$shared"
 
 const Btn0 = styled.div`
@@ -30,13 +32,19 @@ const modalStyle = {
   }
 }
 
+/**
+ * UnlockModal
+ */
 const UnlockModal = (props) => {
   // logg(props, 'UnlockModal')
+
+  const history = useHistory()
 
   const {
     currentUser, setCurrentUser,
     itemToUnlock, setItemToUnlock,
     loginModalOpen, setLoginModalOpen,
+    ratedConfirmation, setRatedConfirmation,
   } = useContext(TwofoldContext)
   const usedTwofoldContext = useContext(TwofoldContext)
 
@@ -71,17 +79,29 @@ const UnlockModal = (props) => {
 
   if (!itemToUnlock.id) { return null }
 
+  let closable = typeof itemToUnlock.closable === 'undefined' ? true : itemToUnlock.closable
+
+  // @TODO: this is messy
+  let gohome = () => {
+    setItemToUnlock({})
+    setRatedConfirmation(true)
+    history.push(config.homeLocation)
+  }
+
+  const cost = itemToUnlock.premium_tier
+
   return (<Modal style={modalStyle} ariaHideApp={false} isOpen={!!itemToUnlock.id} >
     <Header>
       <h1>Unlock this item?</h1>
-      <Btn0 onClick={() => setItemToUnlock(false) } >&times;</Btn0>
+      { closable && <Btn0 onClick={() => closable && setItemToUnlock(false) } >&times;</Btn0> }
     </Header>
-    <p>To access this content, please unlock it first. It costs 1 (one) coin to unlock.</p>
+    <p>To access this content, please unlock it first. It costs {cost} coin(s) to unlock.</p>
     { !!currentUser
       && <p>You have <b>{currentUser.n_unlocks}</b> unlocks.</p>
       || <p>You have to be logged in to unlock content. <a onClick={() => { setLoginModalOpen(true) ; setItemToUnlock(false) }}>Please login.</a></p> }
     <BtnRow>
       { !!currentUser && <Btn onClick={doUnlock} >Unlock</Btn> }
+      { !closable && <Btn onClick={gohome} >Go Home</Btn> }
     </BtnRow>
   </Modal>)
 

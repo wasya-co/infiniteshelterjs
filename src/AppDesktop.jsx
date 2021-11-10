@@ -88,7 +88,8 @@ const AppDesktop = (props) => {
   }
 
   return (<Router>
-    <ToastContainer />
+
+
     <TwofoldContextProvider {...props} {...{ layout, setLayout }} >
       <CollapsibleContextProvider >
         <Root>
@@ -123,6 +124,7 @@ const AppDesktop = (props) => {
         <BottomDrawer />
         <UnlockModal />
         <LoginModal />
+        <ToastContainer />
 
       </CollapsibleContextProvider>
     </TwofoldContextProvider>

@@ -204,6 +204,15 @@ export const TwofoldContextProvider = ({ children, ...props }) => {
   const [ mapPanelWidth, setMapPanelWidth ] = useState(null)
   const [ mapPanelHeight, setMapPanelHeight ] = useState(null)
 
+  /* R */
+  const [ ratedConfirmation, _setRatedConfirmation ] = useState(JSON.parse(localStorage.getItem(C.ratedConfirmation)))
+  const setRatedConfirmation = (which) => {
+    logg(which, 'setting')
+
+    localStorage.setItem(C.ratedConfirmation, JSON.stringify(which))
+    _setRatedConfirmation(which)
+  }
+
   /* S */
   const [ showItem, setShowItem ] = useState(false)
   const [ showUrl, setShowUrl ] = useState(false)
@@ -236,6 +245,8 @@ export const TwofoldContextProvider = ({ children, ...props }) => {
 
     mapPanelHeight, setMapPanelHeight,
     mapPanelWidth, setMapPanelWidth,
+
+    ratedConfirmation, setRatedConfirmation,
 
     showItem, setShowItem,
     showUrl, setShowUrl,

@@ -14,12 +14,13 @@ const GalleriesShow = (props) => {
   const [showLoading, setShowLoading] = useState(false) // @TODO: hmm could it be moved to TwofoldContext ?
   const [gallery, setGallery] = useState({})
 
+  const mountedRef = useRef('init')
+
   const {
     currentUser, setCurrentUser,
     itemToUnlock, setItemToUnlock,
     loginModalOpen, setLoginModalOpen,
   } = useContext(TwofoldContext)
-  const mountedRef = useRef('init')
 
   const getGallery = async () => {
     const token = localStorage.getItem(C.jwt_token)

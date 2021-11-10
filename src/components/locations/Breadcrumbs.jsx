@@ -68,13 +68,13 @@ const WBreadcrumbs = styled.div`
  * Breadcrumbs
  */
 const Breadcrumbs = (props) => {
-  logg(props, 'Breakcrumbs')
-
+  // logg(props, 'Breakcrumbs')
+  const { breadcrumbs=[] } = props
   const { layout } = useContext(TwofoldContext)
   const history = useHistory()
 
   const out = []
-  props.breadcrumbs.map((b, idx) => {
+  breadcrumbs.map((b, idx) => {
     if (idx+1 === props.breadcrumbs.length) {
       // last one
       out.push(<B key={idx} >{b.name}</B>)

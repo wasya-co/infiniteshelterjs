@@ -10,7 +10,8 @@ export { default as MapPanel } from "./MapPanel"
 export { default as MapPanelNoZoom } from "./MapPanelNoZoom"
 export { default as MarkersList } from "./MarkersList"
 
-// W
+export { default as RatedRestrictionModal } from "./RatedRestrictionModal"
+
 export { default as WrappedMapPanel } from './WrappedMapPanel'
 
 

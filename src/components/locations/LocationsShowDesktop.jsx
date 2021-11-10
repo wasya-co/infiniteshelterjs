@@ -1,5 +1,5 @@
 
-
+import { Toast } from "@capacitor/toast"
 import { ChevronLeft, ChevronRight, Menu as MenuIcon, } from '@material-ui/icons'
 import React, { Fragment as F, useContext, useEffect, useRef, useState } from "react"
 import Modal from "react-modal"
@@ -9,6 +9,7 @@ import {
   Breadcrumbs,
   ItemModal,
   MapPanel, MapPanelNoZoom, MarkersList,
+  RatedRestrictionModal,
   WrappedMapPanel,
 } from "./"
 import { CitiesList } from "$components/cities"
@@ -187,28 +188,34 @@ const LocationsShowDesktop = (props) => {
 
   const [ loading, setLoading ] = useState(false)
   const [ location, setLocation ] = useState(null)
-  let markers
-  if (location) {
-    /*
-     * @TODO: test-drive this.
-     * * if map is different from location, the location's markers still show, not the (parent) map's
-     */
-    // markers = location.map ? location.map.markers : location.markers
-    markers = location.markers
-  }
+  const [ markers, setMarkers ] = useState([])
+
+  const mountedRef = useRef('init')
+  const mapPanelRef = useRef(null)
 
   const {
     bottomDrawerOpen,
     folded, setFolded,
+    itemToUnlock, setItemToUnlock,
     mapPanelWidth, setMapPanelWidth,
     mapPanelHeight, setMapPanelHeight,
+    ratedConfirmation, setRatedConfirmation,
     showItem, setShowItem,
     showUrl, setShowUrl,
     twofoldPercent,
   } = useContext(TwofoldContext)
 
-  const mountedRef = useRef('init')
-  const mapPanelRef = useRef(null)
+  useEffect(() => {
+    if (location) {
+      setMarkers(location.markers)
+
+      if (location.is_premium && !location.is_purchased) {
+        setItemToUnlock({ closable: false, item_type: 'Location', ...location })
+      }
+    }
+  }, [ location ])
+
+  const showToast = async (msg) => await Toast.show({ text: msg })
 
   // Load the map
   useEffect(() => {
@@ -216,8 +223,18 @@ const LocationsShowDesktop = (props) => {
     const token = localStorage.getItem("jwt_token")
 
     request.get(`/api/maps/view/${match.params.slug}`, { params: { jwt_token: token } }).then(res => {
-      if (mountedRef.current === match.params.slug) return null
+      if (mountedRef.current === match.params.slug) { return null }
+      if (!res.data.map) {
+        setLoading(false)
+        showToast('could not get Location')
+        logg('smth fuxed')
+        return null
+      }
+
       setLocation(res.data.map)
+      if (res.data.map.rated === C.rated.nc17 && !ratedConfirmation) { // @TODO: not test-driven, bad!
+        setRatedConfirmation(false)
+      }
       setLoading(false)
       // @TODO: setFlash here?! If I"m accessing a gallery I haven't bought access to?
     })
@@ -234,12 +251,6 @@ const LocationsShowDesktop = (props) => {
       setMapPanelHeight(mapPanelRef.current.offsetHeight)
     }
   }, [bottomDrawerOpen, folded, mapPanelRef.current, twofoldPercent, windowWidth, windowHeight])
-  /*
-   * @TODO: add arbitrary panel resizing
-   */
-  /*
-   * @TODO: store resize config in localstorage
-   */
 
   const foldedLeft = folded === C.foldedLeft
   const foldedRight = folded === C.foldedRight
@@ -252,7 +263,7 @@ const LocationsShowDesktop = (props) => {
           twofoldPercent,
         } }
     >
-      { location && <Breadcrumbs {...location} /> }
+      { <Breadcrumbs {...location} /> }
       { location && <WrappedMapPanel
         map={location.map ? location.map : location}
         ref={mapPanelRef}
@@ -299,6 +310,7 @@ const LocationsShowDesktop = (props) => {
     { showUrl && <IframeModal src={showUrl} /> }
     { showItem && <ItemModal item={showItem} /> }
     { loading && <Loading /> }
+    { !ratedConfirmation && <RatedRestrictionModal {...{ ratedConfirmation, setRatedConfirmation, }} /> }
 
   </Row>
 }

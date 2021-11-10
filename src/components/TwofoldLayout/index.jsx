@@ -10,8 +10,6 @@ import { C, logg } from "$shared"
  * Documentation
  */
 const LongLine = styled.div`
-  ${p => logg(p, 'LongLine')}
-
   border: ${p => p.theme.thinBorder};
   border-radius: ${p => p.theme.thinBorderRadius};
 

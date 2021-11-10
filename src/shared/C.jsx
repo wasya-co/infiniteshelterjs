@@ -49,6 +49,12 @@ const C = {
     ThreePanelV1: "ThreePanelV1",
   },
 
+  // R
+  rated: {
+    nc17: 'nc-17',
+  },
+  ratedConfirmation: 'rated-confirmation', // localStorage
+
   // T
   twofoldPercent: 'twofold-percent', // localStorage
 
