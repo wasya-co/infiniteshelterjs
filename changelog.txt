@@ -21,3 +21,5 @@ comfortable will resume auth and credit cards.
                    Would add login asap!
 0.0.8 - wire in ether
 0.0.9 - better borders in twofold-layout
+0.0.10 - a bunch of 3d work - can pick! _vp_ 2021-11-11
+
