@@ -49,7 +49,7 @@ const WrappedMapPanel = React.forwardRef((props, ref) => {
           return <W><ThreePanelV2 {...props} /></W>
         default:
           logg(props.slug, `this 3d panel is not implemented`)
-          <W ref={ref} className="WrappedMapPanel" ><MapPanelNoZoom withZoom={false} {...props} /></W>
+          return <W ref={ref} className="WrappedMapPanel" ><MapPanelNoZoom withZoom={false} {...props} /></W>
       }
     default:
       return <W ref={ref} className="WrappedMapPanel" ><MapPanel {...props} /></W>
