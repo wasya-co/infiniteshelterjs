@@ -1,7 +1,9 @@
 
 import React, { Fragment as F, useEffect, useRef } from 'react'
 import * as THREE from "three"
+// import MTLLoader from 'three-mtl-loader' // @TODO: remove from package.json
 import { OBJLoader } from "three/examples/jsm/loaders/OBJLoader"
+import { MTLLoader } from "three/examples/jsm/loaders/MTLLoader"
 import styled from 'styled-components'
 
 import { logg, S } from "$shared"
@@ -133,7 +135,10 @@ const Loc = (props) => {
 
     raycaster = new THREE.Raycaster( new THREE.Vector3(), new THREE.Vector3( 0, - 1, 0 ), 0, 10 )
 
-    // floor
+    /*
+     * Floor
+     */
+
     // @TODO: it's not aligned to parcels the way I want
     let floorGeometry = new THREE.PlaneGeometry( 460, 680, 100, 100 )
     floorGeometry.rotateX( - Math.PI / 2 )
@@ -162,101 +167,126 @@ const Loc = (props) => {
     const floor = new THREE.Mesh( floorGeometry, floorMaterial )
     scene.add( floor )
 
-
-
-    const loadModel = () => {
-      object.traverse((child) => {
-        if (child.isMesh) {
-          child.material.map = texture
-          child.geometry.scale(10, 10, 10)
-        }
-      })
-      object.position.x = 100
-      object.position.y = 10
-      object.position.z = 100
-
-      scene.add( object )
-    }
-    const manager = new THREE.LoadingManager( loadModel )
-    manager.onProgress = function ( item, loaded, total ) {
-      console.log( item, loaded, total )
-    }
-
-    // texture
-
-    const textureLoader = new THREE.TextureLoader( manager )
-    const texture = textureLoader.load( 'textures/uv_grid_opengl.jpg' )
-
     /*
-     * Import obj
+     * Model Import
      */
+    const scenesPath = '/assets/scenes/'
+    let modelName = 'camaro75' // 'wasyaco-reception' // 'tiny-house-2'
+    const texturePath = `${modelName}/${modelName}.mtl`
+    const modelPath = `${modelName}/${modelName}.obj`
+    const manager = new THREE.LoadingManager()
 
-    // The construct
-    const loader = new OBJLoader( manager )
-    loader.load( '/assets/scenes/weird/weird.obj', ( obj ) => {
-      object = obj
-    }, ( xhr ) => {
-      if ( xhr.lengthComputable ) {
+    const onProgress = (xhr) => {
+      if (xhr.lengthComputable) {
         const percentComplete = xhr.loaded / xhr.total * 100
-        console.log( 'model ' + Math.round( percentComplete, 2 ) + '% downloaded' )
+        console.log( Math.round( percentComplete, 2 ) + '% downloaded' )
       }
-    }, (e) => {
-      logg(e, 'onError')
+    }
+    // onProgress = function ( item, loaded, total ) {
+    //   console.log( item, loaded, total )
+    // }
+    const onError = () => {}
+
+    const mtlLoader = new MTLLoader(manager)
+    // mtlLoader.setBaseUrl(scenesPath)
+    mtlLoader.setPath(scenesPath)
+    mtlLoader.load(texturePath, (materials) => {
+      materials.preload()
+      const objLoader = new OBJLoader( manager )
+      objLoader.setMaterials( materials )
+      objLoader.setPath( scenesPath)
+      objLoader.load( modelPath, ( object ) => {
+        object.traverse((child) => {
+          logg(child, 'child')
+          // logg(texture, 'texture')
+
+          if (child.isMesh) {
+            // child.material.map = texture
+            child.geometry.scale(10, 10, 10)
+          }
+        })
+        object.position.x = 100
+        object.position.y = 10
+        object.position.z = 100
+
+        logg(object, 'zeObject')
+        scene.add( object )
+      }, onProgress, onError )
     } )
 
 
-    // some delimiters for the first 6 parcels!
-    let geometry = new THREE.BoxGeometry( 10, 10, 10 )
-    let material = new THREE.MeshBasicMaterial( {color: 0x00ff00} )
-    let cube = new THREE.Mesh( geometry, material )
-    cube.position.x = 0
-    cube.position.y = 5
-    cube.position.z = 0
-    scene.add( cube )
-    const items = [
-      { color: 0xff0000, x: 1, y: 0, z: 0 },
-      { color: 0x00ff00, x: 0, y: 1, z: 0 },
-      { color: 0x0000ff, x: 0, y: 0, z: 1 }
-    ]
-    items.map((item, idx) => {
-      logg(item, 'item')
-      const { color, x, y, z } = item
-      geometry = new THREE.BoxGeometry( 1 + x*10, 1 + y*10, 1 + z*10 )
-      material = new THREE.MeshBasicMaterial({ color: color })
-      cube = new THREE.Mesh( geometry, material )
-      cube.position.x = x*5
-      cube.position.y = 10+y*5
-      cube.position.z = z*5
-      scene.add( cube )
-    })
+    // /* texture */
+    // const textureLoader = new THREE.TextureLoader( manager )
+    // const texture = textureLoader.load( 'textures/uv_grid_opengl.jpg' )
 
-    const parcels = [
-      { color: 0xff0000, x: 100, y: 1, z: 100 },
-      { color: 0x00ff00, x: 100, y: 1, z: 320 },
-      { color: 0x0000ff, x: -120, y: 1, z: 320 },
 
-      { color: 0x660000, x: -120, y: 1, z: 100 },
-      { color: 0x006600, x: -120, y: 1, z: -120 },
-      { color: 0x000066, x: 100, y: 1, z: -120 },
-    ]
-    parcels.map((item, idx) => {
-      const { color, x, y, z } = item
-      const g = new THREE.BoxGeometry( 200, 2, 200 )
-      const m = new THREE.MeshBasicMaterial({color: color})
-      const p = new THREE.Mesh( g, m )
-      p.position.x = x
-      p.position.y = y
-      p.position.z = z
-      scene.add( p )
-    })
+    // const loader = new OBJLoader( manager )
+    // loader.load( `/assets/scenes/${modelName}/${modelName}.obj`, ( obj ) => {
+    //   object = obj
+    // }, ( xhr ) => {
+    //   if ( xhr.lengthComputable ) {
+    //     const percentComplete = xhr.loaded / xhr.total * 100
+    //     console.log( 'model ' + Math.round( percentComplete, 2 ) + '% downloaded' )
+    //   }
+    // }, (e) => {
+    //   logg(e, 'onError')
+    // } )
 
-    //
+
+    /*
+     * parcels
+     */
+
+    // // some delimiters for the first 6 parcels!
+    // let geometry = new THREE.BoxGeometry( 10, 10, 10 )
+    // let material = new THREE.MeshBasicMaterial( {color: 0x00ff00} )
+    // let cube = new THREE.Mesh( geometry, material )
+    // cube.position.x = 0
+    // cube.position.y = 5
+    // cube.position.z = 0
+    // // scene.add( cube )
+    // const items = [
+    //   { color: 0xff0000, x: 1, y: 0, z: 0 },
+    //   { color: 0x00ff00, x: 0, y: 1, z: 0 },
+    //   { color: 0x0000ff, x: 0, y: 0, z: 1 }
+    // ]
+    // items.map((item, idx) => {
+    //   logg(item, 'item')
+    //   const { color, x, y, z } = item
+    //   geometry = new THREE.BoxGeometry( 1 + x*10, 1 + y*10, 1 + z*10 )
+    //   material = new THREE.MeshBasicMaterial({ color: color })
+    //   cube = new THREE.Mesh( geometry, material )
+    //   cube.position.x = x*5
+    //   cube.position.y = 10+y*5
+    //   cube.position.z = z*5
+    //   // scene.add( cube )
+    // })
+
+    // const parcels = [
+    //   { color: 0xff0000, x: 100, y: 1, z: 100 },
+    //   { color: 0x00ff00, x: 100, y: 1, z: 320 },
+    //   { color: 0x0000ff, x: -120, y: 1, z: 320 },
+
+    //   { color: 0x660000, x: -120, y: 1, z: 100 },
+    //   { color: 0x006600, x: -120, y: 1, z: -120 },
+    //   { color: 0x000066, x: 100, y: 1, z: -120 },
+    // ]
+    // parcels.map((item, idx) => {
+    //   const { color, x, y, z } = item
+    //   const g = new THREE.BoxGeometry( 200, 2, 200 )
+    //   const m = new THREE.MeshBasicMaterial({color: color})
+    //   const p = new THREE.Mesh( g, m )
+    //   p.position.x = x
+    //   p.position.y = y
+    //   p.position.z = z
+    //   // scene.add( p )
+    // })
 
 
     renderer = new THREE.WebGLRenderer({ antialias: true })
     // renderer.setPixelRatio( window.devicePixelRatio )
     renderer.setPixelRatio(1)
-    renderer.setSize( 800, 400 )
+    renderer.setSize( 700, 400 )
     blockerRef.current.appendChild( renderer.domElement )
     window.addEventListener( 'resize', onWindowResize )
 
@@ -274,7 +304,7 @@ const Loc = (props) => {
     if ( controls.isLocked === true ) {
 
       // collision, herehere
-      objects = [ object ]
+      objects = [] //  object ]
 
       var cameraDirection = controls.getDirection(new THREE.Vector3(0, 0, 0)).clone()
 
@@ -289,8 +319,9 @@ const Loc = (props) => {
 
       raycaster = new THREE.Raycaster( camera.position, cameraDirection )
       const intersections = raycaster.intersectObjects( objects, true )
-      logg(intersections, 'intersections')
+
       if (intersections.length) {
+        logg(intersections, 'intersections')
         if (intersections[0].distance < 5) {
           moveForward = false
         }
@@ -320,6 +351,7 @@ const Loc = (props) => {
       }
     }
     prevTime = time
+
     renderer.render( scene, camera )
   }
 

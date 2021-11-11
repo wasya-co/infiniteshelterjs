@@ -13,9 +13,6 @@ import {
   WrappedMapPanel,
 } from "./"
 import { CitiesList } from "$components/cities"
-import {
-  ThreePanelV1, ThreePanelV2,
-} from "$components/locations3"
 import { Newsitems } from "$components/newsitems"
 import { LongLine } from "$components/TwofoldLayout"
 import {
