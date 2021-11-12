@@ -4,17 +4,25 @@ import { Route, useLocation, useHistory, Switch } from 'react-router-dom'
 import styled from 'styled-components'
 
 import {
-  C, Collapsible, CollapsibleContext,
+  C,
   logg,
-  request,
-  S,
   TwofoldContext,
-  WBordered,
-  ZoomContext,
 } from "$shared"
 
 
 // W
+const W0 = styled.div`
+  border: ${p => p.theme.thinBorder};
+  border-radius: ${p => p.theme.thinBorderRadius};
+  background: ${p => p.theme.colors.black};
+
+  height: 100%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
 const W1 = styled.div`
   display: inline-block;
   position: relative;
@@ -23,17 +31,17 @@ const W1 = styled.div`
 
 /*
  * _vp_ 2021-09 @TODO: merge this into MapPanel, have zoom={false} as a prop
- * But I couldn't do it in 10 mins... It's a bit complicated?\\
+ * But I couldn't do it in 10 mins... It's a bit complicated?
+ *
  * _vp_ 2021-10-29 But actually this component is getting more work than the zoom one right now...
  */
 const MapPanelNoZoom = (props) => {
-  logg(props, 'MapPanelNoZoom')
+  // logg(props, 'MapPanelNoZoom')
   const { map } = props
 
   const history = useHistory()
 
   const ctx = useContext(TwofoldContext)
-  logg(ctx, 'TwofoldContext')
   const {
     bottomDrawerOpen,
     mapPanelWidth, mapPanelHeight,
@@ -41,15 +49,12 @@ const MapPanelNoZoom = (props) => {
   } = ctx
 
 
-  // _vp_ 20211029 only sets the zoom (in panelNoZoom) to full-panel
-  // max width or height - fancy!
-  // responds to bottomDrawer!
-  // @TODO: make Left and Right arbitrarily resizable.
+  // Only sets the zoom (in panelNoZoom) to full-panel _vp_ 20211029
   useEffect(() => {
     let nextZoomByWidth = mapPanelWidth/map.w
     let nextZoomByHeight = mapPanelHeight/map.h
     let nextZoom = Math.min(nextZoomByWidth, nextZoomByHeight)
-    nextZoom = nextZoom - 0.01 // image should not overlap with the border... 1% slack added.
+    nextZoom = nextZoom + 0.0 // image should not overlap with the border... 1% slack added.
     setZoom(nextZoom)
   }, [mapPanelWidth, mapPanelHeight])
 
@@ -73,7 +78,7 @@ const MapPanelNoZoom = (props) => {
     markers.push(out)
   })
 
-  return <WBordered className="MapPanelNoZoom" >
+  return <W0 className="MapPanelNoZoom" >
     <W1 >
       <img
         src={map.img_path}
@@ -87,7 +92,7 @@ const MapPanelNoZoom = (props) => {
       />
       { markers }
     </W1>
-  </WBordered>
+  </W0>
 }
 
 export default MapPanelNoZoom

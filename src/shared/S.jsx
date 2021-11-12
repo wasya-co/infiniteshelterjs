@@ -6,6 +6,7 @@ const S = {
 
   colors: {
     background: '#dedede',
+    black: 'black',
     blue: '#6aa3e9',
     darkGrey: '#605d5d',
     lightGrey: '#988b8b',

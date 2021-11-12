@@ -41,6 +41,7 @@ const WrappedMapPanel = React.forwardRef((props, ref) => {
   switch (props.map.config.map_panel_type) {
     case C.map_panel_types.MapPanelNoZoom:
       return <W ref={ref} className="WrappedMapPanel" ><MapPanelNoZoom withZoom={false} {...props} /></W>
+
     case C.map_panel_types.ThreePanelV1:
       switch (props.slug) {
         case 'threev1':
@@ -49,9 +50,11 @@ const WrappedMapPanel = React.forwardRef((props, ref) => {
           return <W><ThreePanelV2 {...props} /></W>
           case 'threev3':
             return <W><ThreePanelV3 {...props} /></W>
+
         default:
           logg(props.slug, `this 3d panel is not implemented`)
-          return <W ref={ref} className="WrappedMapPanel" ><MapPanelNoZoom withZoom={false} {...props} /></W>
+          return <W ref={ref} className="WrappedMapPanel" ><MapPanel {...props} /></W>
+
       }
     default:
       return <W ref={ref} className="WrappedMapPanel" ><MapPanel {...props} /></W>

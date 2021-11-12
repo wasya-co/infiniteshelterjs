@@ -264,15 +264,13 @@ export { default as useWindowSize } from './useWindowSize'
 
 /**
  * Wrapper Bordered. This expects a list? _vp_ 2021-11-02
+ * Used in collapsibles and MarkersList
  */
 export const WBordered = styled.div`
   border: ${p => p.theme.thinBorder};
   border-radius: ${p => p.theme.thinBorderRadius};
   background: white;
   padding: .5em;
-
-  // display: flex;
-  // flex-wrap: wrap;
 
   margin-bottom: 1em;
 `;

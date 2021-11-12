@@ -14,4 +14,6 @@ export { default as RatedRestrictionModal } from "./RatedRestrictionModal"
 
 export { default as WrappedMapPanel } from './WrappedMapPanel'
 
+export { default as ZoomCtrl } from './ZoomCtrl'
+
 
