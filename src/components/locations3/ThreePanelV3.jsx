@@ -46,7 +46,7 @@ const Loc = (props) => {
   } = useContext(TwofoldContext)
 
   let camera, controls,
-    glow, glowMaterial,
+    glow,
     markerObjects = [],
     pickedObject,
     raycaster, removedObject, renderer,
@@ -93,7 +93,7 @@ const Loc = (props) => {
 
     scene = new THREE.Scene()
     scene.background = new THREE.Color( 0xffffff )
-    scene.fog = new THREE.Fog( 0xffffff, 0, 750 )
+    // scene.fog = new THREE.Fog( 0xffffff, 0, 750 )
 
     const light = new THREE.HemisphereLight( 0xeeeeff, 0x777788, 0.75 )
     light.position.set( 0.5, 1, 0.75 )
@@ -181,44 +181,6 @@ const Loc = (props) => {
 
     raycaster = new THREE.Raycaster( new THREE.Vector3(), new THREE.Vector3( 0, - 1, 0 ), 0, 10 )
 
-    /*
-     * Glow
-     */
-    glowMaterial = new THREE.ShaderMaterial({
-      uniforms: {
-        "c":   { type: "f", value: 1.0 },
-        "p":   { type: "f", value: 1.4 },
-        glowColor: { type: "c", value: new THREE.Color(0xffff00) },
-        viewVector: { type: "v3", value: camera.position }
-      },
-      vertexShader: `
-        uniform vec3 viewVector;
-        uniform float c;
-        uniform float p;
-        varying float intensity;
-        void main()
-        {
-            vec3 vNormal = normalize( normalMatrix * normal );
-            vec3 vNormel = normalize( normalMatrix * viewVector );
-            intensity = pow( c - dot(vNormal, vNormel), p );
-
-            gl_Position = projectionMatrix * modelViewMatrix * vec4( position, 1.0 );
-        }
-      `,
-      fragmentShader: `
-        uniform vec3 glowColor;
-        varying float intensity;
-        void main()
-        {
-            vec3 glow = glowColor * intensity;
-            gl_FragColor = vec4( glow, 1.0 );
-        }
-      `,
-      side: THREE.FrontSide,
-      blending: THREE.AdditiveBlending,
-      transparent: true,
-    })
-
 
     /*
      * Floor
@@ -255,6 +217,8 @@ const Loc = (props) => {
 
       { modelName: 'camaro75', slug: 'construct1' },
       { modelName: 'girl',     slug: 'demmitv' },
+
+      // { modelName: 'girl-5',     slug: 'demmitv' },
     ]
 
     const onProgress = (xhr) => {
@@ -280,12 +244,12 @@ const Loc = (props) => {
           objLoader.load( modelPath, ( object ) => {
             object.traverse((child) => {
               if (child.isMesh) {
-                child.geometry.scale(10, 10, 10) // herehere
+                child.geometry.scale(100, 100, 100) // herehere
               }
             })
-            object.position.x = Math.random() * 200
+            object.position.x = Math.random() * 500
             object.position.y = 10
-            object.position.z = Math.random() * 200
+            object.position.z = Math.random() * 500
 
             scene.add( object )
             markerObjects.push({ uuid: object.uuid, name: 'camaro75', object, slug: 'construct1', })
@@ -358,7 +322,7 @@ const Loc = (props) => {
         // glow
         markerObjects.map((item, idx) => {
           if (item.uuid === _pickedObject.parent.uuid) {
-            glow = item.object.clone() // new THREE.Mesh( item.object.geometry.clone(), glowMaterial )
+            glow = item.object.clone()
             glow.traverse((child) => {
               if (child.isMesh) {
                 child.material = new THREE.MeshBasicMaterial()
@@ -373,10 +337,11 @@ const Loc = (props) => {
           }
         })
 
-        // collision @TODO herehere
+        /* collision @TODO */
         if (intersections[0].distance < 5) {
           moveForward = false
         }
+
       }
 
       const onObject = intersections.length > 0
