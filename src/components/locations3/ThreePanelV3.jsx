@@ -244,12 +244,12 @@ const Loc = (props) => {
           objLoader.load( modelPath, ( object ) => {
             object.traverse((child) => {
               if (child.isMesh) {
-                child.geometry.scale(100, 100, 100) // herehere
+                child.geometry.scale(10, 10, 10)
               }
             })
-            object.position.x = Math.random() * 500
+            object.position.x = Math.random() * 200
             object.position.y = 10
-            object.position.z = Math.random() * 500
+            object.position.z = Math.random() * 200
 
             scene.add( object )
             markerObjects.push({ uuid: object.uuid, name: 'camaro75', object, slug: 'construct1', })
