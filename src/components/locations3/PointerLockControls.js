@@ -157,4 +157,9 @@ class PointerLockControls extends EventDispatcher {
 
 }
 
-export { PointerLockControls };
+export {
+	PointerLockControls,
+}
+
+const unlockEvent = _unlockEvent
+export { unlockEvent }

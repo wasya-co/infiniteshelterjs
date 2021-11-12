@@ -13,7 +13,7 @@ import {
 } from "./"
 import { CitiesList } from "$components/cities"
 import {
-  ThreePanelV1, ThreePanelV2,
+  ThreePanelV1, ThreePanelV2, ThreePanelV3,
 } from "$components/locations3"
 import { Newsitems } from "$components/newsitems"
 import { LongLine } from "$components/TwofoldLayout"
@@ -47,6 +47,8 @@ const WrappedMapPanel = React.forwardRef((props, ref) => {
           return <W><ThreePanelV1 {...props} /></W>
         case 'threev2':
           return <W><ThreePanelV2 {...props} /></W>
+          case 'threev3':
+            return <W><ThreePanelV3 {...props} /></W>
         default:
           logg(props.slug, `this 3d panel is not implemented`)
           return <W ref={ref} className="WrappedMapPanel" ><MapPanelNoZoom withZoom={false} {...props} /></W>
