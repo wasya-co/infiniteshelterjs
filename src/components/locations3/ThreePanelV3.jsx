@@ -15,10 +15,9 @@ import {
 } from "$shared"
 
 const Blocker = styled.div`
-  border: 2px solid red;
+  // border: 2px solid red;
 
   position: relative;
-  // height: calc(100% - ${p => p.theme.breadcrumbsHeight});
   width: 100%;
   height: 100%;
 `;
@@ -47,9 +46,10 @@ const Loc = (props) => {
   } = useContext(TwofoldContext)
 
   let camera, controls,
-    markerObjects = [], markerObjectsIdxs = [],
+    glow, glowMaterial,
+    markerObjects = [],
     pickedObject,
-    raycaster, renderer,
+    raycaster, removedObject, renderer,
     texture,
     scene
 
@@ -62,7 +62,6 @@ const Loc = (props) => {
   }, [])
 
   useEffect(() => {
-    logg(camera, 'cameraInEffect')
     window.dispatchEvent(new Event('resize'));
   }, [ bottomDrawerOpen, folded, twofoldPercent ])
 
@@ -76,6 +75,8 @@ const Loc = (props) => {
   const velocity = new THREE.Vector3()
   const direction = new THREE.Vector3()
 
+
+
   function init() {
 
     /**
@@ -87,7 +88,6 @@ const Loc = (props) => {
      * far — Camera frustum far plane.
     */
     const aspect = blockerRef.current.clientWidth / blockerRef.current.clientHeight
-    logg(aspect, 'aspect')
     camera = new THREE.PerspectiveCamera( 75, aspect, 1, 1000 ) // fov, aspect, near, far
     camera.position.y = 10
 
@@ -182,6 +182,45 @@ const Loc = (props) => {
     raycaster = new THREE.Raycaster( new THREE.Vector3(), new THREE.Vector3( 0, - 1, 0 ), 0, 10 )
 
     /*
+     * Glow
+     */
+    glowMaterial = new THREE.ShaderMaterial({
+      uniforms: {
+        "c":   { type: "f", value: 1.0 },
+        "p":   { type: "f", value: 1.4 },
+        glowColor: { type: "c", value: new THREE.Color(0xffff00) },
+        viewVector: { type: "v3", value: camera.position }
+      },
+      vertexShader: `
+        uniform vec3 viewVector;
+        uniform float c;
+        uniform float p;
+        varying float intensity;
+        void main()
+        {
+            vec3 vNormal = normalize( normalMatrix * normal );
+            vec3 vNormel = normalize( normalMatrix * viewVector );
+            intensity = pow( c - dot(vNormal, vNormel), p );
+
+            gl_Position = projectionMatrix * modelViewMatrix * vec4( position, 1.0 );
+        }
+      `,
+      fragmentShader: `
+        uniform vec3 glowColor;
+        varying float intensity;
+        void main()
+        {
+            vec3 glow = glowColor * intensity;
+            gl_FragColor = vec4( glow, 1.0 );
+        }
+      `,
+      side: THREE.FrontSide,
+      blending: THREE.AdditiveBlending,
+      transparent: true,
+    })
+
+
+    /*
      * Floor
      */
 
@@ -236,6 +275,7 @@ const Loc = (props) => {
           materials.preload()
           const objLoader = new OBJLoader( manager )
           objLoader.setMaterials( materials )
+
           objLoader.setPath(objectsPath)
           objLoader.load( modelPath, ( object ) => {
             object.traverse((child) => {
@@ -243,18 +283,16 @@ const Loc = (props) => {
                 child.geometry.scale(10, 10, 10) // herehere
               }
             })
-            object.position.x = Math.random() * 100
+            object.position.x = Math.random() * 200
             object.position.y = 10
-            object.position.z = Math.random() * 100
+            object.position.z = Math.random() * 200
 
             scene.add( object )
-            markerObjects.push( object )
-            markerObjectsIdxs.push({ uuid: object.uuid, name: 'camaro75', slug: 'construct1' })
+            markerObjects.push({ uuid: object.uuid, name: 'camaro75', object, slug: 'construct1', })
 
           }, onProgress, onError )
         }
       }
-      logg('loading?!')
       mtlLoader.load(texturePath, wrappedOnLoad(modelPath))
     })
 
@@ -305,19 +343,33 @@ const Loc = (props) => {
       // raycaster.ray.origin.copy( controls.getObject().position )
       // raycaster.ray.origin.y -= 10
 
+      pickedObject = null
+      scene.remove( glow )
+      if (removedObject) {
+        scene.add( removedObject )
+        removedObject = null
+      }
+
       raycaster = new THREE.Raycaster( camera.position, cameraDirection )
-      const intersections = raycaster.intersectObjects( markerObjects, true )
+      const intersections = raycaster.intersectObjects( markerObjects.map(m=>m.object), true )
       if (intersections.length) {
         const _pickedObject = intersections[0].object
 
-        // herehere
-
-        pickedObject = null
-        markerObjectsIdxs.map((item, idx) => {
+        // glow
+        markerObjects.map((item, idx) => {
           if (item.uuid === _pickedObject.parent.uuid) {
-            pickedObject = item
-            // controls.unlock()
-            // history.push(`/en/locations/show/${item.slug}`)
+            glow = item.object.clone() // new THREE.Mesh( item.object.geometry.clone(), glowMaterial )
+            glow.traverse((child) => {
+              if (child.isMesh) {
+                child.material = new THREE.MeshBasicMaterial()
+                child.material.color = new THREE.Color(0Xffff00)
+              }
+            })
+            glow.position.set(_pickedObject.parent.position.x, _pickedObject.parent.position.y, _pickedObject.parent.position.z)
+            // glow.scale.multiplyScalar(1.05)
+            scene.add( glow )
+            removedObject = _pickedObject.parent.clone()
+            scene.remove( _pickedObject.parent )
           }
         })
 
