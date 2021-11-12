@@ -49,14 +49,14 @@ const MapPanelNoZoom = (props) => {
   } = ctx
 
 
-  // Only sets the zoom (in panelNoZoom) to full-panel _vp_ 20211029
+  // Sets the zoom (in panelNoZoom) to full-panel _vp_ 20211029
   useEffect(() => {
     let nextZoomByWidth = mapPanelWidth/map.w
     let nextZoomByHeight = mapPanelHeight/map.h
     let nextZoom = Math.min(nextZoomByWidth, nextZoomByHeight)
     nextZoom = nextZoom + 0.0 // image should not overlap with the border... 1% slack added.
     setZoom(nextZoom)
-  }, [mapPanelWidth, mapPanelHeight])
+  }, [ mapPanelWidth, mapPanelHeight, map.id ])
 
 
   const markers = []
