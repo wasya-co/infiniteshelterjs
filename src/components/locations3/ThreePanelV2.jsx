@@ -320,7 +320,7 @@ const Loc = (props) => {
      */
     const scenesPath = '/assets/scenes/'
     const objectsPath = '/assets/objects/'
-    let modelName = 'camaro75' // 'wasyaco-reception' // 'tiny-house-2'
+    let modelName = 'polycity' // 'wasyaco-reception' // 'tiny-house-2'
     let modelName2 = 'girl'
     const texturePath = `${modelName}/${modelName}.mtl`
     const modelPath = `${modelName}/${modelName}.obj`
@@ -345,7 +345,7 @@ const Loc = (props) => {
       objLoader.load( modelPath, ( object ) => {
         object.traverse((child) => {
           if (child.isMesh) {
-            child.geometry.scale(10, 10, 10)
+            child.geometry.scale(0.10, 0.10, 0.10)
           }
         })
         object.position.x = Math.random() * 500
@@ -471,11 +471,7 @@ const Loc = (props) => {
      * and render
      */
     renderer = new THREE.WebGLRenderer({ antialias: true })
-
     renderer.setPixelRatio( window.devicePixelRatio )
-    logg(window.devicePixelRatio, 'window.devicePixelRatio')
-    // renderer.setPixelRatio(1)
-
     renderer.setSize( 700, 350 ) // aspect ratio 0.5
     blockerRef.current.appendChild( renderer.domElement )
     window.addEventListener( 'resize', onWindowResize )
@@ -495,11 +491,6 @@ const Loc = (props) => {
 
       var cameraDirection = controls.getDirection(new THREE.Vector3(0, 0, 0)).clone()
 
-      // hmmm unneeded
-      // let mouse = new THREE.Vector2()
-      // mouse.x = ( cameraDirection.x / window.innerWidth ) * 2 - 1;
-	    // mouse.y = - ( cameraDirection.y / window.innerHeight ) * 2 + 1;
-
       /* for standing on things */
       // raycaster.ray.origin.copy( controls.getObject().position )
       // raycaster.ray.origin.y -= 10
@@ -507,20 +498,7 @@ const Loc = (props) => {
       raycaster = new THREE.Raycaster( camera.position, cameraDirection )
       const intersections = raycaster.intersectObjects( markerObjects, true )
       if (intersections.length) {
-        logg(intersections, 'intersections')
-
         const pickedObject = intersections[0].object
-        logg(pickedObject, 'pickedObject')
-        logg(markerObjectsIdxs, 'markerIdx')
-
-        markerObjectsIdxs.map((item, idx) => {
-          logg(item, 'oneMrk')
-
-          if (item.uuid === pickedObject.parent.uuid) {
-            logg(item.slug, 'going to this location')
-            history.push(`/en/locations/show/${item.slug}`)
-          }
-        })
 
         // collision
         if (intersections[0].distance < 5) {
