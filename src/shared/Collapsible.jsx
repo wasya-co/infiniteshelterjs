@@ -27,7 +27,7 @@ const Label = styled.div`
 `;
 
 const WTransparent = styled.div`
-  background: #dedede;
+  background: ${p => p.theme.colors.background};
 
   margin: 0 0.5 1em .5em;
   padding: 0 .5em .5em .5em;

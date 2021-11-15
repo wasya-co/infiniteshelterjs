@@ -12,9 +12,9 @@ import {
 
 // W
 const W0 = styled.div`
-  border: ${p => p.theme.thinBorder};
+  border: ${p => p.theme.thinBorder} ${p=> p.theme.colors.border };
   border-radius: ${p => p.theme.thinBorderRadius};
-  background: ${p => p.theme.colors.black};
+  background: ${p => p.theme.colors.background};
 
   height: 100%;
 

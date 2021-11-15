@@ -6,6 +6,7 @@ import { arrowBack } from 'ionicons/icons'
 import { IonIcon } from '@ionic/react'
 import { CircularProgress as _CircularProgress } from '@material-ui/core'
 import _Box from '@material-ui/core/Box'
+import { ChevronLeft as _ChevronLeft, ChevronRight as _ChevronRight, Menu as _MenuIcon, } from '@material-ui/icons'
 import React, { useState } from 'react'
 import {
   Link, Switch, BrowserRouter as Router, Redirect, Route as _Route, useHistory, withRouter
@@ -49,6 +50,12 @@ export const Btn = styled.div`
 /* C */
 
 export { C }
+export const ChevronLeft = styled(_ChevronLeft)`
+  color: ${(p) => p.theme.colors.textColor}
+`;
+export const ChevronRight = styled(_ChevronRight)`
+  color: ${(p) => p.theme.colors.textColor}
+`;
 
 /**
  * A Card
@@ -154,6 +161,11 @@ const logg2 = (a, b="", c=null) => {
   console.log(`+++ ${b}:`, a.inspect); // eslint-disable-line no-console
 };
 export { logg, logg2 };
+
+/* M */
+export const MenuIcon = styled(_MenuIcon)`
+  color: ${(p) => p.theme.colors.textColor}
+`;
 
 /* P */
 
@@ -270,9 +282,9 @@ export { default as useWindowSize } from './useWindowSize'
  * Used in collapsibles and MarkersList
  */
 export const WBordered = styled.div`
-  border: ${p => p.theme.thinBorder};
+  border: ${p => p.theme.thinBorder} ${p => p.theme.colors.border};
   border-radius: ${p => p.theme.thinBorderRadius};
-  background: white;
+  background: ${p => p.theme.colors.cardBackground};
   padding: .5em;
 
   margin-bottom: 1em;
@@ -282,9 +294,10 @@ export const WBordered = styled.div`
  * Wrapper Bordered Item. Is padded, margined.
  */
 export const WBorderedItem = styled.div`
-  border: ${p => p.theme.thinBorder};
+  border: ${p => p.theme.thinBorder} ${p => p.theme.colors.border};
   border-radius: ${p => p.theme.thinBorderRadius};
-  background: white;
+  background: ${p => p.theme.colors.cardBackground};
+  color: ${p => p.theme.colors.textColor};
 
   margin: 0 .5em .5em 0;
   padding: .5em;

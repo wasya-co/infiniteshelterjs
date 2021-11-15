@@ -48,7 +48,7 @@ import {
 const Root = styled.div`
   // border: 1px solid #741741;
 
-  background: #dedede;
+  background: ${p => p.theme.colors.background};
   height: 100vh;
   overflow: auto;
 `;

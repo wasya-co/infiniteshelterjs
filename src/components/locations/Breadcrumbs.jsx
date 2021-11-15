@@ -16,6 +16,7 @@ import { MenuLeft } from "$components/application"
 
 // One breadcrumb
 const B = styled.div`
+  color: ${p=> p.theme.colors.textColor};
   padding: 0.5em;
 `;
 
@@ -26,6 +27,7 @@ const B1 = styled.div`
 
 /* D */
 const L = styled.div`
+  color: ${p=> p.theme.colors.textColor};
   margin-top: .5em;
 `;
 const WDayNight = styled.div`
