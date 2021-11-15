@@ -47,14 +47,25 @@ const AppWrapper = (props) => {
   }
   fn()
 
+  const [theme, setTheme] = useState(window.localStorage.getItem('theme') || 'light')
+  const toggleTheme = (e) => {
+    if (theme === 'light') {
+      window.localStorage.setItem('theme', 'dark')
+      setTheme('dark')
+    } else {
+      window.localStorage.setItem('theme', 'light')
+      setTheme('light')
+    }
+  }
 
   const childProps = {
     currentUser, setCurrentUser,
     loginModalOpen, setLoginModalOpen,
+    theme, toggleTheme
   }
 
   if (!os) { return null }
-  return <ThemeProvider theme={S} >
+  return <ThemeProvider theme={theme == 'light' ? S.lightTheme: S.darkTheme} >
     { "ios android".includes(os) ?
       <AppMobile {...childProps} />
       : <AppDesktop {...childProps} /> }

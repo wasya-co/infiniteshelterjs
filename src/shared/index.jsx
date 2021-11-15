@@ -178,6 +178,7 @@ export const TwofoldContextProvider = ({ children, ...props }) => {
     currentUser, setCurrentUser,
     layout, setLayout,
     loginModalOpen, setLoginModalOpen,
+    theme, toggleTheme,
   } = props
 
   /* B */
@@ -254,6 +255,8 @@ export const TwofoldContextProvider = ({ children, ...props }) => {
     twofoldPercent, setTwofoldPercent,
 
     zoom, setZoom,
+
+    theme, toggleTheme,
   }} >{ children }</TwofoldContext.Provider>
 }
 

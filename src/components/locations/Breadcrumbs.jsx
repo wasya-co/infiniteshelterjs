@@ -36,9 +36,10 @@ const WDayNight = styled.div`
   margin: 0 1em;
 `;
 const DayNightToggle = (props) => {
+  const { theme, toggleTheme } = props
   return <WDayNight>
     <L>Day</L>
-    <IonToggle value="DayNight" />
+    <IonToggle checked={theme == 'dark'} onIonChange={toggleTheme} value="DayNight" />
     <L>Night</L>
   </WDayNight>
 }
@@ -70,7 +71,7 @@ const WBreadcrumbs = styled.div`
 const Breadcrumbs = (props) => {
   // logg(props, 'Breakcrumbs')
   const { breadcrumbs=[] } = props
-  const { layout } = useContext(TwofoldContext)
+  const { layout, toggleTheme, theme } = useContext(TwofoldContext)
   const history = useHistory()
 
   const out = []
@@ -91,7 +92,7 @@ const Breadcrumbs = (props) => {
   return <W debug={config.debug} className="Breadcrumbs" >
     { layout === C.layout_mapui && <MenuLeft variant={C.variants.inline} /> }
     <WBreadcrumbs>{ out }</WBreadcrumbs>
-    <DayNightToggle />
+    <DayNightToggle toggleTheme={toggleTheme} theme={theme} />
   </W>
 }
 

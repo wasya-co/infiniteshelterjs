@@ -3,17 +3,6 @@
  * Style Constants
  */
 const S = {
-
-  colors: {
-    background: '#dedede',
-    black: 'black',
-    blue: '#6aa3e9',
-    darkGrey: '#605d5d',
-    lightGrey: '#988b8b',
-    red: 'red',
-  },
-
-
   // Twofold layout
   borderWidth: '10px',
   bottomDrawerClosedHeight: '20px',
@@ -23,7 +12,33 @@ const S = {
   thinBorder: '2px solid black',
   thinBorderWidth: '2px',
   thinBorderRadius: '5px',
-
 }
 
-export default S
+const lightTheme = {
+  ...S,
+  colors: {
+    // colors
+    background: '#dedede',
+    blue: '#6aa3e9',
+    darkGrey: '#605d5d',
+    lightGrey: '#988b8b',
+    red: 'red',
+  }
+}
+
+const darkTheme = {
+  ...S,
+  colors: {
+    // colors
+    background: '#dedede',
+    blue: '#6aa3e9',
+    darkGrey: '#605d5d',
+    lightGrey: '#988b8b',
+    red: 'red',
+  }
+}
+
+export default {
+  lightTheme,
+  darkTheme
+}
