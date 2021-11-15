@@ -44,9 +44,11 @@ const C = {
 
   // M
   map_panel_types: {
+    Equirectangular: "Equirectangular",
     MapPanel: "MapPanel",
     MapPanelNoZoom: "MapPanelNoZoom",
     ThreePanelV1: "ThreePanelV1",
+    ThreePanelV4: "ThreePanelV4",
   },
 
   // R

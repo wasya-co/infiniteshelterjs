@@ -11,9 +11,9 @@ import {
   ItemModal,
   MapPanel, MapPanelNoZoom, MarkersList,
 } from "./"
-import { CitiesList } from "$components/cities"
 import {
-  ThreePanelV1, ThreePanelV2, ThreePanelV3,
+  Equirectangular,
+  ThreePanelV1, ThreePanelV2, ThreePanelV3, ThreePanelV4,
 } from "$components/locations3"
 import { Newsitems } from "$components/newsitems"
 import { LongLine } from "$components/TwofoldLayout"
@@ -39,6 +39,9 @@ const WrappedMapPanel = React.forwardRef((props, ref) => {
   // logg(props.map, 'WrappedMapPanel')
 
   switch (props.map.config.map_panel_type) {
+    case C.map_panel_types.Equirectangular:
+      return <W ref={ref} className="Equirectangular" ><Equirectangular {...props} /></W>
+
     case C.map_panel_types.MapPanelNoZoom:
       return <W ref={ref} className="WrappedMapPanel" ><MapPanelNoZoom withZoom={false} {...props} /></W>
 
@@ -54,8 +57,11 @@ const WrappedMapPanel = React.forwardRef((props, ref) => {
         default:
           logg(props.slug, `this 3d panel is not implemented`)
           return <W ref={ref} className="WrappedMapPanel" ><MapPanel {...props} /></W>
-
       }
+
+    case C.map_panel_types.ThreePanelV4: // markers are objects
+      return <W><ThreePanelV4 {...props} /></W>
+
     default:
       return <W ref={ref} className="WrappedMapPanel" ><MapPanel {...props} /></W>
   }
