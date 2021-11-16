@@ -57,6 +57,11 @@ const Blocker = styled.div`
   }
 `;
 
+const W = styled.div`
+  border: 1px solid blue;
+  height: 90vh;
+`;
+
 /**
  * Equirectangular
  * _vp_ 2021-11-15
@@ -65,8 +70,8 @@ const Blocker = styled.div`
  * Threejs units of measure are centimeters (cm).
  *
  */
-const Equirectangular = (props) => {
-  // logg(props, 'Equirectangular')
+const Equirectangular2 = (props) => {
+  logg(props, 'Equirectangular2')
   const { map } = props
 
   const history = useHistory()
@@ -218,14 +223,17 @@ const Equirectangular = (props) => {
      * thetaStart — Start angle for first segment, default = 0 (three o'clock position).
      * thetaLength — The central angle, often called theta, of the circular sector. The default is 2*Pi, which makes for a complete circle.
      */
-    let floorGeometry = new THREE.PlaneGeometry( 1000, 1000, 10, 10 ) // width, height, w segments, h segments
+    let floorGeometry = new THREE.PlaneGeometry( 100, 100, 10, 10 ) // width, height, w segments, h segments
     // let floorGeometry = new THREE.CircleGeometry(100, 32) // radius, segments, thetaStart, thetaLength
     floorGeometry.rotateX( - Math.PI / 2 )
     texture = THREE.ImageUtils.loadTexture(`/assets/textures/100x100_lazer-floor.png`)
     texture.wrapS = THREE.RepeatWrapping
     texture.wrapT = THREE.RepeatWrapping
-    texture.repeat.set( 100, 100 )
-    const floorMaterial = new THREE.MeshPhongMaterial({ map: texture, transparent: true })
+    texture.repeat.set( 10, 10 )
+    const floorMaterial = new THREE.MeshPhongMaterial({
+      map: texture,
+      // transparent: true,
+    })
     const floor = new THREE.Mesh( floorGeometry, floorMaterial )
     scene.add( floor )
 
@@ -305,7 +313,7 @@ const Equirectangular = (props) => {
     const needResize = canvas.width !== width || canvas.height !== height
     if (needResize) {
       logg([width, height], 'setting width, heigh!')
-      renderer.setSize(width, height, false)
+      renderer.setSize(width, height)
     }
     return needResize
   }
@@ -375,12 +383,12 @@ const Equirectangular = (props) => {
     renderer.render( scene, camera )
   }
 
-  return <F>
+  return <W>
     <div ref={instructionsRef} />
     <Blocker ref={blockerRef} >
       <div id="Crosshair" />
     </Blocker>
-  </F>
+  </W>
 }
 
-export default Equirectangular
+export default Equirectangular2
