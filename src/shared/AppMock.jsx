@@ -10,8 +10,9 @@ import {
   Link, Switch, Router, Redirect, Route as _Route, useHistory, withRouter
 } from 'react-router-dom'
 import styled from 'styled-components'
+import { ThemeProvider } from 'styled-components'
 
-import { logg, TwofoldContext } from "$shared"
+import { logg, S, TwofoldContext } from "$shared"
 import { LoginModal } from "$components/users"
 
 const AppMock = (props) => {
@@ -26,19 +27,21 @@ const AppMock = (props) => {
     setCurrentUser = setLocalCurrentUser
   }
 
-  return <Router history={history} >
-    <TwofoldContext.Provider value={{
-      // bottomDrawerOpen, setBottomDrawerOpen,
-      currentUser, setCurrentUser,
-      itemToUnlock, setItemToUnlock,
-      // layout, setLayout,
-      // showUrl, setShowUrl,
-      // zoom, setZoom,
-    }} >
-      { props.children }
-      <LoginModal />
-    </TwofoldContext.Provider>
-  </Router>
+  return <ThemeProvider theme={S.lightTheme}>
+    <Router history={history} >
+      <TwofoldContext.Provider value={{
+        // bottomDrawerOpen, setBottomDrawerOpen,
+        currentUser, setCurrentUser,
+        itemToUnlock, setItemToUnlock,
+        // layout, setLayout,
+        // showUrl, setShowUrl,
+        // zoom, setZoom,
+      }} >
+        { props.children }
+        <LoginModal />
+      </TwofoldContext.Provider>
+    </Router>
+  </ThemeProvider>
 }
 
 export default AppMock
