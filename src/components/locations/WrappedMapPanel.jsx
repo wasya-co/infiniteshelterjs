@@ -12,7 +12,7 @@ import {
   MapPanel, MapPanelNoZoom, MarkersList,
 } from "./"
 import {
-  Equirectangular,
+  Equirectangular, Equirectangular2,
   ThreePanelV1, ThreePanelV2, ThreePanelV3, ThreePanelV4,
 } from "$components/locations3"
 import { Newsitems } from "$components/newsitems"
@@ -34,13 +34,16 @@ const W = styled.div`
 
 /**
  * Renders either MapPanel (W really, a simple wrapper), MapPanelNoZoom, or ThreePanelV1
+ * or some other MapPanel.
  */
 const WrappedMapPanel = React.forwardRef((props, ref) => {
   // logg(props.map, 'WrappedMapPanel')
 
   switch (props.map.config.map_panel_type) {
+
     case C.map_panel_types.Equirectangular:
-      return <W ref={ref} className="Equirectangular" ><Equirectangular {...props} /></W>
+      // return <W ref={ref} className="Equirectangular" ><Equirectangular {...props} /></W>
+      return <W ref={ref} className="Equirectangular2" ><Equirectangular2 {...props} /></W>
 
     case C.map_panel_types.MapPanelNoZoom:
       return <W ref={ref} className="WrappedMapPanel" ><MapPanelNoZoom withZoom={false} {...props} /></W>

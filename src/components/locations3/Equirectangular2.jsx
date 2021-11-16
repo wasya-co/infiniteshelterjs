@@ -1,5 +1,5 @@
 
-import React, { Fragment as F, useEffect, useRef } from 'react'
+import React, { Fragment as F, useContext, useEffect, useRef, useState } from "react"
 import { useHistory } from 'react-router-dom'
 import * as THREE from "three"
 // import MTLLoader from 'three-mtl-loader' // @TODO: remove from package.json
@@ -7,19 +7,20 @@ import { OBJLoader } from "three/examples/jsm/loaders/OBJLoader"
 import { MTLLoader } from "three/examples/jsm/loaders/MTLLoader"
 import styled from 'styled-components'
 
-import { logg, S } from "$shared"
 import { PointerLockControls } from './PointerLockControls'
+import {
+  logg,
+  TwofoldContext,
+} from "$shared"
 
 const Blocker = styled.div`
-  border: 2px solid red;
+  border: 1px dashed red;
 
   position: relative;
-  // height: calc(100% - ${p => p.breadcrumbsHeight});
-  width: 700px;
-  height: 350px;
+  width: 100%;
+  height: 100%;
 
   #Crosshair {
-    // border: 1px solid yellow;
     width: 50px;
     height: 50px;
 
@@ -58,12 +59,14 @@ const Blocker = styled.div`
 
 /**
  * Equirectangular
- * _vp_ 2021-11-13
- * It works, it shows the panoramic.
+ * _vp_ 2021-11-15
+ * Let's wire in a simple floor and full-window sizing.
+ *
+ * Threejs units of measure are centimeters (cm).
  *
  */
 const Equirectangular = (props) => {
-  logg(props, 'Equirectangular')
+  // logg(props, 'Equirectangular')
   const { map } = props
 
   const history = useHistory()
@@ -74,12 +77,29 @@ const Equirectangular = (props) => {
     texture,
     scene
 
+  const {
+    bottomDrawerOpen,
+    folded, setFolded,
+    itemToUnlock, setItemToUnlock,
+    mapPanelWidth, setMapPanelWidth,
+    mapPanelHeight, setMapPanelHeight,
+    ratedConfirmation, setRatedConfirmation,
+    showItem, setShowItem,
+    showUrl, setShowUrl,
+    twofoldPercent,
+  } = useContext(TwofoldContext)
+
   const blockerRef = useRef(null)
   const instructionsRef = useRef(null)
+
   useEffect(() => {
     init()
     animate()
   }, [])
+
+  useEffect(() => {
+    window.dispatchEvent(new Event('resize'));
+  }, [ bottomDrawerOpen, folded, twofoldPercent ])
 
   let moveForward = false
   let moveBackward = false
@@ -108,9 +128,9 @@ const Equirectangular = (props) => {
 
     scene = new THREE.Scene()
     scene.background = new THREE.Color( 0xffffff )
-    scene.fog = new THREE.Fog( 0xffffff, 0, 750 )
+    scene.fog = new THREE.Fog( 0xffffff, 0, 750 ) // @TODO: what this?
 
-    const light = new THREE.HemisphereLight( 0xeeeeff, 0x777788, 0.75 )
+    const light = new THREE.HemisphereLight( 0xeeeeff, 0x777788, 0.75 ) // @TODO: what this?
     light.position.set( 0.5, 1, 0.75 )
     scene.add( light )
 
@@ -133,72 +153,6 @@ const Equirectangular = (props) => {
     } )
 
     scene.add( controls.getObject() )
-
-
-    /*
-     * Crosshair
-     * From: https://codepen.io/driezis/pen/jOPzjLG?editors=1000
-     */
-    var pMat = new THREE.ShaderMaterial({
-        uniforms: { main_color: {value: {r: 1, g: 1, b: 1}},
-                    border_color: {value: {r: 0, g: 0, b: 0.1}},
-
-                    thickness: {value:0.006},
-                    height: {value:0.13},
-                    offset: {value:0.05},
-                    border: {value:0.003},
-
-                    opacity: {value: 1},
-                    center: {value: {x: 0.5, y: 0.5}},
-                    rotation: {value: 0}
-                },
-        vertexShader: `
-                uniform float rotation;
-                uniform vec2 center;
-                #include <common>
-                varying vec2 vUv;
-                void main() {
-                    vUv = uv;
-                    vec4 mvPosition = modelViewMatrix * vec4( 0.0, 0.0, 0.0, 1.0 );
-                    vec2 scale;
-                    scale.x = length( vec3( modelMatrix[ 0 ].x, modelMatrix[ 0 ].y, modelMatrix[ 0 ].z ) );
-                    scale.y = length( vec3( modelMatrix[ 1 ].x, modelMatrix[ 1 ].y, modelMatrix[ 1 ].z ) );
-                    #ifndef USE_SIZEATTENUATION
-                        bool isPerspective = isPerspectiveMatrix( projectionMatrix );
-                        if ( isPerspective ) scale *= - mvPosition.z;
-                    #endif
-                    vec2 alignedPosition = ( position.xy - ( center - vec2( 0.5 ) ) ) * scale;
-                    vec2 rotatedPosition;
-                    rotatedPosition.x = cos( rotation ) * alignedPosition.x - sin( rotation ) * alignedPosition.y;
-                    rotatedPosition.y = sin( rotation ) * alignedPosition.x + cos( rotation ) * alignedPosition.y;
-                    mvPosition.xy += rotatedPosition;
-                    gl_Position = projectionMatrix * mvPosition;
-                }
-            `,
-        fragmentShader: `
-            uniform vec3 main_color;
-            uniform vec3 border_color;
-            uniform float opacity;
-
-            uniform float thickness;
-            uniform float height;
-            uniform float offset;
-            uniform float border;
-
-            varying vec2 vUv;
-            void main() {
-
-                float a = (step(abs(vUv.x - 0.5), thickness)) * step(abs(vUv.y - 0.5), height + offset) * step(offset, abs(vUv.y - 0.5)) + (step(abs(vUv.y - 0.5), thickness)) * step(abs(vUv.x - 0.5), height + offset) * step(offset, abs(vUv.x - 0.5));
-                float b = (step(abs(vUv.x - 0.5), thickness - border)) * step(abs(vUv.y - 0.5), height + offset - border) * step(offset + border, abs(vUv.y - 0.5)) + (step(abs(vUv.y - 0.5), thickness - border)) * step(abs(vUv.x - 0.5), height + offset - border) * step(offset + border, abs(vUv.x - 0.5));
-                gl_FragColor = vec4( mix(border_color, main_color, b), a * opacity);
-            }
-        `,
-        transparent: true,
-    });
-    var sprite = new THREE.Sprite(pMat);
-    // scene.add(sprite);
-    // sprite.position.set(0,0,-5);
-
 
     const onKeyDown = (event) => {
       switch ( event.code ) {
@@ -246,46 +200,14 @@ const Equirectangular = (props) => {
       }
     }
 
-    // document.addEventListener( 'keydown', onKeyDown )
-    // document.addEventListener( 'keyup', onKeyUp )
+    document.addEventListener( 'keydown', onKeyDown )
+    document.addEventListener( 'keyup', onKeyUp )
 
     raycaster = new THREE.Raycaster( new THREE.Vector3(), new THREE.Vector3( 0, - 1, 0 ), 0, 10 )
 
     /*
      * Floor
      */
-
-    // // random
-    // // @TODO: it's not aligned to parcels the way I want
-    // let floorGeometry = new THREE.PlaneGeometry( 460, 680, 100, 100 )
-    // floorGeometry.rotateX( - Math.PI / 2 )
-
-    // // vertex displacement
-    // let position = floorGeometry.attributes.position
-    // for ( let i = 0, l = position.count; i < l; i ++ ) {
-    //   vertex.fromBufferAttribute( position, i )
-    //   vertex.x += Math.random() * 20 - 10
-    //   vertex.y += Math.random() * 2
-    //   vertex.z += Math.random() * 20 - 10
-    //   position.setXYZ( i, vertex.x, vertex.y, vertex.z )
-    // }
-    // floorGeometry = floorGeometry.toNonIndexed() // ensure each face has unique vertices
-    // floorGeometry.x = -200
-    // floorGeometry.y = -200
-    // floorGeometry.z = -200
-    // position = floorGeometry.attributes.position
-    // const colorsFloor = []
-    // for ( let i = 0, l = position.count; i < l; i ++ ) {
-    //   color.setHSL( Math.random() * 0.3 + 0.5, 0.75, Math.random() * 0.25 + 0.75 )
-    //   colorsFloor.push( color.r, color.g, color.b )
-    // }
-    // floorGeometry.setAttribute( 'color', new THREE.Float32BufferAttribute( colorsFloor, 3 ) )
-    // const floorMaterial = new THREE.MeshBasicMaterial( { vertexColors: true } )
-    // const floor = new THREE.Mesh( floorGeometry, floorMaterial )
-    // scene.add( floor )
-
-
-
 
     /**
      * From: https://threejs.org/docs/#api/en/geometries/CircleGeometry
@@ -296,13 +218,16 @@ const Equirectangular = (props) => {
      * thetaStart — Start angle for first segment, default = 0 (three o'clock position).
      * thetaLength — The central angle, often called theta, of the circular sector. The default is 2*Pi, which makes for a complete circle.
      */
-    // let floorGeometry = new THREE.PlaneGeometry( 1000, 1000, 100, 100 ) // width, height, w segments, h segments
-    // let floorGeometry = new THREE.CircleGeometry(1000, 32) // radius, segments, thetaStart, thetaLength
-    // floorGeometry.rotateX( - Math.PI / 2 )
-    // texture = THREE.ImageUtils.loadTexture(`/assets/textures/moon-1.jpg`) // moon floor
-    // const floorMaterial = new THREE.MeshBasicMaterial({ map: texture })
-    // const floor = new THREE.Mesh( floorGeometry, floorMaterial )
-    // scene.add( floor )
+    let floorGeometry = new THREE.PlaneGeometry( 1000, 1000, 10, 10 ) // width, height, w segments, h segments
+    // let floorGeometry = new THREE.CircleGeometry(100, 32) // radius, segments, thetaStart, thetaLength
+    floorGeometry.rotateX( - Math.PI / 2 )
+    texture = THREE.ImageUtils.loadTexture(`/assets/textures/100x100_lazer-floor.png`)
+    texture.wrapS = THREE.RepeatWrapping
+    texture.wrapT = THREE.RepeatWrapping
+    texture.repeat.set( 100, 100 )
+    const floorMaterial = new THREE.MeshPhongMaterial({ map: texture, transparent: true })
+    const floor = new THREE.Mesh( floorGeometry, floorMaterial )
+    scene.add( floor )
 
     /*
      * Model Import
@@ -364,16 +289,40 @@ const Equirectangular = (props) => {
      */
     renderer = new THREE.WebGLRenderer({ antialias: true })
     renderer.setPixelRatio( window.devicePixelRatio )
-    renderer.setSize( 700, 350 ) // aspect ratio 0.5
+    renderer.setSize( blockerRef.current.clientWidth, blockerRef.current.clientHeight )
     blockerRef.current.appendChild( renderer.domElement )
     window.addEventListener( 'resize', onWindowResize )
 
   }
 
+  /* From: https://threejsfundamentals.org/threejs/lessons/threejs-responsive.html */
+  function resizeRendererToDisplaySize() {
+    logg('resizeRendererToDisplaySize()')
+
+    const canvas = renderer.domElement
+    const width = blockerRef.current.clientWidth
+    const height = blockerRef.current.clientHeight
+    const needResize = canvas.width !== width || canvas.height !== height
+    if (needResize) {
+      logg([width, height], 'setting width, heigh!')
+      renderer.setSize(width, height, false)
+    }
+    return needResize
+  }
+
   function onWindowResize() {
-    camera.aspect = window.innerWidth / window.innerHeight
-    camera.updateProjectionMatrix()
-    renderer.setSize( window.innerWidth, window.innerHeight )
+    logg('on window resie')
+    if (resizeRendererToDisplaySize()) {
+      logg('and aspect')
+
+      // const canvas = renderer.domElement
+      // camera.aspect = canvas.clientWidth / canvas.clientHeight
+      const width = blockerRef.current.clientWidth
+      const height = blockerRef.current.clientHeight
+      camera.aspect = width / height
+
+      camera.updateProjectionMatrix()
+    }
   }
 
   function animate() {
@@ -428,7 +377,7 @@ const Equirectangular = (props) => {
 
   return <F>
     <div ref={instructionsRef} />
-    <Blocker {...S} ref={blockerRef} >
+    <Blocker ref={blockerRef} >
       <div id="Crosshair" />
     </Blocker>
   </F>

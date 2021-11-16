@@ -158,6 +158,7 @@ const Account = (props) => {
       <h1>Account</h1>
     </Grid>
     <IonContent className="ion-padding">
+
       <Grid container spacing={2} >
         <Grid item xs={12}>
           <Grid container>
@@ -201,6 +202,12 @@ const Account = (props) => {
                   <PasswordLogin />
 
                 </F> }
+            </Grid>
+          </Grid>
+          <Grid container spacing={2}>
+            <Grid item xs={6} >
+              <textarea value={scratchpad} onChange={setScratchpad} />
+              <button type='submit' onClick={saveScratchpad}>Save Scratchpad</button>
             </Grid>
           </Grid>
         </Grid>
