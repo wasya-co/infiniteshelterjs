@@ -36,7 +36,7 @@ const Inner0 = styled.div`
 `;
 
 const Inner1 = styled.div`
-  border: ${p => p.theme.thinBorder} ${p => p.theme.colors.border};
+  border: ${p => p.theme.thinBorder};
   border-radius: ${p => p.theme.thinBorderRadius};
 
   background: ${p=>p.theme.colors.background};

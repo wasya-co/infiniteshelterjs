@@ -51,10 +51,10 @@ export const Btn = styled.div`
 
 export { C }
 export const ChevronLeft = styled(_ChevronLeft)`
-  color: ${(p) => p.theme.colors.textColor}
+  color: ${(p) => p.theme.colors.text}
 `;
 export const ChevronRight = styled(_ChevronRight)`
-  color: ${(p) => p.theme.colors.textColor}
+  color: ${(p) => p.theme.colors.text}
 `;
 
 /**
@@ -164,7 +164,7 @@ export { logg, logg2 };
 
 /* M */
 export const MenuIcon = styled(_MenuIcon)`
-  color: ${(p) => p.theme.colors.textColor}
+  color: ${(p) => p.theme.colors.text}
 `;
 
 /* P */
@@ -282,7 +282,7 @@ export { default as useWindowSize } from './useWindowSize'
  * Used in collapsibles and MarkersList
  */
 export const WBordered = styled.div`
-  border: ${p => p.theme.thinBorder} ${p => p.theme.colors.border};
+  border: ${p => p.theme.thinBorder};
   border-radius: ${p => p.theme.thinBorderRadius};
   background: ${p => p.theme.colors.cardBackground};
   padding: .5em;
@@ -294,10 +294,10 @@ export const WBordered = styled.div`
  * Wrapper Bordered Item. Is padded, margined.
  */
 export const WBorderedItem = styled.div`
-  border: ${p => p.theme.thinBorder} ${p => p.theme.colors.border};
+  border: ${p => p.theme.thinBorder};
   border-radius: ${p => p.theme.thinBorderRadius};
   background: ${p => p.theme.colors.cardBackground};
-  color: ${p => p.theme.colors.textColor};
+  color: ${p => p.theme.colors.text};
 
   margin: 0 .5em .5em 0;
   padding: .5em;

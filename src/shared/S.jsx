@@ -9,16 +9,15 @@ const S = {
   bottomDrawerOpenHeight: '115px',
   breadcrumbsHeight: '30px',
 
-  thinBorder: '2px solid',
   thinBorderWidth: '2px',
   thinBorderRadius: '5px',
 }
 
 const lightTheme = {
   ...S,
+  thinBorder: '2px solid black',
   colors: {
-    // colors
-    textColor: 'black',
+    text: 'black',
     background: '#dedede',
     blue: '#6aa3e9',
     darkGrey: '#605d5d',
@@ -31,9 +30,9 @@ const lightTheme = {
 
 const darkTheme = {
   ...S,
+  thinBorder: '2px solid white',
   colors: {
-    // colors
-    textColor: 'white',
+    text: 'white',
     background: '#292929',
     blue: '#73b0fa',
     darkGrey: '#b3afaf',

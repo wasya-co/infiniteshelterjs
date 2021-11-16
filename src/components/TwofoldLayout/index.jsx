@@ -10,7 +10,7 @@ import { C, logg } from "$shared"
  * Documentation
  */
 const LongLine = styled.div`
-  border: ${p => p.theme.thinBorder} ${p => p.theme.colors.border};
+  border: ${p => p.theme.thinBorder};
   border-radius: ${p => p.theme.thinBorderRadius};
 
   flex-grow: 1;

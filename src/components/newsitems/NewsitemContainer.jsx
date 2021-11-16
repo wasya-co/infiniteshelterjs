@@ -32,7 +32,7 @@ const Row = styled.div`
 
 const Title = styled.h2`
   margin-top: 0;
-  color: ${p=>p.theme.colors.textColor};
+  color: ${p=>p.theme.colors.text};
 `;
 
 const W = (props) => {

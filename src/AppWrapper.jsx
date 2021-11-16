@@ -47,14 +47,14 @@ const AppWrapper = (props) => {
   }
   fn()
 
-  const [theme, setTheme] = useState(window.localStorage.getItem('theme') || 'light')
+  const [theme, setTheme] = useState(window.localStorage.getItem(C.theme) || C.themes.light)
   const toggleTheme = (e) => {
-    if (theme === 'light') {
-      window.localStorage.setItem('theme', 'dark')
-      setTheme('dark')
+    if (theme === C.themes.light) {
+      window.localStorage.setItem(C.theme, C.themes.dark)
+      setTheme(C.themes.dark)
     } else {
-      window.localStorage.setItem('theme', 'light')
-      setTheme('light')
+      window.localStorage.setItem(C.theme, C.themes.light)
+      setTheme(C.themes.light)
     }
   }
 
@@ -65,7 +65,7 @@ const AppWrapper = (props) => {
   }
 
   if (!os) { return null }
-  return <ThemeProvider theme={theme == 'light' ? S.lightTheme: S.darkTheme} >
+  return <ThemeProvider theme={theme == C.themes.light ? S.lightTheme: S.darkTheme} >
     { "ios android".includes(os) ?
       <AppMobile {...childProps} />
       : <AppDesktop {...childProps} /> }

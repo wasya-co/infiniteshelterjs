@@ -16,7 +16,7 @@ import { MenuLeft } from "$components/application"
 
 // One breadcrumb
 const B = styled.div`
-  color: ${p=> p.theme.colors.textColor};
+  color: ${p=> p.theme.colors.text};
   padding: 0.5em;
 `;
 
@@ -27,7 +27,7 @@ const B1 = styled.div`
 
 /* D */
 const L = styled.div`
-  color: ${p=> p.theme.colors.textColor};
+  color: ${p=> p.theme.colors.text};
   margin-top: .5em;
 `;
 const WDayNight = styled.div`
@@ -41,7 +41,7 @@ const DayNightToggle = (props) => {
   const { theme, toggleTheme } = props
   return <WDayNight>
     <L>Day</L>
-    <IonToggle checked={theme == 'dark'} onIonChange={toggleTheme} value="DayNight" />
+    <IonToggle checked={theme === C.themes.dark} onIonChange={toggleTheme} value="DayNight" />
     <L>Night</L>
   </WDayNight>
 }
