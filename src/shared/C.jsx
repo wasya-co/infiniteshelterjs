@@ -60,7 +60,12 @@ const C = {
   ratedConfirmation: 'rated-confirmation', // localStorage
 
   // T
-  twofoldPercent: 'twofold-percent', // localStorage
+  theme: 'theme',
+  themes: {
+    dark: 'dark',
+    light: 'light',
+  },
+  twofoldPercent: 'twofold-percent', // localStorage  
 
   // V
   variants: {

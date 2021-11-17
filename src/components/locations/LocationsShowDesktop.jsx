@@ -1,6 +1,5 @@
 
 import { Toast } from "@capacitor/toast"
-import { ChevronLeft, ChevronRight, Menu as MenuIcon, } from '@material-ui/icons'
 import React, { Fragment as F, useContext, useEffect, useRef, useState } from "react"
 import Modal from "react-modal"
 import styled from 'styled-components'
@@ -16,8 +15,9 @@ import { CitiesList } from "$components/cities"
 import { Newsitems } from "$components/newsitems"
 import { LongLine } from "$components/TwofoldLayout"
 import {
-  C, Collapsible,
+  C, ChevronLeft, ChevronRight, Collapsible,
   Loading, logg,
+  MenuIcon,
   request,
   TwofoldContext,
   useWindowSize,

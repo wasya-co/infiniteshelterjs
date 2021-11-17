@@ -16,6 +16,7 @@ import { MenuLeft } from "$components/application"
 
 // One breadcrumb
 const B = styled.div`
+  color: ${p=> p.theme.colors.text};
   padding: 0.5em;
 `;
 
@@ -26,6 +27,7 @@ const B1 = styled.div`
 
 /* D */
 const L = styled.div`
+  color: ${p=> p.theme.colors.text};
   margin-top: .5em;
 `;
 const WDayNight = styled.div`
@@ -36,9 +38,10 @@ const WDayNight = styled.div`
   margin: 0 1em;
 `;
 const DayNightToggle = (props) => {
+  const { theme, toggleTheme } = props
   return <WDayNight>
     <L>Day</L>
-    <IonToggle value="DayNight" />
+    <IonToggle checked={theme === C.themes.dark} onIonChange={toggleTheme} value="DayNight" />
     <L>Night</L>
   </WDayNight>
 }
@@ -70,7 +73,7 @@ const WBreadcrumbs = styled.div`
 const Breadcrumbs = (props) => {
   // logg(props, 'Breakcrumbs')
   const { breadcrumbs=[] } = props
-  const { layout } = useContext(TwofoldContext)
+  const { layout, toggleTheme, theme } = useContext(TwofoldContext)
   const history = useHistory()
 
   const out = []
@@ -91,7 +94,7 @@ const Breadcrumbs = (props) => {
   return <W debug={config.debug} className="Breadcrumbs" >
     { layout === C.layout_mapui && <MenuLeft variant={C.variants.inline} /> }
     <WBreadcrumbs>{ out }</WBreadcrumbs>
-    <DayNightToggle />
+    <DayNightToggle toggleTheme={toggleTheme} theme={theme} />
   </W>
 }
 

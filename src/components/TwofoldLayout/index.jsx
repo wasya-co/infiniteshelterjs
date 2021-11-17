@@ -19,7 +19,7 @@ const LongLine = styled.div`
   height: ${p => p.orientation === C.horizontal ? '10px' : 'auto'};
 
   padding: 2px;
-  background: white;
+  background: ${p => p.theme.colors.background};
 `;
 LongLine.propTypes = {
   orientation: PropTypes.string,

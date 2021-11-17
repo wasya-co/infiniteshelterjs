@@ -7,6 +7,7 @@ import { Api, logg, request, pp_date } from "$shared"
 
 const W = styled.div`
   margin-top: .5em;
+  color: ${p=>p.theme.colors.text};
 `
 
 const Metaline = (props) => {

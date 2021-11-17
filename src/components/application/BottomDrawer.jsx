@@ -1,14 +1,13 @@
 
 import _Drawer from '@material-ui/core/Drawer'
 import IconButton from '@material-ui/core/IconButton'
-import MenuIcon from '@material-ui/icons/Menu'
 import React, { Fragment as F, useContext, useState } from 'react'
 import styled from 'styled-components'
 import Web3 from 'web3'
 import { useWeb3React, Web3ReactProvider } from "@web3-react/core"
 import { InjectedConnector } from '@web3-react/injected-connector'
 
-import { C, logg, S, TwofoldContext, } from "$shared"
+import { C, logg, MenuIcon, S, TwofoldContext, } from "$shared"
 import { LongLine } from "$components/TwofoldLayout"
 import { MyAccountWidget } from "$components/users"
 
@@ -51,7 +50,7 @@ const Inner1 = styled.div`
 const Inner2 = styled.div`
   // border: 1px solid green;
 
-  background: white;
+  background: ${p=>p.theme.colors.cardBackground};
   height: 100px;
   display: flex;
 `;
@@ -88,7 +87,6 @@ const BottomDrawer = (props) => {
         onClick={() => setBottomDrawerOpen(true)}
       ><MenuIcon
         fontSize="small"
-        style={{ color: 'black' }}
       /></IconButton>
       <LongLine orientation={C.horizontal} />
     </WClosed>
@@ -108,9 +106,6 @@ const BottomDrawer = (props) => {
           style={{ paddingRight: 0 }}
         ><MenuIcon
           fontSize="small"
-          style={{
-            color: 'black',
-          }}
         /></IconButton>
 
         <Inner1 >

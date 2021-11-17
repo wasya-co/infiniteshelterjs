@@ -14,7 +14,7 @@ import {
 const W0 = styled.div`
   border: ${p => p.theme.thinBorder};
   border-radius: ${p => p.theme.thinBorderRadius};
-  background: ${p => p.theme.colors.black};
+  background: ${p => p.theme.colors.background};
 
   height: 100%;
 

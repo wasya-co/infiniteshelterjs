@@ -2,7 +2,6 @@ import { IonApp, IonButtons, IonMenuButton } from '@ionic/react'
 import Drawer from '@material-ui/core/Drawer'
 import Fab from '@material-ui/core/Fab'
 import IconButton from '@material-ui/core/IconButton'
-import MenuIcon from '@material-ui/icons/Menu'
 import List from '@material-ui/core/List'
 import ListItem from '@material-ui/core/ListItem'
 import ListItemIcon from '@material-ui/core/ListItemIcon'
@@ -13,7 +12,7 @@ import styled from 'styled-components'
 
 import config from 'config'
 import { Menu } from "$components/application"
-import { Api, C, Debug, logg, TwofoldContext } from "$shared"
+import { Api, C, Debug, logg, MenuIcon, TwofoldContext, } from "$shared"
 
 const _LeftWrapper = styled.div`
   // border: 1px solid green;
@@ -37,7 +36,6 @@ const MenuLeft= (props) => {
   const [ loading, setLoading ] = useState(false)
   const history = useHistory()
   const { currentUser, setCurrentUser } = useContext(TwofoldContext)
-
   return <F>
 
     { /* <Menu /> */ }
