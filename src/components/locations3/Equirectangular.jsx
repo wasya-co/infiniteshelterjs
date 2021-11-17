@@ -58,6 +58,8 @@ const Blocker = styled.div`
 
 /**
  * Equirectangular
+ * _vp_ 2021-11-13
+ * It works, it shows the panoramic.
  *
  */
 const Equirectangular = (props) => {
