@@ -63,7 +63,7 @@ const W = styled.div`
 `;
 
 /**
- * Equirectangular
+ * Equirectangular2
  * _vp_ 2021-11-15
  * Let's wire in a simple floor and full-window sizing.
  *
