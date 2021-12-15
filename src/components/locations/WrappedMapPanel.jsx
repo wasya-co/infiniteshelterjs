@@ -12,7 +12,7 @@ import {
   MapPanel, MapPanelNoZoom, MarkersList,
 } from "./"
 import {
-  Equirectangular, Equirectangular2,
+  Equirectangular, Equirectangular2, Equirectangular4,
   ThreePanelV1, ThreePanelV2, ThreePanelV3, ThreePanelV4,
 } from "$components/locations3"
 import { Newsitems } from "$components/newsitems"
@@ -43,7 +43,8 @@ const WrappedMapPanel = React.forwardRef((props, ref) => {
 
     case C.map_panel_types.Equirectangular:
       // return <W ref={ref} className="Equirectangular" ><Equirectangular {...props} /></W>
-      return <W ref={ref} className="Equirectangular2" ><Equirectangular2 {...props} /></W>
+      // return <W ref={ref} className="Equirectangular2" ><Equirectangular2 {...props} /></W>
+      return <W ref={ref} className="Equirectangular4" ><Equirectangular4 {...props} /></W>
 
     case C.map_panel_types.MapPanelNoZoom:
       return <W ref={ref} className="WrappedMapPanel" ><MapPanelNoZoom withZoom={false} {...props} /></W>
