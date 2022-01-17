@@ -8,6 +8,8 @@ import { MTLLoader } from "three/examples/jsm/loaders/MTLLoader"
 import styled from 'styled-components'
 
 import { PointerLockControls } from './PointerLockControls'
+import TouchControls from "./TouchControls"
+import RotationPad from "./RotationPad"
 import {
   logg,
   TwofoldContext,
@@ -80,7 +82,16 @@ const Equirectangular2 = (props) => {
     markerObjects = [], markerObjectsIdxs = [],
     raycaster, renderer,
     texture,
-    scene
+    scene;
+
+  var width, height;
+  var viewAngle = 45,
+    near = 1,
+    far = 10000;
+  var aspect;
+  var stats;
+  var sceneObject, intersected;
+
 
   const {
     bottomDrawerOpen,
@@ -95,6 +106,7 @@ const Equirectangular2 = (props) => {
   } = useContext(TwofoldContext)
 
   const blockerRef = useRef(null)
+  const wContainerRef = useRef(null)
   const instructionsRef = useRef(null)
 
   useEffect(() => {
@@ -211,6 +223,35 @@ const Equirectangular2 = (props) => {
     raycaster = new THREE.Raycaster( new THREE.Vector3(), new THREE.Vector3( 0, - 1, 0 ), 0, 10 )
 
     /*
+     * Origin: axis helper
+     */
+    var axes = new THREE.AxisHelper(700)
+		scene.add(axes)
+
+    const wContainer = wContainerRef.current
+
+    function addControls() {
+      var options = {
+        speedFactor: 0.5,
+        delta: 1,
+        rotationFactor: 0.002,
+        maxPitch: 55,
+        hitTest: true,
+        hitTestDistance: 40
+      };
+      controls = new TouchControls({
+        container: wContainer, camera,
+        options,
+        RotationPad: rotationPad,
+        THREE,
+      });
+      controls.setPosition(0, 35, 400);
+      controls.addToScene(scene);
+      // controls.setRotation(0.15, -0.15);
+    }
+    addControls()
+
+    /*
      * Floor
      */
 
@@ -305,30 +346,20 @@ const Equirectangular2 = (props) => {
 
   /* From: https://threejsfundamentals.org/threejs/lessons/threejs-responsive.html */
   function resizeRendererToDisplaySize() {
-    logg('resizeRendererToDisplaySize()')
-
     const canvas = renderer.domElement
     const width = blockerRef.current.clientWidth
     const height = blockerRef.current.clientHeight
     const needResize = canvas.width !== width || canvas.height !== height
     if (needResize) {
-      logg([width, height], 'setting width, heigh!')
       renderer.setSize(width, height)
     }
     return needResize
   }
-
   function onWindowResize() {
-    logg('on window resie')
     if (resizeRendererToDisplaySize()) {
-      logg('and aspect')
-
-      // const canvas = renderer.domElement
-      // camera.aspect = canvas.clientWidth / canvas.clientHeight
       const width = blockerRef.current.clientWidth
       const height = blockerRef.current.clientHeight
       camera.aspect = width / height
-
       camera.updateProjectionMatrix()
     }
   }
@@ -383,10 +414,12 @@ const Equirectangular2 = (props) => {
     renderer.render( scene, camera )
   }
 
-  return <W>
+  return <W ref={wContainerRef} >
     <div ref={instructionsRef} />
     <Blocker ref={blockerRef} >
       <div id="Crosshair" />
+
+      <RotationPad />
     </Blocker>
   </W>
 }
