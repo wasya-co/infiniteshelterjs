@@ -1,4 +1,8 @@
 
+/*
+ * @TODO: this is just a copy of equirectangular2, discard
+ */
+
 import React, { Fragment as F, useContext, useEffect, useRef, useState } from "react"
 import { useHistory } from 'react-router-dom'
 import * as THREE from "three"
@@ -8,18 +12,12 @@ import { MTLLoader } from "three/examples/jsm/loaders/MTLLoader"
 import styled from 'styled-components'
 
 import { PointerLockControls } from './PointerLockControls'
-import _Octree from "$src/lib/threeoctree"
+import TouchControls from "./TouchControls"
+import RotationPad from "./RotationPad"
 import {
   logg,
   TwofoldContext,
 } from "$shared"
-
-logg(_Octree, '_Octree')
-const Octree = _Octree(THREE)
-logg(Octree, 'Octree')
-
-const GRAVITY = 30;
-const STEPS_PER_FRAME = 5;
 
 const Blocker = styled.div`
   border: 1px dashed red;
@@ -71,13 +69,14 @@ const W = styled.div`
 `;
 
 /**
- * Equirectangular4
- * _vp_ 2021-11-18
- * Sphere no skybox.
- * Should replace Equirectangular2.
+ * Equirectangular2
+ * _vp_ 2021-11-15
+ * Let's wire in a simple floor and full-window sizing.
+ *
+ * Threejs units of measure are centimeters (cm).
  *
  */
-const Equirectangular4 = (props) => {
+const Equirectangular2 = (props) => {
   logg(props, 'Equirectangular2')
   const { map } = props
 
@@ -87,7 +86,16 @@ const Equirectangular4 = (props) => {
     markerObjects = [], markerObjectsIdxs = [],
     raycaster, renderer,
     texture,
-    scene
+    scene;
+
+  var width, height;
+  var viewAngle = 45,
+    near = 1,
+    far = 10000;
+  var aspect;
+  var stats;
+  var sceneObject, intersected;
+
 
   const {
     bottomDrawerOpen,
@@ -102,6 +110,7 @@ const Equirectangular4 = (props) => {
   } = useContext(TwofoldContext)
 
   const blockerRef = useRef(null)
+  const wContainerRef = useRef(null)
   const instructionsRef = useRef(null)
 
   useEffect(() => {
@@ -124,8 +133,6 @@ const Equirectangular4 = (props) => {
   const direction = new THREE.Vector3()
   const vertex = new THREE.Vector3()
   const color = new THREE.Color()
-
-  const textureLoader = new THREE.TextureLoader()
 
   function init() {
 
@@ -219,6 +226,34 @@ const Equirectangular4 = (props) => {
 
     raycaster = new THREE.Raycaster( new THREE.Vector3(), new THREE.Vector3( 0, - 1, 0 ), 0, 10 )
 
+    /*
+     * Origin: axis helper
+     */
+    var axes = new THREE.AxisHelper(700)
+		scene.add(axes)
+
+    const wContainer = wContainerRef.current
+
+    function addControls() {
+      var options = {
+        speedFactor: 0.5,
+        delta: 1,
+        rotationFactor: 0.002,
+        maxPitch: 55,
+        hitTest: true,
+        hitTestDistance: 40
+      };
+      controls = new TouchControls({
+        container: wContainer, camera,
+        options,
+        RotationPad: rotationPad,
+        THREE,
+      });
+      controls.setPosition(0, 35, 400);
+      controls.addToScene(scene);
+      // controls.setRotation(0.15, -0.15);
+    }
+    addControls()
 
     /*
      * Floor
@@ -247,22 +282,63 @@ const Equirectangular4 = (props) => {
     const floor = new THREE.Mesh( floorGeometry, floorMaterial )
     scene.add( floor )
 
-    /**
-     * Skybox,
-     * minimal scene
+    /*
+     * Model Import
      */
+    // const scenesPath = '/assets/scenes/'
+    // const objectsPath = '/assets/objects/'
+    // let modelName = 'polycity' // 'wasyaco-reception' // 'tiny-house-2'
+    // const texturePath = `${modelName}/${modelName}.mtl`
+    // const modelPath = `${modelName}/${modelName}.obj`
+    // const manager = new THREE.LoadingManager()
+    // const onProgress = (xhr) => {
+    //   if (xhr.lengthComputable) {
+    //     const percentComplete = xhr.loaded / xhr.total * 100
+    //     console.log( Math.round( percentComplete, 2 ) + '% downloaded' )
+    //   }
+    // }
+    // const onError = () => {}
+    // const onLoad = (materials) => {
+    //   materials.preload()
+    //   const objLoader = new OBJLoader( manager )
+    //   objLoader.setMaterials( materials )
+    //   objLoader.setPath( scenesPath)
+    //   objLoader.load( modelPath, ( object ) => {
+    //     object.traverse((child) => {
+    //       if (child.isMesh) {
+    //         child.geometry.scale(0.10, 0.10, 0.10) // @TODO: change?
+    //       }
+    //     })
+    //     object.position.x = Math.random() * 500
+    //     object.position.y = 10
+    //     object.position.z = Math.random() * 500
+
+    //     logg(object, '1st object')
+    //     scene.add( object )
+    //     markerObjects.push( object )
+    //     markerObjectsIdxs.push({ uuid: object.uuid, name: 'camaro75', slug: 'construct1' }) // @TODO: change!
+
+    //   }, onProgress, onError )
+    // }
+    // const mtlLoader = new MTLLoader(manager)
+    // mtlLoader.setPath(scenesPath)
+    // mtlLoader.load(texturePath, onLoad)
+
+
+    /*
+     * Skybox
+     */
+    const textureLoader = new THREE.TextureLoader()
     const assetPath = map.img_path
-    let minimalMesh
-    textureLoader.load(assetPath, (texture) => {
-      var geometry = new THREE.SphereGeometry( 200, 20, 20 )
-      var material = new THREE.MeshBasicMaterial({ map: texture, overdraw: 0.5, side: THREE.BackSide })
-      minimalMesh = new THREE.Mesh( geometry, material )
-      scene.add( minimalMesh )
-    })
+    texture = textureLoader.load(assetPath, () => {
+      const rt = new THREE.WebGLCubeRenderTarget(texture.image.height)
+      rt.fromEquirectangularTexture(renderer, texture)
+      scene.background = rt.texture
+    });
 
 
-    /**
-     * And render
+    /*
+     * and render
      */
     renderer = new THREE.WebGLRenderer({ antialias: true })
     renderer.setPixelRatio( window.devicePixelRatio )
@@ -299,7 +375,20 @@ const Equirectangular4 = (props) => {
 
       var cameraDirection = controls.getDirection(new THREE.Vector3(0, 0, 0)).clone()
 
-      const intersections = [] // herehere @TODO: remove
+      /* for standing on things */
+      // raycaster.ray.origin.copy( controls.getObject().position )
+      // raycaster.ray.origin.y -= 10
+
+      raycaster = new THREE.Raycaster( camera.position, cameraDirection )
+      const intersections = raycaster.intersectObjects( markerObjects, true )
+      if (intersections.length) {
+        const pickedObject = intersections[0].object
+
+        // collision
+        if (intersections[0].distance < 5) {
+          moveForward = false
+        }
+      }
 
       const onObject = intersections.length > 0
       const delta = ( time - prevTime ) / 1000
@@ -323,107 +412,20 @@ const Equirectangular4 = (props) => {
         controls.getObject().position.y = 10
         canJump = true
       }
-
-
-      /*
-       * collision
-       */
-      const worldOctree = new THREE.Octree()
-      wordOctree.add( minimalMesh )
-      const playerCollider = new THREE.SphereGeometry(10, 10, 10) // ( new THREE.Vector3( 0, 0.35, 0 ), new THREE.Vector3( 0, 1, 0 ), 0.35 )
-      const playerVelocity = new THREE.Vector3()
-      const playerDirection = new THREE.Vector3()
-
-      let playerOnFloor = false
-      let mouseTime = 0
-      const keyStates = {}
-
-      const vector1 = new THREE.Vector3()
-      const vector2 = new THREE.Vector3()
-      const vector3 = new THREE.Vector3()
-
-      // document.addEventListener( 'keydown', ( event ) => {
-      //   keyStates[ event.code ] = true;
-      // } );
-
-      // document.addEventListener( 'keyup', ( event ) => {
-      //   keyStates[ event.code ] = false;
-      // } );
-
-      // document.addEventListener( 'mousedown', () => {
-      //   document.body.requestPointerLock();
-      //   mouseTime = performance.now();
-      // } );
-
-      // document.addEventListener( 'mouseup', () => {
-      //   throwBall();
-      // } );
-
-      // document.body.addEventListener( 'mousemove', ( event ) => {
-      //   if ( document.pointerLockElement === document.body ) {
-      //     camera.rotation.y -= event.movementX / 500;
-      //     camera.rotation.x -= event.movementY / 500;
-      //   }
-      // } )
-
-      function playerCollisions() {
-        const result = worldOctree.search( playerCollider )[0];
-        logg(result, 'result')
-
-        playerOnFloor = false;
-        if ( result ) {
-          playerOnFloor = result.normal.y > 0;
-          if ( ! playerOnFloor ) {
-            playerVelocity.addScaledVector( result.normal, - result.normal.dot( playerVelocity ) );
-          }
-          playerCollider.translate( result.normal.multiplyScalar( result.depth ) );
-        }
-      }
-
-      function updatePlayer( deltaTime ) {
-        logg(playerCollider, '#updatePlayer')
-
-        let damping = Math.exp( - 4 * deltaTime ) - 1;
-        if (!playerOnFloor) {
-          playerVelocity.y -= GRAVITY * deltaTime;
-          // small air resistance
-          damping *= 0.1;
-        }
-        playerVelocity.addScaledVector( playerVelocity, damping );
-        const deltaPosition = playerVelocity.clone().multiplyScalar( deltaTime );
-        playerCollider.translate( deltaPosition );
-        playerCollisions();
-        // camera.position.copy( playerCollider.end ); // herehere : move back
-      }
-
-      function getForwardVector() {
-        camera.getWorldDirection( playerDirection );
-        playerDirection.y = 0;
-        playerDirection.normalize();
-        return playerDirection;
-      }
-
-      function getSideVector() {
-        camera.getWorldDirection( playerDirection );
-        playerDirection.y = 0;
-        playerDirection.normalize();
-        playerDirection.cross( camera.up );
-        return playerDirection;
-      }
-
-      updatePlayer( delta )
     }
     prevTime = time
 
     renderer.render( scene, camera )
   }
 
-  return <W>
+  return <W ref={wContainerRef} >
     <div ref={instructionsRef} />
     <Blocker ref={blockerRef} >
       <div id="Crosshair" />
+
+      <RotationPad />
     </Blocker>
   </W>
 }
 
-export default Equirectangular4
+export default Equirectangular2
