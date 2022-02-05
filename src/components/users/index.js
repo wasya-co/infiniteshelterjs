@@ -2,9 +2,10 @@
  * components / users / index
  */
 import { Plugins } from '@capacitor/core'
-import { FacebookLoginResponse } from '@capacitor-community/facebook-login';
+import { FacebookLoginResponse } from '@capacitor-community/facebook-login'
 import React, { Fragment as F, useContext, useState, } from 'react'
 import { ToastContainer, toast } from 'react-toastify'
+import styled from 'styled-components'
 
 import 'react-toastify/dist/ReactToastify.css'
 
@@ -52,6 +53,14 @@ export const Logout = () => {
   return <Btn onClick={doLogout}>Logout</Btn>
 }
 
+const _W = styled.div`
+  display: flex;
+
+  > * {
+    // margin: auto .4em;
+  }
+`;
+
 export const PasswordLogin = (props) => {
   const api = useApi()
   const {
@@ -74,15 +83,15 @@ export const PasswordLogin = (props) => {
     })
   }
 
-  return <F>
+  return <_W>
     <input type='email' value={email} onChange={(e) => setEmail(e.target.value) } /><br />
     <input type='password' value={password} onChange={(e) => setPassword(e.target.value) }
       onKeyDown={(e) => {
         if (e.key === 'Enter') { doPasswordLogin(email, password) }
       }}
-    /><br />
+    />
     <Btn onClick={() => doPasswordLogin(email, password)}>Password Login</Btn>
-  </F>
+  </_W>
 }
 
 

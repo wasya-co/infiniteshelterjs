@@ -13,7 +13,7 @@ const W = styled.div`
  * Default
  */
 const ReportsShow = (props) => {
-  // logg(props, "ReportsShow")
+  logg(props, "ReportsShow")
 
   let [ item, setItem ] = useState({})
   let api = useApi()

@@ -158,7 +158,6 @@ const MyAccountWidget = (props) => {
     }
   }
 
-  if (!currentUser) { return null }
   return <W className="MyAccountWidget" >
 
     { /* currentUser.profile_photo_url && <Img src={currentUser.profile_photo_url} /> */ }

@@ -85,7 +85,7 @@ const MenuLeft= (props) => {
             } }>The Directory</span>
           </ListItem> */ }
 
-          { currentUser && currentUser.bookmarks.map((b, idx) =>
+          { currentUser && currentUser.bookmarks?.map((b, idx) =>
             <ListItem button key={idx}
               onClick={() => {
                 setDrawerOpen(false)

@@ -6,7 +6,7 @@ import React from "react"
 import {
   Link, Switch, BrowserRouter as Router, Redirect, Route as _Route, useHistory, withRouter
 } from 'react-router-dom'
-
+import { act } from '@testing-library/react'
 
 import ReportsShow from "./ReportsShow"
 import { LoginModal } from "$components/users"
@@ -15,36 +15,42 @@ import useApi from "$shared/Api"
 
 enzyme.configure({ adapter: new Adapter() })
 
-jest.mock('$shared/Api', () => {
+
+jest.mock('$shared/request', () => {
+  const originalModule = jest.requireActual("$shared/request")
   return {
     __esModule: true,
-    default: () => {
-      return {
-        getCity: () => {
-          return new Promise((resolve, reject) => {
-            resolve({
-              data: {
-                city: {
-                  newsitems: [{ name: 'report-name-2', item_type: 'Report' }]
-                }
+    ...originalModule,
+    default: {
+      get: () => {
+        return new Promise((resolve, reject) => {
+          resolve({
+            data: {
+              report: {
+                id: '1',
+                is_premium: true,
+                premium_tier: 1,
+                is_purchased: false,
               }
-            })
+            }
           })
-        },
-      }
-    },
+        })
+      },
+    }
   }
 })
 
-const theseProps = { match: { url: '/en/cities/travel-to/chicago', params: '?' } }
+
+const theseProps = { match: { url: '/en/reports/show/1', params: '?' } }
 
 describe("ReportsShow", () => {
 
-  test('renders', () => {
+  test('renders', async () => {
     let wrapper = mount(<AppMock >
-      <ReportsShow />
+      <ReportsShow {...theseProps} />
     </AppMock>)
     expect(wrapper).toBeTruthy()
+    await act(() => new Promise(setImmediate))
   })
 
 })

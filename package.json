@@ -192,8 +192,9 @@
   "scripts": {
     "build": "echo +++ +++\n\r'build_guydme , or build_ish ?\n\r @TODO: this isn't wired. +++ +++'",
     "build_guydme": "NODE_PATH=config/environments/production_guydme node scripts/build.js",
-    "build_ish": "NODE_PATH=config/environments/production_ish    node scripts/build.js",
-    "jest": "NODE_PATH=config/environments/test              jest -t current",
+    "build_ish": "NODE_PATH=config/environments/production_ish node scripts/build.js",
+    "jest": "NODE_PATH=config/environments/test jest -t current",
+    "jest2": "echo '+++ +++ usage:' ; echo '  yarn run jest2 -- <file>' ; echo '' ; NODE_PATH=config/environments/test jest -t current2",
     "nft_cancel": "npx hardhat run scripts/nft-cancel.js --network ropsten",
     "nft_compile": "npx hardhat compile",
     "nft_deploy": "npx hardhat run scripts/nft-deploy.js --network ropsten",

@@ -24,4 +24,6 @@ comfortable will resume auth and credit cards.
 0.0.10 - a bunch of 3d work - can pick! _vp_ 2021-11-11
 0.0.11 - 2021-11-15 making 3d canvas resize without glitching
 0.0.12 - TouchControls example is in.
-
+0.0.13 - builds on local machine
+         2022-01-16
+         removed equirectangular4 for now

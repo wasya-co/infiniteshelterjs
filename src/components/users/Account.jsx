@@ -3,7 +3,6 @@ import { Capacitor } from '@capacitor/core'
 import { PushNotifications } from '@capacitor/push-notifications'
 import { Toast } from "@capacitor/toast"
 import { ethers } from 'ethers'
-import React, { Fragment as F, useContext, useEffect, useState } from "react"
 import {
   IonButton, IonButtons,
   IonCard, IonCardContent, IonContent,
@@ -17,7 +16,12 @@ import {
 } from '@ionic/react'
 import { Container, Grid } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
+import React, {
+  Fragment as F,
+  useContext, useEffect, useState,
+} from "react"
 import { Link } from 'react-router-dom'
+import styled from 'styled-components'
 
 import { FbLogin, Logout, PasswordLogin } from "./"
 import { C, logg, logg2, TwofoldContext } from "$shared"
@@ -31,6 +35,14 @@ const isPushNotificationsAvailable = Capacitor.isPluginAvailable('PushNotificati
 const greeterAddress = "0x4bE9765Ca063E73E0aaEd227fd6731473508DbE0"
 const tokenAddress = "0xffa52d00685aC60e65457922aEae2c2783c0cB0E"
 
+const LoginRow = styled.div`
+  display: flex;
+  // border: 1px solid yellow;
+
+  > * {
+    margin: auto .4em;
+  }
+`;
 
 const Account = (props) => {
   logg(props, 'Account')
@@ -38,6 +50,8 @@ const Account = (props) => {
   const { currentUser, setCurrentUser } = useContext(TwofoldContext)
   const [ greeting, setGreetingValue ] = useState("")
   const [notifications, setNotifications] = useState([])
+  const [ scratchpad, setScratchpad ] = useState("")
+  const saveScratchpad = () => {}
 
   // push notifications
   const register = () => {
@@ -196,10 +210,12 @@ const Account = (props) => {
                   </ul>
                 </F>
                 || <F>
-                  <h4>Not logged in 4</h4>
-                  <FbLogin />
-                  <br /><br />
-                  <PasswordLogin />
+                  <h4>Not logged in</h4>
+
+                  <LoginRow>
+                    <FbLogin />
+                    <PasswordLogin />
+                  </LoginRow>
 
                 </F> }
             </Grid>
