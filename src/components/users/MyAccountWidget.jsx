@@ -11,6 +11,9 @@ import { useWeb3React, Web3ReactProvider } from "@web3-react/core"
 import { InjectedConnector } from '@web3-react/injected-connector'
 
 import config from "config"
+
+import { FbLogin, Logout, PasswordLogin } from "./"
+
 import { logg, S, request, TwofoldContext, useApi } from "$shared"
 import bodyNFT from '$src/artifacts/contracts/Body.sol/BodyNFT.json'
 
@@ -21,9 +24,21 @@ import bodyNFT from '$src/artifacts/contracts/Body.sol/BodyNFT.json'
 const bodyAddress = '0x3e1a03a9e1682f4dd95413e0be69e5b7bccaf15d'
 
 const BuyBtn = styled.div`
-  border: 1px solid black;
+  // border: 1px solid black;
   padding: 5px;
   cursor: pointer;
+`;
+
+const Cell = styled.div`
+  display: flex;
+`;
+
+const FlexRow = styled.div`
+  display: flex;
+
+  > * {
+    margin: auto .4em;
+  }
 `;
 
 const _Img = styled.div`
@@ -41,13 +56,20 @@ const injected = new InjectedConnector() // { supportedChainIds: [1, 3, 4, 5, 42
 const stripePromise = loadStripe('pk_test_qr1QPmSpLdBFt1F7itdWJOj3') // @TODO: this is active, but change.
 
 const Login = (props) => {
-  return (<F>
-    <button>do login</button>
-  </F>)
+  const [ active, setActive ] = useState(false) // whether the button is expanded into login form(s)
+
+  return <F>
+    { active && <FlexRow>
+                  <FbLogin />
+                  <PasswordLogin />
+                </FlexRow>
+      || <button onClick={() => setActive(true)} >Login</button>
+    }
+  </F>
 };
 
 const W = styled.div`
-  border: 2px solid black;
+  border: 2px solid cyan;
 
   display: flex;
   justify-content: flex-start;
@@ -161,24 +183,28 @@ const MyAccountWidget = (props) => {
   return <W className="MyAccountWidget" >
 
     { /* currentUser.profile_photo_url && <Img src={currentUser.profile_photo_url} /> */ }
-    <Img src={avatar || currentUser.profile_photo_url} />
+    <Img src={avatar || currentUser?.profile_photo_url} />
 
-    { currentUser.email ? currentUser.email : <Login /> } &nbsp;
-    [&nbsp;{ typeof currentUser.n_unlocks === 'number' ? currentUser.n_unlocks : '?' } coins&nbsp;]&nbsp; &nbsp;
-    <BuyBtn onClick={() => setPurchaseModalIsOpen(true) }>buy</BuyBtn>
-
-    { /* ethers */ }
-    <div className="flex flex-col items-center justify-center">
-      { active ? <F>
-        <span>Connected with <b>{account}</b></span>
-        <button onClick={disconnect} >Disconnect</button>
-        <button onClick={myBodies} >myBodies</button>
-      </F> : <F>
-        <span>Not connected</span>
-        <button onClick={connect} >Connect to MetaMask</button>
-      </F> }
-    </div>
-
+    <FlexRow>
+      <Cell>
+        { currentUser.email ? <F>
+          [ {currentUser.email} <Logout />]
+          [ { currentUser.n_unlocks || '?' } coins <BuyBtn onClick={() => setPurchaseModalIsOpen(true) }>buy</BuyBtn>]
+        </F> : <Login /> }
+      </Cell>
+      <Cell>
+        { /* ethers */ }
+        <div className="flex flex-col items-center justify-center">
+          { active ? <F> [
+            <span>Connected with <b>{account}</b></span>
+            <button onClick={disconnect} >Disconnect</button>
+            <button onClick={myBodies} >myBodies</button> ]
+          </F> : <F>
+            [ <span>Not Connected</span> <button onClick={connect} >Connect to MetaMask</button>]
+          </F> }
+        </div>
+      </Cell>
+    </FlexRow>
 
     <Modal isOpen={purchaseModalIsOpen} ariaHideApp={false} style={{  width: '500px' }} >
       <h1>

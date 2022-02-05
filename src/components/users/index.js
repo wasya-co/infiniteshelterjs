@@ -48,7 +48,7 @@ export const Logout = () => {
   const doLogout = () => {
     localStorage.removeItem(C.jwt_token)
     localStorage.removeItem(C.current_user)
-    setCurrentUser(null)
+    setCurrentUser({})
   }
   return <Btn onClick={doLogout}>Logout</Btn>
 }
