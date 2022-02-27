@@ -72,14 +72,14 @@ export const PasswordLogin = (props) => {
 
   const doPasswordLogin = async (email, password) => {
     request.post(`${config.apiOrigin}${api.loginPath}`, { email, password }).then((r) => r.data).then((resp) => {
-      setCurrentUser(resp)
-      localStorage.setItem('jwt_token', resp.jwt_token)
-      localStorage.setItem('current_user', JSON.stringify(resp))
+      localStorage.setItem(C.jwt_token, resp.jwt_token)
+      localStorage.setItem(C.current_user, JSON.stringify(resp))
+      setCurrentUser(resp) // must be done *after* setting C.jwt_token
       setLoginModalOpen(false)
     }).catch((e) => {
       logg(e, 'e322')
       toast("Login failed")
-      setCurrentUser(null)
+      setCurrentUser(C.anonUser)
     })
   }
 

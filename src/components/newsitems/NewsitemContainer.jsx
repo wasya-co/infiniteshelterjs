@@ -52,7 +52,7 @@ const W = (props) => {
  */
 const NewsitemContainer = ({ children, ...props }) => {
   // logg(props, 'NewsitemContainer')
-  const { item, variant } = props
+  const { className, item, variant } = props
   const { item_type, slug } = item
 
   const history = useHistory()
@@ -77,7 +77,7 @@ const NewsitemContainer = ({ children, ...props }) => {
     }
   }
 
-  return <W {...{ navigateToItem, variant }} >
+  return <W {...{ className, navigateToItem, variant }} >
     { children }
     <Row>
       <ItemIcon {...item} />

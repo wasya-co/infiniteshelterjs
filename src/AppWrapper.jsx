@@ -61,7 +61,7 @@ const AppWrapper = (props) => {
   const childProps = {
     currentUser, setCurrentUser,
     loginModalOpen, setLoginModalOpen,
-    theme, toggleTheme
+    theme, toggleTheme,
   }
 
   if (!os) { return null }

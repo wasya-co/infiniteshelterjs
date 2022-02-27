@@ -43,21 +43,27 @@ const W = ({ children, variant, ...props }) => {
 
 /**
  * Default
- * @TODO: test-driven
  */
 const MarkersList = (props) => {
   // logg(props, 'MarkersList')
   const { variant } = props
 
   const history = useHistory()
-  const { showUrl, setShowUrl } = useContext(TwofoldContext)
+  const {
+    itemToUnlock, setItemToUnlock,
+    showUrl, setShowUrl,
+  } = useContext(TwofoldContext)
 
   const goto = (m) => {
-    if (m.url) {
-      setShowUrl(m.url)
-    }
-    else {
-      history.push(`/en/locations/show/${m.slug}`)
+    if (m.premium_tier && !m.is_purchased) {
+      setItemToUnlock({ ...m })
+    } else {
+      if (m.url) {
+        setShowUrl(m.url)
+      }
+      else {
+        history.push(`/en/locations/show/${m.slug}`)
+      }
     }
   }
 

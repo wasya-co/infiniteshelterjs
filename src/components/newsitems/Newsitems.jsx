@@ -6,6 +6,7 @@ import styled from 'styled-components'
 import { GenericNewsitem } from "./"
 import NewsitemGallery from "$components/newsitems/NewsitemGallery"
 import NewsitemReport from "$components/newsitems/NewsitemReport"
+import NewsitemPhoto from "$components/newsitems/NewsitemPhoto"
 import NewsitemVideo from "$components/newsitems/NewsitemVideo"
 import { Api, C, logg } from "$shared"
 
@@ -34,13 +35,28 @@ const Newsitems = (props) => {
       { newsitems.map((newsitem, idx) => {
         const premium_tier = newsitem.premium_tier || 0
         const icon = ICONS[premium_tier]
+        let item
+
+        switch (newsitem.item_type) {
+          case C.item_types.gallery:
+            item = <NewsitemGallery item={newsitem} variant={variant} />
+            break
+          case C.item_types.report:
+            item = <NewsitemReport  item={newsitem} variant={variant} />
+            break
+          case C.item_types.video:
+            item = <NewsitemVideo   item={newsitem} variant={variant} />
+            break
+            case C.item_types.photo:
+              item = <NewsitemPhoto   item={newsitem} variant={variant} />
+              break
+          default:
+            item = <GenericNewsitem item={newsitem} />
+        }
 
         return (
           <div key={idx} className={`items premium-${premium_tier}`}>
-            { newsitem.item_type === C.item_types.gallery && <NewsitemGallery item={newsitem} variant={variant} /> }
-            { newsitem.item_type === C.item_types.report  && <NewsitemReport  item={newsitem} variant={variant} /> }
-            { newsitem.item_type === C.item_types.video   && <NewsitemVideo   item={newsitem} variant={variant} /> }
-            { !newsitem.item_type && <GenericNewsitem item={newsitem} /> }
+            { item }
           </div>
         )
       }) }
@@ -49,6 +65,7 @@ const Newsitems = (props) => {
 }
 
 Newsitems.propTypes = {
+  newsitems: PropTypes.array.isRequired,
   variant: PropTypes.string,
 }
 export default Newsitems

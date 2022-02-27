@@ -220,8 +220,6 @@ export const TwofoldContextProvider = ({ children, ...props }) => {
   /* R */
   const [ ratedConfirmation, _setRatedConfirmation ] = useState(JSON.parse(localStorage.getItem(C.ratedConfirmation)))
   const setRatedConfirmation = (which) => {
-    logg(which, 'setting')
-
     localStorage.setItem(C.ratedConfirmation, JSON.stringify(which))
     _setRatedConfirmation(which)
   }

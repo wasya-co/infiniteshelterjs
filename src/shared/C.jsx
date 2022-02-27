@@ -4,6 +4,9 @@
  */
 const C = {
 
+  // A
+  anonUser: {}, // as opposed to null
+
   // B
   bottomDrawerOpen: 'bottom-drawer-open', // localStorage
 
@@ -31,6 +34,7 @@ const C = {
   item_types: {
     gallery: 'Gallery',
     report: 'Report',
+    photo: 'Photo',
     video: 'Video',
   },
 
@@ -65,7 +69,7 @@ const C = {
     dark: 'dark',
     light: 'light',
   },
-  twofoldPercent: 'twofold-percent', // localStorage  
+  twofoldPercent: 'twofold-percent', // localStorage
 
   // V
   variants: {

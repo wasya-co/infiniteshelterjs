@@ -11,11 +11,16 @@ import { Box, inflector, logg } from "$shared"
 export const GenericNewsitem = (props) => {
   // logg(props, 'GenericNewsitem')
   const { item } = props
-  return <div dangerouslySetInnerHTML={{ __html: item.description }} />
+
+  return <F>
+    generic newsitem
+    <div dangerouslySetInnerHTML={{ __html: item.description }} />
+  </F>
 }
 
 /* N */
 export { default as NewsitemGallery } from "./NewsitemGallery"
+export { default as NewsitemPhoto } from "./NewsitemPhoto"
 export { default as NewsitemReport } from "./NewsitemReport"
 export { default as Newsitems } from "./Newsitems"
 export { default as NewsitemContainer } from "./NewsitemContainer"

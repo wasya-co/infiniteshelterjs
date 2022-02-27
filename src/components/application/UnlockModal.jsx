@@ -46,7 +46,8 @@ const UnlockModal = (props) => {
     loginModalOpen, setLoginModalOpen,
     ratedConfirmation, setRatedConfirmation,
   } = useContext(TwofoldContext)
-  const usedTwofoldContext = useContext(TwofoldContext)
+  // const usedTwofoldContext = useContext(TwofoldContext)
+  // logg(usedTwofoldContext, 'unlockModalUsedTwofoldContext')
 
   const api = useApi()
 
