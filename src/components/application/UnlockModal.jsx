@@ -1,6 +1,6 @@
 
 import PropTypes from 'prop-types'
-import React, { useContext, useEffect, useRef, } from 'react'
+import React, { Fragment as F, useContext, useEffect, useRef, } from 'react'
 import Modal from "react-modal"
 import { useHistory } from 'react-router-dom'
 import styled from 'styled-components'
@@ -44,6 +44,7 @@ const UnlockModal = (props) => {
     currentUser, setCurrentUser,
     itemToUnlock, setItemToUnlock,
     loginModalOpen, setLoginModalOpen,
+    purchaseModalIsOpen, setPurchaseModalIsOpen,
     ratedConfirmation, setRatedConfirmation,
   } = useContext(TwofoldContext)
   // const usedTwofoldContext = useContext(TwofoldContext)
@@ -97,11 +98,18 @@ const UnlockModal = (props) => {
       { closable && <Btn0 onClick={() => closable && setItemToUnlock(false) } >&times;</Btn0> }
     </Header>
     <p>To access this content, please unlock it first. It costs {cost} coin(s) to unlock.</p>
-    { !!currentUser
-      && <p>You have <b>{currentUser.n_unlocks}</b> unlocks.</p>
-      || <p>You have to be logged in to unlock content. <a onClick={() => { setLoginModalOpen(true) ; setItemToUnlock(false) }}>Please login.</a></p> }
+    { currentUser && <F>
+      <p>You have <b>{currentUser.n_unlocks}</b> unlocks.</p>
+      { currentUser.n_unlocks >= cost && <Btn onClick={doUnlock} >Unlock</Btn> }
+      { currentUser.n_unlocks < cost && <F>
+        <p>You don't have enough unlocks.</p>
+        <Btn onClick={() => { setPurchaseModalIsOpen(true) ; setItemToUnlock(false)} } >Purchase more.</Btn>
+      </F> }
+    </F> }
+    { !currentUser && <F>
+      <p>You have to be logged in to unlock content. <a onClick={() => { setLoginModalOpen(true) ; setItemToUnlock(false) }}>Please login.</a></p>
+    </F> }
     <BtnRow>
-      { !!currentUser && <Btn onClick={doUnlock} >Unlock</Btn> }
       { !closable && <Btn onClick={gohome} >Go Home</Btn> }
     </BtnRow>
   </Modal>)

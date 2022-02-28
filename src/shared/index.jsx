@@ -217,6 +217,9 @@ export const TwofoldContextProvider = ({ children, ...props }) => {
   const [ mapPanelWidth, setMapPanelWidth ] = useState(null)
   const [ mapPanelHeight, setMapPanelHeight ] = useState(null)
 
+  /* P */
+  const [ purchaseModalIsOpen, setPurchaseModalIsOpen ] = useState(false)
+
   /* R */
   const [ ratedConfirmation, _setRatedConfirmation ] = useState(JSON.parse(localStorage.getItem(C.ratedConfirmation)))
   const setRatedConfirmation = (which) => {
@@ -256,6 +259,8 @@ export const TwofoldContextProvider = ({ children, ...props }) => {
 
     mapPanelHeight, setMapPanelHeight,
     mapPanelWidth, setMapPanelWidth,
+
+    purchaseModalIsOpen, setPurchaseModalIsOpen,
 
     ratedConfirmation, setRatedConfirmation,
 

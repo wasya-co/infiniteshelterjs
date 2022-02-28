@@ -87,11 +87,13 @@ const MyAccountWidget = (props) => {
   // logg(props, 'MyAccountWidget')
 
   const api = useApi()
-  const { currentUser, setCurrentUser } = useContext(TwofoldContext)
+  const {
+    currentUser, setCurrentUser,
+    purchaseModalIsOpen, setPurchaseModalIsOpen,
+  } = useContext(TwofoldContext)
   const stripe = useStripe()
   const elements = useElements()
 
-  const [purchaseModalIsOpen, setPurchaseModalIsOpen] = useState(false)
   /*
    * @TODO: avatar would be an object s.t. multiple styles/sizes are there,
    * and it should be in a context - shared across threemap, and accountWidget.

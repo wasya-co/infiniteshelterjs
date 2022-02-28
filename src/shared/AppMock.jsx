@@ -16,15 +16,23 @@ import { logg, S, TwofoldContext } from "$shared"
 import { LoginModal } from "$components/users"
 
 const AppMock = (props) => {
-  let { currentUser, setCurrentUser } = props
+  let {
+    currentUser, setCurrentUser,
+    itemToUnlock, setItemToUnlock,
+  } = props
   const history = createMemoryHistory()
   history.push("/en/cities/travel-to/chicago") // @TODO: move where appropriate
 
-  const [ itemToUnlock, setItemToUnlock ] = useState({})
+  const [ localItemToUnlock, setLocalItemToUnlock ] = useState({})
   const [ localCurrentUser, setLocalCurrentUser ] = useState(false)
+  const [ purchaseModalIsOpen, setPurchaseModalIsOpen ] = useState(false)
   if (!currentUser) {
     currentUser = localCurrentUser
     setCurrentUser = setLocalCurrentUser
+  }
+  if (!itemToUnlock) {
+    itemToUnlock = localItemToUnlock
+    setItemToUnlock = setLocalItemToUnlock
   }
 
   return <ThemeProvider theme={S.lightTheme}>
@@ -33,7 +41,9 @@ const AppMock = (props) => {
         // bottomDrawerOpen, setBottomDrawerOpen,
         currentUser, setCurrentUser,
         itemToUnlock, setItemToUnlock,
+
         // layout, setLayout,
+        purchaseModalIsOpen, setPurchaseModalIsOpen,
         // showUrl, setShowUrl,
         // zoom, setZoom,
       }} >
