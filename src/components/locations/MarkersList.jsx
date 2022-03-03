@@ -9,6 +9,7 @@ import styled from 'styled-components'
 import {
   C,
   logg, S, TwofoldContext,
+  PurchasedIcon,
   WBordered, WBorderedItem,
 } from "$shared"
 import { Metaline } from "$components/application"
@@ -73,9 +74,11 @@ const MarkersList = (props) => {
       onClick={() => goto(m) }
     >
       <img src={m.title_img_path} /><br />
+      { m.is_purchased && <PurchasedIcon /> }
       {m.name}
     </Marker>)
   })
+
   return <W className="MarkersList" >
     {out}
   </W>

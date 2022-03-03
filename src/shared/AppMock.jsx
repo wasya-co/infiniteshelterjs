@@ -19,13 +19,14 @@ const AppMock = (props) => {
   let {
     currentUser, setCurrentUser,
     itemToUnlock, setItemToUnlock,
+    purchaseModalIsOpen, setPurchaseModalIsOpen,
   } = props
   const history = createMemoryHistory()
   history.push("/en/cities/travel-to/chicago") // @TODO: move where appropriate
 
   const [ localItemToUnlock, setLocalItemToUnlock ] = useState({})
   const [ localCurrentUser, setLocalCurrentUser ] = useState(false)
-  const [ purchaseModalIsOpen, setPurchaseModalIsOpen ] = useState(false)
+  const [ localPurchaseModalIsOpen, setLocalPurchaseModalIsOpen ] = useState(false)
   if (!currentUser) {
     currentUser = localCurrentUser
     setCurrentUser = setLocalCurrentUser
@@ -33,6 +34,10 @@ const AppMock = (props) => {
   if (!itemToUnlock) {
     itemToUnlock = localItemToUnlock
     setItemToUnlock = setLocalItemToUnlock
+  }
+  if (!purchaseModalIsOpen) {
+    purchaseModalIsOpen = localPurchasesModalIsOpen
+    setPurchaseModalIsOpen = setLocalPurchasesModalIsOpen
   }
 
   return <ThemeProvider theme={S.lightTheme}>

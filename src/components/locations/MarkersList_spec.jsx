@@ -51,7 +51,11 @@ jest.mock('react-router-dom', () => {
   }
 })
 
-describe("MarkersList - current2", () => {
+describe("MarkersList - ", () => {
+
+  afterEach(() => {
+    jest.clearAllMocks()
+  })
 
   it("renders", () => {
     let component = mount(<AppMock>
@@ -61,8 +65,6 @@ describe("MarkersList - current2", () => {
   })
 
   it("#goto, pushes to history - ", async () => {
-    jest.clearAllMocks()
-
     let component = await mount(<AppMock>
       <MarkersList {...theseProps} />
     </AppMock>)
@@ -72,7 +74,6 @@ describe("MarkersList - current2", () => {
   })
 
   it('#goto, premium_tier 1, not purchased, shows paywall - ', async () => {
-    jest.clearAllMocks()
     const theseProps = { markers: [
       { slug: 'some-slug', premium_tier: 1 }
     ] }
@@ -83,5 +84,17 @@ describe("MarkersList - current2", () => {
     expect(mockPush).not.toHaveBeenCalled()
     await act(() => new Promise(setImmediate))
   })
+
+  it('displays purchased? status - current', async () => {
+    const theseProps = { markers: [
+      { slug: 'some-slug', premium_tier: 1, is_purchased: true }
+    ] }
+    let component = await mount(<AppMock>
+      <MarkersList {...theseProps} />
+    </AppMock>)
+    expect(component.html()).toMatch('PurchasedIcon')
+    await act(() => new Promise(setImmediate))
+  })
+
 
 })

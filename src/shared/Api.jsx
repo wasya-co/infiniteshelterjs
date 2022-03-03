@@ -15,20 +15,23 @@ const useApi = () => {
       return `/api/payments/unlock?kind=${kind}&id=${id}&jwt_token=${jwt_token}`;
     },
 
-    getMyAccount: () => {
-      const jwt_token = localStorage.getItem('jwt_token')
-      return request.post(`/api/my/account`, {
-        jwt_token: jwt_token,
-      })
-    },
+
+    getCities: ()   => request.get(`${config.apiOrigin}/api/cities`).then((r) => r.data),
+    getCity: (slug) => request.get(`${config.apiOrigin}/api/cities/view/${slug}`),
+    getMyAccount: () => request.post(`/api/my/account`, {
+        jwt_token: localStorage.getItem('jwt_token'),
+      }).then((r) => {
+        logg(r.data, 'getmyaccount')
+        return r.data
+      }),
+    getPayments: () => request.get(`${config.apiOrigin}/api/payments2?jwt_token=${token}`).then((r) => r.data),
+    getTag: (tag) => request.get(`${config.apiOrigin}/api/tags/view/${tag.slug}`).then((r) => r.data),
 
     loginPath: '/api/users/login.json',
     longTermTokenPath: '/api/users/long_term_token',
 
     myAccount: () => "/api/my/account",
     myVideosPath: "/api/my/videos",
-
-    paymentsPath: "/api/payments2",
 
     reportsGet: (a) => {
       const currentUser = JSON.parse(localStorage.getItem("current_user")) || {};
@@ -39,9 +42,6 @@ const useApi = () => {
       return `${config.apiOrigin}/api/reports/view/${a}?${jwt}`;
     },
 
-    getCities: ()   => request.get(`${config.apiOrigin}/api/cities`).then((r) => r.data),
-    getCity: (slug) => request.get(`${config.apiOrigin}/api/cities/view/${slug}`),
-    getTag: (tag) => request.get(`${config.apiOrigin}/api/tags/view/${tag.slug}`).then((r) => r.data),
 
     applicationHome: async () => {
       const out = await request.get(`${config.apiOrigin}/api/sites/view/${config.domain}`, { params: { jwt_token: token } })

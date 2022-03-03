@@ -91,6 +91,8 @@ const MyAccountWidget = (props) => {
     currentUser, setCurrentUser,
     purchaseModalIsOpen, setPurchaseModalIsOpen,
   } = useContext(TwofoldContext)
+  // logg(useContext(TwofoldContext), 'MyAccountWidget#usedTwofoldContext')
+
   const stripe = useStripe()
   const elements = useElements()
 
@@ -100,34 +102,27 @@ const MyAccountWidget = (props) => {
    */
   const [ avatar, setAvatar ] = useState("")
 
-  // buy unlocks (coins?)
+  // buy unlocks (coins)
   const handleSubmit = async (event) => {
     event.preventDefault()
-    logg('purchasing...')
 
     if (!stripe || !elements) { return }
     const cardElement = elements.getElement(CardElement)
+    let client_secret = await api.getPayments()
 
-    const jwtToken = localStorage.getItem('jwt_token')
-    let client_secret = await request.get(`${config.apiOrigin}${api.paymentsPath}?jwt_token=${jwtToken}`)
-    client_secret = client_secret.data.client_secret;
-    logg(client_secret, 'client_secret');
-
-    const result = await stripe.confirmCardPayment(client_secret, {
+    const result = await stripe.confirmCardPayment(client_secret.client_secret, {
       payment_method: {
         card: elements.getElement(CardElement),
       },
     })
-    logg(result, 'result')
 
     if (result.error) {
       logg(result.error.message, 'error message')
     } else {
       if (result.paymentIntent.status === 'succeeded') {
-        let response = await request.get(`${config.apiOrigin}${api.myAccount()}?jwt_token=${jwtToken}`)
-        logg(response, 'ze3response')
-      } else {
-        logg('something else');
+        let response = await api.getMyAccount()
+        setCurrentUser(response)
+        setPurchaseModalIsOpen(false)
       }
     }
   }
@@ -182,6 +177,8 @@ const MyAccountWidget = (props) => {
     }
   }
 
+  logg(currentUser, 'cuUse')
+
   return <W className="MyAccountWidget" >
 
     { /* currentUser.profile_photo_url && <Img src={currentUser.profile_photo_url} /> */ }
@@ -190,8 +187,9 @@ const MyAccountWidget = (props) => {
     <FlexRow>
       <Cell>
         { currentUser.email ? <F>
-          [ {currentUser.email} <Logout />]
-          [ { currentUser.n_unlocks || '?' } coins <BuyBtn onClick={() => setPurchaseModalIsOpen(true) }>buy</BuyBtn>]
+          [ {currentUser.email} <Logout /> ]
+          [ { typeof currentUser.n_unlocks === 'undefined' ? '?' : currentUser.n_unlocks}  coins
+            <BuyBtn onClick={() => setPurchaseModalIsOpen(true) }>buy</BuyBtn> ]
         </F> : <Login /> }
       </Cell>
       <Cell>
@@ -208,13 +206,10 @@ const MyAccountWidget = (props) => {
       </Cell>
     </FlexRow>
 
-    <Modal isOpen={purchaseModalIsOpen} ariaHideApp={false} style={{  width: '500px' }} >
+    <Modal isOpen={purchaseModalIsOpen} ariaHideApp={false} >
       <h1>
-        Purchase this
-        <span onClick={() => {
-          logg('clicking...')
-          setPurchaseModalIsOpen(false)
-        } } >[x]</span>
+        Buy unlocks
+        <span onClick={() => { setPurchaseModalIsOpen(false) } } >[x]</span>
       </h1>
       <form onSubmit={handleSubmit} >
         <CardElement />

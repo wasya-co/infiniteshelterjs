@@ -7,7 +7,7 @@ import { IonIcon } from '@ionic/react'
 import { CircularProgress as _CircularProgress } from '@material-ui/core'
 import _Box from '@material-ui/core/Box'
 import { ChevronLeft as _ChevronLeft, ChevronRight as _ChevronRight, Menu as _MenuIcon, } from '@material-ui/icons'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import {
   Link, Switch, BrowserRouter as Router, Redirect, Route as _Route, useHistory, withRouter
 } from 'react-router-dom'
@@ -17,6 +17,7 @@ import config from 'config'
 import C from "./C"
 
 /* A */
+import useApi from "./Api"
 export { default as useApi } from "./Api"
 export { default as AppMock } from "./AppMock"
 export { default as AppRouter } from "./AppRouter"
@@ -168,6 +169,9 @@ export const MenuIcon = styled(_MenuIcon)`
 `;
 
 /* P */
+export const PurchasedIcon = () => {
+  return <div className="PurchasedIcon">[purchased]</div>
+}
 
 /**
  * pretty print date
@@ -192,6 +196,16 @@ export const TwofoldContextProvider = ({ children, ...props }) => {
     loginModalOpen, setLoginModalOpen,
     theme, toggleTheme,
   } = props
+
+  const api = useApi()
+
+  useEffect(() => {
+    let closure = setTimeout(async () => {
+      const result = await api.getMyAccount()
+      setCurrentUser(result)
+    }, 1 * 1000)
+    return () => clearTimeout(closure)
+  }, [currentUser.is_purchasing])
 
   /* B */
   // @TODO: does localStorage work like this on mobile?
