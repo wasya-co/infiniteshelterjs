@@ -54,9 +54,10 @@ const UnlockModal = (props) => {
 
   const doUnlock = async () => {
     // @TODO: check how many unlocks I have, and offer to purchase more if not enough.
-    const path = api.doUnlock({ kind: itemToUnlock.item_type, id: itemToUnlock.id })
-    await request.post(`${config.apiOrigin}${path}`).then((r) => {
+    await api.doUnlock({ kind: itemToUnlock.item_type, id: itemToUnlock.id }).then((r) => {
       setItemToUnlock({})
+      setCurrentUser(r)
+      // refresh the newsfeed?
     }).catch((e) => {
       logg(e, 'e19')
     })

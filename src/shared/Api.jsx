@@ -10,9 +10,12 @@ const useApi = () => {
   const token = localStorage.getItem(C.jwt_token);
 
   return {
+
+    // returns current user
     doUnlock: ({ kind, id }) => {
       const jwt_token = localStorage.getItem('jwt_token')
-      return `/api/payments/unlock?kind=${kind}&id=${id}&jwt_token=${jwt_token}`;
+      const path = `/api/payments/unlock?kind=${kind}&id=${id}&jwt_token=${jwt_token}`
+      return request.post(`${config.apiOrigin}${path}`).then((r) => r.data)
     },
 
 

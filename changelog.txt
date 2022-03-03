@@ -27,3 +27,4 @@ comfortable will resume auth and credit cards.
 0.0.13 - builds on local machine
          2022-01-16
          removed equirectangular4 for now
+         2022-03-03 wow, can unlock!
