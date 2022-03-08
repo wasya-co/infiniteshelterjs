@@ -187,6 +187,9 @@ export { default as S } from "./S"
 
 /* T */
 
+/**
+ * ishjs has a newer version of this. _vp_ 2022-03-05
+ */
 export const TwofoldContext = React.createContext({})
 export const TwofoldContextProvider = ({ children, ...props }) => {
   // logg(props, 'TwofoldContextProvider')

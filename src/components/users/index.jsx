@@ -62,6 +62,8 @@ const _W = styled.div`
 `;
 
 export const PasswordLogin = (props) => {
+  // logg(props, 'PasswordLogin')
+
   const api = useApi()
   const {
     currentUser, setCurrentUser,
@@ -84,15 +86,13 @@ export const PasswordLogin = (props) => {
   }
 
   return <_W>
-    <input type='email' value={email} onChange={(e) => setEmail(e.target.value) } /><br />
+    <input type='email'    value={email}    onChange={(e) => setEmail(e.target.value)    } /><br />
     <input type='password' value={password} onChange={(e) => setPassword(e.target.value) }
-      onKeyDown={(e) => {
-        if (e.key === 'Enter') { doPasswordLogin(email, password) }
-      }}
+      onKeyDown={(e) => { if (e.key === 'Enter') { doPasswordLogin(email, password) } }}
     />
     <Btn onClick={() => doPasswordLogin(email, password)}>Password Login</Btn>
   </_W>
 }
 
 
-export { default as MyAccountWidget } from "./MyAccountWidget";
+export { default as MyAccountWidget } from "./MyAccountWidget"
