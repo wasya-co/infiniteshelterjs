@@ -102,7 +102,9 @@ const ZoomCtrl = (props) => {
  */
 const LocationsShowMobile = (props) => {
   // logg(props, 'LocationsShowMobile')
-  const { match } = props
+  const {
+    match,
+  } = props
 
   const {
     bottomDrawerOpen,

@@ -32,9 +32,7 @@ const L = styled.div`
 `;
 const WDayNight = styled.div`
   // border: 1px solid green;
-
   display: flex;
-
   margin: 0 1em;
 `;
 const DayNightToggle = (props) => {
@@ -46,10 +44,7 @@ const DayNightToggle = (props) => {
   </WDayNight>
 }
 
-
-
 /* W */
-
 const W = styled.div`
   border: ${p=>p.debug?'1':'0'}px solid cyan;
 
@@ -97,7 +92,6 @@ const Breadcrumbs = (props) => {
     <DayNightToggle toggleTheme={toggleTheme} theme={theme} />
   </W>
 }
-
 Breadcrumbs.propTypes = {
   breadcrumbs: PropTypes.arrayOf(
     PropTypes.shape({

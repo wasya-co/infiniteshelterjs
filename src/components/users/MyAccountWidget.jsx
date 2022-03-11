@@ -177,8 +177,6 @@ const MyAccountWidget = (props) => {
     }
   }
 
-  logg(currentUser, 'cuUse')
-
   return <W className="MyAccountWidget" >
 
     { /* currentUser.profile_photo_url && <Img src={currentUser.profile_photo_url} /> */ }

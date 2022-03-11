@@ -17,15 +17,18 @@ import { Newsitems } from "$components/newsitems"
 
 /* M */
 const _Marker = styled.div`
-  margin: 10px;
-  max-width: 20vw;
-  min-width: 120px;
+  margin-bottom: 10px;
+  text-align: center;
+
+  min-width: 100px;
+  max-width: 33%;
+  width: min(33%, 100px);
 `;
 const Marker = ({ children, variant, ...props }) => {
   if (variant===C.variants.bordered) {
     return <WBorderedItem {...props} >{children}</WBorderedItem>
   } else {
-    return <_Marker {...props} >{children}</_Marker>
+    return <_Marker className="Marker" {...props} >{children}</_Marker>
   }
 }
 
@@ -33,6 +36,13 @@ const Marker = ({ children, variant, ...props }) => {
 const _W = styled.div`
   display: flex;
   flex-wrap: wrap;
+  justify-content: space-around;
+  // justify-content: flex-start;
+
+  ::after {
+    content: "";
+    flex: auto;
+  }
 `;
 const W = ({ children, variant, ...props }) => {
   if (variant===C.variants.bordered) {
@@ -49,11 +59,12 @@ const MarkersList = (props) => {
   // logg(props, 'MarkersList')
   const { variant } = props
 
-  const history = useHistory()
   const {
     itemToUnlock, setItemToUnlock,
     showUrl, setShowUrl,
   } = useContext(TwofoldContext)
+
+  const history = useHistory()
 
   const goto = (m) => {
     if (m.premium_tier && !m.is_purchased) {
@@ -75,7 +86,7 @@ const MarkersList = (props) => {
     >
       <img src={m.title_img_path} /><br />
       { m.is_purchased && <PurchasedIcon /> }
-      {m.name}
+      { m.name }
     </Marker>)
   })
 

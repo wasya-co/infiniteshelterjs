@@ -30,6 +30,10 @@ const W = styled.div`
   overflow: hidden;
 
   flex-grow: 1;
+
+  // max-height: 100vh;
+  // min-height: 50vh;
+
 `;
 
 /**

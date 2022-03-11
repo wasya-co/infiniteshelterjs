@@ -33,15 +33,12 @@ import { Galleries, MyGalleries } from "$components/galleries"
 import { useApi, C, CollapsibleContextProvider, Debug, logg, request, TwofoldContextProvider } from "$shared"
 
 const Root = styled.div`
-
-
   background: #dedede;
   height: 100vh;
   overflow: auto;
 `;
 
 const __Container = styled(_Container)`
-
   padding: 0;
   height: 100vh;
   overflow: scroll;
