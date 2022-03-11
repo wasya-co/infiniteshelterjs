@@ -1,3 +1,4 @@
+
 *trash
 *-private
 *.swp
@@ -7,7 +8,8 @@
 /android/app/src/main/assets/public
 
 ## this is what https://guyd.me uses...
-# /build
+/build
+!/build/.keep
 
 /cache
 !/cache/.keep
