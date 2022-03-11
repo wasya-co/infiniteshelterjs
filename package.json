@@ -1,7 +1,7 @@
 {
-  "name": "guyd",
-  "description": "An Ionic project",
-  "version": "0.0.1",
+  "name": "InfiniteShelter",
+  "description": "infiniteshelter.com",
+  "version": "0.0.13",
   "private": true,
   "dependencies": {
     "@alch/alchemy-web3": "^1.1.7",
@@ -184,7 +184,7 @@
     ]
   },
   "scripts": {
-    "build": "echo +++ +++\n\r'build_guydme , or build_ish ?\n\r @TODO: this isn't wired. +++ +++'",
+    "build": "echo '+++ +++' ; echo +++ +++ 'build_guydme (@deprecated), or build_ish ?' ; echo '+++ +++'",
     "build_guydme": "NODE_PATH=config/environments/production_guydme node scripts/build.js",
     "build_ish": "NODE_PATH=config/environments/production_ish node scripts/build.js",
     "jest": "NODE_PATH=config/environments/test jest -t current",
@@ -196,17 +196,14 @@
     "nft_test": "npx hardhat test",
     "postinstall": "link-module-alias",
     "resources": "cordova-res ios && cordova-res android && node scripts/resources.js",
-    "start": "echo +++ +++\n\r'start_local , or start_devremote ?\n\r+++ +++'",
-    "start_devremote": "HTTPS=true HOST=tgm.mac PORT=3002 NODE_PATH=config/environments/devremote                 node scripts/start.js",
-    "start_local": "HTTPS=true HOST=localhost PORT=3002 NODE_PATH=config/environments/development_web               node scripts/start.js",
-    "start_local_guydme": "HTTPS=true HOST=tgm.mac PORT=3002 NODE_PATH=config/environments/development_web_guydme node scripts/start.js",
-    "start_local_ish": "HTTPS=true HOST=tgm.mac PORT=3002 NODE_PATH=config/environments/development_web_ish       node scripts/start.js",
-    "start_mobile_trash": "HTTPS=true HOST=tgm.mac PORT=3002 NODE_PATH=config/environments/development_mobile     node scripts/start.js",
-    "start_production_guydme": "HTTPS=true HOST=tgm.mac PORT=3002 NODE_PATH=config/environments/production_guydme node scripts/start.js",
+    "start": "echo '+++ +++'; echo '+++ +++ start_local , or start_devremote ?'; echo '+++ +++'",
+    "start_devremote": "        HTTPS=true  HOST=tgm.mac             PORT=3002  NODE_PATH=config/environments/devremote               node scripts/start.js",
+    "start_local": "            HTTPS=true  HOST=infiniteshelter.mac PORT=3002  NODE_PATH=config/environments/development_web         SSL_CRT_FILE=config/ssl/infiniteshelter.mac.pem SSL_KEY_FILE=config/ssl/infiniteshelter.mac-key.pem node scripts/start.js",
+    "start_local_guydme": "     HTTPS=true  HOST=tgm.mac             PORT=3002  NODE_PATH=config/environments/development_web_guydme  node scripts/start.js",
+    "start_local_ish": "        HTTPS=true  HOST=tgm.mac             PORT=3002  NODE_PATH=config/environments/development_web_ish     node scripts/start.js",
+    "start_mobile_trash": "     HTTPS=true  HOST=tgm.mac             PORT=3002  NODE_PATH=config/environments/development_mobile      node scripts/start.js",
+    "start_production_guydme": "HTTPS=true  HOST=tgm.mac             PORT=3002  NODE_PATH=config/environments/production_guydme       node scripts/start.js",
     "sync": "NODE_PATH=config/environments/production ionic capacitor sync",
     "test": "NODE_PATH=config/environments/test       jest"
-  },
-  "eslintConfig": {
-    "extends": "react-app"
   }
 }

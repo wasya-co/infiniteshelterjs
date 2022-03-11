@@ -2,6 +2,7 @@
 
 set -x
 
-cp android/app/build/outputs/apk/debug/app-debug.apk ~/Google\ Drive\ 2/ish_`date +"%Y%m%d_%I-%M"`.apk
+rm ~/Google\ Drive\ 2/*apk
+mv android/app/build/outputs/apk/debug/app-debug.apk ~/Google\ Drive\ 2/ish_`date +"%Y%m%d_%I-%M"`.apk
 
 

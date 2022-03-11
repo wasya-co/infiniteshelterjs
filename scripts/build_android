@@ -4,6 +4,6 @@ set -ex
 
 yarn run build_ish
 npx capacitor sync android
-npx capacitor open android
+# npx capacitor open android
 
 echo 'ok.'
