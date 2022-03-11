@@ -102,13 +102,13 @@ const MapPanel = (props) => {
       onClick={() => m.url ? setShowUrl(m.url) : history.push(`/en/locations/show/${m.slug}`) }
       style={{
         position: 'absolute',
-        top: zoom > 1 ? ((m.y- m.centerOffsetY )/zoom) : ((m.y )/zoom- m.centerOffsetY),
-        left: zoom > 1 ? ((m.x- m.centerOffsetX )/zoom) : ((m.x )/zoom- m.centerOffsetX),
+        top: ((m.y- m.centerOffsetY )/zoom),
+        left: ((m.x- m.centerOffsetX )/zoom),
       }} ><img src={m.img_path} style={{
         display: 'block',
         maxWidth: `${m.w/zoom}px`,
         maxHeight: `${m.h/zoom}px`,
-        width: 'auto', height: 'auto',
+        width: `${m.w/zoom}px`, height: `${m.h/zoom}px`,
       }} /></div>
     markers.push(out)
   })
