@@ -5,7 +5,7 @@ import styled from 'styled-components'
 
 import {
   C,
-  logg,
+  logg, logg4,
   TwofoldContext,
   useWindowSize,
 } from "$shared"
@@ -25,8 +25,12 @@ const W0 = styled.div`
 `;
 
 const W1 = styled.div`
-  display: inline-block;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
   position: relative;
+  height: 100%;
 `;
 
 
@@ -37,7 +41,7 @@ const W1 = styled.div`
  * _vp_ 2021-10-29 But actually this component is getting more work than the zoom one right now...
  */
 const MapPanelNoZoom = (props) => {
-  // logg(props, 'MapPanelNoZoom')
+  logg(props, 'MapPanelNoZoom')
   const { map } = props
 
   const {
@@ -45,30 +49,32 @@ const MapPanelNoZoom = (props) => {
     mapPanelWidth, mapPanelHeight,
     zoom, setZoom,
   } = useContext(TwofoldContext)
-  logg(useContext(TwofoldContext), 'MapPanelNoZoomUsedContext')
+  // logg(useContext(TwofoldContext), 'MapPanelNoZoomUsedContext')
 
   const history = useHistory()
   const [ windowWidth, windowHeight ] = useWindowSize()
+
 
   /*
    * Sets the zoom (in panelNoZoom) to full-panel _vp_ 2021-10-29
    * w: 1184 h: 819
    */
-  // useEffect(() => {
-  //   let nextZoomByWidth = mapPanelWidth/map.w
-  //   let nextZoomByHeight = mapPanelHeight/map.h
-  //   let nextZoom = Math.min(nextZoomByWidth, nextZoomByHeight)
-  //   nextZoom = nextZoom + 0.0 // image should not overlap with the border... 1% slack added.
-  //   setZoom(nextZoom)
-  // }, [ mapPanelWidth, mapPanelHeight, map.id ])
   useEffect(() => {
-    let nextZoomByWidth = windowWidth/map.w // .3
-    let nextZoomByHeight = windowHeight/map.h // .9
+    logg4([windowWidth, windowHeight, map.w, map.h], 'MapPanelNoZoom setting zoom')
+    if (windowWidth===0) { return; }
+
+    let nextZoomByWidth = windowWidth/map.w // .3 mobile // 1.94 desktop
+    let nextZoomByHeight = windowHeight/map.h // .9 mobile // .82 desktop
+    logg4([nextZoomByWidth, nextZoomByHeight], 'nextZoomOptions')
+
     let nextZoom = Math.min(nextZoomByWidth, nextZoomByHeight)
     const slack = 0.01 // image should not overlap with the border... 1% slack added.
     nextZoom = nextZoom + slack
     setZoom(nextZoom)
-  }, [ mapPanelWidth, mapPanelHeight, map.id ])
+  }, [
+    mapPanelWidth, mapPanelHeight, map.id,
+    windowWidth, windowHeight,
+  ])
 
 
 
@@ -91,13 +97,19 @@ const MapPanelNoZoom = (props) => {
     markers.push(out)
   })
 
+
   return <W0 className="MapPanelNoZoom W0" >
     <W1 className="W1" >
       <img
         src={map.img_path}
         style={{
-          width: `${map.w*zoom}px`,
-          height: `${map.h*zoom}px`,
+          // width: `${map.w*zoom}px`,
+          // height: `${map.h*zoom}px`,
+
+          maxWidth: '100%',
+          maxHeight: '100%',
+          width: 'auto',
+          height: 'auto',
 
           position: 'relative',
           zIndex: 1,

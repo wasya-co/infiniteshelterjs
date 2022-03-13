@@ -20,6 +20,7 @@ const AppMock = (props) => {
     currentUser, setCurrentUser,
     itemToUnlock, setItemToUnlock,
     purchaseModalIsOpen, setPurchaseModalIsOpen,
+    zoom, setZoom,
   } = props
   const history = createMemoryHistory()
   history.push("/en/cities/travel-to/chicago") // @TODO: move where appropriate
@@ -27,6 +28,7 @@ const AppMock = (props) => {
   const [ localItemToUnlock, setLocalItemToUnlock ] = useState({})
   const [ localCurrentUser, setLocalCurrentUser ] = useState(false)
   const [ localPurchaseModalIsOpen, setLocalPurchaseModalIsOpen ] = useState(false)
+  const [ localZoom, setLocalZoom ] = useState(1)
   if (!currentUser) {
     currentUser = localCurrentUser
     setCurrentUser = setLocalCurrentUser
@@ -36,8 +38,12 @@ const AppMock = (props) => {
     setItemToUnlock = setLocalItemToUnlock
   }
   if (!purchaseModalIsOpen) {
-    purchaseModalIsOpen = localPurchasesModalIsOpen
-    setPurchaseModalIsOpen = setLocalPurchasesModalIsOpen
+    purchaseModalIsOpen = localPurchaseModalIsOpen
+    setPurchaseModalIsOpen = setLocalPurchaseModalIsOpen
+  }
+  if (!zoom) {
+    zoom = localZoom
+    setZoom = setLocalZoom
   }
 
   return <ThemeProvider theme={S.lightTheme}>
@@ -46,11 +52,10 @@ const AppMock = (props) => {
         // bottomDrawerOpen, setBottomDrawerOpen,
         currentUser, setCurrentUser,
         itemToUnlock, setItemToUnlock,
-
         // layout, setLayout,
         purchaseModalIsOpen, setPurchaseModalIsOpen,
         // showUrl, setShowUrl,
-        // zoom, setZoom,
+        zoom, setZoom,
       }} >
         { props.children }
         <LoginModal />

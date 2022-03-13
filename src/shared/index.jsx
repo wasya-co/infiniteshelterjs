@@ -158,10 +158,18 @@ const logg = (a, b="", c=null) => {
   console.log(`+++ ${b}:`, a); // eslint-disable-line no-console
 };
 // optimized for Android (e.g. it inspects and doesn't use window)
-const logg2 = (a, b="", c=null) => {
+const logg_android = (a, b="", c=null) => {
   console.log(`+++ ${b}:`, a.inspect); // eslint-disable-line no-console
 };
-export { logg, logg2 };
+const logg2 = logg
+const logg4 = logg
+const logga = logg_android
+export {
+  logg,
+  logg2,
+  logg4,
+  logga,
+};
 
 /* M */
 export const MenuIcon = styled(_MenuIcon)`
