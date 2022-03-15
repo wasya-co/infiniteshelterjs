@@ -11,17 +11,29 @@ import { GalleriesShow } from "$components/galleries"
 import { ReportsShow } from "$components/reports"
 import { Newsitems } from "$components/newsitems"
 
-/*
+
+const Fabs = styled.div`
+  // border: 1px solid red;
+
+  position: fixed;
+`;
+
+/**
+ * ItemModal
  * @TODO: move to $components/application
  */
 const ItemModal = (props) => {
-  logg(props, 'ItemModal')
+  // logg(props, 'ItemModal')
   const { item } = props
 
-  const { showItem, setShowItem } = useContext(TwofoldContext)
+  const {
+    showItem, setShowItem, // @TODO: should navigate here!
+  } = useContext(TwofoldContext)
 
   return <Modal isOpen={!!showItem} >
-    <h1 onClick={() => setShowItem(false)} >[x]</h1>
+    <Fabs className='Fabs' >
+      <div onClick={() => setShowItem(false)} >[x]</div>
+    </Fabs>
     { item.item_type === C.item_types.report && <ReportsShow match={{ params: { slug: item.reportname } }} /> }
     { item.item_type === C.item_types.gallery && <GalleriesShow match={{ params: { slug: item.slug } }} /> }
   </Modal>

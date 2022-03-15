@@ -21,13 +21,19 @@ const useApi = () => {
 
     getCities: ()   => request.get(`${config.apiOrigin}/api/cities`).then((r) => r.data),
     getCity: (slug) => request.get(`${config.apiOrigin}/api/cities/view/${slug}`),
+    getGallery: (slug) => request.get(`${config.apiOrigin}/api/galleries/view/${slug}?jwt_token=${token}`).then((r) => r.data.gallery),
+
     getMyAccount: () => request.post(`/api/my/account`, {
         jwt_token: localStorage.getItem('jwt_token'),
       }).then((r) => {
         logg(r.data, 'getmyaccount')
         return r.data
       }),
+
     getPayments: () => request.get(`${config.apiOrigin}/api/payments2?jwt_token=${token}`).then((r) => r.data),
+
+    getReport: (slug) => request.get(`${config.apiOrigin}/api/reports/view/${slug}?jwt_token=${token}`).then((r) => r.data.report),
+
     getTag: (tag) => request.get(`${config.apiOrigin}/api/tags/view/${tag.slug}`).then((r) => r.data),
 
     loginPath: '/api/users/login.json',
@@ -35,16 +41,6 @@ const useApi = () => {
 
     myAccount: () => "/api/my/account",
     myVideosPath: "/api/my/videos",
-
-    reportsGet: (a) => {
-      const currentUser = JSON.parse(localStorage.getItem("current_user")) || {};
-      let jwt = "";
-      if (currentUser) {
-        jwt = `jwt_token=${currentUser.jwt_token}`
-      }
-      return `${config.apiOrigin}/api/reports/view/${a}?${jwt}`;
-    },
-
 
     applicationHome: async () => {
       const out = await request.get(`${config.apiOrigin}/api/sites/view/${config.domain}`, { params: { jwt_token: token } })

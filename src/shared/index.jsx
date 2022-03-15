@@ -109,6 +109,19 @@ export const CollapsibleContextProvider = ({ children, ...props }) => {
  * tableize()
  */
 export const inflector = {
+  classify: (m) => {
+    if (m.slice(-3)==='ies') {
+      m = m.slice(0, -3) + 'y'
+    }
+    if (m.slice(-1)==='s') {
+      m = m.slice(0, -1)
+    }
+    const ms = m.split('_')
+    for (var i = 0; i < ms.length; i++) {
+      ms[i] = ms[i].charAt(0).toUpperCase() + ms[i].slice(1)
+    }
+    return ms.join("")
+  },
   tableize: (m) => {
     switch(m) {
       case 'Gallery':
@@ -238,6 +251,9 @@ export const TwofoldContextProvider = ({ children, ...props }) => {
     }
   }
 
+  /* L */
+  const [ location, setLocation ] = useState(null)
+
   /* M */
   const [ mapPanelWidth, setMapPanelWidth ] = useState(null)
   const [ mapPanelHeight, setMapPanelHeight ] = useState(null)
@@ -280,6 +296,7 @@ export const TwofoldContextProvider = ({ children, ...props }) => {
     itemToUnlock, setItemToUnlock,
 
     layout, setLayout,
+    location, setLocation,
     loginModalOpen, setLoginModalOpen,
 
     mapPanelHeight, setMapPanelHeight,

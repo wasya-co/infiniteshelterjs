@@ -2,7 +2,7 @@
 import PropTypes from 'prop-types'
 import React, { Fragment as F, useEffect, useContext, useState } from "react"
 
-import { useHistory } from "react-router-dom"
+import { useHistory, } from "react-router-dom"
 import styled from 'styled-components'
 
 import { ItemIcon } from "./"
@@ -63,6 +63,7 @@ const NewsitemContainer = ({ children, ...props }) => {
   const {
     itemToUnlock, setItemToUnlock,
     layout,
+    location,
     showItem, setShowItem,
   } = useContext(TwofoldContext)
 
@@ -71,9 +72,7 @@ const NewsitemContainer = ({ children, ...props }) => {
       setItemToUnlock(item)
     } else {
       if (layout === C.layout_mapui) {
-        /* @TODO: why below was introduced? _vp_ 2022-03-15 */
-        // setShowItem(item)
-        history.push(`/en/${inflector.tableize(item_type)}/show/${slug}`)
+        history.push(`/en/locations/show/${location.slug}/${inflector.tableize(item_type)}/show/${slug}`)
       } else {
         history.push(`/en/${inflector.tableize(item_type)}/show/${slug}`)
       }

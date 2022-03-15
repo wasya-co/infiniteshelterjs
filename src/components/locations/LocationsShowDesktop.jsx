@@ -16,11 +16,12 @@ import { Newsitems } from "$components/newsitems"
 import { LongLine } from "$components/TwofoldLayout"
 import {
   C, ChevronLeft, ChevronRight, Collapsible,
+  inflector,
   Loading, logg,
   MenuIcon,
   request,
   TwofoldContext,
-  useWindowSize,
+  useApi, useWindowSize,
 } from "$shared"
 
 /* C */
@@ -181,16 +182,18 @@ const LocationsShowDesktop = (props) => {
   const [ windowWidth, windowHeight ] = useWindowSize()
 
   const [ loading, setLoading ] = useState(false)
-  const [ location, setLocation ] = useState(null)
   const [ markers, setMarkers ] = useState([])
 
   const mountedRef = useRef('init')
+  const showItemRef = useRef('init')
   const mapPanelRef = useRef(null)
+  const api = useApi()
 
   const {
     bottomDrawerOpen,
     folded, setFolded,
     itemToUnlock, setItemToUnlock,
+    location, setLocation,
     mapPanelWidth, setMapPanelWidth,
     mapPanelHeight, setMapPanelHeight,
     ratedConfirmation, setRatedConfirmation,
@@ -212,6 +215,7 @@ const LocationsShowDesktop = (props) => {
   const showToast = async (msg) => await Toast.show({ text: msg })
 
   // Load the map
+  // @TODO: move into api object
   useEffect(() => {
     setLoading(true)
     const token = localStorage.getItem("jwt_token")
@@ -245,6 +249,25 @@ const LocationsShowDesktop = (props) => {
       setMapPanelHeight(mapPanelRef.current.offsetHeight)
     }
   }, [bottomDrawerOpen, folded, mapPanelRef.current, twofoldPercent, windowWidth, windowHeight])
+
+  // load showItem if any
+  // @TODO: this makes too many calls, improve performance
+  // @TODO: move to api
+  useEffect(() => {
+    if (!match.params.item_type) { return }
+
+    const itemType = inflector.classify(match.params.item_type)
+    switch (itemType) {
+      case C.item_types.gallery:
+        api.getGallery(match.params.item_slug).then(setShowItem)
+        break
+      case C.item_types.report:
+        api.getReport(match.params.item_slug).then(setShowItem)
+        break
+      default:
+        logg(itemType, 'cannot get this item type')
+    }
+  }, [ match.params.item_slug, match.params.item_type ])
 
   const foldedLeft = folded === C.foldedLeft
   const foldedRight = folded === C.foldedRight

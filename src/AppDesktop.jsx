@@ -116,6 +116,7 @@ const AppDesktop = (props) => {
               <Route exact path="/en/reports/show/:slug" component={ReportsShow} />
 
               <Route exact path="/en/locations/show/:slug" component={LocationsShowDesktop} layout={C.layout_mapui} />
+              <Route exact path="/en/locations/show/:slug/:item_type/show/:item_slug" component={LocationsShowDesktop} layout={C.layout_mapui} />
 
             </Switch>
           </Container>

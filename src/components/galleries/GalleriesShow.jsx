@@ -2,13 +2,22 @@
 import { IonPage, IonContent, IonButton, IonImg, IonLoading } from "@ionic/react"
 import React, { Fragment as F, useContext, useEffect, useRef, useState } from "react"
 import { Route, useLocation, useHistory, Switch } from 'react-router-dom'
+import styled from 'styled-components'
 
 import { C, logg, request, TwofoldContext, BackBtn } from "$shared"
 import { Metaline } from "$components/application"
 import "./galleries.scss"
 
+const W0 = styled.div`
+  border: 1px solid blue;
+  height: auto;
+`;
+
+/**
+ * GalleriesShow
+ */
 const GalleriesShow = (props) => {
-  logg(props, 'GalleriesShow')
+  // logg(props, 'GalleriesShow')
   const { match } = props
 
   const [showLoading, setShowLoading] = useState(false) // @TODO: hmm could it be moved to TwofoldContext ?
@@ -22,6 +31,7 @@ const GalleriesShow = (props) => {
     loginModalOpen, setLoginModalOpen,
   } = useContext(TwofoldContext)
 
+  // @TODO: move this to api
   const getGallery = async () => {
     const token = localStorage.getItem(C.jwt_token)
     await request.get(`/api/galleries/view/${match.params.slug}`, { params: { jwt_token: token } }).then(res => {
@@ -42,7 +52,7 @@ const GalleriesShow = (props) => {
     }
   }, [gallery.id, itemToUnlock.id] )
 
-  return (<F>
+  return (<W0>
 
     { <div className="gallery-show">
       <div className='narrow'>
@@ -73,7 +83,7 @@ const GalleriesShow = (props) => {
       </div>
     </div>}
 
-  </F>)
+  </W0>)
 }
 
 export default GalleriesShow

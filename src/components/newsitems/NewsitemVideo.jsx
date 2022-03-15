@@ -14,10 +14,10 @@ const NewsitemVideo = (props) => {
   const { item, variant } = props
 
   return <NewsitemContainer item={item} variant={variant} >
-    <div className="image-section">
+    <div style={{ display: 'flex', justifyContent: 'center' }} >
       { item.youtube_id ?
           <iframe className="iframe" width="100%" height="315" src={`https://www.youtube.com/embed/${item.youtube_id}`} frameBorder="0" allow="autoplay; encrypted-media" allowFullScreen></iframe>
-          : <video width="100%" preload="metadata" height="auto" controls>
+          : <video style={{ maxWidth: '100%', maxHeight: '100%' }}  preload="metadata" height="auto" controls>
             <source src={item.url} type="video/mp4" />
           </video> }
     </div>

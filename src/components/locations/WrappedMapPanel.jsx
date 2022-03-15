@@ -41,7 +41,7 @@ const W = styled.div`
  * or some other MapPanel.
  */
 const WrappedMapPanel = React.forwardRef((props, ref) => {
-  // logg(props.map, 'WrappedMapPanel')
+  logg(props.map, 'WrappedMapPanel')
 
   switch (props.map.config.map_panel_type) {
 
