@@ -36,7 +36,7 @@ const Marker = ({ children, variant, ...props }) => {
 const _W = styled.div`
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-around;
+  justify-content: space-between;
   // justify-content: flex-start;
 
   ::after {

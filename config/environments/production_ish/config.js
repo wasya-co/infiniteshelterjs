@@ -5,7 +5,7 @@ module.exports = {
 
   "domain": "tgm.piousbox.com", // required! 20210831
 
-  "homeLocation": "/en/locations/show/construct0",
+  "homeLocation": "/en/locations/show/root",
 
   "requireLogin": false,
 };

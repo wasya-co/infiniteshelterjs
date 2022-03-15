@@ -27,16 +27,13 @@ import {
 
 /* D */
 
-// @TODO: move into shared
+// @TODO: move Description into shared ?
 const _D = styled.div`
-  // border: 1px solid red;
-
-  padding: 10px;
 `;
 const Description = ({ item={} }) => {
   if (!item.description) { return }
 
-  return <_D dangerouslySetInnerHTML={{ __html: item.description }} />
+  return <_D className="Description" dangerouslySetInnerHTML={{ __html: item.description }} />
 }
 
 /* H */

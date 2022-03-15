@@ -5,6 +5,9 @@
   width: 100px;
 }
 
+.Newsitems > div:last-child .Newsitem {
+  margin-bottom: 0;
+}
 .newsitems {
 
   div.items {

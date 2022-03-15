@@ -19,9 +19,7 @@ const ICONS = {
 
 const W = styled.div`
   // border: 2px solid yellow;
-  margin: ${p => p.variant === C.variants.bordered ? '.5em' : 0};
-  margin-top: 0;
-  margin-bottom: 0;
+  // margin: 0 0 0 ${p => p.variant === C.variants.bordered ? '.5em' : 0};
 `;
 
 const Newsitems = (props) => {
@@ -31,7 +29,7 @@ const Newsitems = (props) => {
   if (!newsitems || !newsitems.length) { return <div>No Newsitems</div> }
 
   return (
-    <W {...{ variant }} >
+    <W className="Newsitems" {...{ variant }} >
       { newsitems.map((newsitem, idx) => {
         const premium_tier = newsitem.premium_tier || 0
         const icon = ICONS[premium_tier]
@@ -55,7 +53,7 @@ const Newsitems = (props) => {
         }
 
         return (
-          <div key={idx} className={`items premium-${premium_tier}`}>
+          <div key={idx} className={`premium-${premium_tier}`}>
             { item }
           </div>
         )

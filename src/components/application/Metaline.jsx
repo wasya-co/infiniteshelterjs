@@ -6,7 +6,7 @@ import styled from 'styled-components'
 import { Api, logg, request, pp_date } from "$shared"
 
 const W = styled.div`
-  margin-top: .5em;
+  margin: .5em 0;
   color: ${p=>p.theme.colors.text};
 `
 

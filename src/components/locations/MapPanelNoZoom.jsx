@@ -41,7 +41,7 @@ const W1 = styled.div`
  * _vp_ 2021-10-29 But actually this component is getting more work than the zoom one right now...
  */
 const MapPanelNoZoom = (props) => {
-  logg(props, 'MapPanelNoZoom')
+  // logg(props, 'MapPanelNoZoom')
   const { map } = props
 
   const {
@@ -60,12 +60,12 @@ const MapPanelNoZoom = (props) => {
    * w: 1184 h: 819
    */
   useEffect(() => {
-    logg4([windowWidth, windowHeight, map.w, map.h], 'MapPanelNoZoom setting zoom')
+    // logg4([windowWidth, windowHeight, map.w, map.h], 'MapPanelNoZoom setting zoom')
     if (windowWidth===0) { return; }
 
     let nextZoomByWidth = windowWidth/map.w // .3 mobile // 1.94 desktop
     let nextZoomByHeight = windowHeight/map.h // .9 mobile // .82 desktop
-    logg4([nextZoomByWidth, nextZoomByHeight], 'nextZoomOptions')
+    // logg4([nextZoomByWidth, nextZoomByHeight], 'nextZoomOptions')
 
     let nextZoom = Math.min(nextZoomByWidth, nextZoomByHeight)
     const slack = 0.01 // image should not overlap with the border... 1% slack added.

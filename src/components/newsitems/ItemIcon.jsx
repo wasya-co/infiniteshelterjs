@@ -7,6 +7,7 @@ import { C, logg } from "$shared"
 
 const W = styled.div`
   padding: 10px;
+  margin-right: 10px;
   width: 100px;
   height: 100px;
 
@@ -41,7 +42,6 @@ const W = styled.div`
       return <W>[unknown kind]</W>
   }
 }
-
 ItemIcon.propTypes = {
   is_purchased: PropTypes.bool, // .isRequired,
   item_type: PropTypes.string.isRequired,

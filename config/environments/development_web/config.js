@@ -10,7 +10,8 @@ module.exports = {
 
   // "homeLocation": "/en/locations/show/threev1",
   // "homeLocation": "/en/locations/show/earth",
-  "homeLocation": "/en/locations/show/construct0",
+  // "homeLocation": "/en/locations/show/construct0",
+  "homeLocation": "/en/locations/show/root",
 
   "requireLogin": false,
 };

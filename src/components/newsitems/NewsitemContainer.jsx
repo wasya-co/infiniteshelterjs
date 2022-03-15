@@ -21,8 +21,6 @@ import {
 const Col = styled.div`
   display: flex;
   flex-direction: column;
-
-  margin-left: 0.5em;
 `;
 
 const Row = styled.div`
@@ -32,10 +30,11 @@ const Row = styled.div`
 
 const Title = styled.h2`
   margin-top: 0;
+  margin-bottom: 0;
   color: ${p=>p.theme.colors.text};
 `;
 
-const W = (props) => {
+const W0 = (props) => {
   const { children, navigateToItem, variant } = props
   // @TODO: better management of navigateToItem
 
@@ -51,8 +50,12 @@ const W = (props) => {
  * NewsitemContainer
  */
 const NewsitemContainer = ({ children, ...props }) => {
-  // logg(props, 'NewsitemContainer')
-  const { className, item, variant } = props
+  logg(props, 'NewsitemContainer')
+  const {
+    className,
+    item,
+    variant,
+  } = props
   const { item_type, slug } = item
 
   const history = useHistory()
@@ -64,32 +67,48 @@ const NewsitemContainer = ({ children, ...props }) => {
   } = useContext(TwofoldContext)
 
   const navigateToItem = () => {
-    logg('navigating')
-
     if (item.is_premium && !item.is_purchased) {
       setItemToUnlock(item)
     } else {
       if (layout === C.layout_mapui) {
-        setShowItem(item)
+        /* @TODO: why below was introduced? _vp_ 2022-03-15 */
+        // setShowItem(item)
+        history.push(`/en/${inflector.tableize(item_type)}/show/${slug}`)
       } else {
         history.push(`/en/${inflector.tableize(item_type)}/show/${slug}`)
       }
     }
   }
 
-  return <W {...{ className, navigateToItem, variant }} >
-    { children }
-    <Row>
-      <ItemIcon {...item} />
+  /*
+   * @TODO: should be config with variants: standard container, container for a single photo, etc.
+   * but for now I'll use item.item_type
+   * _vp_ 2022-03-13
+   */
+
+  if (item.item_type === C.item_types.photo) {
+    return <W0 {...{ className, navigateToItem: () => {}, variant }} >
       <Col>
         <Title>{item.name}</Title>
         <Metaline {...item} />
       </Col>
-    </Row>
-    <p className="subhead" dangerouslySetInnerHTML={{ __html: item.subhead }} />
-  </W>
-}
+      { children }
+    </W0>
 
+  } else {
+    return <W0 {...{ className, navigateToItem, variant }} >
+      { children }
+      <Row>
+        <ItemIcon {...item} />
+        <Col>
+          <Title>{item.name}</Title>
+          <Metaline {...item} />
+        </Col>
+      </Row>
+      <p className="subhead" dangerouslySetInnerHTML={{ __html: item.subhead }} />
+    </W0>
+  }
+}
 NewsitemContainer.propTypes = {
   item: PropTypes.object.isRequired,
   variant: PropTypes.string,

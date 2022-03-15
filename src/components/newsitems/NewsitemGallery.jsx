@@ -3,28 +3,10 @@ import PropTypes from 'prop-types'
 import React from "react"
 import styled from 'styled-components'
 
-import { NewsitemContainer } from './'
 import { Metaline } from "$components/application"
 import { logg } from "$shared"
-
+import { NewsitemContainer } from './'
 import "./newsitems.scss"
-
-
-const Image = styled.div`
-  position: relative;
-  padding-top: 100%;
-  overflow: hidden;
-  z-index: 10;
-  background-position: center;
-  background-size: cover;
-  background-repeat: no-repeat;
-
-  width: 100px;
-  height: 100px;
-`;
-
-const Image2 = styled.div`
-`;
 
 const Images = styled.div`
   position: relative;
@@ -47,7 +29,7 @@ const ImageThumb2 = styled.img`
 `;
 
 /**
- * TDD
+ * NewsitemGallery
  */
 const NewsitemGallery = (props) => {
   // logg(props, 'NewsitemGallery')
@@ -61,7 +43,6 @@ const NewsitemGallery = (props) => {
     </Images>
   </NewsitemContainer>
 }
-
 NewsitemGallery.propTypes = {
   item: PropTypes.shape({
     photos: PropTypes.array.isRequired,

@@ -313,9 +313,12 @@ export const WBordered = styled.div`
   border: ${p => p.theme.thinBorder};
   border-radius: ${p => p.theme.thinBorderRadius};
   background: ${p => p.theme.colors.cardBackground};
-  padding: .5em;
+
 
   margin-bottom: 1em;
+  padding: .5em;
+
+  cursor: ${p => p.onClick ? 'pointer' : null};
 `;
 
 /**

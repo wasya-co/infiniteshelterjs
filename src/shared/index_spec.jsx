@@ -1,10 +1,16 @@
 
+import { configure, mount, render, shallow, } from 'enzyme'
+import Adapter from "enzyme-adapter-react-16"
 import React from 'react'
 
+configure({ adapter: new Adapter() })
+
 import {
+  AppMock,
   Box,
   inflector,
   WBordered,
+  WidgetContainer,
 } from './'
 
 test('Box', () => {
@@ -34,4 +40,13 @@ describe('TwofoldContext', () => {
 it('WBordered', () => {
   const w = <WBordered />
   expect(w).toBeTruthy()
+})
+
+describe("WidgetContainer - current2", () => {
+  it("cursor pointer", () => {
+    const w = mount(<AppMock>
+      <WidgetContainer data-testid='id1' onClick={() => true } />
+    </AppMock>)
+    expect(w.find('div').getDOMNode()).toHaveStyle('cursor: pointer')
+  })
 })
