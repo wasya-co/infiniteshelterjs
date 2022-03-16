@@ -11,18 +11,20 @@ import styled from 'styled-components'
 import config from 'config'
 import { C, logg, request, S, TwofoldContext } from "$shared"
 import { MenuLeft } from "$components/application"
+import img from '$components/application/45x45_day-night-2.png'
+import './day_night_toggle.scss'
 
 /* B */
 
 // One breadcrumb
-const B = styled.div`
+const B0 = styled.div`
   color: ${p=> p.theme.colors.text};
-  padding: 0.5em;
+  // padding-right: 0.5em;
 `;
 
 // The divider
 const B1 = styled.div`
-  padding: 0.5em 0;
+  padding: 0.5em;
 `;
 
 /* D */
@@ -43,22 +45,45 @@ const DayNightToggle = (props) => {
     <L>Night</L>
   </WDayNight>
 }
+const T0 = styled.div`
+  width: 40px;
+  height: 40px;
+  // background-image: url(${img});
+`;
+const DayNightToggle2 = (props) => {
+  logg(props, 'DayNightToggle2')
+  const { theme, toggleTheme } = props
+
+  return <WDayNight onClick={toggleTheme} >
+    <T0 className={`theme-${theme}`} />
+    {/* <IonToggle checked={theme === C.themes.dark} onIonChange={toggleTheme} value="DayNight" /> */}
+  </WDayNight>
+}
 
 /* W */
-const W = styled.div`
+const W0 = styled.div`
   border: ${p=>p.debug?'1':'0'}px solid cyan;
 
   display: flex;
   align-items: center;
+  justify-content: stretch;
+
   z-index: 1;
 
-  height: ${p => p.theme.breadcrumbsHeight};
+  // height: ${p => p.theme.breadcrumbsHeight};
 `;
 
 const WBreadcrumbs = styled.div`
-  display: flex;
-  flex-direction: row;
+  display: block;
   flex-grow: 1;
+  // flex-direction: row;
+  // flex-grow: 1;
+  // flex-wrap: wrap;
+
+  > * {
+    // border: 1px solid red;
+    display: inline;
+  }
 `;
 
 
@@ -75,22 +100,22 @@ const Breadcrumbs = (props) => {
   breadcrumbs.map((b, idx) => {
     if (idx+1 === props.breadcrumbs.length) {
       // last one
-      out.push(<B key={idx} >{b.name}</B>)
+      out.push(<B0 key={idx} >{b.name}</B0>)
     } else {
-      out.push(<B
+      out.push(<B0
         key={idx}
-        style={{ textDecoration: 'underline' }}
+        style={{ textDecoration: 'underline', cursor: 'pointer' }}
         onClick={() => history.push(`/en/locations/show/${b.slug}`) }
-      >{b.name}</B>)
+      >{b.name}</B0>)
       out.push(<B1 key={`${idx}-divider`} >&gt;</B1>)
     }
   })
 
-  return <W debug={config.debug} className="Breadcrumbs" >
+  return <W0 debug={config.debug} className="Breadcrumbs" >
     { layout === C.layout_mapui && <MenuLeft variant={C.variants.inline} /> }
-    <WBreadcrumbs>{ out }</WBreadcrumbs>
-    <DayNightToggle toggleTheme={toggleTheme} theme={theme} />
-  </W>
+    <WBreadcrumbs className='WBreadcrumbs' >{ out }</WBreadcrumbs>
+    <DayNightToggle2 toggleTheme={toggleTheme} theme={theme} />
+  </W0>
 }
 Breadcrumbs.propTypes = {
   breadcrumbs: PropTypes.arrayOf(

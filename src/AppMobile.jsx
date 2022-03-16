@@ -1,11 +1,11 @@
 import { Container as _Container, Grid, GridList } from '@material-ui/core'
 
-import React, { Fragment as F, useEffect, useState } from 'react'
+import React, { Fragment as F, useContext, useEffect, useState } from 'react'
 import Modal from "react-modal"
 import {
   Switch, BrowserRouter as Router, Redirect, Route as _Route,
 } from 'react-router-dom'
-import styled from 'styled-components'
+import styled, { useTheme } from 'styled-components'
 
 import '@ionic/react/css/core.css'
 import '@ionic/react/css/normalize.css'
@@ -30,7 +30,14 @@ import { SitesShow } from '$components/sites'
 import { Account, LoginModal } from "$components/users"
 import { Videos } from "$components/videos"
 import { Galleries, MyGalleries } from "$components/galleries"
-import { useApi, C, CollapsibleContextProvider, Debug, logg, request, TwofoldContextProvider } from "$shared"
+import {
+  C, CollapsibleContextProvider,
+  Debug,
+  logg,
+  request,
+  TwofoldContext, TwofoldContextProvider,
+  useApi,
+} from "$shared"
 
 const Root = styled.div`
   background: #dedede;
@@ -45,22 +52,32 @@ const __Container = styled(_Container)`
 `;
 
 const AppMobile = (props) => {
-  logg(props, 'AppMobile')
-  const { currentUser, setCurrentUser } = props
+  // logg(props, 'AppMobile')
 
   const [ layout, setLayout ] = useState(C.layout_onecol)
-  const [ bottomDrawerOpen, setBottomDrawerOpen ] = React.useState(false)
-  const [ itemToUnlock, setItemToUnlock ] = React.useState(false)
-  const [ zoom, setZoom ] = useState(1)
-  const api = useApi()
+  // const [ bottomDrawerOpen, setBottomDrawerOpen ] = React.useState(false)
+  // const [ itemToUnlock, setItemToUnlock ] = React.useState(false)
+  // const [ zoom, setZoom ] = useState(1)
+  // const api = useApi()
+  const theme = useTheme()
 
-  const Container = (props) => {
+  const Container = ({ children, ...props }) => {
+    // logg(props, 'Container')
+
+    const {
+      bottomDrawerOpen,
+    } = useContext(TwofoldContext)
+
+    const style = {
+      paddingBottom: bottomDrawerOpen ? theme.bottomDrawerOpenHeight : null
+    }
+
     switch(layout) {
       case C.layout_onecol:
-        return <__Container maxWidth="md" {...props} />
+        return <__Container style={style} maxWidth="md" {...props} >{ children }</__Container>
       case C.layout_mapui:
         // This is true right now (2021-10-20) for mobile even when it's one column
-        return <MapuiMobileLayout {...props} {...{ bottomDrawerOpen, setBottomDrawerOpen }} />
+        return <MapuiMobileLayout style={style} {...props} >{ children }</MapuiMobileLayout>
     }
   }
 
@@ -76,12 +93,12 @@ const AppMobile = (props) => {
     return <_Route {...props} />
   }
 
-  const doUnlock = async () => {
-    // @TODO: check how many unlocks I have, and offer to purchase more if not enough.
-    const path = api.doUnlock({ kind: 'Report', id: itemToUnlock.report_id });
-    const result = await request.post(`${config.apiOrigin}${path}`);
-    logg(result, 'result of unlocking')
-  };
+  // const doUnlock = async () => {
+  //   // @TODO: check how many unlocks I have, and offer to purchase more if not enough.
+  //   const path = api.doUnlock({ kind: 'Report', id: itemToUnlock.report_id })
+  //   const result = await request.post(`${config.apiOrigin}${path}`)
+  //   logg(result, 'result of unlocking')
+  // }
 
   return (<Router>
     <TwofoldContextProvider {...props} {...{ layout, setLayout }} >
@@ -110,6 +127,7 @@ const AppMobile = (props) => {
 
             </Switch>
           </Container>
+
         </Root>
 
         <BottomDrawer />

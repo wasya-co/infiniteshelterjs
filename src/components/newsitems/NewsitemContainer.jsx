@@ -50,7 +50,7 @@ const W0 = (props) => {
  * NewsitemContainer
  */
 const NewsitemContainer = ({ children, ...props }) => {
-  logg(props, 'NewsitemContainer')
+  // logg(props, 'NewsitemContainer')
   const {
     className,
     item,

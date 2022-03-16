@@ -69,7 +69,7 @@ const WClosed = styled.div`
 `;
 
 /**
- * Documentation?
+ * BottomDrawer
  */
 const BottomDrawer = (props) => {
   // logg(props, 'BottomDrawer')

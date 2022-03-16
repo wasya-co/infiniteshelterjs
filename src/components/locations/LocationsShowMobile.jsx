@@ -156,6 +156,13 @@ const LocationsShowMobile = (props) => {
     }
   }, [bottomDrawerOpen, folded, mapPanelRef.current, twofoldPercent, windowWidth, windowHeight])
 
+  // This is to not have MapPanel, only MapPanelNoZoom on mobile _vp_ 2022-03-16
+  let map
+  if (location) {
+    map = location.map || location
+    map = { ...map, config: { ...map.config, map_panel_type: C.map_panel_types.MapPanelNoZoom } }
+  }
+
   return (<W className='LocationsShowMobile' >
 
     { loading && <i>Loading...</i> }
@@ -166,7 +173,7 @@ const LocationsShowMobile = (props) => {
         slug={C.collapsible.map}
     >
       <WrappedMapPanel
-        map={location.map || location}
+        map={map}
         ref={mapPanelRef}
         slug={match.params.slug}
         withZoom={false}
