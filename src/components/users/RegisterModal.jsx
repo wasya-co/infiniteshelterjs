@@ -7,17 +7,29 @@ import Modal from 'react-modal'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 
-import { FbLogin, Logout, PasswordLogin } from "./"
-import { C, logg, TwofoldContext } from "$shared"
+import {
+  FbLogin,
+  Logout,
+  PasswordLogin,
+} from "./"
+import {
+  Btn,
+  C,
+  FlexCol,
+  logg,
+  TwofoldContext,
+  useApi,
+} from "$shared"
 
 const RegisterModal = (props) => {
-  // logg(props, 'RegisterModal')
+  logg(props, 'RegisterModal')
 
-  const api = useApi()
   const {
     currentUser, setCurrentUser,
     registerModalOpen, setRegisterModalOpen,
   } = useContext(TwofoldContext)
+
+  const api = useApi()
   const [ email, setEmail ] = useState('')
   const [ password, setPassword ] = useState('')
   const [ passwordConfirm, setPasswordConfirm ] = useState('')

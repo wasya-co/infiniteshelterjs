@@ -162,9 +162,9 @@
     "moduleNameMapper": {
       "^react-native$": "react-native-web",
       "^.+\\.module\\.(css|sass|scss)$": "identity-obj-proxy",
-      "^\\$components(.*)$": "<rootDir>/src/components$1",
       "\\.(css|less|sass|scss)$": "<rootDir>/config/styleMock.js",
-      "\\.(gif|ttf|eot|svg)$": "<rootDir>/config/fileMock.js"
+      "\\.(eot|gif|jpg|jpeg|png|svg|ttf)$": "<rootDir>/config/fileMock.js",
+      "^\\$components(.*)\\.jsx$": "<rootDir>/src/components$1"
     },
     "moduleFileExtensions": [
       "web.js",

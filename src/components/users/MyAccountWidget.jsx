@@ -15,7 +15,12 @@ import config from "config"
 import {
   Btn,
   FlexCol,
-  logg, S, request, TwofoldContext, useApi } from "$shared"
+  logg,
+  request,
+  S,
+  TwofoldContext,
+  useApi,
+} from "$shared"
 import bodyNFT from '$src/artifacts/contracts/Body.sol/BodyNFT.json'
 import { FbLogin2, Logout,
   PasswordLoginMobile, PasswordRegisterMobile,
@@ -65,9 +70,12 @@ const injected = new InjectedConnector() // { supportedChainIds: [1, 3, 4, 5, 42
 const stripePromise = loadStripe('pk_test_qr1QPmSpLdBFt1F7itdWJOj3') // @TODO: this is active, but change.
 
 const Login = (props) => {
+  const {
+    setRegisterModalIsOpen,
+  } = useContext(TwofoldContext)
+
   const s = {
     default: null,
-    login: 'login-with-email',
     register: 'register-with-email',
   }
   const [ state, setState ] = useState(s.default)
@@ -76,7 +84,7 @@ const Login = (props) => {
     case s.default:
       return <FlexCol>
         <FbLogin2 />
-        <RegisterWithEmail onClick={() => setState(s.register)} />
+        <RegisterWithEmail onClick={() => setRegisterModalIsOpen(true) } />
         <LoginWithEmail onClick={() => setState(s.login)} />
       </FlexCol>
     case s.register:

@@ -5,8 +5,12 @@ import React from 'react'
 import { ThemeProvider } from 'styled-components'
 
 import App from './AppMobile'
-import { LoginModal } from "$components/users"
 import {
+  LoginModal,
+  RegisterModal,
+} from "$components/users"
+import {
+  AppMock,
   logg,
   request,
   S,
@@ -57,4 +61,13 @@ test('loads User from api', () => {
 test('shows LoginModal for unauthed users', () => {
   let wrapper = mount(<ThemeProvider theme={S.lightTheme} ><App /></ThemeProvider>)
   expect(wrapper.find('LoginModal').length).toEqual(1)
+})
+
+test('renders RegisterModal - current2 ', () => {
+  const currentUser = {}
+
+  let w = mount(<AppMock >
+    <App {...{ currentUser }}/>
+  </AppMock>)
+  expect(w.find(RegisterModal).length).toEqual(1)
 })

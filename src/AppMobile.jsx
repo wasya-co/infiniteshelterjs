@@ -27,7 +27,11 @@ import { GalleriesShow } from "$components/galleries"
 import { LocationsShowMobile } from "$components/locations"
 import { ReportsShow } from "$components/reports"
 import { SitesShow } from '$components/sites'
-import { Account, LoginModal } from "$components/users"
+import {
+  Account,
+  LoginModal,
+  RegisterModal,
+} from "$components/users"
 import { Videos } from "$components/videos"
 import { Galleries, MyGalleries } from "$components/galleries"
 import {
@@ -133,6 +137,7 @@ const AppMobile = (props) => {
         <BottomDrawer />
         <UnlockModal />
         <LoginModal />
+        <RegisterModal />
 
       </CollapsibleContextProvider>
     </TwofoldContextProvider>

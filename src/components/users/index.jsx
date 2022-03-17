@@ -17,8 +17,11 @@ import {
   logg, request, TwofoldContext, useApi,
 } from "$shared"
 
+/* A */
 export { default as Account } from "./Account"
 
+
+/* F */
 const { FacebookLogin } = Plugins
 
 const FACEBOOK_PERMISSIONS = ['email']
@@ -67,6 +70,7 @@ export const FbLogin2 = (props) => {
   return <Btn onClick={doFbLogin}>Login or Register with Facebook</Btn>
 }
 
+/* L */
 export { default as LoginModal } from "./LoginModal"
 
 const BuyBtn = styled.span`
@@ -94,6 +98,10 @@ const _W = styled.div`
   }
 `;
 
+/* M */
+export { default as MyAccountWidget } from "./MyAccountWidget"
+
+/* P */
 export const PasswordLogin = (props) => {
   // logg(props, 'PasswordLogin')
 
@@ -192,6 +200,6 @@ export const PasswordLoginMobile = (props) => {
   </FlexCol>
 }
 
+/* R */
 export { default as RegisterModal } from './RegisterModal'
 
-export { default as MyAccountWidget } from "./MyAccountWidget"

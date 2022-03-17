@@ -12,7 +12,12 @@ import {
 import styled from 'styled-components'
 import { ThemeProvider } from 'styled-components'
 
-import { logg, S, TwofoldContext } from "$shared"
+import {
+  C,
+  logg,
+  S,
+  TwofoldContext, TwofoldContextProvider,
+} from "$shared"
 import { LoginModal } from "$components/users"
 
 const AppMock = (props) => {
@@ -26,7 +31,7 @@ const AppMock = (props) => {
   history.push("/en/cities/travel-to/chicago") // @TODO: move where appropriate
 
   const [ localItemToUnlock, setLocalItemToUnlock ] = useState({})
-  const [ localCurrentUser, setLocalCurrentUser ] = useState(false)
+  const [ localCurrentUser, setLocalCurrentUser ] = useState(C.anonUser)
   const [ localPurchaseModalIsOpen, setLocalPurchaseModalIsOpen ] = useState(false)
   const [ localZoom, setLocalZoom ] = useState(1)
   if (!currentUser) {
@@ -46,9 +51,11 @@ const AppMock = (props) => {
     setZoom = setLocalZoom
   }
 
+  logg(currentUser, 'mock CU')
+
   return <ThemeProvider theme={S.lightTheme}>
     <Router history={history} >
-      <TwofoldContext.Provider value={{
+      <TwofoldContextProvider {...{
         // bottomDrawerOpen, setBottomDrawerOpen,
         currentUser, setCurrentUser,
         itemToUnlock, setItemToUnlock,
@@ -59,7 +66,7 @@ const AppMock = (props) => {
       }} >
         { props.children }
         <LoginModal />
-      </TwofoldContext.Provider>
+      </TwofoldContextProvider>
     </Router>
   </ThemeProvider>
 }

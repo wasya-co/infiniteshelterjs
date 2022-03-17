@@ -11,8 +11,11 @@ import {
 import styled from 'styled-components'
 
 import config from 'config'
-import C from "./C"
-import useApi from "./Api"
+import {
+  C,
+  logg,
+  useApi,
+} from "./"
 
 /**
  * ishjs has a newer version of this. _vp_ 2022-03-05
