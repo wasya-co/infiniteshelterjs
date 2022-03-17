@@ -40,7 +40,7 @@ import {
 } from "$shared"
 
 const Root = styled.div`
-  background: #dedede;
+  background: ${p => p.theme.colors.background};
   height: 100vh;
   overflow: auto;
 `;

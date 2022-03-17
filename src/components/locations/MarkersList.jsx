@@ -17,11 +17,14 @@ import { Newsitems } from "$components/newsitems"
 
 /* M */
 const _Marker = styled.div`
+  color: ${p => p.theme.colors.text};
+
   margin-bottom: 10px;
+  max-width: 33%;
+  min-width: 100px;
+
   text-align: center;
 
-  min-width: 100px;
-  max-width: 33%;
   width: min(33%, 100px);
 `;
 const Marker = ({ children, variant, ...props }) => {

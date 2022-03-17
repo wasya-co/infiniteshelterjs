@@ -123,7 +123,9 @@ const LocationsShowMobile = (props) => {
 
   const mountedRef = useRef('init')
   const mapPanelRef = useRef(null)
+  const history = useHistory()
 
+  // Get the location data
   useEffect(() => {
     setLoading(true)
     const token = localStorage.getItem("jwt_token")
@@ -132,6 +134,9 @@ const LocationsShowMobile = (props) => {
       setLocation(res.data.map)
       setLoading(false)
       // @TODO: setFlash here?! If I"m accessing a gallery I haven't bought access to?
+    }).catch((e) => {
+      logg(e, 'e13')
+      history.push('/')
     }).finally(() => {
     })
 
@@ -171,8 +176,7 @@ const LocationsShowMobile = (props) => {
     { location && <Collapsible
         label={location.labels.map}
         slug={C.collapsible.map}
-    >
-      <WrappedMapPanel
+    ><WrappedMapPanel
         map={map}
         ref={mapPanelRef}
         slug={match.params.slug}
@@ -184,21 +188,20 @@ const LocationsShowMobile = (props) => {
     { markers && markers.length && <Collapsible
         label={location.labels.markers}
         slug={C.collapsible.markers}
-    >
-      <MarkersList markers={markers} />
+    ><MarkersList markers={markers} />
     </Collapsible> || null }
+
     { location && location.description && <Collapsible
         config={location.config.description}
         label={location.labels.description}
         slug={C.collapsible.description}
-    >
-      <Description item={location} />
+    ><Description item={location} />
     </Collapsible> || null }
+
     { location && location.newsitems.length && <Collapsible
         label={location.labels.newsitems}
         slug="news-sec"
-    >
-      <Newsitems newsitems={location.newsitems} />
+    ><Newsitems newsitems={location.newsitems} />
     </Collapsible> || null }
 
     { showUrl  && <IframeModal src={showUrl} /> }

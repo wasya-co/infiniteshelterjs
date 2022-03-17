@@ -1,7 +1,8 @@
 
+import { Assignment as ReportIcon } from '@material-ui/icons'
 import PropTypes from 'prop-types'
 import React from 'react'
-import styled from 'styled-components'
+import styled, { useTheme } from 'styled-components'
 
 import { C, logg } from "$shared"
 
@@ -25,6 +26,8 @@ const W = styled.div`
   // logg(props, "ItemIcon")
   const { is_purchased, item_type, premium_tier } = props
 
+  const theme = useTheme()
+
   if (is_purchased) {
     return <img className="icon" src="/assets/icons/glasses.png" alt='' />
   }
@@ -35,7 +38,10 @@ const W = styled.div`
     case C.item_types.gallery:
       return <W><img className="icon" src="/assets/icons/gallery.png" alt='' /></W>
     case C.item_types.report:
-      return <W><img className="icon" src="/assets/icons/report.png" alt='' /></W>
+      return <W>
+        {/* <img className="icon" src="/assets/icons/report.png" alt='' /> */}
+        <ReportIcon style={{ color: theme.colors.text, width: '100%', height: '100%' }} />
+      </W>
     case C.item_types.video:
       return <W><img className="icon" src="/assets/newsfeed/video_icon.svg" alt='' /></W>
     default:

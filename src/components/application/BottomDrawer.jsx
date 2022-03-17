@@ -12,7 +12,6 @@ import { LongLine } from "$components/TwofoldLayout"
 import { MyAccountWidget } from "$components/users"
 
 
-
 const Drawer = styled(_Drawer)`
   .MuiDrawer-paper {
     // border: 1px solid cyan;
@@ -33,6 +32,7 @@ function getLibrary(provider) {
 const Inner0 = styled.div`
   display: flex;
   align-items: flex-start;
+  color: ${p => p.theme.colors.text};
 `;
 
 const Inner1 = styled.div`

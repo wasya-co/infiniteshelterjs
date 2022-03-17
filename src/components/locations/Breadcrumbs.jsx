@@ -25,6 +25,7 @@ const B0 = styled.div`
 // The divider
 const B1 = styled.div`
   padding: 0.5em;
+  color: ${p => p.theme.colors.text};
 `;
 
 /* D */
@@ -51,7 +52,7 @@ const T0 = styled.div`
   // background-image: url(${img});
 `;
 const DayNightToggle2 = (props) => {
-  logg(props, 'DayNightToggle2')
+  // logg(props, 'DayNightToggle2')
   const { theme, toggleTheme } = props
 
   return <WDayNight onClick={toggleTheme} >
@@ -62,6 +63,7 @@ const DayNightToggle2 = (props) => {
 
 /* W */
 const W0 = styled.div`
+  background: ${p => p.theme.colors.cardBackground};
   border: ${p=>p.debug?'1':'0'}px solid cyan;
 
   display: flex;
@@ -89,6 +91,7 @@ const WBreadcrumbs = styled.div`
 
 /**
  * Breadcrumbs
+ * @TODO: move to src/application
  */
 const Breadcrumbs = (props) => {
   // logg(props, 'Breakcrumbs')

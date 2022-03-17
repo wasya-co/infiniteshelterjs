@@ -6,8 +6,7 @@ import { C, logg, request, S, TwofoldContext, ZoomContext } from "$shared"
 
 const MapuiContainer = styled.div`
   // border: 1px solid cyan;
-
-  background: white;
+  // background: white;
 
   overflow-y: auto;
 

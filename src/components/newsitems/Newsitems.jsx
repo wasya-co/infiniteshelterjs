@@ -23,7 +23,7 @@ const W = styled.div`
 `;
 
 const Newsitems = (props) => {
-  // logg(props, 'Newsitems')
+  logg(props, 'Newsitems')
   const { newsitems, variant } = props
 
   if (!newsitems || !newsitems.length) { return <div>No Newsitems</div> }

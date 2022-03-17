@@ -12,10 +12,14 @@ import { InjectedConnector } from '@web3-react/injected-connector'
 
 import config from "config"
 
-import { FbLogin, Logout, PasswordLogin } from "./"
-
-import { logg, S, request, TwofoldContext, useApi } from "$shared"
+import {
+  Btn,
+  FlexCol,
+  logg, S, request, TwofoldContext, useApi } from "$shared"
 import bodyNFT from '$src/artifacts/contracts/Body.sol/BodyNFT.json'
+import { FbLogin2, Logout,
+  PasswordLoginMobile, PasswordRegisterMobile,
+} from "./"
 
 /*
  * ropsten, _vp_ 2021-10-26
@@ -23,14 +27,15 @@ import bodyNFT from '$src/artifacts/contracts/Body.sol/BodyNFT.json'
  */
 const bodyAddress = '0x3e1a03a9e1682f4dd95413e0be69e5b7bccaf15d'
 
-const BuyBtn = styled.div`
-  // border: 1px solid black;
+const BuyBtn = styled.span`
+  border: 1px solid ${p => p.theme.colors.text};
+
   padding: 5px;
   cursor: pointer;
 `;
 
 const Cell = styled.div`
-  display: flex;
+  // display: flex;
 `;
 
 const FlexRow = styled.div`
@@ -42,10 +47,14 @@ const FlexRow = styled.div`
 `;
 
 const _Img = styled.div`
-  // border: 1px solid red;
+  border: 1px solid red;
+  background: white;
 
   max-width: 100px;
   max-height: 100px;
+  width: 100px;
+  height: 100px;
+
 
 `;
 const Img = ({ src }) => {
@@ -56,20 +65,38 @@ const injected = new InjectedConnector() // { supportedChainIds: [1, 3, 4, 5, 42
 const stripePromise = loadStripe('pk_test_qr1QPmSpLdBFt1F7itdWJOj3') // @TODO: this is active, but change.
 
 const Login = (props) => {
-  const [ active, setActive ] = useState(false) // whether the button is expanded into login form(s)
-
-  return <F>
-    { active && <FlexRow>
-                  <FbLogin />
-                  <PasswordLogin />
-                </FlexRow>
-      || <button onClick={() => setActive(true)} >Login</button>
-    }
-  </F>
+  const s = {
+    default: null,
+    login: 'login-with-email',
+    register: 'register-with-email',
+  }
+  const [ state, setState ] = useState(s.default)
+  logg(state, 'ze state')
+  switch (state) {
+    case s.default:
+      return <FlexCol>
+        <FbLogin2 />
+        <RegisterWithEmail onClick={() => setState(s.register)} />
+        <LoginWithEmail onClick={() => setState(s.login)} />
+      </FlexCol>
+    case s.register:
+      return <PasswordRegisterMobile />
+    case s.login:
+      return <PasswordLoginMobile />
+    default:
+      throw 'not implemented tr5'
+  }
 };
 
-const W = styled.div`
-  border: 2px solid cyan;
+const RegisterWithEmail = (props) => {
+  return <Btn {...props} >Register with Email</Btn>
+}
+const LoginWithEmail = (props) => {
+  return <Btn {...props} >Login with Email</Btn>
+}
+
+const W0 = styled.div`
+  // border: 1px solid cyan;
 
   display: flex;
   justify-content: flex-start;
@@ -177,32 +204,28 @@ const MyAccountWidget = (props) => {
     }
   }
 
-  return <W className="MyAccountWidget" >
+  return <W0 className="MyAccountWidget" >
 
     { /* currentUser.profile_photo_url && <Img src={currentUser.profile_photo_url} /> */ }
     <Img src={avatar || currentUser?.profile_photo_url} />
 
-    <FlexRow>
-      <Cell>
-        { currentUser.email ? <F>
-          [ {currentUser.email} <Logout /> ]
-          [ { typeof currentUser.n_unlocks === 'undefined' ? '?' : currentUser.n_unlocks}  coins
-            <BuyBtn onClick={() => setPurchaseModalIsOpen(true) }>buy</BuyBtn> ]
-        </F> : <Login /> }
-      </Cell>
-      <Cell>
-        { /* ethers */ }
-        <div className="flex flex-col items-center justify-center">
-          { active ? <F> [
-            <span>Connected with <b>{account}</b></span>
-            <button onClick={disconnect} >Disconnect</button>
-            <button onClick={myBodies} >myBodies</button> ]
-          </F> : <F>
-            [ <span>Not Connected</span> <button onClick={connect} >Connect to MetaMask</button>]
-          </F> }
-        </div>
-      </Cell>
-    </FlexRow>
+    <FlexCol>
+
+      { currentUser.email && <Cell>[ {currentUser.email} <Logout /> ]</Cell> }
+      { currentUser.email && <Cell>[ { typeof currentUser.n_unlocks === 'undefined' ? '?' : currentUser.n_unlocks} coins <BuyBtn onClick={() => setPurchaseModalIsOpen(true) }>ADD</BuyBtn> ]</Cell> }
+      { !currentUser.email && <Login /> }
+
+
+      { active && <F> [
+          <span>Connected with <b>{account}</b></span>
+          <button onClick={disconnect} >Disconnect</button>
+          <button onClick={myBodies} >myBodies</button> ]</F> }
+      { !active && <F>
+        {/* <span>Not Connected</span>  */}
+        {/* <button onClick={connect} >Connect to MetaMask</button> */}
+      </F> }
+
+    </FlexCol>
 
     <Modal isOpen={purchaseModalIsOpen} ariaHideApp={false} >
       <h1>
@@ -215,7 +238,7 @@ const MyAccountWidget = (props) => {
       </form>
     </Modal>
 
-  </W>
+  </W0>
 }
 
 // no props?!
