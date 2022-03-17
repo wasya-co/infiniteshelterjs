@@ -14,12 +14,12 @@ import {
   Btn,
   C,
   FlexCol,
-  logg, request, TwofoldContext, useApi, } from "$shared"
+  logg, request, TwofoldContext, useApi,
+} from "$shared"
 
 export { default as Account } from "./Account"
 
 const { FacebookLogin } = Plugins
-
 
 const FACEBOOK_PERMISSIONS = ['email']
 
@@ -45,7 +45,6 @@ export const FbLogin = (props) => {
   return <Btn onClick={doFbLogin}>FB Login</Btn>
 }
 
-
 export const FbLogin2 = (props) => {
   const api = useApi()
   const { currentUser, setCurrentUser } = useContext(TwofoldContext)
@@ -68,7 +67,6 @@ export const FbLogin2 = (props) => {
   return <Btn onClick={doFbLogin}>Login or Register with Facebook</Btn>
 }
 
-
 export { default as LoginModal } from "./LoginModal"
 
 const BuyBtn = styled.span`
@@ -77,6 +75,7 @@ const BuyBtn = styled.span`
   padding: 5px;
   cursor: pointer;
 `;
+
 export const Logout = () => {
   const { currentUser, setCurrentUser } = useContext(TwofoldContext)
   const doLogout = () => {
@@ -128,6 +127,38 @@ export const PasswordLogin = (props) => {
   </_W>
 }
 
+export const PasswordRegisterMobile = (props) => {
+  // logg(props, 'PasswordRegisterMobile')
+
+  const api = useApi()
+  const {
+    currentUser, setCurrentUser,
+    loginModalOpen, setLoginModalOpen,
+  } = useContext(TwofoldContext)
+  const [ email, setEmail ] = useState('')
+  const [ password, setPassword ] = useState('')
+  const [ passwordConfirm, setPasswordConfirm ] = useState('')
+
+  const doPasswordRegister = async (email, password, passwordConfirm) => {
+    request.post(`${config.apiOrigin}${api.loginPath}`, { email, password }).then((r) => r.data).then((resp) => {
+      localStorage.setItem(C.jwt_token, resp.jwt_token)
+      localStorage.setItem(C.current_user, JSON.stringify(resp))
+      setCurrentUser(resp) // must be done *after* setting C.jwt_token
+      setLoginModalOpen(false)
+    }).catch((e) => {
+      logg(e, 'e322')
+      toast("Login failed")
+      setCurrentUser(C.anonUser)
+    })
+  }
+  return <FlexCol>
+    <input type='email'    value={email}    onChange={(e) => setEmail(e.target.value)    } />
+    <input type='password' value={password} onChange={(e) => setPassword(e.target.value) } />
+    <input type='password' value={passwordConfirm} onChange={(e) => setPasswordConfirm(e.target.value) } />
+    <Btn onClick={() => doPasswordRegister(email, password, passwordConfirm)}>Register</Btn>
+  </FlexCol>
+}
+
 export const PasswordLoginMobile = (props) => {
   // logg(props, 'PasswordLoginMobile')
 
@@ -161,39 +192,6 @@ export const PasswordLoginMobile = (props) => {
   </FlexCol>
 }
 
-
-export const PasswordRegisterMobile = (props) => {
-  // logg(props, 'PasswordRegisterMobile')
-
-  const api = useApi()
-  const {
-    currentUser, setCurrentUser,
-    loginModalOpen, setLoginModalOpen,
-  } = useContext(TwofoldContext)
-  const [ email, setEmail ] = useState('')
-  const [ password, setPassword ] = useState('')
-  const [ passwordConfirm, setPasswordConfirm ] = useState('')
-
-  const doPasswordRegister = async (email, password, passwordConfirm) => {
-    request.post(`${config.apiOrigin}${api.loginPath}`, { email, password }).then((r) => r.data).then((resp) => {
-      localStorage.setItem(C.jwt_token, resp.jwt_token)
-      localStorage.setItem(C.current_user, JSON.stringify(resp))
-      setCurrentUser(resp) // must be done *after* setting C.jwt_token
-      setLoginModalOpen(false)
-    }).catch((e) => {
-      logg(e, 'e322')
-      toast("Login failed")
-      setCurrentUser(C.anonUser)
-    })
-  }
-
-  return <FlexCol>
-    <input type='email'    value={email}    onChange={(e) => setEmail(e.target.value)    } />
-    <input type='password' value={password} onChange={(e) => setPassword(e.target.value) } />
-    <input type='password' value={passwordConfirm} onChange={(e) => setPasswordConfirm(e.target.value) } />
-    <Btn onClick={() => doPasswordRegister(email, password, passwordConfirm)}>Register</Btn>
-  </FlexCol>
-}
-
+export { default as RegisterModal } from './RegisterModal'
 
 export { default as MyAccountWidget } from "./MyAccountWidget"
