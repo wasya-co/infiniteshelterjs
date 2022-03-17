@@ -6,6 +6,7 @@ import {
   Switch, BrowserRouter as Router, Redirect, Route as _Route,
 } from 'react-router-dom'
 import styled, { useTheme } from 'styled-components'
+import { ToastContainer, toast } from 'react-toastify'
 
 import '@ionic/react/css/core.css'
 import '@ionic/react/css/normalize.css'
@@ -138,6 +139,7 @@ const AppMobile = (props) => {
         <UnlockModal />
         <LoginModal />
         <RegisterModal />
+        <ToastContainer />
 
       </CollapsibleContextProvider>
     </TwofoldContextProvider>

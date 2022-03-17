@@ -19,7 +19,7 @@ const TestActor = (props) => {
   // logg(useContext(TwofoldContext), 'testUsedContext')
 
   return <div>
-    <div className='class-1' test-id="registerModalisOpen">{registerModalIsOpen.toString()}</div>
+    <div className='registerModalIsOpen'>{registerModalIsOpen.toString()}</div>
   </div>
 }
 
@@ -30,7 +30,7 @@ describe('TwofoldContext - ', () => {
       <TestActor />
     </TwofoldContextProvider>)
     expect(w).toBeTruthy()
-    expect(w.find('.class-1').text()).toEqual('false')
+    expect(w.find('.registerModalIsOpen').text()).toEqual('false')
   })
 
 })

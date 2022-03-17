@@ -11,6 +11,14 @@ const useApi = () => {
 
   return {
 
+    doRegister: ({email, password }) => {
+      return request.post(`${config.apiOrigin}/api/users`, { email, password }).then((r) => r.data).then((r) => {
+        logg(r, 'done registered')
+        return r
+      })
+    },
+
+
     // returns current user
     doUnlock: ({ kind, id }) => {
       const jwt_token = localStorage.getItem('jwt_token')
@@ -38,6 +46,8 @@ const useApi = () => {
 
     loginPath: '/api/users/login.json',
     longTermTokenPath: '/api/users/long_term_token',
+
+
 
     myAccount: () => "/api/my/account",
     myVideosPath: "/api/my/videos",
