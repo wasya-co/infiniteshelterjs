@@ -47,13 +47,14 @@ const W = ({ children, variant, ...props }) => {
  * @TODO: test-driven _vp_ 2021-10-29
  */
 const Collapsible = ({ children, ...props }) => {
-  logg(props, 'Collapsible')
-  const { className='', config, variant, } = props
+  // logg(props, 'Collapsible')
+  const {
+    className='', config, variant,
+  } = props
 
   const ctx = useContext(CollapsibleContext)
   if (!ctx) { return null }
   const { collapsibles, setCollapsibles } = ctx
-  logg(collapsibles, 'collapsibles')
 
   const doToggle = () => setCollapsibles({ ...collapsibles, [props.slug]: !collapsibles[props.slug] })
 
@@ -61,8 +62,6 @@ const Collapsible = ({ children, ...props }) => {
     : typeof config.collapsible === 'undefined' ? true
       : config.collapsible
   const folded = false // collapsible ? !!collapsibles[props.slug] : false
-
-  logg(folded, 'folded?')
 
   return <W variant={variant} className={`Collapsible ${className}`} >
     { props.label &&  collapsible && <Label onClick={doToggle} >{folded ? <Lt /> : <Gt />} {props.label}</Label> }
