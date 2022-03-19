@@ -2,6 +2,7 @@
 import { configure, mount, shallow } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
 import React from 'react'
+import { act } from "react-dom/test-utils"
 import { ThemeProvider } from 'styled-components'
 
 import AppMobile from './AppMobile'

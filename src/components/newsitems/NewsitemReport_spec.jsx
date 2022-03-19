@@ -1,6 +1,7 @@
 import Adapter from "enzyme-adapter-react-16"
 import { configure, shallow, } from "enzyme"
 import React from "react"
+import { act } from "react-dom/test-utils"
 
 import { NewsitemReport } from "$components/newsitems"
 import { logg } from "$shared"

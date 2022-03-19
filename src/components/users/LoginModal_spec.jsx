@@ -2,6 +2,7 @@
 import Adapter from "enzyme-adapter-react-16"
 import { configure, mount } from "enzyme"
 import React, { useState } from "react"
+import { act } from "react-dom/test-utils"
 
 import { LoginModal } from "$components/users"
 import { AppMock, logg } from "$shared"

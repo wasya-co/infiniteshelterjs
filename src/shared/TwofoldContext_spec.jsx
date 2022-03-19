@@ -2,6 +2,7 @@
 import { configure, mount, render, shallow, } from 'enzyme'
 import Adapter from "enzyme-adapter-react-16"
 import React, { useContext } from 'react'
+import { act } from "react-dom/test-utils"
 
 configure({ adapter: new Adapter() })
 

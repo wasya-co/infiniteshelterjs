@@ -3,6 +3,7 @@ import { configure, mount, shallow } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
 import React from 'react'
 import { ThemeProvider } from 'styled-components'
+import { act } from "react-dom/test-utils"
 
 import App from './AppDesktop'
 import { LoginModal } from "$components/users"

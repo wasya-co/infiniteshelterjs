@@ -1,6 +1,7 @@
 
 import Adapter from "enzyme-adapter-react-16"
 import React from 'react'
+import { act } from "react-dom/test-utils"
 import { configure, mount } from 'enzyme'
 
 import { C, AppMock } from "$shared"

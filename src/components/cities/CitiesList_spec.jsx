@@ -2,6 +2,7 @@ import Adapter from "enzyme-adapter-react-16"
 import * as enzyme from "enzyme"
 import { shallow } from "enzyme"
 import React from "react"
+import { act } from "react-dom/test-utils"
 
 import { CitiesList } from "$components/cities"
 import { logg } from "$shared"
