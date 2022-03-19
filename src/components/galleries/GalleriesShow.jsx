@@ -31,8 +31,8 @@ const GalleriesShow = (props) => {
     loginModalOpen, setLoginModalOpen,
   } = useContext(TwofoldContext)
 
-  // @TODO: move this to api
-  const getGallery = async () => {
+  // @TODO: move this into api
+  let getGallery = async () => {
     const token = localStorage.getItem(C.jwt_token)
     await request.get(`/api/galleries/view/${match.params.slug}`, { params: { jwt_token: token } }).then(res => {
       if (!mountedRef.current) { return }
@@ -42,6 +42,8 @@ const GalleriesShow = (props) => {
       } else {
         setGallery(res.data.gallery)
       }
+    }).catch((err) => {
+      logg(err, 'e65')
     })
   }
 

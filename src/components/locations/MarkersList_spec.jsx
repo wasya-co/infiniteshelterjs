@@ -14,26 +14,27 @@ import useApi from "$shared/Api"
 
 enzyme.configure({ adapter: new Adapter() })
 
-jest.mock('$shared/Api', () => {
-  return {
-    __esModule: true,
-    default: () => {
-      return {
-        getCity: () => {
-          return new Promise((resolve, reject) => {
-            resolve({
-              data: {
-                city: {
-                  newsitems: [{ name: 'report-name-2', item_type: 'Report' }]
-                }
-              }
-            })
-          })
-        },
-      }
-    },
-  }
-})
+// jest.mock('$shared/Api', () => {
+//   return {
+//     __esModule: true,
+//     default: () => {
+//       return {
+//         getCity: () => {
+//           return new Promise((resolve, reject) => {
+//             resolve({
+//               data: {
+//                 city: {
+//                   newsitems: [{ name: 'report-name-2', item_type: 'Report' }]
+//                 }
+//               }
+//             })
+//           })
+//         },
+//       }
+//     },
+//   }
+// })
+jest.mock('$shared/Api')
 
 const theseProps = { markers: [
   { slug: 'some-slug' }
@@ -57,7 +58,7 @@ describe("MarkersList - ", () => {
     jest.clearAllMocks()
   })
 
-  it("renders", () => {
+  it("renders - current2 ", () => {
     let component = mount(<AppMock>
       <MarkersList {...theseProps} />
     </AppMock>)

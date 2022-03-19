@@ -37,9 +37,7 @@ import { Videos } from "$components/videos"
 import { Galleries, MyGalleries } from "$components/galleries"
 import {
   C, CollapsibleContextProvider,
-  Debug,
   logg,
-  request,
   TwofoldContext, TwofoldContextProvider,
   useApi,
 } from "$shared"

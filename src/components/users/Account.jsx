@@ -45,7 +45,7 @@ const LoginRow = styled.div`
 `;
 
 const Account = (props) => {
-  logg(props, 'Account')
+  // logg(props, 'Account')
 
   const { currentUser, setCurrentUser } = useContext(TwofoldContext)
   const [ greeting, setGreetingValue ] = useState("")

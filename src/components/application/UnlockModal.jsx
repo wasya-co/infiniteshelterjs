@@ -36,9 +36,7 @@ const modalStyle = {
  * UnlockModal
  */
 const UnlockModal = (props) => {
-  // logg(props, 'UnlockModal')
-
-  const history = useHistory()
+  logg(props, 'UnlockModal')
 
   const {
     currentUser, setCurrentUser,
@@ -47,9 +45,9 @@ const UnlockModal = (props) => {
     purchaseModalIsOpen, setPurchaseModalIsOpen,
     ratedConfirmation, setRatedConfirmation,
   } = useContext(TwofoldContext)
-  // const usedTwofoldContext = useContext(TwofoldContext)
-  // logg(usedTwofoldContext, 'unlockModalUsedTwofoldContext')
+  logg(useContext(TwofoldContext), 'unlockModalUsedTwofoldContext')
 
+  const history = useHistory()
   const api = useApi()
 
   const doUnlock = async () => {
@@ -65,7 +63,6 @@ const UnlockModal = (props) => {
 
   const mountedRef = useRef('init')
   useEffect(() => {
-
     const fn = async () => {
       const r = await api.getMyAccount().then((r) => {
         if (!mountedRef.current) { return }

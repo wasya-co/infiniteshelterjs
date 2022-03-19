@@ -15,6 +15,7 @@ import {
   request,
   S,
 } from "$shared"
+import useApi from "$shared/Api"
 
 configure({ adapter: new Adapter() })
 
@@ -22,6 +23,8 @@ jest.mock('request')
 const getMock = jest.fn()
 getMock.mockReturnValue(new Promise(() => {}, () => {}))
 request.get = getMock
+
+jest.mock("$shared/Api")
 
 jest.mock("react-router-dom", () => ({
   ...jest.requireActual("react-router-dom"),
@@ -44,31 +47,39 @@ Object.defineProperty(window, 'matchMedia', {
   })),
 });
 
-it("renders", () => {
-  let component = shallow(<ThemeProvider theme={S.lightTheme} >
-    <AppMobile />
-  </ThemeProvider>)
-  expect(component).toBeTruthy()
-})
+describe('AppMobile', () => {
 
-test('loads User from api - current2 ', () => {
-  localStorage.setItem('jwt_token', 'jwt-token')
-  // let component = mount(<ThemeProvider theme={S.lightTheme} ><AppMobile {...{currentUser: {} }} /></ThemeProvider>)
-  let component = mount(<AppMock ><AppMobile /></AppMock>)
-  expect(component).toBeTruthy()
-  expect(request.get.mock.calls[0][0]).toEqual(`http://localhost:3000/api/my/account?jwt_token=jwt-token`)
-})
+  it("renders", () => {
+    let component = shallow(<ThemeProvider theme={S.lightTheme} >
+      <AppMobile />
+    </ThemeProvider>)
+    expect(component).toBeTruthy()
+  })
 
-test('shows LoginModal for unauthed users', () => {
-  let wrapper = mount(<ThemeProvider theme={S.lightTheme} ><AppMobile /></ThemeProvider>)
-  expect(wrapper.find('LoginModal').length).toEqual(1)
-})
+  // @TODO: this belongs to TwofoldContext_spec
 
-test('renders RegisterModal - current2 ', () => {
-  const currentUser = {}
+  // test('loads User from api - ', async () => {
+  //   localStorage.setItem('jwt_token', 'jwt-token')
+  //   let component = await mount(<AppMock ><AppMobile /></AppMock>)
+  //   expect(component).toBeTruthy()
+  //   logg(request.get.mock.calls, 'calls')
 
-  let w = mount(<AppMock >
-    <AppMobile {...{ currentUser }}/>
-  </AppMock>)
-  expect(w.find(RegisterModal).length).toEqual(1)
+  //   expect(request.get.mock.calls[0][0]).toEqual(`http://localhost:3000/api/my/account?jwt_token=jwt-token`)
+  //   await act(() => new Promise(setImmediate))
+  // })
+
+  test('shows LoginModal for unauthed users', () => {
+    let wrapper = mount(<ThemeProvider theme={S.lightTheme} ><AppMobile /></ThemeProvider>)
+    expect(wrapper.find('LoginModal').length).toEqual(1)
+  })
+
+  test('renders RegisterModal - ', () => {
+    const currentUser = {}
+
+    let w = mount(<AppMock >
+      <AppMobile {...{ currentUser, setCurrentUser: () => {} }}/>
+    </AppMock>)
+    expect(w.find(RegisterModal).length).toEqual(1)
+  })
+
 })

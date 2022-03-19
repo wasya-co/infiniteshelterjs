@@ -25,6 +25,8 @@ const TwofoldContext = React.createContext({})
 const TwofoldContextProvider = ({ children, ...props }) => {
   // logg(props, 'TwofoldContextProvider')
   let {
+    currentUser, setCurrentUser, // for testing only. _vp_ 2022-03-18
+    itemToUnlock, setItemToUnlock,
     layout, setLayout,
     theme, toggleTheme,
     zoom, setZoom, // it's a prop for testing only. _vp_ 2022-03-18
@@ -45,7 +47,11 @@ const TwofoldContextProvider = ({ children, ...props }) => {
 
   /* C */
 
-  const [ currentUser, setCurrentUser ] = useState(C.anonUser)
+  const [ localCurrentUser, setLocalCurrentUser ] = useState(C.anonUser)
+  if (!currentUser) {
+    currentUser = localCurrentUser
+    setCurrentUser = setLocalCurrentUser
+  }
 
   /* Get the current_user on load */
   const mountedRef = useRef('init')
@@ -71,12 +77,17 @@ const TwofoldContextProvider = ({ children, ...props }) => {
   const [ folded, setFolded ] = useState()
 
   /* I */
-  const [ itemToUnlock, _setItemToUnlock ] = useState({})
-  const setItemToUnlock = (item) => {
-    if (itemToUnlock.id !== item.id && !loginModalOpen) {
-      _setItemToUnlock(item)
-    }
+  const [ _itemToUnlock, _setItemToUnlock ] = useState({})
+  if (!itemToUnlock) {
+    itemToUnlock = _itemToUnlock
+    setItemToUnlock = _setItemToUnlock
   }
+  /* why is this here? remove. _vp_ 2022-03-18 */
+  // const setItemToUnlock = (item) => {
+  //   if (itemToUnlock.id !== item.id && !loginModalOpen) {
+  //     _setItemToUnlock(item)
+  //   }
+  // }
 
   /* L */
   const [ location, setLocation ] = useState(null)

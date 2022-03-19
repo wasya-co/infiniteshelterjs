@@ -41,7 +41,7 @@ jest.mock('$shared/Api', () => {
 
 const theseProps = { match: { url: '/en/cities/travel-to/chicago', params: '?' } }
 
-describe("CitiesShow", () => {
+describe("CitiesShow - current2 ", () => {
 
   it("renders", () => {
     let component = mount(<AppMock>
@@ -51,8 +51,6 @@ describe("CitiesShow", () => {
   })
 
   it("renders newsitems - ", async () => {
-    // const history = createMemoryHistory()
-    // history.push('/en/cities/travel-to/chicago')
     let component = await mount(<AppMock>
       <CitiesShow {...theseProps} />
     </AppMock>)

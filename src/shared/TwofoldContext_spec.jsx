@@ -33,4 +33,10 @@ describe('TwofoldContext - ', () => {
     expect(w.find('.registerModalIsOpen').text()).toEqual('false')
   })
 
+  // @TODO: fix!
+
+  // it('Get the current_user on load', () => {
+  //   throw 'not implemented'
+  // })
+
 })

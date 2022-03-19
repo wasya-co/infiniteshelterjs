@@ -25,7 +25,7 @@ const Root = styled.div`
 `
 
 const SitesShow = (props) => {
-  logg(props, 'SitesShow')
+  // logg(props, 'SitesShow')
 
   let [ site, setSite ] = useState({ features: [], newsitems: [] })
   let [ loading, setLoading ] = useState(false)
@@ -36,7 +36,6 @@ const SitesShow = (props) => {
   useEffect(() => {
     api.applicationHome().then(data => {
       if (!mountedRef.current) { return null }
-      logg(data, 'setSite')
       setSite(data)
       setLoading(false)
     })

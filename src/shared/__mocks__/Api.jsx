@@ -46,10 +46,10 @@ const useApi = () => {
 
     // myVideosPath: "/api/my/videos", // @TODO: remove
 
-    // applicationHome: async () => {
-    //   const out = await request.get(`${config.apiOrigin}/api/sites/view/${config.domain}`, { params: { jwt_token: token } })
-    //   return out.data
-    // }
+    applicationHome: async () => {
+      const out = await request.get(`${config.apiOrigin}/api/sites/view/${config.domain}`, { params: { jwt_token: token } })
+      return out.data
+    }
   }
 
 }

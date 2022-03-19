@@ -28,7 +28,7 @@ const Root = styled.div`
 
 // Currently a homepage, like a wp page.
 const SitesShow1 = (props) => {
-  logg(props, 'SitesShow')
+  // logg(props, 'SitesShow1')
 
   let [ site, setSite ] = useState({ features: [], newsitems: [] })
   let [ artTag, setArtTag ] = useState({ features: [] })

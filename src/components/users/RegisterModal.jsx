@@ -29,7 +29,7 @@ const RegisterModal = (props) => {
     currentUser, setCurrentUser,
     registerModalIsOpen, setRegisterModalIsOpen,
   } = useContext(TwofoldContext)
-  logg(useContext(TwofoldContext), 'registerModalUsedContext')
+  // logg(useContext(TwofoldContext), 'registerModalUsedContext')
 
   const api = useApi()
   const [ email, setEmail ] = useState('')
