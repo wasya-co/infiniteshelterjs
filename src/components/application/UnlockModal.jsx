@@ -54,6 +54,7 @@ const UnlockModal = (props) => {
     // @TODO: check how many unlocks I have, and offer to purchase more if not enough.
     await api.doUnlock({ kind: itemToUnlock.item_type, id: itemToUnlock.id }).then((r) => {
       setItemToUnlock({})
+      logg(r, 'nowThisR')
       setCurrentUser(r)
       // refresh the newsfeed?
     }).catch((e) => {
@@ -66,7 +67,11 @@ const UnlockModal = (props) => {
     const fn = async () => {
       const r = await api.getMyAccount().then((r) => {
         if (!mountedRef.current) { return }
-        setCurrentUser(r)
+        logg(r, 'nowThisR 2')
+        // @TODO: fix this mess
+        if (r) {
+          setCurrentUser(r)
+        }
       }).catch((e) => {
         logg(e, 'e1-')
       })

@@ -156,6 +156,7 @@ const MyAccountWidget = (props) => {
     } else {
       if (result.paymentIntent.status === 'succeeded') {
         let response = await api.getMyAccount()
+        logg(response, 'tr2')
         setCurrentUser(response)
         setPurchaseModalIsOpen(false)
       }

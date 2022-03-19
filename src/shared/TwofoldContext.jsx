@@ -54,20 +54,38 @@ const TwofoldContextProvider = ({ children, ...props }) => {
   }
 
   /* Get the current_user on load */
+
   const mountedRef = useRef('init')
   useEffect(() => {
     if (!mountedRef.current) { return } // @TODO: hmmm do I need this?
-    const r = api.getMyAccount()
-    setCurrentUser(r)
+
+    // @TODO: rewrite this.
+    api.getMyAccount().then((r) => {
+      if (r) {
+        setCurrentUser(r)
+      }
+    }).catch((err) => {
+      logg(err, 'e566')
+    })
 
     return () => mountedRef.current = null
   }, [currentUser])
 
+  logg(currentUser, 'CU?')
+
   // Refresh current_user if is_purchasing
   useEffect(() => {
     let closure = setTimeout(async () => {
-      const result = await api.getMyAccount()
-      setCurrentUser(result)
+
+      // @TODO: rewrite this.
+      api.getMyAccount().then((r) => {
+        if (r) {
+          setCurrentUser(r)
+        }
+      }).catch((err) => {
+        logg(err, 'e567')
+      })
+
     }, 1 * 1000)
     return () => clearTimeout(closure)
   }, [currentUser.is_purchasing])

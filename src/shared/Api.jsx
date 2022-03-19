@@ -33,8 +33,10 @@ const useApi = () => {
 
     getMyAccount: async () => await request.post(`/api/my/account`, { jwt_token: token,
     }).then((r) => r.data
-    ).then((r) => r
-    ).catch((err) => logg(err, 'r89')),
+    ).then((r) => {
+      logg(r, 'r???')
+      return r
+    }).catch((err) => logg(err, 'r89')),
 
     getPayments: () => request.get(`${config.apiOrigin}/api/payments2?jwt_token=${token}`).then((r) => r.data),
 

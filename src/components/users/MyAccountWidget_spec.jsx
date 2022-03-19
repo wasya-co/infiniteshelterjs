@@ -39,7 +39,7 @@ jest.mock('$shared/Api', () => ({
   })
 }))
 
-describe("MyAccountWidget", () => {
+describe("MyAccountWidget - current2 ", () => {
 
   it("shows email, n available unlocks - ", async () => {
     const aCurrentUser = { email: 'test@gmail.com', n_unlocks: 1 }
@@ -56,24 +56,5 @@ describe("MyAccountWidget", () => {
     expect(component.text()).toMatch(/1 coins/)
 
   })
-
-  /* this doesnt work because it is very very async */
-  // it('handleSubmit - current2', async () => {
-  //   let currentUser = {
-  //     email: 'some1@email.com',
-  //     is_purchasing: true,
-  //     n_unlocks: 0,
-  //   }
-  //   const setCurrentUser = (props) => {
-  //     currentUser = props
-  //   }
-  //   let component = await mount(<AppMock {...{
-  //     currentUser, setCurrentUser,
-  //     purchaseModalIsOpen: true, setPurchaseModalIsOpen: () => {},
-  //   }} ><MyAccountWidget /></AppMock>)
-  //   component.find('form').at(0).simulate('submit')
-  //   await act(() => new Promise(setImmediate))
-  //   expect(component.text()).toMatch(/5/)
-  // })
 
 })
