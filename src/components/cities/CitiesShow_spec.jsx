@@ -14,11 +14,15 @@ import useApi from "$shared/Api"
 
 enzyme.configure({ adapter: new Adapter() })
 
+// @TODO: use __mocks__ for a better request mock.
 jest.mock('$shared/Api', () => {
+  const actual = jest.requireActual("$shared/Api")
+
   return {
     __esModule: true,
     default: () => {
       return {
+        ...actual.default(),
         getCity: () => {
           return new Promise((resolve, reject) => {
             resolve({
@@ -46,7 +50,7 @@ describe("CitiesShow", () => {
     expect(component).toBeTruthy()
   })
 
-  it("renders newsitems", async () => {
+  it("renders newsitems - ", async () => {
     // const history = createMemoryHistory()
     // history.push('/en/cities/travel-to/chicago')
     let component = await mount(<AppMock>

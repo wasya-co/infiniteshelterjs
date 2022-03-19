@@ -10,9 +10,11 @@ import useApi from "$shared/Api"
 
 configure({ adapter: new Adapter() })
 
+import { RegisterModal } from "./"
+
 describe("RegisterModal", () => {
 
-  it("renders", () => {
+  it("renders - ", () => {
     const w = mount(<RegisterModal />)
     expect(w).toBeTruthy()
   })

@@ -24,9 +24,10 @@ import {
 const TwofoldContext = React.createContext({})
 const TwofoldContextProvider = ({ children, ...props }) => {
   // logg(props, 'TwofoldContextProvider')
-  const {
+  let {
     layout, setLayout,
     theme, toggleTheme,
+    zoom, setZoom, // it's a prop for testing only. _vp_ 2022-03-18
   } = props
 
   const api = useApi()
@@ -52,7 +53,6 @@ const TwofoldContextProvider = ({ children, ...props }) => {
     if (!mountedRef.current) { return } // @TODO: hmmm do I need this?
     const r = api.getMyAccount()
     setCurrentUser(r)
-
 
     return () => mountedRef.current = null
   }, [currentUser])
@@ -115,7 +115,11 @@ const TwofoldContextProvider = ({ children, ...props }) => {
   const [ twofoldPercent, setTwofoldPercent ] = useState(0.5)
 
   /* Z */
-  const [ zoom, setZoom ] = useState(1)
+  const [ localZoom, setLocalZoom ] = useState(1)
+  if (!zoom) {
+    zoom = localZoom
+    setZoom = setLocalZoom
+  }
 
   return <TwofoldContext.Provider value={{
     bottomDrawerOpen, setBottomDrawerOpen,

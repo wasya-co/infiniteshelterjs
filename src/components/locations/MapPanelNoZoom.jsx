@@ -53,6 +53,7 @@ const MapPanelNoZoom = (props) => {
 
   const history = useHistory()
   const [ windowWidth, windowHeight ] = useWindowSize()
+  // logg(useWindowSize(), 'usedWindowSize')
 
 
   /*
@@ -60,8 +61,8 @@ const MapPanelNoZoom = (props) => {
    * w: 1184 h: 819
    */
   useEffect(() => {
-    // logg4([windowWidth, windowHeight, map.w, map.h], 'MapPanelNoZoom setting zoom')
-    if (windowWidth===0) { return; }
+    // logg([windowWidth, windowHeight, map.w, map.h], 'MapPanelNoZoom setting zoom')
+    if (windowWidth === 0) { return; }
 
     let nextZoomByWidth = windowWidth/map.w // .3 mobile // 1.94 desktop
     let nextZoomByHeight = windowHeight/map.h // .9 mobile // .82 desktop
@@ -70,6 +71,7 @@ const MapPanelNoZoom = (props) => {
     let nextZoom = Math.min(nextZoomByWidth, nextZoomByHeight)
     const slack = 0.01 // image should not overlap with the border... 1% slack added.
     nextZoom = nextZoom + slack
+
     setZoom(nextZoom)
   }, [
     mapPanelWidth, mapPanelHeight, map.id,

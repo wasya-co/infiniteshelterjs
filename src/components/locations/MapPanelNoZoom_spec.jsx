@@ -49,15 +49,13 @@ describe("MapPanelNoZoom - ", () => {
   })
 
   it("calls setZoom on window size change - ", async () => {
-    const zoom = 1
-    const mockSetZoom = jest.fn()
+    const zoom = 0.99
+    const mockSetZoom = jest.fn(() => 'abba')
+
     let component = await mount(<AppMock {...{ zoom, setZoom: mockSetZoom }} >
       <MapPanelNoZoom {...theseProps} />
     </AppMock>)
-    global.dispatchEvent(new Event('resize'))
-
     expect(mockSetZoom).toHaveBeenCalled()
-    await act(() => new Promise(setImmediate))
   })
 
 })

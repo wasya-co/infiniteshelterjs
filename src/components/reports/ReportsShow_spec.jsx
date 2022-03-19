@@ -10,42 +10,23 @@ import { act } from '@testing-library/react'
 
 import ReportsShow from "./ReportsShow"
 import { LoginModal } from "$components/users"
-import { AppMock, C, logg, } from "$shared"
+import {
+  AppMock,
+  C,
+  logg,
+} from "$shared"
 import useApi from "$shared/Api"
 
+
+jest.mock('$shared/Api')
+
 enzyme.configure({ adapter: new Adapter() })
-
-
-jest.mock('$shared/request', () => {
-  const originalModule = jest.requireActual("$shared/request")
-  return {
-    __esModule: true,
-    ...originalModule,
-    default: {
-      get: () => {
-        return new Promise((resolve, reject) => {
-          resolve({
-            data: {
-              report: {
-                id: '1',
-                is_premium: true,
-                premium_tier: 1,
-                is_purchased: false,
-              }
-            }
-          })
-        })
-      },
-    }
-  }
-})
-
 
 const theseProps = { match: { url: '/en/reports/show/1', params: '?' } }
 
 describe("ReportsShow", () => {
 
-  test('renders', async () => {
+  test("renders - current2 ", async () => {
     let wrapper = mount(<AppMock >
       <ReportsShow {...theseProps} />
     </AppMock>)

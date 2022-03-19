@@ -7,7 +7,7 @@ request, TwofoldContext } from "$shared"
 
 const useApi = () => {
   const { currentUser, setCurrentUser } = useContext(TwofoldContext)
-  const token = localStorage.getItem(C.jwt_token);
+  const token = localStorage.getItem(C.jwt_token)
 
   return {
 
@@ -31,7 +31,7 @@ const useApi = () => {
     getCity: (slug) => request.get(`${config.apiOrigin}/api/cities/view/${slug}`),
     getGallery: (slug) => request.get(`${config.apiOrigin}/api/galleries/view/${slug}?jwt_token=${token}`).then((r) => r.data.gallery),
 
-    getMyAccount: () => request.post(`/api/my/account`, { jwt_token: token, }).then((r) => r.data).then((r) => r),
+    getMyAccount: async () => await request.post(`/api/my/account`, { jwt_token: token, }).then((r) => r.data).then((r) => r),
 
     getPayments: () => request.get(`${config.apiOrigin}/api/payments2?jwt_token=${token}`).then((r) => r.data),
 

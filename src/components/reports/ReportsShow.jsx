@@ -5,43 +5,35 @@ import styled from 'styled-components'
 import config from "config"
 import { useApi, Card as Box, logg, request } from "$shared"
 
-const W = styled.div`
+const W0 = styled.div`
   padding: 2em 0;
 `
 
 /**
- * Default
+ * ReportsShow
  */
 const ReportsShow = (props) => {
-  logg(props, "ReportsShow")
+  // logg(props, "ReportsShow")
 
   let [ item, setItem ] = useState({})
   let api = useApi()
 
-  // @TODO: refactor
-  const currentUser = JSON.parse(localStorage.getItem("current_user")) || {};
-
-  // @TODO: not logged in and has access
-  const getReport = async () => {
+  useEffect(() => {
     api.getReport(props.match.params.slug).then((data) => {
       setItem(data)
     })
-  }
-
-  useEffect(() => {
-    getReport()
   }, [])
 
   // @TODO: logged in and no access
 
   // @TODO: logged in and access
 
-  return (<W>
+  return (<W0>
     {/* <Box boxShadow={2}> */}
       <h1>Report {item.name}</h1>
       <div className="description" dangerouslySetInnerHTML={{ __html: item.description }} />
     {/* </Box> */}
-  </W>)
+  </W0>)
 }
 
 // @TODO: wrap in login HOC
