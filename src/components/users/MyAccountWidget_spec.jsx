@@ -53,7 +53,7 @@ describe("MyAccountWidget", () => {
     await new Promise(process.nextTick)
 
     expect(component.text()).toMatch(/test@gmail.com/)
-    expect(component.text()).toMatch(/5 coins/)
+    expect(component.text()).toMatch(/1 coins/)
 
   })
 

@@ -5,33 +5,28 @@ import React, { useState } from "react"
 import { act } from '@testing-library/react'
 
 import { PasswordLogin } from "./"
-import { AppMock, logg, request } from "$shared"
+import { AppMock, logg, } from "$shared"
+import request from "$shared/request"
 
 enzyme.configure({ adapter: new Adapter() })
 
-jest.mock('request')
-request.post = jest.fn().mockImplementationOnce(() => new Promise(() => {}, () => {}))
+// jest.mock('$shared/request')
+// request.post = jest.fn(new Promise(() => {}, () => {}))
 
-/*
+
 jest.mock('$shared/request', () => {
   const originalModule = jest.requireActual("$shared/request")
   return {
     __esModule: true,
     ...originalModule,
     default: {
-      post: () => {
-        return new Promise((resolve, reject) => {
-          resolve({
-            data: {
-            }
-          })
-        })
-      },
+      ...originalModule.default,
+      post: jest.fn().mockImplementation(() => new Promise(() => true, () => true)),
     }
   }
-}) */
+})
 
-describe("PasswordLogin", () => {
+describe("PasswordLogin - current2 ", () => {
 
   it("submits on Enter", async () => {
     let component = mount(<AppMock ><PasswordLogin /></AppMock>)

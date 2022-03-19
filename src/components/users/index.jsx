@@ -113,8 +113,11 @@ export const PasswordLogin = (props) => {
   const [ email, setEmail ] = useState('')
   const [ password, setPassword ] = useState('')
 
-  const doPasswordLogin = async (email, password) => {
-    request.post(`${config.apiOrigin}${api.loginPath}`, { email, password }).then((r) => r.data).then((resp) => {
+  // @TODO: this used to be async/await
+  const doPasswordLogin =  (email, password) => {
+    request.post(`${config.apiOrigin}${api.loginPath}`, { email, password
+    }).then((r) => r.data
+    ).then((resp) => {
       localStorage.setItem(C.jwt_token, resp.jwt_token)
       localStorage.setItem(C.current_user, JSON.stringify(resp))
       setCurrentUser(resp) // must be done *after* setting C.jwt_token

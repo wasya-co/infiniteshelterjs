@@ -26,7 +26,7 @@ const TestActor = (props) => {
 describe('TwofoldContext - ', () => {
 
   it('Sets: registerModalIsOpen', () => {
-    const w = mount(<TwofoldContextProvider {...{ currentUser: {} }} >
+    const w = mount(<TwofoldContextProvider {...{ currentUser: {}, setCurrentUser: () => {} }} >
       <TestActor />
     </TwofoldContextProvider>)
     expect(w).toBeTruthy()
