@@ -69,16 +69,13 @@ const TwofoldContextProvider = ({ children, ...props }) => {
 
   // Refresh current_user if is_purchasing
   useEffect(() => {
-    let closure = setTimeout(async () => {
+    let closure = setTimeout(() => {
 
-      // @TODO: rewrite this.
-      api.getMyAccount().then((r) => {
-        if (r) {
-          setCurrentUser(r)
-        }
-      }).catch((err) => {
-        logg(err, 'e567')
-      })
+      const fn = async () => {
+        const r = await api.getMyAccount()
+        setCurrentUser(r)
+      }
+      fn()
 
     }, 1 * 1000)
     return () => clearTimeout(closure)

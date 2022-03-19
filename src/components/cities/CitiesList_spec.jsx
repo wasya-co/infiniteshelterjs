@@ -10,9 +10,10 @@ enzyme.configure({ adapter: new Adapter() })
 
 describe("CitiesList", () => {
 
-  it("renders", () => {
+  it("renders", async () => {
     let component = shallow(<CitiesList />)
     expect(component).toBeTruthy()
+    await act(() => new Promise(setImmediate))
   })
 
 })

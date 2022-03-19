@@ -41,21 +41,23 @@ describe("MapPanelNoZoom - ", () => {
     jest.clearAllMocks()
   })
 
-  it("renders -  ", () => {
+  it("renders -  ", async () => {
     let component = mount(<AppMock>
       <MapPanelNoZoom {...theseProps} />
     </AppMock>)
     expect(component).toBeTruthy()
+    await act(() => new Promise(setImmediate))
   })
 
-  it("calls setZoom on window size change - ", async () => {
+  it("calls setZoom on window size change -  ", async () => {
     const zoom = 0.99
-    const mockSetZoom = jest.fn(() => 'abba')
+    const mockSetZoom = jest.fn(() => 'done setZoom')
 
     let component = await mount(<AppMock {...{ zoom, setZoom: mockSetZoom }} >
       <MapPanelNoZoom {...theseProps} />
     </AppMock>)
     expect(mockSetZoom).toHaveBeenCalled()
+    await act(() => new Promise(setImmediate))
   })
 
 })

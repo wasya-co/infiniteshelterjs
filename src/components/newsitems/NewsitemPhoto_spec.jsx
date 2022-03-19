@@ -9,8 +9,8 @@ import NewsitemPhoto from './NewsitemPhoto'
 configure({ adapter: new Adapter() })
 
 describe('NewsitemPhoto', () => {
-  test('renders', () => {
 
+  test('renders', async () => {
     const item = {
       photos: [],
       item_type: 'Photo',
@@ -20,6 +20,8 @@ describe('NewsitemPhoto', () => {
       <NewsitemPhoto item={item} />
     </AppMock>)
     expect(component).toBeTruthy()
+    await act(() => new Promise(setImmediate))
   })
+
 })
 

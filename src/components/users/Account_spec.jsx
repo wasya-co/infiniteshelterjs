@@ -27,12 +27,13 @@ jest.mock('$shared/Api', () => ({
 // @TODO: this test is duplicated, unneeded.
 describe("Account", () => {
 
-  it("renders - ", () => {
+  it("renders - ", async () => {
     const defaultCurrentUser = { email: 'test@gmail.com', n_unlocks: 1 }
     let currentUser = false
     const setCurrentUser = (props) => currentUser = props
     let component = mount(<AppMock {...{ currentUser, setCurrentUser }} ><Account /></AppMock>)
     expect(component).toBeTruthy()
+    await act(() => new Promise(setImmediate))
   })
 
 })

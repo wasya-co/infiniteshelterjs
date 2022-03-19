@@ -43,11 +43,12 @@ const theseProps = { match: { url: '/en/cities/travel-to/chicago', params: '?' }
 
 describe("CitiesShow - current2 ", () => {
 
-  it("renders", () => {
+  it("renders", async () => {
     let component = mount(<AppMock>
       <CitiesShow {...theseProps} />
     </AppMock>)
     expect(component).toBeTruthy()
+    await act(() => new Promise(setImmediate))
   })
 
   it("renders newsitems - ", async () => {

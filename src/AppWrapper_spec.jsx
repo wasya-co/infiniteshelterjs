@@ -38,9 +38,9 @@ Object.defineProperty(window, 'matchMedia', {
     removeEventListener: jest.fn(),
     dispatchEvent: jest.fn(),
   })),
-});
+})
 
-it('sanity', () => {
+it.skip('sanity', () => {
   expect(true).toBeTruthy()
 })
 

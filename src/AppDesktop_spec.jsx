@@ -40,24 +40,30 @@ Object.defineProperty(window, 'matchMedia', {
   })),
 });
 
-it("renders", () => {
-  let component = shallow(<ThemeProvider theme={S.lightTheme} >
-    <App />
-  </ThemeProvider>)
-  expect(component).toBeTruthy()
-})
+describe('AppDesktop', () => {
 
-test('loads User from api', () => {
-  localStorage.setItem('jwt_token', 'jwt-token')
-  let component = mount(<ThemeProvider theme={S.lightTheme} ><App /></ThemeProvider>)
-  expect(component).toBeTruthy()
+  it("renders", async () => {
+    let component = shallow(<ThemeProvider theme={S.lightTheme} >
+      <App />
+    </ThemeProvider>)
+    expect(component).toBeTruthy()
+    await act(() => new Promise(setImmediate))
+  })
 
-  // @TODO: herehere, should be fixed
-  // expect(request.get.mock.calls[0][0]).toEqual(`http://localhost:3000/api/my/account?jwt_token=jwt-token`)
+  test('loads User from api', async () => {
+    localStorage.setItem('jwt_token', 'jwt-token')
+    let component = mount(<ThemeProvider theme={S.lightTheme} ><App /></ThemeProvider>)
+    expect(component).toBeTruthy()
 
-})
+    // @TODO: herehere, should be fixed
+    // expect(request.get.mock.calls[0][0]).toEqual(`http://localhost:3000/api/my/account?jwt_token=jwt-token`)
+    await act(() => new Promise(setImmediate))
+  })
 
-test('shows LoginModal for unauthed users', () => {
-  let wrapper = mount(<ThemeProvider theme={S.lightTheme} ><App /></ThemeProvider>)
-  expect(wrapper.find('LoginModal').length).toEqual(1)
+  test('shows LoginModal for unauthed users', async () => {
+    let wrapper = mount(<ThemeProvider theme={S.lightTheme} ><App /></ThemeProvider>)
+    expect(wrapper.find('LoginModal').length).toEqual(1)
+    await act(() => new Promise(setImmediate))
+  })
+
 })

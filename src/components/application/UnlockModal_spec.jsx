@@ -44,11 +44,12 @@ const theseProps = { match: { url: '/en/cities/travel-to/chicago', params: '?' }
 
 describe("UnlockModal -  ", () => {
 
-  it("renders", () => {
+  it("renders", async () => {
     let component = mount(<AppMock>
       <UnlockModal {...theseProps} />
     </AppMock>)
     expect(component).toBeTruthy()
+    await act(() => new Promise(setImmediate))
   })
 
   // it('allows to buy if enough coins', () => {

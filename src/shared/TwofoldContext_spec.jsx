@@ -25,18 +25,17 @@ const TestActor = (props) => {
 
 describe('TwofoldContext - ', () => {
 
-  it('Sets: registerModalIsOpen', () => {
+  it('Sets: registerModalIsOpen', async () => {
     const w = mount(<TwofoldContextProvider {...{ currentUser: {}, setCurrentUser: () => {} }} >
       <TestActor />
     </TwofoldContextProvider>)
     expect(w).toBeTruthy()
     expect(w.find('.registerModalIsOpen').text()).toEqual('false')
+    await act(() => new Promise(setImmediate))
   })
 
-  // @TODO: fix!
-
-  // it('Get the current_user on load', () => {
-  //   throw 'not implemented'
-  // })
+  it.skip('Get the current_user on load', () => {
+    throw 'not implemented'
+  })
 
 })

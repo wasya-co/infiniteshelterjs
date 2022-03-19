@@ -9,20 +9,24 @@ import Newsitems from './Newsitems'
 configure({ adapter: new Adapter() })
 
 describe('Newsitems', () => {
-  test('renders', () => {
+
+  test('renders', async () => {
     const items = []
     const component = mount(<AppMock>
       <Newsitems newsitems={items} />
     </AppMock>)
     expect(component).toBeTruthy()
+    await act(() => new Promise(setImmediate))
   })
 
-  test('current2 - renders a NewsitemPhoto', () => {
+  test('current2 - renders a NewsitemPhoto', async () => {
     const items = [{ item_type: C.item_types.photo, photos: [] }]
     const component = mount(<AppMock>
       <Newsitems newsitems={items} />
     </AppMock>)
     expect(component.find('.NewsitemPhoto').length).toBeTruthy()
+    await act(() => new Promise(setImmediate))
   })
+
 })
 

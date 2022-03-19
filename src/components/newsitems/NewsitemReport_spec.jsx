@@ -9,9 +9,11 @@ configure({ adapter: new Adapter() })
 
 describe("NewsitemReport", () => {
 
-  it("renders", () => {
+  it("renders", async () => {
     let component = shallow(<NewsitemReport newsitem={ {} } />)
     expect(component).toBeTruthy()
+    await act(() => new Promise(setImmediate))
   })
 
 })
+

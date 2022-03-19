@@ -43,10 +43,13 @@ it('WBordered', () => {
 })
 
 describe("WidgetContainer - current2", () => {
-  it("cursor pointer", () => {
+
+  it("cursor pointer", async () => {
     const w = mount(<AppMock>
       <WidgetContainer data-testid='id1' onClick={() => true } />
     </AppMock>)
     expect(w.find('div').getDOMNode()).toHaveStyle('cursor: pointer')
+    await act(() => new Promise(setImmediate))
   })
+
 })

@@ -14,9 +14,10 @@ import { RegisterModal } from "./"
 
 describe("RegisterModal", () => {
 
-  it("renders - ", () => {
+  it("renders - ", async () => {
     const w = mount(<RegisterModal />)
     expect(w).toBeTruthy()
+    await act(() => new Promise(setImmediate))
   })
 
 })

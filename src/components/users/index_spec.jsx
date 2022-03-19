@@ -33,8 +33,8 @@ describe("PasswordLogin - current2 ", () => {
     expect(component.find('input[type="password"]').length).toEqual(1)
 
     component.find('input[type="password"]').simulate('keydown', { key: 'Enter' })
-    await act(() => new Promise(setImmediate))
     expect(request.post).toHaveBeenCalled()
+    await act(() => new Promise(setImmediate))
   })
 
 })

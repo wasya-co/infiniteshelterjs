@@ -58,11 +58,12 @@ describe("MarkersList - ", () => {
     jest.clearAllMocks()
   })
 
-  it("renders - current2 ", () => {
+  it("renders - current2 ", async () => {
     let component = mount(<AppMock>
       <MarkersList {...theseProps} />
     </AppMock>)
     expect(component).toBeTruthy()
+    await act(() => new Promise(setImmediate))
   })
 
   it("#goto, pushes to history - ", async () => {

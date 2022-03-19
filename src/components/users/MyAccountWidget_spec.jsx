@@ -49,12 +49,12 @@ describe("MyAccountWidget - current2 ", () => {
 
     setCurrentUser(aCurrentUser)
     component = await mount(<AppMock {...{ currentUser: aCurrentUser, setCurrentUser }} ><MyAccountWidget /></AppMock>)
-    await act(() => new Promise(setImmediate))
-    await new Promise(process.nextTick)
 
     expect(component.text()).toMatch(/test@gmail.com/)
     expect(component.text()).toMatch(/1 coins/)
 
+    await act(() => new Promise(setImmediate))
+    // await new Promise(process.nextTick)
   })
 
 })

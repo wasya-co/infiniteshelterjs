@@ -9,8 +9,8 @@ import NewsitemGallery from './NewsitemGallery'
 configure({ adapter: new Adapter() })
 
 describe('NewsitemGallery', () => {
-  test('renders', () => {
 
+  test('renders', async () => {
     const item = {
       photos: [],
     }
@@ -19,6 +19,8 @@ describe('NewsitemGallery', () => {
       <NewsitemGallery item={item} />
     </AppMock>)
     expect(component).toBeTruthy()
+    await act(() => new Promise(setImmediate))
   })
+
 })
 
