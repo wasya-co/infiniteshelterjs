@@ -31,12 +31,7 @@ const useApi = () => {
     getCity: (slug) => request.get(`${config.apiOrigin}/api/cities/view/${slug}`),
     getGallery: (slug) => request.get(`${config.apiOrigin}/api/galleries/view/${slug}?jwt_token=${token}`).then((r) => r.data.gallery),
 
-    getMyAccount: () => request.post(`/api/my/account`, {
-        jwt_token: localStorage.getItem('jwt_token'),
-      }).then((r) => {
-        logg(r.data, 'getmyaccount')
-        return r.data
-      }),
+    getMyAccount: () => request.post(`/api/my/account`, { jwt_token: token, }).then((r) => r.data).then((r) => r),
 
     getPayments: () => request.get(`${config.apiOrigin}/api/payments2?jwt_token=${token}`).then((r) => r.data),
 
@@ -47,10 +42,7 @@ const useApi = () => {
     loginPath: '/api/users/login.json',
     longTermTokenPath: '/api/users/long_term_token',
 
-
-
-    myAccount: () => "/api/my/account",
-    myVideosPath: "/api/my/videos",
+    myVideosPath: "/api/my/videos", // @TODO: remove
 
     applicationHome: async () => {
       const out = await request.get(`${config.apiOrigin}/api/sites/view/${config.domain}`, { params: { jwt_token: token } })

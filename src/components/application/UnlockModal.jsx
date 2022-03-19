@@ -67,13 +67,11 @@ const UnlockModal = (props) => {
   useEffect(() => {
 
     const fn = async () => {
-      const jwtToken = localStorage.getItem(C.jwt_token)
-      await request.get(`${config.apiOrigin}${api.myAccount()}?jwt_token=${jwtToken}`).then((r) => {
+      const r = await api.getMyAccount().then((r) => {
         if (!mountedRef.current) { return }
-        setCurrentUser(r.data)
+        setCurrentUser(r)
       }).catch((e) => {
-        // logg(e, 'e12')
-        // setCurrentUser(null)
+        logg(e, 'e1-')
       })
     }
     fn()

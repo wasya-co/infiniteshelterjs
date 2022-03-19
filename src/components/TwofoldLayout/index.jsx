@@ -7,7 +7,8 @@ import styled from 'styled-components'
 import { C, logg } from "$shared"
 
 /**
- * Documentation
+ * LongLine
+ * @TODO: remove this, probably. Or at least move it.
  */
 const LongLine = styled.div`
   border: ${p => p.theme.thinBorder};

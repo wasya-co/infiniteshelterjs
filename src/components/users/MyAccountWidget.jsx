@@ -79,7 +79,7 @@ const Login = (props) => {
     register: 'register-with-email',
   }
   const [ state, setState ] = useState(s.default)
-  logg(state, 'ze state')
+
   switch (state) {
     case s.default:
       return <FlexCol>

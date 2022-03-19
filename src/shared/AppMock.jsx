@@ -21,6 +21,7 @@ import {
 import { LoginModal } from "$components/users"
 
 const AppMock = (props) => {
+  logg(props, 'AppMock')
   let {
     currentUser, setCurrentUser,
     itemToUnlock, setItemToUnlock,
@@ -35,6 +36,8 @@ const AppMock = (props) => {
   const [ localPurchaseModalIsOpen, setLocalPurchaseModalIsOpen ] = useState(false)
   const [ localZoom, setLocalZoom ] = useState(1)
   if (!currentUser) {
+    logg('no local CU in mock?!')
+
     currentUser = localCurrentUser
     setCurrentUser = setLocalCurrentUser
   }

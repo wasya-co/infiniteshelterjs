@@ -4,7 +4,7 @@ import { IonIcon } from '@ionic/react'
 import { CircularProgress as _CircularProgress } from '@material-ui/core'
 import _Box from '@material-ui/core/Box'
 import { ChevronLeft as _ChevronLeft, ChevronRight as _ChevronRight, Menu as _MenuIcon, } from '@material-ui/icons'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import {
   Link, Switch, BrowserRouter as Router, Redirect, Route as _Route, useHistory, withRouter
 } from 'react-router-dom'
@@ -14,8 +14,9 @@ import config from 'config'
 import {
   C,
   logg,
+  request,
   useApi,
-} from "./"
+} from "$shared"
 
 /**
  * ishjs has a newer version of this. _vp_ 2022-03-05
@@ -24,13 +25,37 @@ const TwofoldContext = React.createContext({})
 const TwofoldContextProvider = ({ children, ...props }) => {
   // logg(props, 'TwofoldContextProvider')
   const {
-    currentUser, setCurrentUser,
     layout, setLayout,
-    loginModalOpen, setLoginModalOpen,
     theme, toggleTheme,
   } = props
 
   const api = useApi()
+
+  /* B */
+
+  // @TODO: does localStorage work like this on mobile?
+  // @TODO: try and catch
+  const [ bottomDrawerOpen, _setBottomDrawerOpen ] = useState(JSON.parse(localStorage.getItem(C.bottomDrawerOpen)))
+  const setBottomDrawerOpen = (m) => {
+    localStorage.setItem(C.bottomDrawerOpen, JSON.stringify(m))
+    _setBottomDrawerOpen(m)
+  }
+
+
+  /* C */
+
+  const [ currentUser, setCurrentUser ] = useState(C.anonUser)
+
+  /* Get the current_user on load */
+  const mountedRef = useRef('init')
+  useEffect(() => {
+    if (!mountedRef.current) { return } // @TODO: hmmm do I need this?
+    const r = api.getMyAccount()
+    setCurrentUser(r)
+
+
+    return () => mountedRef.current = null
+  }, [currentUser])
 
   // Refresh current_user if is_purchasing
   useEffect(() => {
@@ -41,14 +66,6 @@ const TwofoldContextProvider = ({ children, ...props }) => {
     return () => clearTimeout(closure)
   }, [currentUser.is_purchasing])
 
-  /* B */
-  // @TODO: does localStorage work like this on mobile?
-  // @TODO: try and catch
-  const [ bottomDrawerOpen, _setBottomDrawerOpen ] = useState(JSON.parse(localStorage.getItem(C.bottomDrawerOpen)))
-  const setBottomDrawerOpen = (m) => {
-    localStorage.setItem(C.bottomDrawerOpen, JSON.stringify(m))
-    _setBottomDrawerOpen(m)
-  }
 
   /* F */
   const [ folded, setFolded ] = useState()
@@ -63,6 +80,7 @@ const TwofoldContextProvider = ({ children, ...props }) => {
 
   /* L */
   const [ location, setLocation ] = useState(null)
+  const [ loginModalOpen, setLoginModalOpen ] = useState(false)
 
   /* M */
   const [ mapPanelWidth, setMapPanelWidth ] = useState(null)
@@ -102,7 +120,7 @@ const TwofoldContextProvider = ({ children, ...props }) => {
   return <TwofoldContext.Provider value={{
     bottomDrawerOpen, setBottomDrawerOpen,
 
-    currentUser, setCurrentUser, // @TODO: move this to an AppWrapper context
+    currentUser, setCurrentUser,
 
     folded, setFolded,
 

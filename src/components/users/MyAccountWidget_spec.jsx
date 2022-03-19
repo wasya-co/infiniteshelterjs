@@ -28,6 +28,7 @@ jest.mock('$shared/Api', () => ({
   ...jest.requireActual('$shared/Api'),
   default: () => ({
     getMyAccount: () => ({
+      email: 'test@gmail.com',
       n_unlocks: 5,
     }),
     getPayments: () => ({
@@ -40,17 +41,20 @@ jest.mock('$shared/Api', () => ({
 
 describe("MyAccountWidget", () => {
 
-  it("shows email, n available unlocks", () => {
-    const defaultCurrentUser = { email: 'test@gmail.com', n_unlocks: 1 }
+  it("shows email, n available unlocks - ", async () => {
+    const aCurrentUser = { email: 'test@gmail.com', n_unlocks: 1 }
     let currentUser = false
+    let component
     const setCurrentUser = (props) => currentUser = props
-    let component = mount(<AppMock {...{ currentUser, setCurrentUser }} ><MyAccountWidget /></AppMock>)
-    expect(component).toBeTruthy()
 
-    setCurrentUser(defaultCurrentUser)
-    component = mount(<AppMock {...{ currentUser, setCurrentUser }} ><MyAccountWidget /></AppMock>)
+    setCurrentUser(aCurrentUser)
+    component = await mount(<AppMock {...{ currentUser: aCurrentUser, setCurrentUser }} ><MyAccountWidget /></AppMock>)
+    await act(() => new Promise(setImmediate))
+    await new Promise(process.nextTick)
+
     expect(component.text()).toMatch(/test@gmail.com/)
-    expect(component.text()).toMatch(/1 coins/)
+    expect(component.text()).toMatch(/5 coins/)
+
   })
 
   /* this doesnt work because it is very very async */

@@ -4,7 +4,7 @@ import Adapter from 'enzyme-adapter-react-16'
 import React from 'react'
 import { ThemeProvider } from 'styled-components'
 
-import App from './AppMobile'
+import AppMobile from './AppMobile'
 import {
   LoginModal,
   RegisterModal,
@@ -46,20 +46,21 @@ Object.defineProperty(window, 'matchMedia', {
 
 it("renders", () => {
   let component = shallow(<ThemeProvider theme={S.lightTheme} >
-    <App />
+    <AppMobile />
   </ThemeProvider>)
   expect(component).toBeTruthy()
 })
 
-test('loads User from api', () => {
+test('loads User from api - current2 ', () => {
   localStorage.setItem('jwt_token', 'jwt-token')
-  let component = mount(<ThemeProvider theme={S.lightTheme} ><App /></ThemeProvider>)
+  // let component = mount(<ThemeProvider theme={S.lightTheme} ><AppMobile {...{currentUser: {} }} /></ThemeProvider>)
+  let component = mount(<AppMock ><AppMobile /></AppMock>)
   expect(component).toBeTruthy()
   expect(request.get.mock.calls[0][0]).toEqual(`http://localhost:3000/api/my/account?jwt_token=jwt-token`)
 })
 
 test('shows LoginModal for unauthed users', () => {
-  let wrapper = mount(<ThemeProvider theme={S.lightTheme} ><App /></ThemeProvider>)
+  let wrapper = mount(<ThemeProvider theme={S.lightTheme} ><AppMobile /></ThemeProvider>)
   expect(wrapper.find('LoginModal').length).toEqual(1)
 })
 
@@ -67,7 +68,7 @@ test('renders RegisterModal - current2 ', () => {
   const currentUser = {}
 
   let w = mount(<AppMock >
-    <App {...{ currentUser }}/>
+    <AppMobile {...{ currentUser }}/>
   </AppMock>)
   expect(w.find(RegisterModal).length).toEqual(1)
 })
