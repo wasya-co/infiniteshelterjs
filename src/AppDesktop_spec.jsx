@@ -9,13 +9,12 @@ import {
   logg,
   S,
 } from "$shared"
-import useApi from "$shared/Api"
 import AppDesktop from './AppDesktop'
 
 configure({ adapter: new Adapter() })
 
 jest.mock("$shared/Api")
-jest.mock("$shared/request")
+jest.mock("$shared/request") // @TODO: remove?
 
 // jest.mock("react-router-dom", () => ({
 //   ...jest.requireActual("react-router-dom"),
@@ -40,31 +39,28 @@ jest.mock("$shared/request")
 
 describe('AppDesktop', () => {
 
-  it("renders - ", async () => {
-    let component = shallow(<ThemeProvider theme={S.lightTheme} >
-      <AppDesktop />
-    </ThemeProvider>)
-    expect(component).toBeTruthy()
-    await act(() => new Promise(setImmediate))
-  })
-
-  it('loads User from api -  ', async () => {
-    // localStorage.setItem('jwt_token', 'jwt-token')
-    let component = mount(<ThemeProvider theme={S.lightTheme} >
-      <AppDesktop />
-    </ThemeProvider>)
-    await expect(component).toBeTruthy()
-
-    // @TODO: herehere, should be fixed
-    // expect(request.get.mock.calls[0][0]).toEqual(`http://localhost:3000/api/my/account?jwt_token=jwt-token`)
-    await act(() => new Promise(setImmediate))
-  })
-
-  it('shows LoginModal for unauthed users - current2 ', async () => {
+  // Works! : ) _vp_ 2022-03-19
+  it('Renders and shows LoginModal, RegisterModal - current2 ', async () => {
     let wrapper = mount(<ThemeProvider theme={S.lightTheme} >
       <AppDesktop />
     </ThemeProvider>)
-    await expect(wrapper.find('LoginModal').length).toEqual(1)
+    expect(wrapper).toBeTruthy()
+    expect(wrapper.find('LoginModal').length).toEqual(1)
+    expect(wrapper.find('RegisterModal').length).toEqual(1)
+    await act(() => new Promise(setImmediate))
+  })
+
+  // @TODO: fix, or remove
+  it.skip('loads User from api -  ', async () => {
+    // localStorage.setItem('jwt_token', 'jwt-token')
+    let wrapper = mount(<ThemeProvider theme={S.lightTheme} >
+      <AppDesktop />
+    </ThemeProvider>)
+    await expect(wrapper).toBeTruthy()
+
+    // @TODO: herehere, should be fixed
+    // expect(request.get.mock.calls[0][0]).toEqual(`http://localhost:3000/api/my/account?jwt_token=jwt-token`)
+
     await act(() => new Promise(setImmediate))
   })
 

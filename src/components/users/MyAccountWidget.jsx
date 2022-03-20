@@ -14,7 +14,7 @@ import config from "config"
 
 import {
   Btn,
-  FlexCol,
+  FlexCol, FlexRow,
   logg,
   request,
   S,
@@ -43,13 +43,7 @@ const Cell = styled.div`
   // display: flex;
 `;
 
-const FlexRow = styled.div`
-  display: flex;
 
-  > * {
-    margin: auto .4em;
-  }
-`;
 
 const _Img = styled.div`
   border: 1px solid red;
@@ -138,6 +132,7 @@ const MyAccountWidget = (props) => {
   const [ avatar, setAvatar ] = useState("")
 
   // buy unlocks (coins)
+  // @TODO: rename
   const handleSubmit = async (event) => {
     event.preventDefault()
 

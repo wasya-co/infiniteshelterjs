@@ -111,6 +111,7 @@ const BottomDrawer = (props) => {
         <Inner1 >
           <Inner2 >
 
+            {/* @TODO: move this upstream */}
             <Web3ReactProvider getLibrary={getLibrary}>
               <MyAccountWidget />
             </Web3ReactProvider>

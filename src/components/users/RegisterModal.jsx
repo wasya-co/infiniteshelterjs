@@ -16,7 +16,7 @@ import {
 import {
   Btn,
   C,
-  FlexCol,
+  FlexCol, FlexRow,
   logg,
   TwofoldContext,
   useApi,
@@ -29,7 +29,7 @@ const RegisterModal = (props) => {
     currentUser, setCurrentUser,
     registerModalIsOpen, setRegisterModalIsOpen,
   } = useContext(TwofoldContext)
-  // logg(useContext(TwofoldContext), 'registerModalUsedContext')
+  logg(useContext(TwofoldContext), 'registerModalUsedContext')
 
   const api = useApi()
   const [ email, setEmail ] = useState('')
@@ -49,7 +49,6 @@ const RegisterModal = (props) => {
     }).catch((e) => {
       logg(e, 'e322')
       toast("Registration failed")
-      // setCurrentUser(C.anonUser)
     })
   }
 
@@ -65,8 +64,10 @@ const RegisterModal = (props) => {
       <label for='password2'>Confirm Password</label>
       <input type='password' name='password2' value={password2} onChange={(e) => setPassword2(e.target.value) } />
 
-      <Btn onClick={() => doRegister(email, password, password2) }>Register</Btn>
-      <Btn onClick={() => setRegisterModalIsOpen(false) }>Cancel</Btn>
+      <FlexRow>
+        <Btn onClick={() => doRegister(email, password, password2) }>Register</Btn>
+        <Btn onClick={() => setRegisterModalIsOpen(false) }>Cancel</Btn>
+      </FlexRow>
     </FlexCol>
   </Modal>
 }

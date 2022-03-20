@@ -1,14 +1,4 @@
 
-
-import { Container as _Container, Grid, GridList } from '@material-ui/core'
-import React, { Fragment as F, useEffect, useRef, useState } from 'react'
-import {
-  Link, Switch, BrowserRouter as Router, Redirect, Route as _Route, useHistory, withRouter
-} from 'react-router-dom'
-import { ToastContainer, toast } from 'react-toastify'
-
-import styled from 'styled-components'
-
 import '@ionic/react/css/core.css'
 import '@ionic/react/css/normalize.css'
 import '@ionic/react/css/structure.css'
@@ -20,10 +10,17 @@ import '@ionic/react/css/text-transformation.css'
 import '@ionic/react/css/flex-utils.css'
 import '@ionic/react/css/display.css'
 
-import './theme/variables.css'
+import { Container as _Container, Grid, GridList } from '@material-ui/core'
+import React, { Fragment as F, useEffect, useRef, useState } from 'react'
+import {
+  Link, Switch, BrowserRouter as Router, Redirect, Route as _Route, useHistory, withRouter
+} from 'react-router-dom'
+import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
+import styled from 'styled-components'
 
 import config from "config"
+
 import {
   BottomDrawer,
   MainHeader, Menu, MenuBottom, MenuLeft,
@@ -38,12 +35,15 @@ import Three from "$components/locations3/ThreePanelV1"
 import { ReportsShow } from "$components/reports"
 // import { SitesShow } from '$components/sites'
 import SitesShow from '$components/sites/SitesShow1'
-import { Account, LoginModal } from "$components/users"
+import { Account, LoginModal, RegisterModal } from "$components/users"
 import { Videos } from "$components/videos"
 import {
   C, CollapsibleContext, CollapsibleContextProvider,
   Debug, logg, request, TwofoldContext, TwofoldContextProvider , useApi,
 } from "$shared"
+
+import './theme/variables.css'
+
 
 const Root = styled.div`
   // border: 1px solid #741741;
@@ -120,6 +120,7 @@ const AppDesktop = (props) => {
         <BottomDrawer />
         <UnlockModal />
         <LoginModal />
+        <RegisterModal />
         <ToastContainer />
 
       </CollapsibleContextProvider>

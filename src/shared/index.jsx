@@ -102,6 +102,7 @@ export const CollapsibleContextProvider = ({ children, ...props }) => {
 }
 
 /* D */
+
 /* F */
 
 const _FlexCol = styled.div`
@@ -113,6 +114,14 @@ const _FlexCol = styled.div`
   }
 `;
 export const FlexCol = ({ children, ...props }) => <_FlexCol className="FlexCol" {...props} >{children}</_FlexCol>
+
+export const FlexRow = styled.div`
+  display: flex;
+
+  > * {
+    margin: auto .4em;
+  }
+`;
 
 /* I */
 

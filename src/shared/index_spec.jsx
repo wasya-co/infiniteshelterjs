@@ -9,16 +9,32 @@ configure({ adapter: new Adapter() })
 import {
   AppMock,
   Box,
+  FlexCol, FlexRow,
   inflector,
   WBordered,
   WidgetContainer,
 } from './'
 
+/* B */
 test('Box', () => {
   const box = <Box />
   expect(box).toBeTruthy()
 })
 
+/* F */
+
+test('FlexCol', () => {
+  const w = mount(<FlexCol />)
+  expect(w).toBeTruthy()
+})
+
+test('FlexRow', () => {
+  const w = mount(<FlexRow />)
+  expect(w).toBeTruthy()
+})
+
+
+/* I */
 describe('inflector', () => {
 
   test('tableize', () => {
