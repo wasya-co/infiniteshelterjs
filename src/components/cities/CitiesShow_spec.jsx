@@ -11,31 +11,6 @@ import { AppMock, C, logg, } from "$shared"
 enzyme.configure({ adapter: new Adapter() })
 jest.mock("$shared/Api")
 
-/* @TODO: use __mocks__ for a better request mock. */
-// jest.mock('$shared/Api', () => {
-//   const actual = jest.requireActual("$shared/Api")
-
-//   return {
-//     __esModule: true,
-//     default: () => {
-//       return {
-//         ...actual.default(),
-//         getCity: () => {
-//           return new Promise((resolve, reject) => {
-//             resolve({
-//               data: {
-//                 city: {
-//                   newsitems: [{ name: 'report-name-2', item_type: 'Report' }]
-//                 }
-//               }
-//             })
-//           })
-//         },
-//       }
-//     },
-//   }
-// })
-
 const theseProps = { match: { url: '/en/cities/travel-to/chicago', params: '?' } }
 
 describe("CitiesShow - current2 ", () => {

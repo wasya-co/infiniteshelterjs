@@ -8,8 +8,8 @@ import { C,
 request, TwofoldContext } from "$shared"
 
 const useApi = () => {
-  const { currentUser, setCurrentUser } = useContext(TwofoldContext)
-  const token = localStorage.getItem(C.jwt_token)
+  // const { currentUser, setCurrentUser } = useContext(TwofoldContext)
+  // const token = localStorage.getItem(C.jwt_token)
 
   return {
 
@@ -20,6 +20,11 @@ const useApi = () => {
     //   })
     // },
 
+    applicationHome: () => {
+      return new Promise((resolve, reject) => {
+        return resolve({ domain: 'ok-123', features: [], newsitems: [] })
+      })
+    },
 
     /* Returns current user */
     doUnlock: ({ kind, id }) => {
@@ -42,7 +47,7 @@ const useApi = () => {
           }
         })
       })
-    }
+    },
 
     // getGallery: (slug) => request.get(`${config.apiOrigin}/api/galleries/view/${slug}?jwt_token=${token}`).then((r) => r.data.gallery),
 
@@ -63,12 +68,6 @@ const useApi = () => {
     // longTermTokenPath: '/api/users/long_term_token',
 
     // myVideosPath: "/api/my/videos", // @TODO: remove
-
-    applicationHome: () => {
-      return new Promise((resolve, reject) => {
-        return resolve({ domain: 'ok-123', features: [], newsitems: [] })
-      })
-    },
 
   }
 
