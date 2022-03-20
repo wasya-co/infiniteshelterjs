@@ -4,7 +4,7 @@ import {
   IonLabel, IonItemDivider,
 } from '@ionic/react'
 import PropTypes from 'prop-types'
-import React, { Fragment as F, useContext } from 'react'
+import React, { Fragment as F, useContext, useState } from 'react'
 import { Route, useLocation, useHistory, Switch } from 'react-router-dom'
 import styled from 'styled-components'
 
@@ -47,16 +47,25 @@ const DayNightToggle = (props) => {
   </WDayNight>
 }
 const T0 = styled.div`
-  width: 40px;
-  height: 40px;
+  width: 45px;
+  height: 45px;
   // background-image: url(${img});
 `;
 const DayNightToggle2 = (props) => {
   // logg(props, 'DayNightToggle2')
   const { theme, toggleTheme } = props
+  const [ rotating, setRotating ] = useState(null)
 
-  return <WDayNight onClick={toggleTheme} >
-    <T0 className={`theme-${theme}`} />
+  const doTransition = () => {
+    setRotating('rotating')
+    setTimeout(() => {
+      setRotating(null)
+      toggleTheme()
+    }, 1 * 1000)
+  }
+
+  return <WDayNight onClick={doTransition} >
+    <T0 className={`theme-${theme} ${rotating}`} />
     {/* <IonToggle checked={theme === C.themes.dark} onIonChange={toggleTheme} value="DayNight" /> */}
   </WDayNight>
 }

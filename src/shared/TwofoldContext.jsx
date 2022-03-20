@@ -59,9 +59,7 @@ const TwofoldContextProvider = ({ children, ...props }) => {
     if (!mountedRef.current) { return } // @TODO: hmmm do I need this?
 
     const fn = async () => {
-      logg('getting 0...')
       const r = await api.getMyAccount()
-      logg(r, 'getting 1...')
       setCurrentUser(r)
     }
     fn()
@@ -74,9 +72,7 @@ const TwofoldContextProvider = ({ children, ...props }) => {
     let closure = setTimeout(() => {
 
       const fn = async () => {
-        logg('getting 2...')
         const r = await api.getMyAccount()
-        logg('getting 3...')
         setCurrentUser(r)
       }
       fn()

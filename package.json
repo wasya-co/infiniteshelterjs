@@ -205,6 +205,6 @@
     "start_mobile_trash": "     HTTPS=true  HOST=tgm.mac             PORT=3002  NODE_PATH=config/environments/development_mobile      node scripts/start.js",
     "start_production_guydme": "HTTPS=true  HOST=tgm.mac             PORT=3002  NODE_PATH=config/environments/production_guydme       node scripts/start.js",
     "sync": "NODE_PATH=config/environments/production ionic capacitor sync",
-    "test": "NODE_PATH=config/environments/test       jest"
+    "test": "NODE_OPTIONS=--max_old_space_size=4096 NODE_PATH=config/environments/test       jest --maxWorkers=1 "
   }
 }

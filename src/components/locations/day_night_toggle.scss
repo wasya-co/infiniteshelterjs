@@ -1,12 +1,14 @@
 
 .theme-light {
-  animation:spin 1s linear;
+  // animation:spin 1s linear;
   background-image: url('../application/45x45_day-night-2.png');
 }
 .theme-dark {
-  animation:spin 1s linear;
   // transform:rotate(180deg);
   background-image: url('../application/45x45_day-night-3.png');
+}
+.rotating {
+  animation:spin 1s linear;
 }
 
 @-moz-keyframes spin {
