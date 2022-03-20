@@ -44,29 +44,34 @@ const SitesShow1 = (props) => {
   useEffect(() => {
     // setLoading(true)
 
-    api.applicationHome().then(data => {
-      if (!mountedRef.current) { return null }
-      logg(data, 'setSite')
+    const fn = async () => {
+
+      if (!mountedRef.current) { return }
+      const data = await api.applicationHome()
+      logg(data, 'zeDataZ')
       setSite(data)
-      // setLoading(false)
-    })
 
-    api.getTag({ slug: 'interesting-locations' }).then(data => {
-      if (!mountedRef.current) { return null }
-      logg(data, 'setInterestingLocations')
-      setInterestingLocationsTag(data)
-      // setLoading(false)
-    })
+      // @TODO: this was here before, but not anymore. Check it out. _vp_ 2022-03-19
 
-    api.getTag({ slug: 'home-row-1' }).then(data => {
-      if (!mountedRef.current) { return null }
-      setHomeRow1Tag(data)
-    })
+      // api.getTag({ slug: 'interesting-locations' }).then(data => {
+      //   if (!mountedRef.current) { return null }
+      //   logg(data, 'setInterestingLocations')
+      //   setInterestingLocationsTag(data)
+      //   // setLoading(false)
+      // })
 
-    api.getTag({ slug: 'art' }).then(data => {
-      if (!mountedRef.current) { return null }
-      setArtTag(data)
-    })
+      // api.getTag({ slug: 'home-row-1' }).then(data => {
+      //   if (!mountedRef.current) { return null }
+      //   setHomeRow1Tag(data)
+      // })
+
+      // api.getTag({ slug: 'art' }).then(data => {
+      //   if (!mountedRef.current) { return null }
+      //   setArtTag(data)
+      // })
+
+    }
+    fn()
 
     return () => { mountedRef.current = false }
   }, [])

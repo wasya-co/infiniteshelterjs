@@ -8,7 +8,11 @@ import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 
 import { FbLogin, Logout, PasswordLogin } from "./"
-import { C, logg, TwofoldContext } from "$shared"
+import {
+  C,
+  logg,
+  TwofoldContext,
+} from "$shared"
 
 
 const LoginModal = (props) => {

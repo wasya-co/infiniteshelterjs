@@ -14,6 +14,7 @@ import {
 import useWindowSize from "$shared/useWindowSize"
 
 enzyme.configure({ adapter: new Adapter() })
+jest.mock("$shared/Api")
 
 let mockWindowSize = [764, 1024]
 

@@ -21,35 +21,55 @@ const useApi = () => {
     // },
 
 
-    // // returns current user
-    // doUnlock: ({ kind, id }) => {
-    //   const jwt_token = localStorage.getItem('jwt_token')
-    //   const path = `/api/payments/unlock?kind=${kind}&id=${id}&jwt_token=${jwt_token}`
-    //   return request.post(`${config.apiOrigin}${path}`).then((r) => r.data)
-    // },
+    /* Returns current user */
+    doUnlock: ({ kind, id }) => {
+      logg('fakeApi doUnlock')
+      return new Promise((resolve, reject) => {
+        resolve({ email: 'some@email.com' })
+      })
+    },
 
 
     // getCities: ()   => request.get(`${config.apiOrigin}/api/cities`).then((r) => r.data),
-    // getCity: (slug) => request.get(`${config.apiOrigin}/api/cities/view/${slug}`),
+
+    getCity: () => {
+      return new Promise((resolve, reject) => {
+        resolve({
+          data: {
+            city: {
+              newsitems: [{ name: 'report-name-2', item_type: 'Report' }]
+            }
+          }
+        })
+      })
+    }
+
     // getGallery: (slug) => request.get(`${config.apiOrigin}/api/galleries/view/${slug}?jwt_token=${token}`).then((r) => r.data.gallery),
 
-    getMyAccount: () => new Promise(() => {}, () => {}), // async () => await request.post(`/api/my/account`, { jwt_token: token, }).then((r) => r.data).then((r) => r),
+    getMyAccount: () => {
+      logg('fakeApi getMyAccount')
+      return new Promise((resolve, reject) => {
+        resolve({ email: 'some@email.com' })
+      })
+    },
 
     // getPayments: () => request.get(`${config.apiOrigin}/api/payments2?jwt_token=${token}`).then((r) => r.data),
 
     getReport: (slug) => new Promise(() => {}, () => {}), // request.get(`${config.apiOrigin}/api/reports/view/${slug}?jwt_token=${token}`).then((r) => r.data.report),
 
-    // getTag: (tag) => request.get(`${config.apiOrigin}/api/tags/view/${tag.slug}`).then((r) => r.data),
+    getTag: (tag) => new Promise(() => {}, () => {}), // request.get(`${config.apiOrigin}/api/tags/view/${tag.slug}`).then((r) => r.data),
 
     // loginPath: '/api/users/login.json',
     // longTermTokenPath: '/api/users/long_term_token',
 
     // myVideosPath: "/api/my/videos", // @TODO: remove
 
-    applicationHome: async () => {
-      const out = await request.get(`${config.apiOrigin}/api/sites/view/${config.domain}`, { params: { jwt_token: token } })
-      return out.data
-    }
+    applicationHome: () => {
+      return new Promise((resolve, reject) => {
+        return resolve({ domain: 'ok-123', features: [], newsitems: [] })
+      })
+    },
+
   }
 
 }

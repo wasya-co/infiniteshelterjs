@@ -55,11 +55,8 @@ const Root = styled.div`
 
 
 const AppDesktop = (props) => {
-  // logg(props, 'AppDesktop')
-  const {
-    currentUser, setCurrentUser,
-    loginModalOpen, setLoginModalOpen,
-  } = props
+  logg(props, 'AppDesktop')
+  const {} = props
 
   const api = useApi()
 
@@ -88,8 +85,6 @@ const AppDesktop = (props) => {
   }
 
   return (<Router>
-
-
     <TwofoldContextProvider {...props} {...{ layout, setLayout }} >
       <CollapsibleContextProvider >
         <Root>

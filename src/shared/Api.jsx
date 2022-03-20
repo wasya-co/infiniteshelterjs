@@ -18,22 +18,18 @@ const useApi = () => {
       })
     },
 
-
-    // returns current user
+    /* Returns current user */
     doUnlock: ({ kind, id }) => {
       const jwt_token = localStorage.getItem('jwt_token')
       const path = `/api/payments/unlock?kind=${kind}&id=${id}&jwt_token=${jwt_token}`
       return request.post(`${config.apiOrigin}${path}`).then((r) => r.data)
     },
 
-
     getCities: ()   => request.get(`${config.apiOrigin}/api/cities`).then((r) => r.data),
     getCity: (slug) => request.get(`${config.apiOrigin}/api/cities/view/${slug}`),
     getGallery: (slug) => request.get(`${config.apiOrigin}/api/galleries/view/${slug}?jwt_token=${token}`).then((r) => r.data.gallery),
 
-    getMyAccount: () => request.post(`/api/my/account`, { jwt_token: token, }
-    ).then((r) => r.data
-    ).catch((err) => logg(err, 'r89')),
+    getMyAccount: () => request.post(`/api/my/account`, { jwt_token: token, }).then((r) => r.data),
 
     getPayments: () => request.get(`${config.apiOrigin}/api/payments2?jwt_token=${token}`).then((r) => r.data),
 
@@ -46,9 +42,10 @@ const useApi = () => {
 
     myVideosPath: "/api/my/videos", // @TODO: remove
 
-    applicationHome: async () => {
-      const out = await request.get(`${config.apiOrigin}/api/sites/view/${config.domain}`, { params: { jwt_token: token } })
-      return out.data
+    applicationHome: () => {
+      request.get(`${config.apiOrigin}/api/sites/view/${config.domain}`, { params: { jwt_token: token } }).then((r) => {
+        return r.data
+      })
     }
   }
 

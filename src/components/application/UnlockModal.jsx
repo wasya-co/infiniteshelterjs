@@ -64,23 +64,18 @@ const UnlockModal = (props) => {
     })
   }
 
-  const mountedRef = useRef('init')
-  useEffect(() => {
-    const fn = async () => {
-      const r = await api.getMyAccount().then((r) => {
-        if (!mountedRef.current) { return }
-
-        // @TODO: fix this mess
-        if (r) {
-          setCurrentUser(r)
-        }
-      }).catch((e) => {
-        logg(e, 'e1-')
-      })
-    }
-    fn()
-    return () => mountedRef.current = null
-  }, [itemToUnlock.id])
+  /* @TODO: this was here before, but should not be, right? _vp_ 2022-03-19 */
+  // const mountedRef = useRef('init')
+  // useEffect(() => {
+  //   const fn = async () => {
+  //     const r = await api.getMyAccount()
+  //     if (r) {
+  //       setCurrentUser(r)
+  //     }
+  //   }
+  //   fn()
+  //   return () => mountedRef.current = null
+  // }, [itemToUnlock.id])
 
   if (!itemToUnlock.id) { return null }
 

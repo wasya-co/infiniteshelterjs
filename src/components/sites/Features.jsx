@@ -9,7 +9,7 @@ import { C, logg, useApi, } from "$shared"
 const Label = styled.div``;
 
 const Features = ({ features, label, ...props }) => {
-  logg(props, 'Features')
+  // logg(props, 'Features')
 
   const out = []
   features.map((f) => {
