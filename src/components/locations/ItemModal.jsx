@@ -23,7 +23,7 @@ const Fabs = styled.div`
  * @TODO: move to $components/application
  */
 const ItemModal = (props) => {
-  // logg(props, 'ItemModal')
+  logg(props, 'ItemModal')
   const { item } = props
 
   const {

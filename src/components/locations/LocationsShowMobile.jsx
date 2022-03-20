@@ -13,11 +13,12 @@ import { Metaline } from "$components/application"
 import { Newsitems } from "$components/newsitems"
 import {
   C, Collapsible, CollapsibleContext,
+  inflector,
   Loading, logg,
   request,
   S,
   TwofoldContext,
-  useWindowSize,
+  useApi, useWindowSize,
   ZoomContext,
 } from "$shared"
 
@@ -109,6 +110,7 @@ const LocationsShowMobile = (props) => {
   const {
     bottomDrawerOpen,
     folded, setFolded,
+    location, setLocation,
     mapPanelWidth, setMapPanelWidth,
     mapPanelHeight, setMapPanelHeight,
     showItem, setShowItem,
@@ -119,7 +121,7 @@ const LocationsShowMobile = (props) => {
   const [ windowWidth, windowHeight ] = useWindowSize()
 
   const [loading, setLoading] = useState(false)
-  const [location, setLocation ] = useState(null)
+  const api = useApi()
 
   const mountedRef = useRef('init')
   const mapPanelRef = useRef(null)
@@ -131,6 +133,13 @@ const LocationsShowMobile = (props) => {
     const token = localStorage.getItem("jwt_token")
     request.get(`/api/maps/view/${match.params.slug}`, { params: { jwt_token: token } }).then(res => {
       if (mountedRef.current === match.params.slug) return null
+
+      if (!res.data.map) {
+        setLoading(false)
+        showToast('could not get Location')
+        return null
+      }
+
       setLocation(res.data.map)
       setLoading(false)
       // @TODO: setFlash here?! If I"m accessing a gallery I haven't bought access to?
@@ -167,6 +176,26 @@ const LocationsShowMobile = (props) => {
     map = location.map || location
     map = { ...map, config: { ...map.config, map_panel_type: C.map_panel_types.MapPanelNoZoom } }
   }
+
+  // load showItem if any
+  // @TODO: this makes too many calls, improve performance
+  // @TODO: move to api
+  // @TODO: this is duplicated between LocationsShowDesktop,Mobile - consolidate!
+  useEffect(() => {
+    if (!match.params.item_type) { return }
+
+    const itemType = inflector.classify(match.params.item_type)
+    switch (itemType) {
+      case C.item_types.gallery:
+        api.getGallery(match.params.item_slug).then(setShowItem)
+        break
+      case C.item_types.report:
+        api.getReport(match.params.item_slug).then(setShowItem)
+        break
+      default:
+        logg(itemType, 'cannot get this item type')
+    }
+  }, [ match.params.item_slug, match.params.item_type ])
 
   return (<W className='LocationsShowMobile' >
 

@@ -225,7 +225,6 @@ const LocationsShowDesktop = (props) => {
       if (!res.data.map) {
         setLoading(false)
         showToast('could not get Location')
-        logg('smth fuxed')
         return null
       }
 
@@ -253,6 +252,7 @@ const LocationsShowDesktop = (props) => {
   // load showItem if any
   // @TODO: this makes too many calls, improve performance
   // @TODO: move to api
+  // @TODO: this is duplicated between LocationsShowDesktop,Mobile - consolidate!
   useEffect(() => {
     if (!match.params.item_type) { return }
 

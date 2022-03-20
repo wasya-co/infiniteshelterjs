@@ -66,6 +66,7 @@ const NewsitemContainer = ({ children, ...props }) => {
     location,
     showItem, setShowItem,
   } = useContext(TwofoldContext)
+  // logg(useContext(TwofoldContext), 'NewsitemContainerUsedContext')
 
   const navigateToItem = () => {
     if (item.is_premium && !item.is_purchased) {
