@@ -99,7 +99,7 @@ const NewsitemContainer = ({ children, ...props }) => {
       { children }
       <Row>
         <ItemIcon {...item} />
-        <Col>
+        <Col style={{ overflowWrap: 'break-word', maxWidth: 'calc(100vw - 100px)' }} >
           <Title>{item.name}</Title>
           <Metaline {...item} />
         </Col>
