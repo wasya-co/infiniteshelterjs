@@ -7,9 +7,9 @@
 
 /android/app/src/main/assets/public
 
-## this is what https://guyd.me uses...
-/build
-!/build/.keep
+## this is what https://guyd.me and infiniteshelter.com uses... I cant ignore these at the moment.
+# /build
+# !/build/.keep
 
 /cache
 !/cache/.keep
