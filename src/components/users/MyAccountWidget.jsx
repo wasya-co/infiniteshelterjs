@@ -65,6 +65,7 @@ const stripePromise = loadStripe('pk_test_qr1QPmSpLdBFt1F7itdWJOj3') // @TODO: t
 
 const Login = (props) => {
   const {
+    setLoginModalOpen,
     setRegisterModalOpen,
   } = useContext(TwofoldContext)
 
@@ -79,8 +80,14 @@ const Login = (props) => {
     case s.default:
       return <FlexCol>
         <FbLogin2 />
-        <RegisterWithEmail onClick={() => setRegisterModalOpen(true) } />
-        <LoginWithEmail onClick={() => setState(s.login)} />
+        <RegisterWithEmail onClick={() => {
+          setRegisterModalOpen(true)
+          // setState(s.register)
+        }} />
+        <LoginWithEmail onClick={() => {
+          setLoginModalOpen(true)
+          // setState(s.login)
+        }} />
       </FlexCol>
     case s.register:
       return <div>Register?</div>

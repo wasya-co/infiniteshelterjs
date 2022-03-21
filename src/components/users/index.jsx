@@ -71,7 +71,7 @@ export const FbLogin2 = (props) => {
 }
 
 /* L */
-export { default as LoginModal } from './PasswordLoginModal'
+export { default as LoginModal } from './LoginModal'
 
 const BuyBtn = styled.span`
   border: 1px solid ${p => p.theme.colors.text};
@@ -102,39 +102,6 @@ const _W = styled.div`
 export { default as MyAccountWidget } from "./MyAccountWidget"
 
 /* P */
-
-// @TODO: remove, most likely
-export const PasswordRegisterMobile = (props) => {
-  // logg(props, 'PasswordRegisterMobile')
-
-  const api = useApi()
-  const {
-    currentUser, setCurrentUser,
-    loginModalOpen, setLoginModalOpen,
-  } = useContext(TwofoldContext)
-  const [ email, setEmail ] = useState('')
-  const [ password, setPassword ] = useState('')
-  const [ passwordConfirm, setPasswordConfirm ] = useState('')
-
-  const doPasswordRegister = async (email, password, passwordConfirm) => {
-    request.post(`${config.apiOrigin}${api.loginPath}`, { email, password }).then((r) => r.data).then((resp) => {
-      localStorage.setItem(C.jwt_token, resp.jwt_token)
-      localStorage.setItem(C.current_user, JSON.stringify(resp))
-      setCurrentUser(resp) // must be done *after* setting C.jwt_token
-      setLoginModalOpen(false)
-    }).catch((e) => {
-      logg(e, 'e322')
-      toast("Login failed")
-      setCurrentUser(C.anonUser)
-    })
-  }
-  return <FlexCol>
-    <input type='email'    value={email}    onChange={(e) => setEmail(e.target.value)    } />
-    <input type='password' value={password} onChange={(e) => setPassword(e.target.value) } />
-    <input type='password' value={passwordConfirm} onChange={(e) => setPasswordConfirm(e.target.value) } />
-    <Btn onClick={() => doPasswordRegister(email, password, passwordConfirm)}>Register</Btn>
-  </FlexCol>
-}
 
 
 /* R */

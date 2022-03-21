@@ -27,7 +27,7 @@ const RegisterModal = (props) => {
 
   const {
     currentUser, setCurrentUser,
-    registerModalOpen, setRegisterModalIsOpen,
+    registerModalOpen, setRegisterModalOpen,
   } = useContext(TwofoldContext)
   // logg(useContext(TwofoldContext), 'registerModalUsedContext')
 
