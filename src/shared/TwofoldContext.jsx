@@ -107,7 +107,7 @@ const TwofoldContextProvider = ({ children, ...props }) => {
   const [ mapPanelHeight, setMapPanelHeight ] = useState(null)
 
   /* P */
-  const [ purchaseModalIsOpen, setPurchaseModalIsOpen ] = useState(false)
+  const [ purchaseModalOpen, setPurchaseModalIsOpen ] = useState(false)
 
   /* R */
 
@@ -117,7 +117,7 @@ const TwofoldContextProvider = ({ children, ...props }) => {
     _setRatedConfirmation(which)
   }
 
-  const [ registerModalIsOpen, setRegisterModalIsOpen ] = useState(false)
+  const [ registerModalOpen, setRegisterModalIsOpen ] = useState(false)
 
   /* S */
   const [ showItem, setShowItem ] = useState(false)
@@ -157,10 +157,10 @@ const TwofoldContextProvider = ({ children, ...props }) => {
     mapPanelHeight, setMapPanelHeight,
     mapPanelWidth, setMapPanelWidth,
 
-    purchaseModalIsOpen, setPurchaseModalIsOpen,
+    purchaseModalOpen, setPurchaseModalIsOpen,
 
     ratedConfirmation, setRatedConfirmation,
-    registerModalIsOpen, setRegisterModalIsOpen,
+    registerModalOpen, setRegisterModalIsOpen,
 
     showItem, setShowItem,
     showUrl, setShowUrl,

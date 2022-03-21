@@ -23,7 +23,7 @@ import React, {
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 
-import { FbLogin, Logout, PasswordLogin } from "./"
+import { FbLogin, Logout, } from "./"
 import { C, logg, logg2, TwofoldContext } from "$shared"
 import { MenuLeft } from "$components/application"
 import Greeter from '$src/artifacts/contracts/Greeter.sol/Greeter.json'
@@ -34,6 +34,10 @@ const isPushNotificationsAvailable = Capacitor.isPluginAvailable('PushNotificati
 // Update with the contract address logged out to the CLI when it was deployed
 const greeterAddress = "0x4bE9765Ca063E73E0aaEd227fd6731473508DbE0"
 const tokenAddress = "0xffa52d00685aC60e65457922aEae2c2783c0cB0E"
+
+export const PasswordLogin = () => {
+  return <div>PasswordLogin - @TODO: remove</div>
+}
 
 const LoginRow = styled.div`
   display: flex;

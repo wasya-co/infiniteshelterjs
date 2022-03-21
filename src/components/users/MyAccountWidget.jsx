@@ -22,8 +22,8 @@ import {
   useApi,
 } from "$shared"
 import bodyNFT from '$src/artifacts/contracts/Body.sol/BodyNFT.json'
-import { FbLogin2, Logout,
-  PasswordLoginMobile, PasswordRegisterMobile,
+import {
+  FbLogin2, Logout,
 } from "./"
 
 /*
@@ -65,11 +65,12 @@ const stripePromise = loadStripe('pk_test_qr1QPmSpLdBFt1F7itdWJOj3') // @TODO: t
 
 const Login = (props) => {
   const {
-    setRegisterModalIsOpen,
+    setRegisterModalOpen,
   } = useContext(TwofoldContext)
 
   const s = {
     default: null,
+    login: 'login',
     register: 'register-with-email',
   }
   const [ state, setState ] = useState(s.default)
@@ -78,13 +79,13 @@ const Login = (props) => {
     case s.default:
       return <FlexCol>
         <FbLogin2 />
-        <RegisterWithEmail onClick={() => setRegisterModalIsOpen(true) } />
+        <RegisterWithEmail onClick={() => setRegisterModalOpen(true) } />
         <LoginWithEmail onClick={() => setState(s.login)} />
       </FlexCol>
     case s.register:
-      return <PasswordRegisterMobile />
+      return <div>Register?</div>
     case s.login:
-      return <PasswordLoginMobile />
+      return <div>Login?</div>
     default:
       throw 'not implemented tr5'
   }
@@ -112,13 +113,16 @@ const W0 = styled.div`
   // margin-bottom: ${p => p.theme.borderWidth};
 `;
 
+/**
+ * MyAccountWidget
+ */
 const MyAccountWidget = (props) => {
   // logg(props, 'MyAccountWidget')
 
   const api = useApi()
   const {
     currentUser, setCurrentUser,
-    purchaseModalIsOpen, setPurchaseModalIsOpen,
+    purchaseModalOpen, setPurchaseModalIsOpen,
   } = useContext(TwofoldContext)
   // logg(useContext(TwofoldContext), 'MyAccountWidget#usedTwofoldContext')
 
@@ -153,7 +157,7 @@ const MyAccountWidget = (props) => {
         let response = await api.getMyAccount()
         logg(response, 'tr2')
         setCurrentUser(response)
-        setPurchaseModalIsOpen(false)
+        setPurchaseModalOpen(false)
       }
     }
   }
@@ -216,7 +220,7 @@ const MyAccountWidget = (props) => {
     <FlexCol>
 
       { currentUser.email && <Cell>[ {currentUser.email} <Logout /> ]</Cell> }
-      { currentUser.email && <Cell>[ { typeof currentUser.n_unlocks === 'undefined' ? '?' : currentUser.n_unlocks} coins <BuyBtn onClick={() => setPurchaseModalIsOpen(true) }>ADD</BuyBtn> ]</Cell> }
+      { currentUser.email && <Cell>[ { typeof currentUser.n_unlocks === 'undefined' ? '?' : currentUser.n_unlocks} coins <BuyBtn onClick={() => setPurchaseModalOpen(true) }>ADD</BuyBtn> ]</Cell> }
       { !currentUser.email && <Login /> }
 
 
@@ -231,10 +235,10 @@ const MyAccountWidget = (props) => {
 
     </FlexCol>
 
-    <Modal isOpen={purchaseModalIsOpen} ariaHideApp={false} >
+    <Modal isOpen={purchaseModalOpen} ariaHideApp={false} >
       <h1>
         Buy unlocks
-        <span onClick={() => { setPurchaseModalIsOpen(false) } } >[x]</span>
+        <span onClick={() => { setPurchaseModalOpen(false) } } >[x]</span>
       </h1>
       <form onSubmit={handleSubmit} >
         <CardElement />

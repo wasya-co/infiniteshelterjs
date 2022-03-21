@@ -42,7 +42,7 @@ const UnlockModal = (props) => {
     currentUser, setCurrentUser,
     itemToUnlock, setItemToUnlock,
     loginModalOpen, setLoginModalOpen,
-    purchaseModalIsOpen, setPurchaseModalIsOpen,
+    purchaseModalOpen, setPurchaseModalIsOpen,
     ratedConfirmation, setRatedConfirmation,
   } = useContext(TwofoldContext)
   // logg(useContext(TwofoldContext), 'unlockModalUsedTwofoldContext')
@@ -101,7 +101,7 @@ const UnlockModal = (props) => {
       { currentUser.n_unlocks >= cost && <Btn onClick={doUnlock} >Unlock</Btn> }
       { currentUser.n_unlocks < cost && <F>
         <p>You don't have enough unlocks.</p>
-        <Btn onClick={() => { setPurchaseModalIsOpen(true) ; setItemToUnlock(false)} } >Purchase more.</Btn>
+        <Btn onClick={() => { setPurchaseModalOpen(true) ; setItemToUnlock(false)} } >Purchase more.</Btn>
       </F> }
     </F> }
     { !currentUser && <F>

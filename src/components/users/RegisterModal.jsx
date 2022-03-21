@@ -27,7 +27,7 @@ const RegisterModal = (props) => {
 
   const {
     currentUser, setCurrentUser,
-    registerModalIsOpen, setRegisterModalIsOpen,
+    registerModalOpen, setRegisterModalIsOpen,
   } = useContext(TwofoldContext)
   // logg(useContext(TwofoldContext), 'registerModalUsedContext')
 
@@ -45,15 +45,15 @@ const RegisterModal = (props) => {
       localStorage.setItem(C.jwt_token, r.jwt_token)
       localStorage.setItem(C.current_user, JSON.stringify(r))
       setCurrentUser(r)
-      setRegisterModalIsOpen(false)
+      setRegisterModalOpen(false)
     }).catch((e) => {
       logg(e, 'e322')
       toast("Registration failed")
     })
   }
 
-  return <Modal style={{ zIndex: 3 }} isOpen={registerModalIsOpen} >
-    <div onClick={() => setRegisterModalIsOpen(false)}>[x]</div>
+  return <Modal style={{ zIndex: 3 }} isOpen={registerModalOpen} >
+    <div onClick={() => setRegisterModalOpen(false)}>[x]</div>
     <FlexCol>
       <label for='email'>Email</label>
       <input type='email'    name='email'     value={email}    onChange={(e) => setEmail(e.target.value)    } />
@@ -66,7 +66,7 @@ const RegisterModal = (props) => {
 
       <FlexRow>
         <Btn onClick={() => doRegister(email, password, password2) }>Register</Btn>
-        <Btn onClick={() => setRegisterModalIsOpen(false) }>Cancel</Btn>
+        <Btn onClick={() => setRegisterModalOpen(false) }>Cancel</Btn>
       </FlexRow>
     </FlexCol>
   </Modal>

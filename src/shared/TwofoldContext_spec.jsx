@@ -15,23 +15,23 @@ import {
 
 const TestActor = (props) => {
   const {
-    registerModalIsOpen, setRegisterModalIsOpen,
+    registerModalOpen, setRegisterModalIsOpen,
   } = useContext(TwofoldContext)
   // logg(useContext(TwofoldContext), 'testUsedContext')
 
   return <div>
-    <div className='registerModalIsOpen'>{registerModalIsOpen.toString()}</div>
+    <div className='registerModalOpen'>{registerModalIsOpen.toString()}</div>
   </div>
 }
 
 describe('TwofoldContext - ', () => {
 
-  it('Sets: registerModalIsOpen', async () => {
+  it('Sets: registerModalOpen', async () => {
     const w = mount(<TwofoldContextProvider {...{ currentUser: {}, setCurrentUser: () => {} }} >
       <TestActor />
     </TwofoldContextProvider>)
     expect(w).toBeTruthy()
-    expect(w.find('.registerModalIsOpen').text()).toEqual('false')
+    expect(w.find('.registerModalOpen').text()).toEqual('false')
     await act(() => new Promise(setImmediate))
   })
 

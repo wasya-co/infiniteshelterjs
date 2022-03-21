@@ -25,7 +25,7 @@ const AppMock = (props) => {
   let {
     currentUser, setCurrentUser,
     itemToUnlock, setItemToUnlock,
-    purchaseModalIsOpen, setPurchaseModalIsOpen,
+    purchaseModalOpen, setPurchaseModalIsOpen,
     zoom, setZoom,
   } = props
   const history = createMemoryHistory()
@@ -33,7 +33,7 @@ const AppMock = (props) => {
 
   const [ localItemToUnlock, setLocalItemToUnlock ] = useState({})
   const [ localCurrentUser, setLocalCurrentUser ] = useState(C.anonUser)
-  const [ localPurchaseModalIsOpen, setLocalPurchaseModalIsOpen ] = useState(false)
+  const [ localPurchaseModalOpen, setLocalPurchaseModalIsOpen ] = useState(false)
   const [ localZoom, setLocalZoom ] = useState(1)
   if (!currentUser) {
     currentUser = localCurrentUser
@@ -43,9 +43,9 @@ const AppMock = (props) => {
     itemToUnlock = localItemToUnlock
     setItemToUnlock = setLocalItemToUnlock
   }
-  if (!purchaseModalIsOpen) {
-    purchaseModalIsOpen = localPurchaseModalIsOpen
-    setPurchaseModalIsOpen = setLocalPurchaseModalIsOpen
+  if (!purchaseModalOpen) {
+    purchaseModalOpen = localPurchaseModalIsOpen
+    setPurchaseModalOpen = setLocalPurchaseModalIsOpen
   }
   if (!zoom) {
     // logg('no props.zoom?!')
@@ -60,7 +60,7 @@ const AppMock = (props) => {
         currentUser, setCurrentUser,
         itemToUnlock, setItemToUnlock,
         // layout, setLayout,
-        purchaseModalIsOpen, setPurchaseModalIsOpen,
+        purchaseModalOpen, setPurchaseModalIsOpen,
         // showUrl, setShowUrl,
         zoom, setZoom,
       }} >
