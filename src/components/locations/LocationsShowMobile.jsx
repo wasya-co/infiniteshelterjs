@@ -213,6 +213,8 @@ const LocationsShowMobile = (props) => {
       />
     </Collapsible> }
 
+    { /* Right-hand side */ }
+
     { /* @TODO: recursively render map (not location) as appropriate all around in these collapsibles. */ }
     { markers && markers.length && <Collapsible
         label={location.labels.markers}
