@@ -47,7 +47,8 @@ const theseProps = { match: { url: '/en/galleries/show/abba', params: '?' } }
 
 describe("GalleriesShow", () => {
 
-  skip(' current2 - does not show unlock modal if user is not logged in', async () => {
+  // @TODO: herehere
+  test.skip(' current2 - does not show unlock modal if user is not logged in', async () => {
     let wrapper = mount(<AppMock >
       <GalleriesShow {...theseProps} />
     </AppMock>)
