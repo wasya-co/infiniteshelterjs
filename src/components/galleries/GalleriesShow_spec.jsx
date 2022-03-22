@@ -8,10 +8,12 @@ import {
 } from 'react-router-dom'
 import { act } from '@testing-library/react'
 
-import GalleriesShow from "./GalleriesShow"
+import { UnlockModal } from "$components/application"
+import { LoginModal } from "$components/users"
 import { AppMock, C, logg, } from "$shared"
-import request from "$shared/request"
 import useApi from "$shared/Api"
+import request from "$shared/request"
+import GalleriesShow from "./GalleriesShow"
 
 jest.mock("$shared/Api")
 
@@ -49,8 +51,8 @@ describe("GalleriesShow", () => {
     let wrapper = mount(<AppMock >
       <GalleriesShow {...theseProps} />
     </AppMock>)
-    expect(wrapper.find('LoginModal').length).toEqual(1)
-    expect(wrapper.find('UnlockModal').length).toEqual(0)
+    expect(wrapper.find(LoginModal).length).toEqual(1)
+    expect(wrapper.find(UnlockModal).length).toEqual(0)
     await act(() => new Promise(setImmediate))
   })
 

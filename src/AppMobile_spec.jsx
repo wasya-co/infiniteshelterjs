@@ -72,7 +72,7 @@ describe('AppMobile', () => {
 
   test('shows LoginModal for unauthed users', async () => {
     let wrapper = mount(<ThemeProvider theme={S.lightTheme} ><AppMobile /></ThemeProvider>)
-    expect(wrapper.find('LoginModal').length).toEqual(1)
+    expect(wrapper.find(LoginModal).length).toEqual(1)
     await act(() => new Promise(setImmediate))
   })
 

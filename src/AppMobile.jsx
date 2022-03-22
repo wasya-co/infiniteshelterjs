@@ -54,6 +54,9 @@ const __Container = styled(_Container)`
   overflow: scroll;
 `;
 
+/**
+ * AppMobile
+ */
 const AppMobile = (props) => {
   // logg(props, 'AppMobile')
 

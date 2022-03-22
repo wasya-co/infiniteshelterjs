@@ -129,7 +129,7 @@ const MyAccountWidget = (props) => {
   const api = useApi()
   const {
     currentUser, setCurrentUser,
-    purchaseModalOpen, setPurchaseModalIsOpen,
+    purchaseModalOpen, setPurchaseModalOpen,
   } = useContext(TwofoldContext)
   // logg(useContext(TwofoldContext), 'MyAccountWidget#usedTwofoldContext')
 

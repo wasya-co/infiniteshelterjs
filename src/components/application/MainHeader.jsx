@@ -24,6 +24,9 @@ const Root = styled.div`
   padding: 2em 0;
 `;
 
+/*
+ * @TODO: likely destroy this file
+ */
 const MainHeader = (props) => {
   // logg(props, 'MainMenu')
 

@@ -15,12 +15,12 @@ import {
 
 const TestActor = (props) => {
   const {
-    registerModalOpen, setRegisterModalIsOpen,
+    registerModalOpen, setRegisterModalOpen,
   } = useContext(TwofoldContext)
   // logg(useContext(TwofoldContext), 'testUsedContext')
 
   return <div>
-    <div className='registerModalOpen'>{registerModalIsOpen.toString()}</div>
+    <div className='registerModalOpen'>{registerModalOpen.toString()}</div>
   </div>
 }
 

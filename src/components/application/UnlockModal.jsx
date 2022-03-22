@@ -42,7 +42,7 @@ const UnlockModal = (props) => {
     currentUser, setCurrentUser,
     itemToUnlock, setItemToUnlock,
     loginModalOpen, setLoginModalOpen,
-    purchaseModalOpen, setPurchaseModalIsOpen,
+    purchaseModalOpen, setPurchaseModalOpen,
     ratedConfirmation, setRatedConfirmation,
   } = useContext(TwofoldContext)
   // logg(useContext(TwofoldContext), 'unlockModalUsedTwofoldContext')

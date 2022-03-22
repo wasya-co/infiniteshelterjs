@@ -103,6 +103,10 @@ const MenuLeft= (props) => {
             <span >Account</span>
           </ListItem>
 
+          <ListItem>
+            Version 0.0.0
+          </ListItem>
+
         </List>
         { /* <W2>
           { loading && 'Loading...' }

@@ -4,15 +4,11 @@ import { mount, shallow } from "enzyme"
 import React, { useState } from "react"
 import { act } from '@testing-library/react'
 
-import { PasswordLogin } from "./"
+import { LoginModal } from "./"
 import { AppMock, logg, } from "$shared"
 import request from "$shared/request"
 
 enzyme.configure({ adapter: new Adapter() })
-
-// jest.mock('$shared/request')
-// request.post = jest.fn(new Promise(() => {}, () => {}))
-
 
 jest.mock('$shared/request', () => {
   const originalModule = jest.requireActual("$shared/request")
@@ -26,10 +22,10 @@ jest.mock('$shared/request', () => {
   }
 })
 
-describe("PasswordLogin - current2 ", () => {
+describe("LoginModal - current2 ", () => {
 
   it("submits on Enter", async () => {
-    let component = mount(<AppMock ><PasswordLogin /></AppMock>)
+    let component = mount(<AppMock ><LoginModal /></AppMock>)
     expect(component.find('input[type="password"]').length).toEqual(1)
 
     component.find('input[type="password"]').simulate('keydown', { key: 'Enter' })

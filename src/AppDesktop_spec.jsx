@@ -13,6 +13,8 @@ import AppDesktop from './AppDesktop'
 
 configure({ adapter: new Adapter() })
 
+import { LoginModal, RegisterModal } from "$components/users"
+
 jest.mock("$shared/Api")
 jest.mock("$shared/request") // @TODO: remove?
 
@@ -45,8 +47,8 @@ describe('AppDesktop', () => {
       <AppDesktop />
     </ThemeProvider>)
     expect(wrapper).toBeTruthy()
-    expect(wrapper.find('LoginModal').length).toEqual(1)
-    expect(wrapper.find('RegisterModal').length).toEqual(1)
+    expect(wrapper.find(LoginModal).length).toEqual(1)
+    expect(wrapper.find(RegisterModal).length).toEqual(1)
     await act(() => new Promise(setImmediate))
   })
 
