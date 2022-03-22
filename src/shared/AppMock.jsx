@@ -21,10 +21,11 @@ import {
 import { LoginModal } from "$components/users"
 
 const AppMock = (props) => {
-  // logg(props, 'AppMock')
+  logg(props, 'AppMock')
   let {
     currentUser, setCurrentUser,
     itemToUnlock, setItemToUnlock,
+    loginModalOpen, setLoginModalOpen,
     purchaseModalOpen, setPurchaseModalOpen,
     zoom, setZoom,
   } = props
@@ -33,6 +34,7 @@ const AppMock = (props) => {
 
   const [ localItemToUnlock, setLocalItemToUnlock ] = useState({})
   const [ localCurrentUser, setLocalCurrentUser ] = useState(C.anonUser)
+  const [ localLoginModalOpen, setLocalLoginModalOpen ] = useState(false)
   const [ localPurchaseModalOpen, setLocalPurchaseModalOpen ] = useState(false)
   const [ localZoom, setLocalZoom ] = useState(1)
   if (!currentUser) {
@@ -43,11 +45,16 @@ const AppMock = (props) => {
     itemToUnlock = localItemToUnlock
     setItemToUnlock = setLocalItemToUnlock
   }
-  if (!purchaseModalOpen) {
+  if ('undefined' === typeof loginModalOpen) {
+    logg('it was undefined')
+    loginModalOpen = localLoginModalOpen
+    setLoginModalOpen = setLocalLoginModalOpen
+  }
+  if ('undefined' === typeof purchaseModalOpen) {
     purchaseModalOpen = localPurchaseModalOpen
     setPurchaseModalOpen = setLocalPurchaseModalOpen
   }
-  if (!zoom) {
+  if ('undefined' === typeof zoom) {
     // logg('no props.zoom?!')
     zoom = localZoom
     setZoom = setLocalZoom
@@ -60,12 +67,13 @@ const AppMock = (props) => {
         currentUser, setCurrentUser,
         itemToUnlock, setItemToUnlock,
         // layout, setLayout,
+        loginModalOpen, setLoginModalOpen,
         purchaseModalOpen, setPurchaseModalOpen,
         // showUrl, setShowUrl,
         zoom, setZoom,
       }} >
         { props.children }
-        <LoginModal />
+        {/* <LoginModal /> */}
       </TwofoldContextProvider>
     </Router>
   </ThemeProvider>

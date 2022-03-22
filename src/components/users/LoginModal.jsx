@@ -23,14 +23,14 @@ import {
 } from "$shared"
 
 
-const PasswordLoginModal = (props) => {
-  // logg(props, 'PasswordLoginModal')
+const LoginModal = (props) => {
+  // logg(props, 'LoginModal')
 
   const {
     currentUser, setCurrentUser,
     loginModalOpen, setLoginModalOpen,
   } = useContext(TwofoldContext)
-  // logg(useContext(TwofoldContext), 'PasswordLoginModalUsedContext')
+  // logg(useContext(TwofoldContext), 'LoginModalUsedContext')
 
   const [ email, setEmail ] = useState('')
   const [ password, setPassword ] = useState('')
@@ -61,4 +61,4 @@ const PasswordLoginModal = (props) => {
   </Modal>
 }
 
-export default PasswordLoginModal
+export default LoginModal
