@@ -174,7 +174,7 @@ const Row = styled.div`
 
 /**
  * LocationsShowDesktop
- */
+**/
 const LocationsShowDesktop = (props) => {
   // logg(props, 'LocationsShowDesktop')
   const { match } = props

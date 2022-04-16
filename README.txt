@@ -51,6 +51,9 @@ After running above commands, android studio will get open then you can build ap
 
 == Ethereum ==
 
+From: https://docs.alchemy.com/alchemy/tutorials/how-to-create-an-nft
+From: https://docs.alchemy.com/alchemy/tutorials/how-to-create-an-nft/how-to-mint-a-nft
+
 ```shell
 npx hardhat accounts
 npx hardhat compile
