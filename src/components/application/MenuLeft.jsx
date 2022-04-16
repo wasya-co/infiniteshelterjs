@@ -18,7 +18,7 @@ const _LeftWrapper = styled.div`
   // border: 1px solid green;
 `;
 
-const W1 = styled.div`
+const W0 = styled.div`
   height: 100vh;
   display: flex;
   flex-direction: column;
@@ -26,11 +26,9 @@ const W1 = styled.div`
   align-content: space-between;
 `;
 
-const W2 = styled.div`
-`;
 
-const MenuLeft= (props) => {
-  // logg(props, 'MenuLeft')
+const SideMenu = (props) => {
+  // logg(props, 'SideMenu')
 
   const [ drawerOpen, setDrawerOpen ] = React.useState(false)
   const [ loading, setLoading ] = useState(false)
@@ -46,7 +44,7 @@ const MenuLeft= (props) => {
       : <MenuIcon onClick={() => setDrawerOpen(true)} /> }
 
     <Drawer anchor={"left"} open={drawerOpen} onClose={() => setDrawerOpen(false)} >
-      <W1>
+      <W0>
         <List>
 
           <ListItem button key={'newsfeed'}
@@ -116,12 +114,12 @@ const MenuLeft= (props) => {
             some action
           </F> }
         </W2> */ }
-      </W1>
+      </W0>
     </Drawer>
   </F>
 }
 
-MenuLeft.propTypes = {
+SideMenu.propTypes = {
   variant: PropTypes.string,
 }
-export default MenuLeft
+export default SideMenu

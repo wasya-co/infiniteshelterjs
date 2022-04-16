@@ -105,15 +105,17 @@ export const CollapsibleContextProvider = ({ children, ...props }) => {
 
 /* F */
 
+// @deprecated, FlexCol has been moved to ishlibjs
 const _FlexCol = styled.div`
   display: flex;
   flex-direction: column;
-
   > * {
     margin: auto .4em;
   }
 `;
 export const FlexCol = ({ children, ...props }) => <_FlexCol className="FlexCol" {...props} >{children}</_FlexCol>
+// ^ @deprecated
+
 
 export const FlexRow = styled.div`
   display: flex;

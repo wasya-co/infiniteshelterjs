@@ -22,6 +22,9 @@ import {
   useApi,
 } from "$shared"
 
+/**
+ * @deprecated, moved to ishlibjs
+**/
 const RegisterModal = (props) => {
   // logg(props, 'RegisterModal')
 

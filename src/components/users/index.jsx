@@ -22,14 +22,12 @@ export { default as Account } from "./Account"
 
 
 /* F */
+// @deprecated below, use ishlibjs
 const { FacebookLogin } = Plugins
-
 const FACEBOOK_PERMISSIONS = ['email']
-
 export const FbLogin = (props) => {
   const api = useApi()
   const { currentUser, setCurrentUser } = useContext(TwofoldContext)
-
   const doFbLogin = async () => {
     const result = await FacebookLogin.login({ permissions: FACEBOOK_PERMISSIONS });
     if (result.accessToken) {
@@ -47,11 +45,9 @@ export const FbLogin = (props) => {
   }
   return <Btn onClick={doFbLogin}>FB Login</Btn>
 }
-
 export const FbLogin2 = (props) => {
   const api = useApi()
   const { currentUser, setCurrentUser } = useContext(TwofoldContext)
-
   const doFbLogin = async () => {
     const result = await FacebookLogin.login({ permissions: FACEBOOK_PERMISSIONS });
     if (result.accessToken) {
@@ -69,6 +65,9 @@ export const FbLogin2 = (props) => {
   }
   return <Btn onClick={doFbLogin}>Login or Register with Facebook</Btn>
 }
+// ^ @deprecated above
+
+
 
 /* L */
 export { default as LoginModal } from './LoginModal'
