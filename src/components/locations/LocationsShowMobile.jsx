@@ -3,14 +3,17 @@ import React, { Fragment as F, useContext, useEffect, useRef, useState } from "r
 import { Route, useLocation, useHistory, Switch } from 'react-router-dom'
 import styled from 'styled-components'
 
+import { Metaline } from "$components/application"
+import { Newsitems } from "$components/newsitems"
 import {
   Breadcrumbs,
   ItemModal,
-  MapPanel, MapPanelNoZoom, MarkersList,
+  MapPanel, MapPanelNoZoom,
   WrappedMapPanel,
 } from "./"
-import { Metaline } from "$components/application"
-import { Newsitems } from "$components/newsitems"
+import {
+  MarkersList,
+} from '$resources/markers'
 import {
   C, Collapsible, CollapsibleContext,
   inflector,

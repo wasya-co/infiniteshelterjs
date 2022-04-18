@@ -12,11 +12,12 @@ import { InjectedConnector } from '@web3-react/injected-connector'
 
 import config from "config"
 import {
+  AuthContext, AuthWidget,
   FlexCol, FlexRow,
 } from 'ishlibjs'
 
 import {
-  FbLogin2, Logout,
+  FbLogin2,
 } from "./"
 import {
   Btn,
@@ -24,7 +25,6 @@ import {
   request,
   S,
   TwofoldContext,
-  useApi,
 } from "$shared"
 import bodyNFT from '$src/artifacts/contracts/Body.sol/BodyNFT.json'
 
@@ -45,8 +45,6 @@ const Cell = styled.div`
   // display: flex;
 `;
 
-
-
 const _Img = styled.div`
   border: 1px solid red;
   background: white;
@@ -55,57 +53,15 @@ const _Img = styled.div`
   max-height: 100px;
   width: 100px;
   height: 100px;
-
-
 `;
 const Img = ({ src }) => {
   return <_Img><img src={src} alt='' /></_Img>
 }
+
 const injected = new InjectedConnector() // { supportedChainIds: [1, 3, 4, 5, 42], })
 
 const stripePromise = loadStripe('pk_test_qr1QPmSpLdBFt1F7itdWJOj3') // @TODO: this is active, but change.
 
-const Login = (props) => {
-  const {
-    setLoginModalOpen,
-    setRegisterModalOpen,
-  } = useContext(TwofoldContext)
-
-  const s = {
-    default: null,
-    login: 'login',
-    register: 'register-with-email',
-  }
-  const [ state, setState ] = useState(s.default)
-
-  switch (state) {
-    case s.default:
-      return <FlexCol>
-        <FbLogin2 />
-        <RegisterWithEmail onClick={() => {
-          setRegisterModalOpen(true)
-          // setState(s.register)
-        }} />
-        <LoginWithEmail onClick={() => {
-          setLoginModalOpen(true)
-          // setState(s.login)
-        }} />
-      </FlexCol>
-    case s.register:
-      return <div>Register?</div>
-    case s.login:
-      return <div>Login?</div>
-    default:
-      throw 'not implemented tr5'
-  }
-};
-
-const RegisterWithEmail = (props) => {
-  return <Btn {...props} >Register with Email</Btn>
-}
-const LoginWithEmail = (props) => {
-  return <Btn {...props} >Login with Email</Btn>
-}
 
 const W0 = styled.div`
   // border: 1px solid cyan;
@@ -113,14 +69,9 @@ const W0 = styled.div`
   display: flex;
   justify-content: flex-start;
   align-items: center;
-
-  // background: #dedede;
-  // background: white;
-  // height: 100px;
-  // width: calc(100vw - 2*${p => p.theme.borderWidth});
-  // padding: 1em;
-  // margin-bottom: ${p => p.theme.borderWidth};
 `;
+
+const W1 = styled.div``;
 
 /**
  * MyAccountWidget
@@ -128,9 +79,14 @@ const W0 = styled.div`
 const MyAccountWidget = (props) => {
   // logg(props, 'MyAccountWidget')
 
-  const api = useApi()
   const {
     currentUser, setCurrentUser,
+    useApi,
+  } = useContext(AuthContext)
+
+  const api = useApi()
+
+  const {
     purchaseModalOpen, setPurchaseModalOpen,
   } = useContext(TwofoldContext)
   // logg(useContext(TwofoldContext), 'MyAccountWidget#usedTwofoldContext')
@@ -172,14 +128,6 @@ const MyAccountWidget = (props) => {
   }
 
   const { active, account, library, connector, activate, deactivate } = useWeb3React()
-
-  /* useEffect(() => {
-    const fn = async () => {
-      await connect()
-      await myBodies()
-    }
-    fn()
-  }) */
 
   async function connect() {
     try {
@@ -226,23 +174,22 @@ const MyAccountWidget = (props) => {
     { /* currentUser.profile_photo_url && <Img src={currentUser.profile_photo_url} /> */ }
     <Img src={avatar || currentUser?.profile_photo_url} />
 
-    <FlexCol>
+    <FlexRow>
 
-      { currentUser.email && <Cell>[ {currentUser.email} <Logout /> ]</Cell> }
       { currentUser.email && <Cell>[ { typeof currentUser.n_unlocks === 'undefined' ? '?' : currentUser.n_unlocks} coins <BuyBtn onClick={() => setPurchaseModalOpen(true) }>ADD</BuyBtn> ]</Cell> }
-      { !currentUser.email && <Login /> }
+      <AuthWidget />
 
 
-      { active && <F> [
+      { active && <W1> [
           <span>Connected with <b>{account}</b></span>
           <button onClick={disconnect} >Disconnect</button>
-          <button onClick={myBodies} >myBodies</button> ]</F> }
-      { !active && <F>
+          <button onClick={myBodies} >myBodies</button> ]</W1> }
+      { !active && <W1>
         <span>Not Connected</span>
         <button onClick={connect} >Connect to MetaMask</button>
-      </F> }
+      </W1> }
 
-    </FlexCol>
+    </FlexRow>
 
     <Modal isOpen={purchaseModalOpen} ariaHideApp={false} >
       <h1>
@@ -257,10 +204,9 @@ const MyAccountWidget = (props) => {
 
   </W0>
 }
-
-// no props?!
 MyAccountWidget.propTypes = {
-}
+  // no props
+};
 
 const WrappedMyAccountWidget = (props) => <Elements stripe={stripePromise}><MyAccountWidget {...props} /></Elements>;
 

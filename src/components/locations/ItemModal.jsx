@@ -1,41 +1,37 @@
 
-import { IonPage, IonContent, IonButton, IonImg, IonLoading } from "@ionic/react"
 import React, { Fragment as F, useContext, useEffect, useRef, useState } from "react"
 import Modal from "react-modal"
-import { Route, useHistory, useLocation, useParams, Switch } from 'react-router-dom'
+import { Route, useHistory, useLocation, useParams } from 'react-router-dom'
 import styled from 'styled-components'
 
 import config from 'config'
+import {
+  Actions,
+  CloseBtn,
+} from 'ishlibjs'
 
-import { C, logg, request, S, TwofoldContext, ZoomContext } from "$shared"
-import { Metaline } from "$components/application"
+import { C, logg, TwofoldContext } from "$shared"
 import { GalleriesShow } from "$components/galleries"
-import { ReportsShow } from "$components/reports"
-import { Newsitems } from "$components/newsitems"
-
-
-const Fabs = styled.div`
-  // border: 1px solid red;
-
-  position: fixed;
-`;
+import {
+  ReportsForm,
+  ReportsShow,
+} from "$resources/reports"
 
 /**
  * ItemModal
- * @TODO: move to $components/application
+ * @TODO: move to $components/application ?
+ * shows items, but also I use it to create report, ...
+ *
 **/
 const ItemModal = (props) => {
   // logg(props, 'ItemModal')
   const { item } = props
 
-  logg(config, 'config')
-
   const params = useParams()
-  // console.log('params:', params)
   const history = useHistory()
 
   const {
-    showItem, setShowItem, // @TODO: should navigate here!
+    showItem, setShowItem,
   } = useContext(TwofoldContext)
 
   const onClose = () => {
@@ -43,11 +39,14 @@ const ItemModal = (props) => {
     setShowItem(null)
   }
 
+  if (!item) { return }
+
   return <Modal isOpen={!!showItem} >
-    <Fabs className='Fabs' >
-      <div onClick={onClose} >[x]</div>
-    </Fabs>
-    { item.item_type === C.item_types.report && <ReportsShow match={{ params: { slug: item.reportname } }} /> }
+    <Actions style={{ position: 'absolute', top: '1em', right: '1em' }} >
+      <CloseBtn onClick={onClose} />
+    </Actions>
+    { item.item_type === C.item_types.report && action === C.actions.show && <ReportsShow match={{ params: { slug: item.reportname } }} /> }
+    { item.item_type === C.item_types.report && action === C.actions.new && <ReportsForm /> }
     { item.item_type === C.item_types.gallery && <GalleriesShow match={{ params: { slug: item.slug } }} /> }
   </Modal>
 }

@@ -7,10 +7,17 @@ import styled from 'styled-components'
 import {
   Breadcrumbs,
   ItemModal,
-  MapPanel, MapPanelNoZoom, MarkersList,
+  MapPanel, MapPanelNoZoom,
   RatedRestrictionModal,
   WrappedMapPanel,
 } from "./"
+import {
+  MarkersList,
+  MarkerModal, MarkerContext, MarkerContextProvider,
+} from '$resources/markers'
+import {
+  ReportForm,
+} from '$resources/reports'
 import { CitiesList } from "$components/cities"
 import { Newsitems } from "$components/newsitems"
 import { LongLine } from "$components/TwofoldLayout"
@@ -274,6 +281,7 @@ const LocationsShowDesktop = (props) => {
   const foldedRight = folded === C.foldedRight
 
   return <Row>
+    <MarkerContextProvider >
 
     { !foldedLeft && <Left
         className='Left'
@@ -349,7 +357,9 @@ const LocationsShowDesktop = (props) => {
     { showItem && <ItemModal item={showItem} /> }
     { loading && <Loading /> }
     { !ratedConfirmation && <RatedRestrictionModal {...{ ratedConfirmation, setRatedConfirmation, }} /> }
+    { <MarkerModal /> }
 
+  </MarkerContextProvider>
   </Row>
 }
 

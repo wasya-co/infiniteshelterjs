@@ -1,12 +1,21 @@
 import React, { useContext } from 'react'
 
 import config from "config"
+import {
+  AuthContext,
+} from 'ishlibjs'
+
 import { C,
   logg, // eslint-disable-line no-unused-vars
-request, TwofoldContext } from "$shared"
+  request,
+} from "$shared"
 
 const useApi = () => {
-  const { currentUser, setCurrentUser } = useContext(TwofoldContext)
+  const {
+    setCurrentUser,
+    setLoginModalOpen,
+  } = useContext(AuthContext)
+
   const token = localStorage.getItem(C.jwt_token)
 
   return {
@@ -39,6 +48,21 @@ const useApi = () => {
 
     loginPath: '/api/users/login.json',
     longTermTokenPath: '/api/users/long_term_token',
+
+    postLogin: ({ email, password }) => {
+      return request.post(`${config.apiOrigin}${config.router.loginPath}`, { email, password }).then((r) => r.data).then((resp) => {
+        logg(resp, 'got this resp')
+
+        localStorage.setItem(C.jwt_token, resp.jwt_token)
+        localStorage.setItem(C.current_user, JSON.stringify(resp))
+        setCurrentUser(resp) // must be done *after* setting C.jwt_token
+        setLoginModalOpen(false)
+      }).catch((e) => {
+        logg(e, 'e322')
+        toast("Login failed")
+        setCurrentUser(C.anonUser)
+      })
+    },
 
     myVideosPath: "/api/my/videos", // @TODO: remove
 

@@ -4,6 +4,9 @@ import { Route, useLocation, useHistory, Switch } from 'react-router-dom'
 import styled from 'styled-components'
 
 import {
+  MarkerContext,
+} from '$resources/markers'
+import {
   C, Card,
   logg, logg4,
   TwofoldContext,
@@ -11,10 +14,13 @@ import {
 } from "$shared"
 
 const Actions = styled.div`
+  border: 1px solid red;
+
   position: absolute;
   top: 0;
   right: 0;
-  border: 1px solid red;
+
+  z-index: 2;
 `;
 
 // W
@@ -28,6 +34,8 @@ const W0 = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+
+  position: relative;
 `;
 
 const W1 = styled.div`
@@ -59,6 +67,10 @@ const MapPanelNoZoom = (props) => {
   } = useContext(TwofoldContext)
   // logg(useContext(TwofoldContext), 'MapPanelNoZoomUsedContext')
 
+  const {
+    markerModalOpen, setMarkerModalOpen,
+  } = useContext(MarkerContext)
+
   const history = useHistory()
   const [ windowWidth, windowHeight ] = useWindowSize()
   // logg(useWindowSize(), 'usedWindowSize')
@@ -87,7 +99,6 @@ const MapPanelNoZoom = (props) => {
   ])
 
 
-
   const markers = []
   props.map.markers.map((m, idx) => {
     const out = <div
@@ -107,15 +118,18 @@ const MapPanelNoZoom = (props) => {
     markers.push(out)
   })
 
+  /*
+   * @TODO: need to get the ACL from api, and use it to determine what to display or not.
+  **/
 
   return <W0 className="MapPanelNoZoom W0" >
-
+    <Actions>
+      <Card onClick={() => setMarkerModalOpen(true)} >
+        + Marker
+      </Card>
+    </Actions>
     <W1 className="W1" >
-      <Actions>
-        <Card>
-          + Marker
-        </Card>
-      </Actions>
+
       <img
         src={map.img_path}
         style={{

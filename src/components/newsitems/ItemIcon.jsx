@@ -10,16 +10,15 @@ import styled, { useTheme } from 'styled-components'
 
 import { C, logg } from "$shared"
 
-const W = styled.div`
-  padding: 10px;
+const _W0 = styled.div`
+  // border: 1px solid red;
+
+  padding: 10px 10px 0 10px;
   margin-right: 10px;
-  width: 100px;
-  height: 100px;
 
   box-sizing: border-box;
 `;
-
-logg(Ic, 'ic')
+const W0 = ({ children, ...props }) => <_W0 className='ItemIcon' {...props}>{children}</_W0>
 
 /**
  * Displays the appropriate icon.
@@ -42,17 +41,17 @@ logg(Ic, 'ic')
   }
   switch (item_type) {
     case C.item_types.gallery:
-      return <W><img className="icon" src="/assets/icons/gallery.png" alt='' /></W>
+      return <W0><img className="icon" src="/assets/icons/gallery.png" alt='' /></W0>
     case C.item_types.report:
-      return <W>
+      return <W0>
         {/* <img className="icon" src="/assets/icons/report.png" alt='' /> */}
         <ReportIcon style={{ color: theme.colors.text }} />
         <Diamond />
-      </W>
+      </W0>
     case C.item_types.video:
-      return <W><img className="icon" src="/assets/newsfeed/video_icon.svg" alt='' /></W>
+      return <W0><img className="icon" src="/assets/newsfeed/video_icon.svg" alt='' /></W0>
     default:
-      return <W>[unknown kind]</W>
+      return <W0>[unknown kind]</W0>
   }
 }
 ItemIcon.propTypes = {

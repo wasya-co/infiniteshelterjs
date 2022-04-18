@@ -8,7 +8,7 @@ export { default as LocationsShowMobile } from "./LocationsShowMobile"
 
 export { default as MapPanel } from "./MapPanel"
 export { default as MapPanelNoZoom } from "./MapPanelNoZoom"
-export { default as MarkersList } from "./MarkersList"
+
 
 export { default as RatedRestrictionModal } from "./RatedRestrictionModal"
 

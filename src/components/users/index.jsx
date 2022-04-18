@@ -70,7 +70,6 @@ export const FbLogin2 = (props) => {
 
 
 /* L */
-export { default as LoginModal } from './LoginModal'
 
 const BuyBtn = styled.span`
   border: 1px solid ${p => p.theme.colors.text};

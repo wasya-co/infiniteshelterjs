@@ -4,9 +4,12 @@ import React, { useContext, useEffect, useRef, useState, } from 'react'
 import { ThemeProvider } from 'styled-components'
 
 import config from 'config'
+import 'ishlibjs/dist/index.css'
+
 import { C, logg, request, S, useApi } from "$shared"
 import AppDesktop from './AppDesktop'
 import AppMobile from './AppMobile'
+
 
 /**
  * Choses mobile vs desktop

@@ -105,13 +105,16 @@ const NewsitemContainer = ({ children, ...props }) => {
     return <W0 {...{ className, navigateToItem, variant }} >
       { children }
       <Row>
-        <Col>
+        <Col style={{ alignItems: 'center' }} >
           <Voteable item={item} />
-          <ItemIcon {...item} />
+
           { /* @TODO: add premiumTier icon here */ }
         </Col>
         <Col style={{ overflowWrap: 'break-word', maxWidth: 'calc(100vw - 100px)' }} >
-          <Title>{item.name}</Title>
+          <Row>
+            <ItemIcon {...item} />
+            <Title>{item.name}</Title>
+          </Row>
           <Metaline {...item} />
         </Col>
       </Row>

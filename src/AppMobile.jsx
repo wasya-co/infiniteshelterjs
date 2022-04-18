@@ -22,6 +22,7 @@ import './theme/variables.css'
 
 import config from "config"
 import {
+  LoginModal,
   RegisterModal,
 } from 'ishlibjs'
 
@@ -35,7 +36,7 @@ import { ReportsShow } from "$components/reports"
 import { SitesShow } from '$components/sites'
 import {
   Account,
-  LoginModal,
+
 } from "$components/users"
 import { Videos } from "$components/videos"
 import { Galleries, MyGalleries } from "$components/galleries"

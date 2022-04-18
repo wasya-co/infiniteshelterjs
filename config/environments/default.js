@@ -4,6 +4,7 @@ module.exports = {
 
   router: {
     locationPath: (a) => `/en/locations/show/${a}`,
+    loginPath: '/api/users/login',
   },
 };
 
