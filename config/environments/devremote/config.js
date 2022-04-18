@@ -1,5 +1,5 @@
 
-module.exports = {
+const all = {
   "apiOrigin": "https://manager.piousbox.com",
   "appIndexPath": "src/index",
 
@@ -9,4 +9,8 @@ module.exports = {
   "homeLocation": "/en/locations/show/construct0",
 
   "requireLogin": false,
+
 };
+
+const default = require('../default.js')
+module.exports = { ...default, ...all }

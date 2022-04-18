@@ -5,8 +5,13 @@ import React, { Fragment as F, useEffect, useContext, useState } from "react"
 import { useHistory, } from "react-router-dom"
 import styled from 'styled-components'
 
-import { ItemIcon } from "./"
-import { Metaline, } from "$components/application"
+import {
+  ItemIcon,
+} from "./"
+import {
+  Metaline,
+  Voteable,
+} from "$components/application"
 import {
   C, Card,
   inflector,
@@ -48,7 +53,7 @@ const W0 = (props) => {
 
 /**
  * NewsitemContainer
- */
+**/
 const NewsitemContainer = ({ children, ...props }) => {
   // logg(props, 'NewsitemContainer')
   const {
@@ -87,6 +92,7 @@ const NewsitemContainer = ({ children, ...props }) => {
    */
 
   if (item.item_type === C.item_types.photo) {
+    // @TODO: navigateToItem can show full-screen pic. _vp_ 2022-04-17
     return <W0 {...{ className, navigateToItem: () => {}, variant }} >
       <Col>
         <Title>{item.name}</Title>
@@ -99,7 +105,11 @@ const NewsitemContainer = ({ children, ...props }) => {
     return <W0 {...{ className, navigateToItem, variant }} >
       { children }
       <Row>
-        <ItemIcon {...item} />
+        <Col>
+          <Voteable item={item} />
+          <ItemIcon {...item} />
+          { /* @TODO: add premiumTier icon here */ }
+        </Col>
         <Col style={{ overflowWrap: 'break-word', maxWidth: 'calc(100vw - 100px)' }} >
           <Title>{item.name}</Title>
           <Metaline {...item} />

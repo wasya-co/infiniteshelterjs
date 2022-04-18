@@ -15,7 +15,8 @@ import { CitiesList } from "$components/cities"
 import { Newsitems } from "$components/newsitems"
 import { LongLine } from "$components/TwofoldLayout"
 import {
-  C, ChevronLeft, ChevronRight, Collapsible,
+  C, Card, ChevronLeft, ChevronRight, Collapsible,
+  FlexCol, FlexRow,
   inflector,
   Loading, logg,
   MenuIcon,
@@ -273,6 +274,7 @@ const LocationsShowDesktop = (props) => {
   const foldedRight = folded === C.foldedRight
 
   return <Row>
+
     { !foldedLeft && <Left
         className='Left'
         {...{ bottomDrawerOpen,
@@ -299,6 +301,7 @@ const LocationsShowDesktop = (props) => {
       <Handle />
       { location && !foldedRight && <F>
 
+        { /* Markers */ }
         { markers && markers.length && <Collapsible
             config={{ collapsible: false }}
             slug={C.collapsible.markers}
@@ -309,6 +312,23 @@ const LocationsShowDesktop = (props) => {
           />
         </Collapsible> || null }
 
+        { /* Actions */ }
+        <FlexRow style={{ marginBottom: '1em' }} >
+          <Card>
+            + Report
+          </Card>
+          <Card>
+            + Gallery
+          </Card>
+          <Card>
+            + File
+          </Card>
+          <Card>
+            + Spreadsheet
+          </Card>
+        </FlexRow>
+
+        { /* Description */ }
         { location.description && <Collapsible
             label={location.labels.description}
             slug={C.collapsible.description}
@@ -317,6 +337,7 @@ const LocationsShowDesktop = (props) => {
           <Description item={location} />
         </Collapsible> || null }
 
+        { /* Newsitems */ }
         { location.newsitems && location.newsitems.length && <Newsitems
             variant={C.variants.bordered} newsitems={location.newsitems}
         /> || null }

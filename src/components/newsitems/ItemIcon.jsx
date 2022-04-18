@@ -1,5 +1,9 @@
 
-import { Assignment as ReportIcon } from '@material-ui/icons'
+import {
+  Article as ReportIcon,
+  Diamond,
+} from '@mui/icons-material'
+import * as Ic from '@material-ui/icons'
 import PropTypes from 'prop-types'
 import React from 'react'
 import styled, { useTheme } from 'styled-components'
@@ -14,6 +18,8 @@ const W = styled.div`
 
   box-sizing: border-box;
 `;
+
+logg(Ic, 'ic')
 
 /**
  * Displays the appropriate icon.
@@ -40,7 +46,8 @@ const W = styled.div`
     case C.item_types.report:
       return <W>
         {/* <img className="icon" src="/assets/icons/report.png" alt='' /> */}
-        <ReportIcon style={{ color: theme.colors.text, width: '100%', height: '100%' }} />
+        <ReportIcon style={{ color: theme.colors.text }} />
+        <Diamond />
       </W>
     case C.item_types.video:
       return <W><img className="icon" src="/assets/newsfeed/video_icon.svg" alt='' /></W>

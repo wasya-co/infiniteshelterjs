@@ -11,10 +11,15 @@ import { useWeb3React, Web3ReactProvider } from "@web3-react/core"
 import { InjectedConnector } from '@web3-react/injected-connector'
 
 import config from "config"
+import {
+  FlexCol, FlexRow,
+} from 'ishlibjs'
 
 import {
+  FbLogin2, Logout,
+} from "./"
+import {
   Btn,
-  FlexCol, FlexRow,
   logg,
   request,
   S,
@@ -22,9 +27,6 @@ import {
   useApi,
 } from "$shared"
 import bodyNFT from '$src/artifacts/contracts/Body.sol/BodyNFT.json'
-import {
-  FbLogin2, Logout,
-} from "./"
 
 /*
  * ropsten, _vp_ 2021-10-26
@@ -236,8 +238,8 @@ const MyAccountWidget = (props) => {
           <button onClick={disconnect} >Disconnect</button>
           <button onClick={myBodies} >myBodies</button> ]</F> }
       { !active && <F>
-        {/* <span>Not Connected</span>  */}
-        {/* <button onClick={connect} >Connect to MetaMask</button> */}
+        <span>Not Connected</span>
+        <button onClick={connect} >Connect to MetaMask</button>
       </F> }
 
     </FlexCol>

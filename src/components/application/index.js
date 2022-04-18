@@ -12,3 +12,4 @@ export { default as Metaline } from "./Metaline"
 export { default as Rating } from "./Rating"
 
 export { default as UnlockModal } from "./UnlockModal"
+export { default as Voteable } from './Voteable'

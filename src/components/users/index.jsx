@@ -104,5 +104,4 @@ export { default as MyAccountWidget } from "./MyAccountWidget"
 
 
 /* R */
-export { default as RegisterModal } from './RegisterModal'
 

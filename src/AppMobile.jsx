@@ -21,6 +21,11 @@ import '@ionic/react/css/display.css'
 import './theme/variables.css'
 
 import config from "config"
+import {
+  RegisterModal,
+} from 'ishlibjs'
+
+
 import { BottomDrawer, Menu, MenuBottom, MenuLeft, UnlockModal } from "$components/application"
 import { MapuiMobileLayout } from "$components/application"
 import { CitiesList, CitiesShow } from "$components/cities"
@@ -31,7 +36,6 @@ import { SitesShow } from '$components/sites'
 import {
   Account,
   LoginModal,
-  RegisterModal,
 } from "$components/users"
 import { Videos } from "$components/videos"
 import { Galleries, MyGalleries } from "$components/galleries"

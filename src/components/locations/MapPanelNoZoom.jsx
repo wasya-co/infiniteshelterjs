@@ -4,12 +4,18 @@ import { Route, useLocation, useHistory, Switch } from 'react-router-dom'
 import styled from 'styled-components'
 
 import {
-  C,
+  C, Card,
   logg, logg4,
   TwofoldContext,
   useWindowSize,
 } from "$shared"
 
+const Actions = styled.div`
+  position: absolute;
+  top: 0;
+  right: 0;
+  border: 1px solid red;
+`;
 
 // W
 const W0 = styled.div`
@@ -34,12 +40,14 @@ const W1 = styled.div`
 `;
 
 
-/*
+/**
+ * MapPanelNoZoom
+ *
  * _vp_ 2021-09 @TODO: merge this into MapPanel, have zoom={false} as a prop
  * But I couldn't do it in 10 mins... It's a bit complicated?
  *
  * _vp_ 2021-10-29 But actually this component is getting more work than the zoom one right now...
- */
+**/
 const MapPanelNoZoom = (props) => {
   // logg(props, 'MapPanelNoZoom')
   const { map } = props
@@ -101,7 +109,13 @@ const MapPanelNoZoom = (props) => {
 
 
   return <W0 className="MapPanelNoZoom W0" >
+
     <W1 className="W1" >
+      <Actions>
+        <Card>
+          + Marker
+        </Card>
+      </Actions>
       <img
         src={map.img_path}
         style={{

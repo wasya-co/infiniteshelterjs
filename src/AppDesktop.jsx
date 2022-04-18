@@ -20,11 +20,14 @@ import 'react-toastify/dist/ReactToastify.css'
 import styled from 'styled-components'
 
 import config from "config"
+import {
+  RegisterModal,
+} from 'ishlibjs'
 
 import {
   BottomDrawer,
   MainHeader, Menu, MenuBottom, MenuLeft,
-  UnlockModal
+  UnlockModal,
 } from "$components/application"
 import MapuiLayout from "$components/application/MapuiLayout"
 import { CitiesList, CitiesShow } from "$components/cities"
@@ -35,7 +38,9 @@ import Three from "$components/locations3/ThreePanelV1"
 import { ReportsShow } from "$components/reports"
 // import { SitesShow } from '$components/sites'
 import SitesShow from '$components/sites/SitesShow1'
-import { Account, LoginModal, RegisterModal } from "$components/users"
+import {
+  Account, LoginModal,
+} from "$components/users"
 import { Videos } from "$components/videos"
 import {
   C, CollapsibleContext, CollapsibleContextProvider,

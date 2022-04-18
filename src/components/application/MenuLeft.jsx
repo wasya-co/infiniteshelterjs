@@ -96,7 +96,7 @@ const SideMenu = (props) => {
           <ListItem button key={'account'}
             onClick={() => {
               setDrawerOpen(false)
-              history.push("/en/account")
+              history.push(`/en/locations/show/${currentUser.id}`)
             } } >
             <span >Account</span>
           </ListItem>

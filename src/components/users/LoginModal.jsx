@@ -11,11 +11,13 @@ import 'react-toastify/dist/ReactToastify.css'
 import styled from 'styled-components'
 
 import config from 'config'
+import {
+  FlexCol,
+} from 'ishlibjs'
 
 import {
   Btn,
   C,
-  FlexCol,
   logg,
   request,
   TwofoldContext,
