@@ -17,6 +17,9 @@ import {
 } from 'ishlibjs'
 
 import {
+  PurchaseModal,
+} from '$components/application'
+import {
   FbLogin2,
 } from "./"
 import {
@@ -60,8 +63,7 @@ const Img = ({ src }) => {
 
 const injected = new InjectedConnector() // { supportedChainIds: [1, 3, 4, 5, 42], })
 
-const stripePromise = loadStripe('pk_test_qr1QPmSpLdBFt1F7itdWJOj3') // @TODO: this is active, but change.
-
+// const stripePromise = loadStripe('pk_test_qr1QPmSpLdBFt1F7itdWJOj3') // @TODO: this is active, but change.
 
 const W0 = styled.div`
   // border: 1px solid cyan;
@@ -87,45 +89,14 @@ const MyAccountWidget = (props) => {
   const api = useApi()
 
   const {
-    purchaseModalOpen, setPurchaseModalOpen,
   } = useContext(TwofoldContext)
   // logg(useContext(TwofoldContext), 'MyAccountWidget#usedTwofoldContext')
-
-  const stripe = useStripe()
-  const elements = useElements()
 
   /*
    * @TODO: avatar would be an object s.t. multiple styles/sizes are there,
    * and it should be in a context - shared across threemap, and accountWidget.
    */
   const [ avatar, setAvatar ] = useState("")
-
-  // buy unlocks (coins)
-  // @TODO: rename
-  const handleSubmit = async (event) => {
-    event.preventDefault()
-
-    if (!stripe || !elements) { return }
-    const cardElement = elements.getElement(CardElement)
-    let client_secret = await api.getPayments()
-
-    const result = await stripe.confirmCardPayment(client_secret.client_secret, {
-      payment_method: {
-        card: elements.getElement(CardElement),
-      },
-    })
-
-    if (result.error) {
-      logg(result.error.message, 'error message')
-    } else {
-      if (result.paymentIntent.status === 'succeeded') {
-        let response = await api.getMyAccount()
-        logg(response, 'tr2')
-        setCurrentUser(response)
-        setPurchaseModalOpen(false)
-      }
-    }
-  }
 
   const { active, account, library, connector, activate, deactivate } = useWeb3React()
 
@@ -191,23 +162,13 @@ const MyAccountWidget = (props) => {
 
     </FlexRow>
 
-    <Modal isOpen={purchaseModalOpen} ariaHideApp={false} >
-      <h1>
-        Buy unlocks
-        <span onClick={() => { setPurchaseModalOpen(false) } } >[x]</span>
-      </h1>
-      <form onSubmit={handleSubmit} >
-        <CardElement />
-        <button type="submit" disabled={!stripe} >Pay</button>
-      </form>
-    </Modal>
-
+    <PurchaseModal />
   </W0>
 }
 MyAccountWidget.propTypes = {
   // no props
 };
 
-const WrappedMyAccountWidget = (props) => <Elements stripe={stripePromise}><MyAccountWidget {...props} /></Elements>;
-
-export default WrappedMyAccountWidget
+// const WrappedMyAccountWidget = (props) => <Elements stripe={stripePromise}><MyAccountWidget {...props} /></Elements>;
+// export default WrappedMyAccountWidget
+export default MyAccountWidget

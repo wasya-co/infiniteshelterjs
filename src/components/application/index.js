@@ -9,6 +9,7 @@ export { default as Menu } from "./Menu"
 export { default as MenuLeft } from "./MenuLeft"
 export { default as Metaline } from "./Metaline"
 
+export { default as PurchaseModal } from './PurchaseModal'
 export { default as Rating } from "./Rating"
 
 export { default as UnlockModal } from "./UnlockModal"
