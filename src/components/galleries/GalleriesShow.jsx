@@ -4,21 +4,24 @@ import React, { Fragment as F, useContext, useEffect, useRef, useState } from "r
 import { Route, useLocation, useHistory, Switch } from 'react-router-dom'
 import styled from 'styled-components'
 
-import { C, logg, request, TwofoldContext, BackBtn } from "$shared"
 import { Metaline } from "$components/application"
+import {
+  C, logg, request, TwofoldContext, BackBtn,
+} from "$shared"
+
 import "./galleries.scss"
 
 const W0 = styled.div`
-  border: 1px solid blue;
+  // border: 1px solid blue;
   height: auto;
 `;
 
 /**
  * GalleriesShow
- */
+**/
 const GalleriesShow = (props) => {
   // logg(props, 'GalleriesShow')
-  const { match } = props
+  const { match } = props // @TODO: this doesnt look like a prop, remove
 
   const [showLoading, setShowLoading] = useState(false) // @TODO: hmm could it be moved to TwofoldContext ?
   const [gallery, setGallery] = useState({})
@@ -26,9 +29,7 @@ const GalleriesShow = (props) => {
   const mountedRef = useRef('init')
 
   const {
-    currentUser, setCurrentUser,
     itemToUnlock, setItemToUnlock,
-    loginModalOpen, setLoginModalOpen,
   } = useContext(TwofoldContext)
 
   // @TODO: move this into api
@@ -54,38 +55,39 @@ const GalleriesShow = (props) => {
     }
   }, [gallery.id, itemToUnlock.id] )
 
-  return (<W0>
+  return <W0 className="GalleriesShow">
 
-    { <div className="gallery-show">
-      <div className='narrow'>
-        <h1 className="heading">
-          <BackBtn />
-          <img src="/assets/newsfeed/photos_icon.png" />
-          <span className="title">{gallery.name}</span>
-        </h1>
-        <Metaline {...gallery} />
+    <div className='narrow'>
+      <h1 className="heading">
+        <BackBtn />
+        <span className="title">{gallery.name}</span>
+      </h1>
+      <Metaline {...gallery} />
 
-        <div className="thumbs">
-          { gallery.photos && gallery.photos.map((ph, i) =>
-            <div className='card' key={i}>
-              <div className='card-inner'>
-                <IonImg src={ph.thumb_url}></IonImg>
-              </div>
-            </div>
-          ) }
-        </div>
-        <div dangerouslySetInnerHTML={{ __html: gallery.description }}></div>
-      </div>
-      <div className="full-img-section">
+      <div className="thumbs">
         { gallery.photos && gallery.photos.map((ph, i) =>
-          <div className='item' key={i}>
-            <img src={ph.large_url} />
+          <div className='card' key={i}>
+            <div className='card-inner'>
+              <IonImg src={ph.thumb_url}></IonImg>
+            </div>
           </div>
         ) }
       </div>
-    </div>}
 
-  </W0>)
+      <div dangerouslySetInnerHTML={{ __html: gallery.description }}></div>
+
+    </div>
+    <div className="full-img-section">
+
+      { gallery.photos && gallery.photos.map((ph, i) =>
+        <div className='item' key={i}>
+          <img src={ph.large_url} />
+        </div>
+      ) }
+
+    </div>
+
+  </W0>
 }
 
 export default GalleriesShow

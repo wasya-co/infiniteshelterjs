@@ -1,8 +1,8 @@
 
 import { Container as _Container, } from '@material-ui/core'
-import React, { Fragment as F, useEffect, useRef, useState } from 'react'
+import React, { Fragment as F, useEffect, useState } from 'react'
 import {
-  Switch, BrowserRouter as Router, Redirect, Route as _Route, useHistory, withRouter,
+  Switch, BrowserRouter as Router, Redirect, Route as _Route,
 } from 'react-router-dom'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
@@ -22,8 +22,7 @@ import { CitiesList, CitiesShow } from "$components/cities"
 // @TODO: MyGalleries doesn't look right...
 import { GalleriesShow, MyGalleries } from "$components/galleries"
 import { LocationsShowDesktop } from "$components/locations"
-import { ReportsShow } from "$components/reports"
-// import { SitesShow } from '$components/sites'
+import { ReportsShow } from "$resources/reports"
 import SitesShow from '$components/sites/SitesShow1'
 import {
   Account,

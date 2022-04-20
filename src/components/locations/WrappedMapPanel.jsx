@@ -7,16 +7,12 @@ import Modal from "react-modal"
 import styled from 'styled-components'
 
 import {
-  Breadcrumbs,
-  ItemModal,
-  MapPanel, MapPanelNoZoom, MarkersList,
+  MapPanel, MapPanelNoZoom,
 } from "./"
 import {
   Equirectangular, Equirectangular2, Equirectangular4,
   ThreePanelV1, ThreePanelV2, ThreePanelV3, ThreePanelV4,
-} from "$components/locations3"
-import { Newsitems } from "$components/newsitems"
-import { LongLine } from "$components/TwofoldLayout"
+} from "$components/3d_locations"
 import {
   C, Collapsible,
   logg,
@@ -26,7 +22,7 @@ import {
 } from "$shared"
 
 /* W */
-const W = styled.div`
+const W0 = styled.div`
   overflow: hidden;
 
   flex-grow: 1;
@@ -46,32 +42,32 @@ const WrappedMapPanel = React.forwardRef((props, ref) => {
   switch (props.map.config.map_panel_type) {
 
     case C.map_panel_types.Equirectangular:
-      // return <W ref={ref} className="Equirectangular" ><Equirectangular {...props} /></W>
-      // return <W ref={ref} className="Equirectangular2" ><Equirectangular2 {...props} /></W>
-      return <W ref={ref} className="Equirectangular4" ><Equirectangular4 {...props} /></W>
+      // return <W0 ref={ref} className="Equirectangular" ><Equirectangular {...props} /></W0>
+      // return <W0 ref={ref} className="Equirectangular2" ><Equirectangular2 {...props} /></W0>
+      return <W0 ref={ref} className="Equirectangular4" ><Equirectangular4 {...props} /></W0>
 
     case C.map_panel_types.MapPanelNoZoom:
-      return <W ref={ref} className="WrappedMapPanel" ><MapPanelNoZoom withZoom={false} {...props} /></W>
+      return <W0 ref={ref} className="WrappedMapPanel" ><MapPanelNoZoom withZoom={false} {...props} /></W0>
 
     case C.map_panel_types.ThreePanelV1:
       switch (props.slug) {
         case 'threev1':
-          return <W><ThreePanelV1 {...props} /></W>
+          return <W0><ThreePanelV1 {...props} /></W0>
         case 'threev2':
-          return <W><ThreePanelV2 {...props} /></W>
+          return <W0><ThreePanelV2 {...props} /></W0>
           case 'threev3':
-            return <W><ThreePanelV3 {...props} /></W>
+            return <W0><ThreePanelV3 {...props} /></W0>
 
         default:
-          logg(props.slug, `this 3d panel is not implemented`)
-          return <W ref={ref} className="WrappedMapPanel" ><MapPanel {...props} /></W>
+          logg(props.slug, `ttr - this 3d panel is not implemented`)
+          return <W0 ref={ref} className="WrappedMapPanel" ><MapPanel {...props} /></W0>
       }
 
     case C.map_panel_types.ThreePanelV4: // markers are objects
-      return <W><ThreePanelV4 {...props} /></W>
+      return <W0><ThreePanelV4 {...props} /></W0>
 
     default:
-      return <W ref={ref} className="WrappedMapPanel" ><MapPanel {...props} /></W>
+      return <W0 ref={ref} className="WrappedMapPanel" ><MapPanel {...props} /></W0>
   }
 })
 export default WrappedMapPanel

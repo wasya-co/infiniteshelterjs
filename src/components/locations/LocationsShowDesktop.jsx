@@ -199,6 +199,7 @@ const LocationsShowDesktop = (props) => {
 
   const {
     bottomDrawerOpen,
+    editorMode,
     folded, setFolded,
     itemToUnlock, setItemToUnlock,
     location, setLocation,
@@ -320,10 +321,18 @@ const LocationsShowDesktop = (props) => {
           />
         </Collapsible> || null }
 
+        { /* Tags */ }
+        <FlexRow style={{ marginBottom: '1em', flexWrap: 'wrap' }} >
+          { location.tags.map((tag) => <Card >{tag.name}</Card> )}
+        </FlexRow>
+
         { /* Actions */ }
-        <FlexRow style={{ marginBottom: '1em' }} >
-          <Card>
+        { editorMode && <FlexRow style={{ marginBottom: '1em' }} >
+          <Card onClick={() => setShowItem({ action: C.actions.new, item_type: C.item_types.report }) } >
             + Report
+          </Card>
+          <Card>
+            + Photo
           </Card>
           <Card>
             + Gallery
@@ -331,10 +340,9 @@ const LocationsShowDesktop = (props) => {
           <Card>
             + File
           </Card>
-          <Card>
-            + Spreadsheet
-          </Card>
-        </FlexRow>
+          {/* <Card> + Spreadsheet </Card> */}
+          <Card> + Marker </Card>
+        </FlexRow> }
 
         { /* Description */ }
         { location.description && <Collapsible

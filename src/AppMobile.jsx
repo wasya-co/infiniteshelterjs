@@ -32,11 +32,10 @@ import { MapuiMobileLayout } from "$components/application"
 import { CitiesList, CitiesShow } from "$components/cities"
 import { GalleriesShow } from "$components/galleries"
 import { LocationsShowMobile } from "$components/locations"
-import { ReportsShow } from "$components/reports"
+import { ReportsShow } from "$resources/reports"
 import { SitesShow } from '$components/sites'
 import {
   Account,
-
 } from "$components/users"
 import { Videos } from "$components/videos"
 import { Galleries, MyGalleries } from "$components/galleries"

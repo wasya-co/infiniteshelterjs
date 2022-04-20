@@ -56,7 +56,7 @@ const _PurchaseModal = (props) => {
 
   return <F>
 
-    <h1>purchaseModalBtn</h1>
+    <Btn>Spend $</Btn>
 
     <Modal isOpen={purchaseModalOpen} ariaHideApp={false} >
       <h1>

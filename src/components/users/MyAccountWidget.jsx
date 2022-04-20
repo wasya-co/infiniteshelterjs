@@ -2,9 +2,7 @@
 import { ethers } from 'ethers'
 import PropTypes from 'prop-types'
 import React, { Fragment as F, useContext, useEffect, useState } from "react"
-import Modal from "react-modal"
-import { CardElement, Elements, useElements, useStripe, } from '@stripe/react-stripe-js'
-import { loadStripe } from '@stripe/stripe-js'
+import Toggle from 'react-toggle'
 import styled from 'styled-components'
 import Web3 from 'web3'
 import { useWeb3React, Web3ReactProvider } from "@web3-react/core"
@@ -24,11 +22,15 @@ import {
 } from "./"
 import {
   Btn,
+  Card,
   logg,
   request,
   S,
   TwofoldContext,
 } from "$shared"
+
+import "react-toggle/style.css"
+
 import bodyNFT from '$src/artifacts/contracts/Body.sol/BodyNFT.json'
 
 /*
@@ -63,8 +65,6 @@ const Img = ({ src }) => {
 
 const injected = new InjectedConnector() // { supportedChainIds: [1, 3, 4, 5, 42], })
 
-// const stripePromise = loadStripe('pk_test_qr1QPmSpLdBFt1F7itdWJOj3') // @TODO: this is active, but change.
-
 const W0 = styled.div`
   // border: 1px solid cyan;
 
@@ -75,9 +75,37 @@ const W0 = styled.div`
 
 const W1 = styled.div``;
 
+const AuthedWidget = (props) => {
+
+  const {
+    currentUser, setCurrentUser,
+    useApi,
+  } = useContext(AuthContext)
+
+  const {
+    editorMode, setEditorMode,
+  } = useContext(TwofoldContext)
+
+  return <F>
+    <Cell>[ { typeof currentUser.n_unlocks === 'undefined' ? '?' : currentUser.n_unlocks} coins
+      <BuyBtn onClick={() => setPurchaseModalOpen(true) }>Add</BuyBtn> ]</Cell>
+
+    <Card>
+      <label>
+      <Toggle
+        defaultChecked={editorMode}
+        icons={false}
+        onChange={() => setEditorMode(!editorMode) } />
+      <span>Editor mode</span>
+    </label>
+    </Card>
+
+  </F>
+}
+
 /**
  * MyAccountWidget
- */
+**/
 const MyAccountWidget = (props) => {
   // logg(props, 'MyAccountWidget')
 
@@ -86,18 +114,16 @@ const MyAccountWidget = (props) => {
     useApi,
   } = useContext(AuthContext)
 
-  const api = useApi()
-
-  const {
-  } = useContext(TwofoldContext)
-  // logg(useContext(TwofoldContext), 'MyAccountWidget#usedTwofoldContext')
+  // const {
+  // } = useContext(TwofoldContext)
+  // // logg(useContext(TwofoldContext), 'MyAccountWidget#usedTwofoldContext')
 
   /*
    * @TODO: avatar would be an object s.t. multiple styles/sizes are there,
    * and it should be in a context - shared across threemap, and accountWidget.
    */
   const [ avatar, setAvatar ] = useState("")
-
+  const api = useApi()
   const { active, account, library, connector, activate, deactivate } = useWeb3React()
 
   async function connect() {
@@ -147,7 +173,7 @@ const MyAccountWidget = (props) => {
 
     <FlexRow>
 
-      { currentUser.email && <Cell>[ { typeof currentUser.n_unlocks === 'undefined' ? '?' : currentUser.n_unlocks} coins <BuyBtn onClick={() => setPurchaseModalOpen(true) }>ADD</BuyBtn> ]</Cell> }
+      { currentUser.email && <AuthedWidget /> }
       <AuthWidget />
 
 

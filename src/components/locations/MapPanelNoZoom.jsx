@@ -62,6 +62,7 @@ const MapPanelNoZoom = (props) => {
 
   const {
     bottomDrawerOpen,
+    editorMode,
     mapPanelWidth, mapPanelHeight,
     zoom, setZoom,
   } = useContext(TwofoldContext)
@@ -123,11 +124,13 @@ const MapPanelNoZoom = (props) => {
   **/
 
   return <W0 className="MapPanelNoZoom W0" >
-    <Actions>
+
+    { editorMode && <Actions>
       <Card onClick={() => setMarkerModalOpen(true)} >
         + Marker
       </Card>
-    </Actions>
+    </Actions> }
+
     <W1 className="W1" >
 
       <img

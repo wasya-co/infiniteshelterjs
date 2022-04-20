@@ -8,7 +8,8 @@ import { C, logg } from "$shared"
 
 /**
  * LongLine
- * @TODO: remove this, probably. Or at least move it.
+ *
+ * Turns out I need this still - part of the layout.
  */
 const LongLine = styled.div`
   border: ${p => p.theme.thinBorder};
@@ -23,7 +24,7 @@ const LongLine = styled.div`
   background: ${p => p.theme.colors.background};
 `;
 LongLine.propTypes = {
-  orientation: PropTypes.string,
+  orientation: PropTypes.string, // 'horizontal' or 'vertical'
 }
 
 export { LongLine }
