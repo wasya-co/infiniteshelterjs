@@ -5,6 +5,10 @@
 const C = {
 
   // A
+  actions: { // CRUD
+    new: 'new',
+    show: 'show',
+  },
   anonUser: {}, // as opposed to null
 
   // B
@@ -55,6 +59,11 @@ const C = {
     MapPanelNoZoom: "MapPanelNoZoom",
     ThreePanelV1: "ThreePanelV1",
     ThreePanelV4: "ThreePanelV4",
+  },
+
+  // N
+  names: { // for localStorage
+    editorMode: 'editorMode',
   },
 
   // R

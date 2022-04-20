@@ -3,8 +3,14 @@ import React, { Fragment as F, useContext, useEffect, useRef, useState } from "r
 import { useHistory } from 'react-router-dom'
 import styled from 'styled-components'
 import * as THREE from "three"
+import Stats from 'three/examples/jsm/libs/stats.module'
+// import { GUI } from 'three/examples/jsm/libs/lil-gui.module.min.js'
+import { Octree } from 'three/examples/jsm/math/Octree'
+import { Capsule } from 'three/examples/jsm/math/Capsule'
+// import { OctreeHelper } from 'three/examples/jsm/helpers/OctreeHelper'
 import { OBJLoader } from "three/examples/jsm/loaders/OBJLoader"
 import { MTLLoader } from "three/examples/jsm/loaders/MTLLoader"
+import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader"
 
 import { Crosshair } from "./"
 import { PointerLockControls, } from './PointerLockControls'
@@ -23,13 +29,18 @@ const Blocker = styled.div`
 `;
 
 /**
- * Loc = Location
+ * Location
  *
  * Excellent documentation. From: https://threejs.org/examples/#misc_controls_pointerlock
  * Right now the unit is 1cm, 1/10 of a meter.
- */
-const Loc = (props) => {
+ *
+ * Octree! From: https://threejs.org/examples/games_fps.html
+ * @TODO: let's load the map, and collision player on map. _vp_ 202-04-20
+ *
+**/
+const Location = (props) => {
   // logg(props, 'Loc')
+
   logg([window.innerWidth, window.innerHeight], 'windowWidthHeight')
 
   const history = useHistory()
@@ -380,4 +391,4 @@ const Loc = (props) => {
   </F>
 }
 
-export default Loc
+export default Location

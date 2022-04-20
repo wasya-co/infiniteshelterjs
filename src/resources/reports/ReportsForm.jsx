@@ -29,29 +29,27 @@ const ReportForm = (props) => {
       </FlexRow>
 
       <FlexRow>
-        <input type='text' name='name' /> destination
+        <textarea name='name' /> subhead
       </FlexRow>
 
       <FlexRow>
-        <input type='file' name='title_image' />
-        map image
+        item_type: default? longscroll?
       </FlexRow>
 
       <FlexRow>
-        <input type='file' name='title_image' />
-        title image
+        @TODO: editable slug, the fucking slug hasn't been solved in 10 years!
       </FlexRow>
 
       <FlexRow>
-        <checkbox name='is_active' /> active?
+        @TODO: premium tier
       </FlexRow>
 
       <FlexRow>
-        <checkbox name='is_public' /> public?
+        @TODO: tags
       </FlexRow>
 
       <FlexRow>
-        <input type='text' name='url' /> url
+        public?
       </FlexRow>
 
       <textarea /> description

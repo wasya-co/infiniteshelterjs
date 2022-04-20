@@ -81,6 +81,12 @@ const TwofoldContextProvider = ({ children, ...props }) => {
     return () => clearTimeout(closure)
   }, [currentUser.is_purchasing])
 
+  /* E */
+  const [ editorMode, _setEditorMode ] = useState(JSON.parse(localStorage.getItem(C.names.editorMode)))
+  const setEditorMode = (t) => {
+    localStorage.setItem(C.names.editorMode, t)
+    _setEditorMode(t)
+  }
 
   /* F */
   const [ folded, setFolded ] = useState()
@@ -145,6 +151,8 @@ const TwofoldContextProvider = ({ children, ...props }) => {
     bottomDrawerOpen, setBottomDrawerOpen,
 
     currentUser, setCurrentUser,
+
+    editorMode, setEditorMode,
 
     folded, setFolded,
 

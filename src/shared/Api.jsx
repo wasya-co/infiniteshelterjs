@@ -20,13 +20,17 @@ const useApi = () => {
 
   return {
 
+    deleteNewsitem: ({ id }) => {
+      return request.delete(`${config.apiOrigin}/api/newsitems/${id}?jwt_token=${token}`).then((r) => r.data).then((r) => {
+        return r
+      })
+    },
     doRegister: ({email, password }) => {
       return request.post(`${config.apiOrigin}/api/users`, { email, password }).then((r) => r.data).then((r) => {
         logg(r, 'done registered')
         return r
       })
     },
-
     /* Returns current user */
     doUnlock: ({ kind, id }) => {
       const jwt_token = localStorage.getItem('jwt_token')
