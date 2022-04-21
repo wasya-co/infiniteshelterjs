@@ -7,11 +7,13 @@ import Modal from "react-modal"
 import styled from 'styled-components'
 
 import {
+  // GoogleMaps,
   MapPanel, MapPanelNoZoom,
 } from "./"
+import GoogleMaps from './GoogleMaps2'
 import {
   Equirectangular, Equirectangular2, Equirectangular4,
-  ThreePanelV1, ThreePanelV2, ThreePanelV3, ThreePanelV4,
+  TabiversePlanet, ThreePanelV1, ThreePanelV2, ThreePanelV3, ThreePanelV4,
 } from "$components/3d_locations"
 import {
   C, Collapsible,
@@ -63,10 +65,17 @@ const WrappedMapPanel = React.forwardRef((props, ref) => {
           return <W0 ref={ref} className="WrappedMapPanel" ><MapPanel {...props} /></W0>
       }
 
+    case C.map_panel_types.TabiversePlanet: // markers are objects
+      return <W0><TabiversePlanet {...props} /></W0>
+
     case C.map_panel_types.ThreePanelV4: // markers are objects
       return <W0><ThreePanelV4 {...props} /></W0>
 
+    case C.map_panel_types.GoogleMaps:
+      return <W0><GoogleMaps {...props} /></W0>
+
     default:
+      logg(null, `This map_panel_type is not implemented! ${props.map.config.map_panel_type}`)
       return <W0 ref={ref} className="WrappedMapPanel" ><MapPanel {...props} /></W0>
   }
 })

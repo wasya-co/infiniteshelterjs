@@ -38,16 +38,16 @@ const _EditModeActions = styled.div`
   z-index: 2;
 `;
 const EditModeActions = ({ children, ...props }) => {
-  logg(props, 'EditModeActions')
+  // logg(props, 'EditModeActions')
   const { item } = props
 
   const {
     editorMode,
   } = useContext(TwofoldContext)
 
-  const api = useApi()
-
   if (!editorMode) { return null }
+
+  const api = useApi()
 
   const removeStory = (e) => {
     if (!confirm('Are you sure?')) { return }

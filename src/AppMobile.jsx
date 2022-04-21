@@ -22,15 +22,20 @@ import './theme/variables.css'
 
 import config from "config"
 import {
+  AuthContextProvider,
   LoginModal,
   RegisterModal,
 } from 'ishlibjs'
 
 
-import { BottomDrawer, Menu, MenuBottom, MenuLeft, UnlockModal } from "$components/application"
-import { MapuiMobileLayout } from "$components/application"
+import { BottomDrawer,
+  Menu, MenuBottom, MenuLeft,
+  MapuiMobileLayout,
+  UnlockModal } from "$components/application"
 import { CitiesList, CitiesShow } from "$components/cities"
-import { GalleriesShow } from "$components/galleries"
+import {
+  GalleriesShow, Galleries, MyGalleries,
+} from "$components/galleries"
 import { LocationsShowMobile } from "$components/locations"
 import { ReportsShow } from "$resources/reports"
 import { SitesShow } from '$components/sites'
@@ -38,7 +43,6 @@ import {
   Account,
 } from "$components/users"
 import { Videos } from "$components/videos"
-import { Galleries, MyGalleries } from "$components/galleries"
 import {
   C, CollapsibleContextProvider,
   logg,
@@ -60,15 +64,14 @@ const __Container = styled(_Container)`
 
 /**
  * AppMobile
- */
+**/
 const AppMobile = (props) => {
-  // logg(props, 'AppMobile')
+  logg(props, 'AppMobile')
 
   const [ layout, setLayout ] = useState(C.layout_onecol)
   // const [ bottomDrawerOpen, setBottomDrawerOpen ] = React.useState(false)
   // const [ itemToUnlock, setItemToUnlock ] = React.useState(false)
   // const [ zoom, setZoom ] = useState(1)
-  // const api = useApi()
   const theme = useTheme()
 
   // @TODO: move into its own component!
@@ -112,6 +115,7 @@ const AppMobile = (props) => {
   // }
 
   return (<Router>
+    <AuthContextProvider {...{ useApi, }} >
     <TwofoldContextProvider {...props} {...{ layout, setLayout }} >
       <CollapsibleContextProvider >
         { layout === C.layout_onecol && <MenuLeft variant={C.variants.floating} /> }
@@ -120,7 +124,7 @@ const AppMobile = (props) => {
           <Container className="Container" >
             <Switch id="main" main >
 
-              <Redirect exact from="/" to={config.homeLocation} />
+              <Redirect exact from="/" to={config.homePath} />
               <Route exact path="/en" ><SitesShow /></Route>
 
               <Route exact path="/en/account" component={Account} />
@@ -150,6 +154,7 @@ const AppMobile = (props) => {
 
       </CollapsibleContextProvider>
     </TwofoldContextProvider>
+    </AuthContextProvider>
   </Router>)
 }
 

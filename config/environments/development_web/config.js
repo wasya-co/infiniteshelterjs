@@ -7,7 +7,7 @@ const settings = {
   "debug": false,
 
   APP_ENV: 'development_web',
-  "homeLocation": "/en/locations/show/root",
+  "homePath": "/en/locations/show/root",
 
   "requireLogin": false,
 };

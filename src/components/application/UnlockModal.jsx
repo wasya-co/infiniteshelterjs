@@ -85,7 +85,7 @@ const UnlockModal = (props) => {
   let gohome = () => {
     setItemToUnlock({})
     setRatedConfirmation(true)
-    history.push(config.homeLocation)
+    history.push(config.homePath)
   }
 
   const cost = itemToUnlock.premium_tier

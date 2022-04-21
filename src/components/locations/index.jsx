@@ -1,6 +1,8 @@
 
 export { default as Breadcrumbs } from "./Breadcrumbs"
 
+export { default as GoogleMaps } from './GoogleMaps'
+
 export { default as ItemModal } from "./ItemModal"
 
 export { default as LocationsShowDesktop } from "./LocationsShowDesktop"

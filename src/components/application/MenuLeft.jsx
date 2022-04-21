@@ -50,7 +50,7 @@ const SideMenu = (props) => {
           <ListItem button key={'newsfeed'}
             onClick={() => {
               setDrawerOpen(false)
-              history.push(config.homeLocation)
+              history.push(config.homePath)
             } } >Home
           </ListItem>
 

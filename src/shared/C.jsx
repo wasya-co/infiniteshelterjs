@@ -55,8 +55,10 @@ const C = {
   // M
   map_panel_types: {
     Equirectangular: "Equirectangular",
+    GoogleMaps: "GoogleMaps",
     MapPanel: "MapPanel",
     MapPanelNoZoom: "MapPanelNoZoom",
+    TabiversePlanet: "TabiversePlanet",
     ThreePanelV1: "ThreePanelV1",
     ThreePanelV4: "ThreePanelV4",
   },

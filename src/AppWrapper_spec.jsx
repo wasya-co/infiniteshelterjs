@@ -5,13 +5,16 @@ import React from 'react'
 import { ThemeProvider } from 'styled-components'
 import { act } from "react-dom/test-utils"
 
+import config from 'config'
+
 import AppWrapper from './AppWrapper'
-import { LoginModal } from "$components/users"
 import {
   logg,
   request,
   S,
 } from "$shared"
+
+const mockConfig = config
 
 configure({ adapter: new Adapter() })
 
@@ -23,7 +26,7 @@ request.get = getMock
 jest.mock("react-router-dom", () => ({
   ...jest.requireActual("react-router-dom"),
   useLocation: () => ({
-    pathname: "localhost:3001/example/path"
+    pathname: `${mockConfig.domain}${mockConfig.homePath}`
   })
 }));
 
@@ -41,15 +44,9 @@ Object.defineProperty(window, 'matchMedia', {
   })),
 })
 
-it.skip('sanity', () => {
-  expect(true).toBeTruthy()
+it("renders - current2 ", () => {
+  let component = shallow(
+    <AppWrapper />
+  )
+  expect(component).toBeTruthy()
 })
-
-/* This doesn't work b/c of some severe async issue */
-
-// it("renders - current2 ", () => {
-//   let component = shallow(
-//     <AppWrapper />
-//   )
-//   expect(component).toBeTruthy()
-// })

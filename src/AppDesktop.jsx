@@ -97,7 +97,7 @@ const AppDesktop = (props) => {
             <Container >
               <Switch id="main" main >
 
-                <Redirect exact from="/" to={config.homeLocation} />
+                <Redirect exact from="/" to={config.homePath} />
                 <Route exact path="/en" ><SitesShow /></Route>
 
                 <Route exact path="/en/account" component={Account} />

@@ -355,6 +355,7 @@ const Equirectangular2 = (props) => {
     }
     return needResize
   }
+
   function onWindowResize() {
     if (resizeRendererToDisplaySize()) {
       const width = blockerRef.current.clientWidth
