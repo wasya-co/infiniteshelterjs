@@ -26,7 +26,7 @@ request.get = getMock
 jest.mock("react-router-dom", () => ({
   ...jest.requireActual("react-router-dom"),
   useLocation: () => ({
-    pathname: `${mockConfig.domain}${mockConfig.homePath}`
+    pathname: `/`
   })
 }));
 
