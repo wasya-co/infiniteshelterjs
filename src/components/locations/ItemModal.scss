@@ -11,17 +11,24 @@
   padding: 20px;
 }
 
-/*
- * Mobile
-**/
-@media only screen and (max-width: 600px) {
-
-  .ItemModal {
-    inset: 0px;
-    border: 0px;
-    padding: 0px;
-  }
-
+html.plt-mobile .ItemModal {
+  inset: 0px;
+  border: 0px;
+  padding: 0px;
+  color: red !important;
 }
+
+// /*
+//  * Mobile, redundant? See above.
+// **/
+// @media only screen and (max-width: 600px) {
+
+//   .ItemModal {
+//     inset: 0px;
+//     border: 0px;
+//     padding: 0px;
+//   }
+
+// }
 
 
