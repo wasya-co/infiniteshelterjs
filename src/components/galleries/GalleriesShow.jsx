@@ -18,6 +18,7 @@ const W0 = styled.div`
 
 /**
  * GalleriesShow
+ *
 **/
 const GalleriesShow = (props) => {
   // logg(props, 'GalleriesShow')

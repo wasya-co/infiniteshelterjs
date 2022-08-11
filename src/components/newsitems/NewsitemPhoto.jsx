@@ -22,7 +22,7 @@ const W = styled.div`
  * default
  */
 const NewsitemPhoto = (props) => {
-  logg(props, 'NewsitemPhoto')
+  // logg(props, 'NewsitemPhoto')
   const { item, variant } = props
 
   return <NewsitemContainer className='Newsitem NewsitemPhoto' {...{ item, variant }} >

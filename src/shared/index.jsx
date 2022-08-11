@@ -7,7 +7,7 @@ import { IonIcon } from '@ionic/react'
 import { CircularProgress as _CircularProgress } from '@material-ui/core'
 import _Box from '@material-ui/core/Box'
 import { ChevronLeft as _ChevronLeft, ChevronRight as _ChevronRight, Menu as _MenuIcon, } from '@material-ui/icons'
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import {
   Link, Switch, BrowserRouter as Router, Redirect, Route as _Route, useHistory, withRouter
 } from 'react-router-dom'
@@ -15,6 +15,8 @@ import styled from 'styled-components'
 
 import config from 'config'
 import C from "./C"
+import { default as TwofoldContext } from './TwofoldContext'
+import { TwofoldContextProvider } from './TwofoldContext'
 
 /* A */
 import useApi from "./Api"
@@ -33,7 +35,20 @@ const BackIcon = styled(IonIcon)`
 `;
 export const BackBtn = () => {
   const history = useHistory()
-  return <BackIcon onClick={history.goBack} icon={arrowBack}></BackIcon>
+  const {
+    showItem, setShowItem,
+  } = useContext(TwofoldContext)
+  logg(useContext(TwofoldContext), 'BackBtn usedContext')
+
+  const onClick = () => {
+    setShowItem(null)
+    history.goBack()
+  }
+
+  return <BackIcon className="BackBtn"
+    icon={arrowBack}
+    onClick={onClick}
+  ></BackIcon>
 }
 
 /**
@@ -218,8 +233,7 @@ export { default as request } from "./request"
 export { default as S } from "./S"
 
 /* T */
-export { default as TwofoldContext } from './TwofoldContext'
-export { TwofoldContextProvider } from './TwofoldContext'
+export { TwofoldContext, TwofoldContextProvider }
 
 /* U */
 export { default as useWindowSize } from './useWindowSize'

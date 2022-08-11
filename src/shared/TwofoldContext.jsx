@@ -28,6 +28,7 @@ const TwofoldContextProvider = ({ children, ...props }) => {
     currentUser, setCurrentUser, // for testing only. _vp_ 2022-03-18
     itemToUnlock, setItemToUnlock,
     layout, setLayout,
+    showItem: _showItem, setShowItem: _setShowItem,
     theme, toggleTheme,
     zoom, setZoom, // it's a prop for testing only. _vp_ 2022-03-18
   } = props
@@ -126,7 +127,10 @@ const TwofoldContextProvider = ({ children, ...props }) => {
   const [ registerModalOpen, setRegisterModalOpen ] = useState(false)
 
   /* S */
-  const [ showItem, setShowItem ] = useState(false)
+  let [ showItem, setShowItem ] = useState(false)
+  if (!!_setShowItem) { setShowItem = _setShowItem }
+  if (!!_showItem) { showItem = _showItem }
+
   const [ showUrl, setShowUrl ] = useState(false)
 
   /* T */

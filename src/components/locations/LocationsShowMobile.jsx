@@ -105,7 +105,7 @@ const ZoomCtrl = (props) => {
  *
  */
 const LocationsShowMobile = (props) => {
-  // logg(props, 'LocationsShowMobile')
+  logg(props, 'LocationsShowMobile')
   const {
     match,
   } = props

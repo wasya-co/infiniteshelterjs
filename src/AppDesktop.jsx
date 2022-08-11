@@ -61,7 +61,7 @@ const Root = styled.div`
  * AppDesktop
 **/
 const AppDesktop = (props) => {
-  // logg(props, 'AppDesktop')
+  logg(props, 'AppDesktop')
   // const {} = props
 
   const [ layout, setLayout ] = useState(C.layout_onecol)

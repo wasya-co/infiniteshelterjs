@@ -1,14 +1,17 @@
 
-import {
-  Article as ReportIcon,
-  Diamond,
-} from '@mui/icons-material'
+// import {
+//   Article as ReportIcon,
+//   Diamond,
+// } from '@mui/icons-material'
 import * as Ic from '@material-ui/icons'
 import PropTypes from 'prop-types'
 import React from 'react'
 import styled, { useTheme } from 'styled-components'
 
 import { C, logg } from "$shared"
+
+const ReportIcon = () => <h1>ReportIcon</h1>
+const Diamond = () => <h1>Diamond</h1>
 
 const _W0 = styled.div`
   // border: 1px solid red;

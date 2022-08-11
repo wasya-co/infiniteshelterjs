@@ -32,4 +32,6 @@ comfortable will resume auth and credit cards.
         2022-04-16 - continue groking NFT
 0.1.1 - 2022-04-17 - added Space, multiple simulaneous feature improvements
         2022-04-20 - threejs, octree actually works! a bit non-performant, but it works.
+0.2.0 - 2022-08-11 - BackBtn received a test!
+                     redmine#2521, full width of gallery modal on mobile
 

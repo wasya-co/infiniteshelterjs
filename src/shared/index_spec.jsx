@@ -8,14 +8,45 @@ configure({ adapter: new Adapter() })
 
 import {
   AppMock,
-  Box,
+  BackBtn, Box,
   FlexCol, FlexRow,
   inflector,
+  logg,
+  TwofoldContext, TwofoldContextProvider,
   WBordered,
   WidgetContainer,
 } from './'
 
+
+// import useApi from "$shared/Api"
+jest.mock("$shared/Api")
+
+jest.mock('react-router-dom', () => ({
+  ...jest.requireActual('react-router-dom'),
+  useHistory: () => ({
+    // push: jest.fn(),
+    goBack: jest.fn(),
+  }),
+}));
+
+
 /* B */
+describe('BackBtn - current2 ', () => {
+  test('unsets ShowItem', () => {
+
+    const mockSetShowItem = jest.fn()
+
+    const w = mount(<TwofoldContextProvider {...{ showItem: '123', setShowItem: mockSetShowItem }} >
+      <BackBtn />
+    </TwofoldContextProvider>)
+    logg(w.find('.BackBtn').exists(), 'found?')
+    w.find('.BackBtn').first().simulate('click')
+    expect(mockSetShowItem).toHaveBeenCalled()
+
+    expect(true).toBeTruthy()
+  })
+})
+
 test('Box', () => {
   const box = <Box />
   expect(box).toBeTruthy()
