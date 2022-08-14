@@ -34,4 +34,6 @@ comfortable will resume auth and credit cards.
         2022-04-20 - threejs, octree actually works! a bit non-performant, but it works.
 0.2.0 - 2022-08-11 - BackBtn received a test!
                      redmine#2521, full width of gallery modal on mobile
+        2022-08-13 - Let's get down let's get down to business : )
+                     asset3d, and geodesic some as a new home
 

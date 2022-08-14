@@ -13,7 +13,7 @@ import {
 import GoogleMaps from './GoogleMaps2'
 import {
   Equirectangular, Equirectangular2, Equirectangular4,
-  TabiversePlanet, ThreePanelV1, ThreePanelV2, ThreePanelV3, ThreePanelV4,
+  TabiversePlanet, ThreePanelV1, ThreePanelV2, ThreePanelV3, ThreePanelV4, ThreePanelDefault,
 } from "$components/3d_locations"
 import {
   C, Collapsible,
@@ -53,16 +53,17 @@ const WrappedMapPanel = React.forwardRef((props, ref) => {
 
     case C.map_panel_types.ThreePanelV1:
       switch (props.slug) {
+
+        // legacy, remove all three: _vp_ 2022-08-13
         case 'threev1':
           return <W0><ThreePanelV1 {...props} /></W0>
         case 'threev2':
           return <W0><ThreePanelV2 {...props} /></W0>
-          case 'threev3':
-            return <W0><ThreePanelV3 {...props} /></W0>
+        case 'threev3':
+          return <W0><ThreePanelV3 {...props} /></W0>
 
         default:
-          logg(props.slug, `ttr - this 3d panel is not implemented`)
-          return <W0 ref={ref} className="WrappedMapPanel" ><MapPanel {...props} /></W0>
+          return <W0><ThreePanelDefault {...props} /></W0>
       }
 
     case C.map_panel_types.TabiversePlanet: // markers are objects
