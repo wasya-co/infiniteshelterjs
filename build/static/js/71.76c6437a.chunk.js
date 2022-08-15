@@ -1,0 +1,2 @@
+(this.webpackJsonpInfiniteShelter=this.webpackJsonpInfiniteShelter||[]).push([[71],{1129:function(n,t,e){"use strict";e.r(t),e.d(t,"startStatusTap",(function(){return r}));var i=e(65),o=e(54),r=function(){var n=window;n.addEventListener("statusTap",(function(){Object(i.h)((function(){var t=n.innerWidth,e=n.innerHeight,r=document.elementFromPoint(t/2,e/2);if(r){var c=r.closest("ion-content");c&&new Promise((function(n){return Object(o.c)(c,n)})).then((function(){Object(i.f)((function(){return c.scrollToTop(300)}))}))}}))}))}}}]);
+//# sourceMappingURL=71.76c6437a.chunk.js.map
