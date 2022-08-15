@@ -36,4 +36,5 @@ comfortable will resume auth and credit cards.
                      redmine#2521, full width of gallery modal on mobile
         2022-08-13 - Let's get down let's get down to business : )
                      asset3d, and geodesic some as a new home
+1.0.0 - 2022-08-15 - Wire in next.js
 

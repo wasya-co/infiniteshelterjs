@@ -18,7 +18,7 @@ import '@ionic/react/css/text-alignment.css'
 import '@ionic/react/css/text-transformation.css'
 import '@ionic/react/css/flex-utils.css'
 import '@ionic/react/css/display.css'
-import './theme/variables.css'
+// import './theme/variables.css' // removed due to next_js _vp_ 2022-08-15
 
 import config from "config"
 import {

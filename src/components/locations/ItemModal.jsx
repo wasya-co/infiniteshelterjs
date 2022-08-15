@@ -17,7 +17,7 @@ import {
   ReportsShow,
 } from "$resources/reports"
 
-import * as classes from './ItemModal.scss'
+import * as classes from './ItemModal.module.scss'
 
 /**
  * ItemModal

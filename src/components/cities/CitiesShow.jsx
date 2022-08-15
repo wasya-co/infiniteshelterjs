@@ -6,7 +6,7 @@ import { pin, newspaperOutline, image, videocam } from 'ionicons/icons'
 import { AppRouter, useApi, logg, Wrapper } from "$shared"
 import { Newsitems } from "$components/newsitems"
 import { Venues } from "$components/venues"
-import "./cities.scss"
+import "./Cities.module.scss"
 
 const CitiesShow = (props) => {
   logg(props, 'CitiesShow')

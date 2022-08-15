@@ -19,7 +19,7 @@ import {
 
 import React from 'react';
 import { newspaperOutline, bus, person, powerOutline } from 'ionicons/icons';
-import './application.scss';
+import './Application.module.scss';
 
 const appPages = [
   {

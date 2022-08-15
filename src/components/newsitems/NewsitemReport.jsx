@@ -9,7 +9,7 @@ import { ItemIcon, NewsitemContainer } from "./"
 import { Metaline, } from "$components/application"
 import { Api, C, logg, request, TwofoldContext } from "$shared"
 
-import "./newsitems.scss"
+import "./Newsitems.module.scss"
 
 
 const NewsitemReport = (props) => {

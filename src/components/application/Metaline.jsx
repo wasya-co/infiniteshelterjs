@@ -1,6 +1,6 @@
-import React from "react";
-import { withRouter } from "react-router-dom";
-import "./application.scss";
+import React from "react"
+import { withRouter } from "react-router-dom"
+import "./Application.module.scss"
 import styled from 'styled-components'
 
 import { Api, logg, request, pp_date } from "$shared"

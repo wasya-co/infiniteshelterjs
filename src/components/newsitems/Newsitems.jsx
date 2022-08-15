@@ -17,7 +17,7 @@ import {
   useApi,
 } from "$shared"
 
-import "./newsitems.scss"
+import "./Newsitems.module.scss"
 
 const ICONS = {
   1: "/assets/newsfeed/sunglass.png",
