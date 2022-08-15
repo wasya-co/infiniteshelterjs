@@ -16,7 +16,7 @@ fi
 
 set -ex
 
-yarn run build_ish # not build_staging_ish, staging has production config. _vp_ 2022-08-15
+yarn run next_build
 echo $(date) > timestamp
 git add . &&
 git commit -m "autobuild `date "+%Y%m%d"`" || echo 'nothing to commit'

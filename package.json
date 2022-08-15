@@ -196,7 +196,7 @@
     "build_ish":         "NODE_PATH=config/environments/production_ish:shared_modules    node scripts/build.js",
     "jest": "NODE_PATH=config/environments/test:shared_modules jest -t current",
     "jest2": "echo '+++ +++ usage:' ; echo '  yarn run jest2 -- <file>' ; echo '' ; NODE_PATH=config/environments/test:shared_modules jest -t current2",
-    "next_build": "next build",
+    "next_build": "NODE_PATH=config/environments/production_ish:shared_modules next build",
     "next_dev": "NODE_PATH=config/environments/development_web:shared_modules next dev -- --port 3004",
     "next_start": "next start",
     "nft_cancel": "npx hardhat run scripts/nft-cancel.js --network ropsten",
