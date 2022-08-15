@@ -198,7 +198,7 @@
     "jest2": "echo '+++ +++ usage:' ; echo '  yarn run jest2 -- <file>' ; echo '' ; NODE_PATH=config/environments/test:shared_modules jest -t current2",
     "next_build": "NODE_PATH=config/environments/production_ish:shared_modules next build",
     "next_dev": "NODE_PATH=config/environments/development_web:shared_modules next dev -- --port 3004",
-    "next_start": "next start",
+    "next_start": "next start -- --port 8091",
     "nft_cancel": "npx hardhat run scripts/nft-cancel.js --network ropsten",
     "nft_compile": "npx hardhat compile",
     "nft_deploy": "npx hardhat run scripts/nft-deploy.js --network ropsten",
