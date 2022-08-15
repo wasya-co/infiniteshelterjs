@@ -7,7 +7,7 @@ import styled from 'styled-components'
 import { useApi, AppRouter,
   logg, // eslint-disable-line no-unused-vars
   Wrapper } from "$shared"
-import "./cities.scss"
+import "./Cities.module.scss"
 
 const Counts = styled.div`
   display: flex;

@@ -12,6 +12,10 @@ The default namespace and default component name is "application". If you don't 
 
 Go to https://tgm.mac:3002
 
+== suppress "DevTools failed to load source map" ==
+
+ -/(load|parse)\sSourceMap/
+
 == How to implement a feature ==
 Once you get a Redmine ticket,
 

@@ -1,0 +1,29 @@
+#!/bin/bash
+
+if [[ -z "${NODE_ENV}" ]]; then
+  eee=production
+  # echo "Please set NODE_ENV = [ production | staging | development_web | development_mobile ] before running this script."
+  # exit 3
+else
+  eee="${NODE_ENV}"
+fi
+
+branch=`git branch | grep -e "^*" | cut -d' ' -f 2`
+if [ "" != "" ]; then
+  echo "+++ Only building branch 'staging' is supported."
+  exit 55
+fi
+
+set -ex
+
+yarn run build_ish # not build_staging_ish, staging has production config. _vp_ 2022-08-15
+echo $(date) > timestamp
+git add . &&
+git commit -m "autobuild `date "+%Y%m%d"`" || echo 'nothing to commit'
+
+
+
+ssh do "cd /home/ubuntu/projects/staging_ishjs && git pull && sudo apachectl -k restart && sudo pkill nginx && sudo nginx"
+
+set +e
+echo 'build_web_staging_ish ok'

@@ -11,7 +11,7 @@ fi
 set -ex
 
 yarn run build_ish
-echo $(date) > redeploy
+echo $(date) > timestamp
 git add . &&
 git commit -m "autobuild `date "+%Y%m%d"`" || echo 'nothing to commit'
 

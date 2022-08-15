@@ -23,9 +23,9 @@ import {
 */
 const TwofoldContext = React.createContext({})
 const TwofoldContextProvider = ({ children, ...props }) => {
-  // logg(props, 'TwofoldContextProvider')
+  logg(props, 'TwofoldContextProvider')
   let {
-    currentUser, setCurrentUser, // for testing only. _vp_ 2022-03-18
+    currentUser: _currentUser, setCurrentUser: _setCurrentUser, // for testing only. _vp_ 2022-03-18
     itemToUnlock, setItemToUnlock,
     layout, setLayout,
     showItem: _showItem, setShowItem: _setShowItem,
@@ -47,11 +47,9 @@ const TwofoldContextProvider = ({ children, ...props }) => {
 
 
   /* C */
-
-  const [ localCurrentUser, setLocalCurrentUser ] = useState(C.anonUser)
-  if (!currentUser) {
-    currentUser = localCurrentUser
-    setCurrentUser = setLocalCurrentUser
+  const [ currentUser, setCurrentUser ] = useState(C.anonUser)
+  if (_setCurrentUser) {
+    [ currentUser, setCurrentUser ] = [ _currentUser, _setCurrentUser ]
   }
 
   /* Get the current_user on load */
@@ -61,12 +59,16 @@ const TwofoldContextProvider = ({ children, ...props }) => {
 
     const fn = async () => {
       const r = await api.getMyAccount()
+      logg(r, 'new currentUser')
       setCurrentUser(r)
     }
     fn()
 
     return () => mountedRef.current = null
   }, [currentUser])
+
+  logg(C, 'C')
+  logg(currentUser, 'currentUser')
 
   // Refresh current_user if is_purchasing
   useEffect(() => {

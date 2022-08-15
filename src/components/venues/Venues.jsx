@@ -6,7 +6,8 @@ import styled from 'styled-components'
 
 import { logg } from "$shared"
 import { Rating } from "$components/application"
-import "./venues.scss"
+
+import "./Venues.module.scss"
 
 const Address = styled.p`
   white-space: nowrap;

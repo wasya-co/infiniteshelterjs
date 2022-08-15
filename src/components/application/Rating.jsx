@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from "react";
-import { IonIcon } from "@ionic/react";
-import { starOutline, starHalf, star } from 'ionicons/icons';
-import "./application.scss";
+import React, { useEffect, useState } from "react"
+import { IonIcon } from "@ionic/react"
+import { starOutline, starHalf, star } from 'ionicons/icons'
+import "./Application.module.scss"
 
 const Rating = (props) => {
 

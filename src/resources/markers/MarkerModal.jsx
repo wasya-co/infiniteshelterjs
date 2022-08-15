@@ -12,7 +12,7 @@ import {
   logg,
 } from '$shared'
 
-import styles from './markers.scss'
+import styles from './Markers.module.scss'
 
 /**
  * MarkerModal

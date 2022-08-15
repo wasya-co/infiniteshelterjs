@@ -1,8 +1,10 @@
-div {
-  box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  -webkit-box-sizing: border-box;
-}
+
+/* @TODO: move out of a module _vp_ 2022-08-15 */
+// div {
+//   box-sizing: border-box;
+//   -moz-box-sizing: border-box;
+//   -webkit-box-sizing: border-box;
+// }
 
 .item-inner {
   background: black;

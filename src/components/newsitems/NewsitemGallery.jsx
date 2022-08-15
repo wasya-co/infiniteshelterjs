@@ -6,7 +6,8 @@ import styled from 'styled-components'
 import { Metaline } from "$components/application"
 import { logg } from "$shared"
 import { NewsitemContainer } from './'
-import "./newsitems.scss"
+
+import "./Newsitems.module.scss"
 
 const Images = styled.div`
   position: relative;

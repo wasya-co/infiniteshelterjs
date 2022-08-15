@@ -12,7 +12,7 @@ import config from 'config'
 import { C, logg, request, S, TwofoldContext } from "$shared"
 import { MenuLeft } from "$components/application"
 import img from '$components/application/45x45_day-night-2.png'
-import './day_night_toggle.scss'
+import './day_night_toggle.module.scss'
 
 /* B */
 
