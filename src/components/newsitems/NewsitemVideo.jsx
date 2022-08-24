@@ -6,7 +6,8 @@ import styled from 'styled-components'
 import { logg } from "$shared"
 import { Metaline } from "$components/application"
 import { NewsitemContainer } from "./"
-import "./newsitems.scss"
+
+import "./Newsitems.module.scss"
 
 
 const NewsitemVideo = (props) => {

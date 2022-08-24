@@ -1,0 +1,332 @@
+{
+  "../../ishlibjs/node_modules/@ionic/core/components/index4.js -> ./ios.transition.js": {
+    "id": "../../ishlibjs/node_modules/@ionic/core/components/index4.js -> ./ios.transition.js",
+    "files": []
+  },
+  "../../ishlibjs/node_modules/@ionic/core/components/index4.js -> ./md.transition.js": {
+    "id": "../../ishlibjs/node_modules/@ionic/core/components/index4.js -> ./md.transition.js",
+    "files": []
+  },
+  "../../ishlibjs/node_modules/@ionic/core/components/ion-app.js -> ./focus-visible.js": {
+    "id": "../../ishlibjs/node_modules/@ionic/core/components/ion-app.js -> ./focus-visible.js",
+    "files": []
+  },
+  "../../ishlibjs/node_modules/@ionic/core/components/ion-app.js -> ./hardware-back-button.js": {
+    "id": "../../ishlibjs/node_modules/@ionic/core/components/ion-app.js -> ./hardware-back-button.js",
+    "files": []
+  },
+  "../../ishlibjs/node_modules/@ionic/core/components/ion-app.js -> ./input-shims.js": {
+    "id": "../../ishlibjs/node_modules/@ionic/core/components/ion-app.js -> ./input-shims.js",
+    "files": [
+      "static/chunks/ishlibjs_node_modules_ionic_core_components_input-shims_js.js"
+    ]
+  },
+  "../../ishlibjs/node_modules/@ionic/core/components/ion-app.js -> ./keyboard.js": {
+    "id": "../../ishlibjs/node_modules/@ionic/core/components/ion-app.js -> ./keyboard.js",
+    "files": []
+  },
+  "../../ishlibjs/node_modules/@ionic/core/components/ion-app.js -> ./status-tap.js": {
+    "id": "../../ishlibjs/node_modules/@ionic/core/components/ion-app.js -> ./status-tap.js",
+    "files": [
+      "static/chunks/ishlibjs_node_modules_ionic_core_components_status-tap_js.js"
+    ]
+  },
+  "../../ishlibjs/node_modules/@ionic/core/components/ion-app.js -> ./tap-click.js": {
+    "id": "../../ishlibjs/node_modules/@ionic/core/components/ion-app.js -> ./tap-click.js",
+    "files": [
+      "static/chunks/ishlibjs_node_modules_ionic_core_components_tap-click_js.js"
+    ]
+  },
+  "../../ishlibjs/node_modules/@ionic/core/components/ion-item-sliding.js -> ./index2.js": {
+    "id": "../../ishlibjs/node_modules/@ionic/core/components/ion-item-sliding.js -> ./index2.js",
+    "files": []
+  },
+  "../../ishlibjs/node_modules/@ionic/core/components/ion-menu.js -> ./index2.js": {
+    "id": "../../ishlibjs/node_modules/@ionic/core/components/ion-menu.js -> ./index2.js",
+    "files": []
+  },
+  "../../ishlibjs/node_modules/@ionic/core/components/ion-nav.js -> ./swipe-back.js": {
+    "id": "../../ishlibjs/node_modules/@ionic/core/components/ion-nav.js -> ./swipe-back.js",
+    "files": [
+      "static/chunks/ishlibjs_node_modules_ionic_core_components_swipe-back_js.js"
+    ]
+  },
+  "../../ishlibjs/node_modules/@ionic/core/components/ion-range.js -> ./index2.js": {
+    "id": "../../ishlibjs/node_modules/@ionic/core/components/ion-range.js -> ./index2.js",
+    "files": []
+  },
+  "../../ishlibjs/node_modules/@ionic/core/components/ion-refresher.js -> ./index2.js": {
+    "id": "../../ishlibjs/node_modules/@ionic/core/components/ion-refresher.js -> ./index2.js",
+    "files": []
+  },
+  "../../ishlibjs/node_modules/@ionic/core/components/ion-reorder-group.js -> ./index2.js": {
+    "id": "../../ishlibjs/node_modules/@ionic/core/components/ion-reorder-group.js -> ./index2.js",
+    "files": []
+  },
+  "../../ishlibjs/node_modules/@ionic/core/components/ion-router-outlet.js -> ./swipe-back.js": {
+    "id": "../../ishlibjs/node_modules/@ionic/core/components/ion-router-outlet.js -> ./swipe-back.js",
+    "files": [
+      "static/chunks/ishlibjs_node_modules_ionic_core_components_swipe-back_js.js"
+    ]
+  },
+  "../../ishlibjs/node_modules/@ionic/core/components/ion-segment.js -> ./index2.js": {
+    "id": "../../ishlibjs/node_modules/@ionic/core/components/ion-segment.js -> ./index2.js",
+    "files": []
+  },
+  "../../ishlibjs/node_modules/@ionic/core/components/ion-slides.js -> ./swiper.bundle.js": {
+    "id": "../../ishlibjs/node_modules/@ionic/core/components/ion-slides.js -> ./swiper.bundle.js",
+    "files": [
+      "static/chunks/ishlibjs_node_modules_ionic_core_components_swiper_bundle_js.js"
+    ]
+  },
+  "../../ishlibjs/node_modules/@ionic/core/components/ion-toggle.js -> ./index2.js": {
+    "id": "../../ishlibjs/node_modules/@ionic/core/components/ion-toggle.js -> ./index2.js",
+    "files": []
+  },
+  "../../ishlibjs/node_modules/@ionic/core/components/picker-column.js -> ./index2.js": {
+    "id": "../../ishlibjs/node_modules/@ionic/core/components/picker-column.js -> ./index2.js",
+    "files": []
+  },
+  "../../ishlibjs/node_modules/@ionic/core/dist/esm-es5/index-c8ef55b5.js -> ./ios.transition-4a03103b.js": {
+    "id": "../../ishlibjs/node_modules/@ionic/core/dist/esm-es5/index-c8ef55b5.js -> ./ios.transition-4a03103b.js",
+    "files": []
+  },
+  "../../ishlibjs/node_modules/@ionic/core/dist/esm-es5/index-c8ef55b5.js -> ./md.transition-8277029c.js": {
+    "id": "../../ishlibjs/node_modules/@ionic/core/dist/esm-es5/index-c8ef55b5.js -> ./md.transition-8277029c.js",
+    "files": []
+  },
+  "../../ishlibjs/node_modules/@ionic/core/dist/esm-es5/ion-app_8.entry.js -> ./focus-visible-02bf7a99.js": {
+    "id": "../../ishlibjs/node_modules/@ionic/core/dist/esm-es5/ion-app_8.entry.js -> ./focus-visible-02bf7a99.js",
+    "files": [
+      "static/chunks/ishlibjs_node_modules_ionic_core_dist_esm-es5_focus-visible-02bf7a99_js.js"
+    ]
+  },
+  "../../ishlibjs/node_modules/@ionic/core/dist/esm-es5/ion-app_8.entry.js -> ./hardware-back-button-ace6a71b.js": {
+    "id": "../../ishlibjs/node_modules/@ionic/core/dist/esm-es5/ion-app_8.entry.js -> ./hardware-back-button-ace6a71b.js",
+    "files": []
+  },
+  "../../ishlibjs/node_modules/@ionic/core/dist/esm-es5/ion-app_8.entry.js -> ./input-shims-fef4a5fa.js": {
+    "id": "../../ishlibjs/node_modules/@ionic/core/dist/esm-es5/ion-app_8.entry.js -> ./input-shims-fef4a5fa.js",
+    "files": [
+      "static/chunks/ishlibjs_node_modules_ionic_core_dist_esm-es5_input-shims-fef4a5fa_js.js"
+    ]
+  },
+  "../../ishlibjs/node_modules/@ionic/core/dist/esm-es5/ion-app_8.entry.js -> ./keyboard-808e4e15.js": {
+    "id": "../../ishlibjs/node_modules/@ionic/core/dist/esm-es5/ion-app_8.entry.js -> ./keyboard-808e4e15.js",
+    "files": []
+  },
+  "../../ishlibjs/node_modules/@ionic/core/dist/esm-es5/ion-app_8.entry.js -> ./status-tap-4087b8c4.js": {
+    "id": "../../ishlibjs/node_modules/@ionic/core/dist/esm-es5/ion-app_8.entry.js -> ./status-tap-4087b8c4.js",
+    "files": [
+      "static/chunks/ishlibjs_node_modules_ionic_core_dist_esm-es5_status-tap-4087b8c4_js.js"
+    ]
+  },
+  "../../ishlibjs/node_modules/@ionic/core/dist/esm-es5/ion-app_8.entry.js -> ./swipe-back-edc455e2.js": {
+    "id": "../../ishlibjs/node_modules/@ionic/core/dist/esm-es5/ion-app_8.entry.js -> ./swipe-back-edc455e2.js",
+    "files": [
+      "static/chunks/ishlibjs_node_modules_ionic_core_dist_esm-es5_swipe-back-edc455e2_js.js"
+    ]
+  },
+  "../../ishlibjs/node_modules/@ionic/core/dist/esm-es5/ion-app_8.entry.js -> ./tap-click-c0be8677.js": {
+    "id": "../../ishlibjs/node_modules/@ionic/core/dist/esm-es5/ion-app_8.entry.js -> ./tap-click-c0be8677.js",
+    "files": [
+      "static/chunks/ishlibjs_node_modules_ionic_core_dist_esm-es5_tap-click-c0be8677_js.js"
+    ]
+  },
+  "../../ishlibjs/node_modules/@ionic/core/dist/esm-es5/ion-item-option_3.entry.js -> ./index-41bf41f2.js": {
+    "id": "../../ishlibjs/node_modules/@ionic/core/dist/esm-es5/ion-item-option_3.entry.js -> ./index-41bf41f2.js",
+    "files": []
+  },
+  "../../ishlibjs/node_modules/@ionic/core/dist/esm-es5/ion-menu_3.entry.js -> ./index-41bf41f2.js": {
+    "id": "../../ishlibjs/node_modules/@ionic/core/dist/esm-es5/ion-menu_3.entry.js -> ./index-41bf41f2.js",
+    "files": []
+  },
+  "../../ishlibjs/node_modules/@ionic/core/dist/esm-es5/ion-nav_2.entry.js -> ./swipe-back-edc455e2.js": {
+    "id": "../../ishlibjs/node_modules/@ionic/core/dist/esm-es5/ion-nav_2.entry.js -> ./swipe-back-edc455e2.js",
+    "files": [
+      "static/chunks/ishlibjs_node_modules_ionic_core_dist_esm-es5_swipe-back-edc455e2_js.js"
+    ]
+  },
+  "../../ishlibjs/node_modules/@ionic/core/dist/esm-es5/ion-range.entry.js -> ./index-41bf41f2.js": {
+    "id": "../../ishlibjs/node_modules/@ionic/core/dist/esm-es5/ion-range.entry.js -> ./index-41bf41f2.js",
+    "files": []
+  },
+  "../../ishlibjs/node_modules/@ionic/core/dist/esm-es5/ion-refresher_2.entry.js -> ./index-41bf41f2.js": {
+    "id": "../../ishlibjs/node_modules/@ionic/core/dist/esm-es5/ion-refresher_2.entry.js -> ./index-41bf41f2.js",
+    "files": []
+  },
+  "../../ishlibjs/node_modules/@ionic/core/dist/esm-es5/ion-reorder_2.entry.js -> ./index-41bf41f2.js": {
+    "id": "../../ishlibjs/node_modules/@ionic/core/dist/esm-es5/ion-reorder_2.entry.js -> ./index-41bf41f2.js",
+    "files": []
+  },
+  "../../ishlibjs/node_modules/@ionic/core/dist/esm-es5/ion-segment_2.entry.js -> ./index-41bf41f2.js": {
+    "id": "../../ishlibjs/node_modules/@ionic/core/dist/esm-es5/ion-segment_2.entry.js -> ./index-41bf41f2.js",
+    "files": []
+  },
+  "../../ishlibjs/node_modules/@ionic/core/dist/esm-es5/ion-slide_2.entry.js -> ./swiper.bundle-28080340.js": {
+    "id": "../../ishlibjs/node_modules/@ionic/core/dist/esm-es5/ion-slide_2.entry.js -> ./swiper.bundle-28080340.js",
+    "files": [
+      "static/chunks/ishlibjs_node_modules_ionic_core_dist_esm-es5_swiper_bundle-28080340_js.js"
+    ]
+  },
+  "../../ishlibjs/node_modules/@ionic/core/dist/esm-es5/ion-toggle.entry.js -> ./index-41bf41f2.js": {
+    "id": "../../ishlibjs/node_modules/@ionic/core/dist/esm-es5/ion-toggle.entry.js -> ./index-41bf41f2.js",
+    "files": []
+  },
+  "../../ishlibjs/node_modules/@ionic/core/dist/esm-es5/overlays-942c6b99.js -> ./index-41bf41f2.js": {
+    "id": "../../ishlibjs/node_modules/@ionic/core/dist/esm-es5/overlays-942c6b99.js -> ./index-41bf41f2.js",
+    "files": []
+  },
+  "../../ishlibjs/node_modules/@stencil/core/internal/client/index.js -> ./shadow-css.js": {
+    "id": "../../ishlibjs/node_modules/@stencil/core/internal/client/index.js -> ./shadow-css.js",
+    "files": [
+      "static/chunks/ishlibjs_node_modules_stencil_core_internal_client_shadow-css_js.js"
+    ]
+  },
+  "../node_modules/@capacitor-community/facebook-login/dist/esm/index.js -> ./web": {
+    "id": "../node_modules/@capacitor-community/facebook-login/dist/esm/index.js -> ./web",
+    "files": [
+      "static/chunks/node_modules_capacitor-community_facebook-login_dist_esm_web_js.js"
+    ]
+  },
+  "../node_modules/@capacitor/device/dist/esm/index.js -> ./web": {
+    "id": "../node_modules/@capacitor/device/dist/esm/index.js -> ./web",
+    "files": [
+      "static/chunks/node_modules_capacitor_device_dist_esm_web_js.js"
+    ]
+  },
+  "../node_modules/@capacitor/toast/dist/esm/index.js -> ./web": {
+    "id": "../node_modules/@capacitor/toast/dist/esm/index.js -> ./web",
+    "files": [
+      "static/chunks/node_modules_capacitor_toast_dist_esm_web_js.js"
+    ]
+  },
+  "../node_modules/@ionic/core/dist/esm-es5/index-7a8b7a1c.js -> ./shadow-css-a3f00b33.js": {
+    "id": "../node_modules/@ionic/core/dist/esm-es5/index-7a8b7a1c.js -> ./shadow-css-a3f00b33.js",
+    "files": [
+      "static/chunks/node_modules_ionic_core_dist_esm-es5_shadow-css-a3f00b33_js.js"
+    ]
+  },
+  "../node_modules/@ionic/core/dist/esm-es5/index-931440b1.js -> ./ios.transition-12db6216.js": {
+    "id": "../node_modules/@ionic/core/dist/esm-es5/index-931440b1.js -> ./ios.transition-12db6216.js",
+    "files": []
+  },
+  "../node_modules/@ionic/core/dist/esm-es5/index-931440b1.js -> ./md.transition-eecd3a67.js": {
+    "id": "../node_modules/@ionic/core/dist/esm-es5/index-931440b1.js -> ./md.transition-eecd3a67.js",
+    "files": []
+  },
+  "../node_modules/@ionic/core/dist/esm-es5/ion-app_8.entry.js -> ./focus-visible-f4ad4f1a.js": {
+    "id": "../node_modules/@ionic/core/dist/esm-es5/ion-app_8.entry.js -> ./focus-visible-f4ad4f1a.js",
+    "files": [
+      "static/chunks/node_modules_ionic_core_dist_esm-es5_focus-visible-f4ad4f1a_js.js"
+    ]
+  },
+  "../node_modules/@ionic/core/dist/esm-es5/ion-app_8.entry.js -> ./hardware-back-button-4a6b37fb.js": {
+    "id": "../node_modules/@ionic/core/dist/esm-es5/ion-app_8.entry.js -> ./hardware-back-button-4a6b37fb.js",
+    "files": []
+  },
+  "../node_modules/@ionic/core/dist/esm-es5/ion-app_8.entry.js -> ./input-shims-73f15161.js": {
+    "id": "../node_modules/@ionic/core/dist/esm-es5/ion-app_8.entry.js -> ./input-shims-73f15161.js",
+    "files": [
+      "static/chunks/node_modules_ionic_core_dist_esm-es5_input-shims-73f15161_js.js"
+    ]
+  },
+  "../node_modules/@ionic/core/dist/esm-es5/ion-app_8.entry.js -> ./keyboard-5742b5da.js": {
+    "id": "../node_modules/@ionic/core/dist/esm-es5/ion-app_8.entry.js -> ./keyboard-5742b5da.js",
+    "files": [
+      "static/chunks/node_modules_ionic_core_dist_esm-es5_keyboard-5742b5da_js.js"
+    ]
+  },
+  "../node_modules/@ionic/core/dist/esm-es5/ion-app_8.entry.js -> ./status-tap-bdecfebf.js": {
+    "id": "../node_modules/@ionic/core/dist/esm-es5/ion-app_8.entry.js -> ./status-tap-bdecfebf.js",
+    "files": [
+      "static/chunks/node_modules_ionic_core_dist_esm-es5_status-tap-bdecfebf_js.js"
+    ]
+  },
+  "../node_modules/@ionic/core/dist/esm-es5/ion-app_8.entry.js -> ./swipe-back-fae97365.js": {
+    "id": "../node_modules/@ionic/core/dist/esm-es5/ion-app_8.entry.js -> ./swipe-back-fae97365.js",
+    "files": [
+      "static/chunks/node_modules_ionic_core_dist_esm-es5_swipe-back-fae97365_js.js"
+    ]
+  },
+  "../node_modules/@ionic/core/dist/esm-es5/ion-app_8.entry.js -> ./tap-click-cc1ae2b2.js": {
+    "id": "../node_modules/@ionic/core/dist/esm-es5/ion-app_8.entry.js -> ./tap-click-cc1ae2b2.js",
+    "files": [
+      "static/chunks/node_modules_ionic_core_dist_esm-es5_tap-click-cc1ae2b2_js.js"
+    ]
+  },
+  "../node_modules/@ionic/core/dist/esm-es5/ion-datetime_3.entry.js -> ./index-34cb2743.js": {
+    "id": "../node_modules/@ionic/core/dist/esm-es5/ion-datetime_3.entry.js -> ./index-34cb2743.js",
+    "files": []
+  },
+  "../node_modules/@ionic/core/dist/esm-es5/ion-item-option_3.entry.js -> ./index-34cb2743.js": {
+    "id": "../node_modules/@ionic/core/dist/esm-es5/ion-item-option_3.entry.js -> ./index-34cb2743.js",
+    "files": []
+  },
+  "../node_modules/@ionic/core/dist/esm-es5/ion-menu_3.entry.js -> ./index-34cb2743.js": {
+    "id": "../node_modules/@ionic/core/dist/esm-es5/ion-menu_3.entry.js -> ./index-34cb2743.js",
+    "files": []
+  },
+  "../node_modules/@ionic/core/dist/esm-es5/ion-nav_2.entry.js -> ./swipe-back-fae97365.js": {
+    "id": "../node_modules/@ionic/core/dist/esm-es5/ion-nav_2.entry.js -> ./swipe-back-fae97365.js",
+    "files": [
+      "static/chunks/node_modules_ionic_core_dist_esm-es5_swipe-back-fae97365_js.js"
+    ]
+  },
+  "../node_modules/@ionic/core/dist/esm-es5/ion-range.entry.js -> ./index-34cb2743.js": {
+    "id": "../node_modules/@ionic/core/dist/esm-es5/ion-range.entry.js -> ./index-34cb2743.js",
+    "files": []
+  },
+  "../node_modules/@ionic/core/dist/esm-es5/ion-refresher_2.entry.js -> ./index-34cb2743.js": {
+    "id": "../node_modules/@ionic/core/dist/esm-es5/ion-refresher_2.entry.js -> ./index-34cb2743.js",
+    "files": []
+  },
+  "../node_modules/@ionic/core/dist/esm-es5/ion-reorder_2.entry.js -> ./index-34cb2743.js": {
+    "id": "../node_modules/@ionic/core/dist/esm-es5/ion-reorder_2.entry.js -> ./index-34cb2743.js",
+    "files": []
+  },
+  "../node_modules/@ionic/core/dist/esm-es5/ion-segment_2.entry.js -> ./index-34cb2743.js": {
+    "id": "../node_modules/@ionic/core/dist/esm-es5/ion-segment_2.entry.js -> ./index-34cb2743.js",
+    "files": []
+  },
+  "../node_modules/@ionic/core/dist/esm-es5/ion-slide_2.entry.js -> ./swiper.bundle-6c5e7804.js": {
+    "id": "../node_modules/@ionic/core/dist/esm-es5/ion-slide_2.entry.js -> ./swiper.bundle-6c5e7804.js",
+    "files": [
+      "static/chunks/node_modules_ionic_core_dist_esm-es5_swiper_bundle-6c5e7804_js.js"
+    ]
+  },
+  "../node_modules/@ionic/core/dist/esm-es5/ion-toggle.entry.js -> ./index-34cb2743.js": {
+    "id": "../node_modules/@ionic/core/dist/esm-es5/ion-toggle.entry.js -> ./index-34cb2743.js",
+    "files": []
+  },
+  "../node_modules/@ionic/core/dist/esm-es5/loader.js -> ./css-shim-2ccf4dec.js": {
+    "id": "../node_modules/@ionic/core/dist/esm-es5/loader.js -> ./css-shim-2ccf4dec.js",
+    "files": [
+      "static/chunks/node_modules_ionic_core_dist_esm-es5_css-shim-2ccf4dec_js.js"
+    ]
+  },
+  "../node_modules/@ionic/core/dist/esm/polyfills/index.js -> ./core-js.js": {
+    "id": "../node_modules/@ionic/core/dist/esm/polyfills/index.js -> ./core-js.js",
+    "files": [
+      "static/chunks/polyfills-core-js.js"
+    ]
+  },
+  "../node_modules/@ionic/core/dist/esm/polyfills/index.js -> ./dom.js": {
+    "id": "../node_modules/@ionic/core/dist/esm/polyfills/index.js -> ./dom.js",
+    "files": [
+      "static/chunks/polyfills-dom.js"
+    ]
+  },
+  "../node_modules/next/dist/client/index.js -> ../pages/_app": {
+    "id": "../node_modules/next/dist/client/index.js -> ../pages/_app",
+    "files": [
+      "static/chunks/node_modules_next_dist_pages__app_js.js"
+    ]
+  },
+  "../node_modules/next/dist/client/index.js -> ../pages/_error": {
+    "id": "../node_modules/next/dist/client/index.js -> ../pages/_error",
+    "files": [
+      "static/chunks/node_modules_next_dist_pages__error_js.js"
+    ]
+  }
+}

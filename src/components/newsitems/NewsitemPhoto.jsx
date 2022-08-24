@@ -7,7 +7,7 @@ import { NewsitemContainer } from './'
 import { Metaline } from "$components/application"
 import { logg } from "$shared"
 
-import "./newsitems.scss"
+import "./Newsitems.module.scss"
 
 const ImageLarge = styled.img`
   max-width: 100%;

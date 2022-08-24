@@ -1,2 +1,0 @@
-(this.webpackJsonpInfiniteShelter=this.webpackJsonpInfiniteShelter||[]).push([[114],{1036:function(t,n,e){"use strict";e.r(n),e.d(n,"ion_text",(function(){return i}));var o=e(16),r=e(38),c=e(61),i=function(){function t(t){Object(o.l)(this,t)}return t.prototype.render=function(){var t,n=Object(r.b)(this);return Object(o.h)(o.b,{class:Object(c.a)(this.color,(t={},t[n]=!0,t))},Object(o.h)("slot",null))},t}();i.style=":host(.ion-color){color:var(--ion-color-base)}"}}]);
-//# sourceMappingURL=114.f485eb57.chunk.js.map

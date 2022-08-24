@@ -9,7 +9,7 @@ import {
   C, logg, request, TwofoldContext, BackBtn,
 } from "$shared"
 
-import "./galleries.scss"
+import "./Galleries.module.scss"
 
 const W0 = styled.div`
   // border: 1px solid blue;

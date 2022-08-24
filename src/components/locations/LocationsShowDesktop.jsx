@@ -5,12 +5,14 @@ import Modal from "react-modal"
 import styled from 'styled-components'
 
 import {
-  Breadcrumbs,
   ItemModal,
   MapPanel, MapPanelNoZoom,
   RatedRestrictionModal,
   WrappedMapPanel,
 } from "./"
+import {
+  Breadcrumbs,
+} from "$components/application"
 import {
   MarkersList,
   MarkerModal, MarkerContext, MarkerContextProvider,
@@ -229,6 +231,7 @@ const LocationsShowDesktop = (props) => {
     setLoading(true)
     const token = localStorage.getItem("jwt_token")
 
+    // @TODO: move to Api _vp_ 2022-08-15
     request.get(`/api/maps/view/${match.params.slug}`, { params: { jwt_token: token } }).then(res => {
       if (mountedRef.current === match.params.slug) { return null }
       if (!res.data.map) {
@@ -243,6 +246,8 @@ const LocationsShowDesktop = (props) => {
       }
       setLoading(false)
       // @TODO: setFlash here?! If I"m accessing a gallery I haven't bought access to?
+    }).catch((err) => {
+      logg(err, `Cannot get map ${match.params.slug}`)
     })
 
     return () => {

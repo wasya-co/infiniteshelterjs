@@ -6,7 +6,7 @@ import { useHistory } from 'react-router-dom'
 import styled from 'styled-components'
 
 import config from 'config'
-import './UnlockModal.scss'
+import './UnlockModal.module.scss'
 import { Btn, C, logg, request, TwofoldContext, useApi, } from "$shared"
 
 const Btn0 = styled.div`

@@ -42,7 +42,13 @@ const useApi = () => {
     getCity: (slug) => request.get(`${config.apiOrigin}/api/cities/view/${slug}`),
     getGallery: (slug) => request.get(`${config.apiOrigin}/api/galleries/view/${slug}?jwt_token=${token}`).then((r) => r.data.gallery),
 
-    getMyAccount: () => request.post(`/api/my/account`, { jwt_token: token, }).then((r) => r.data),
+    // @TODO: test: upon 401, return anon user. _vp_ 2022-08-15
+    getMyAccount: () => {
+      return request.post(`/api/my/account`, { jwt_token: token, }).then((r) => r.data).catch((err) => {
+        logg(err, 'Cannot #getMyAccount')
+        return C.anonUser
+      })
+    },
 
     getPayments: () => request.get(`${config.apiOrigin}/api/payments2?jwt_token=${token}`).then((r) => r.data),
 
