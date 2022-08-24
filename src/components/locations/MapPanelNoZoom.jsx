@@ -145,7 +145,7 @@ const MapPanelNoZoom = (props) => {
           height: 'auto',
 
           position: 'relative',
-          zIndex: 1,
+          zIndex: 0,
         }}
       />
       { markers }

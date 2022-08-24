@@ -90,5 +90,9 @@ const C = {
     transparent: 'transparent', // for markers on Right
   },
   vertical: 'vertical',
+  vote_values: {
+    up: 'up',
+    downl: 'down',
+  },
 }
 export default C
