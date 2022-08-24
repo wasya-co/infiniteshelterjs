@@ -1,0 +1,210 @@
+
+
+.container {
+  font-size: 10px;
+
+  height: calc(100% - 2em);
+  background: #f4f4f4;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+}
+
+.switch {
+  position: relative;
+  overflow: hidden;
+  width: 7.5em;
+  height: 4em;
+
+  input {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 2;
+    opacity: 0;
+  }
+
+  input:checked ~ .fill {
+    background: #E9F8FD;
+  }
+
+  label {
+    cursor: pointer;
+  }
+}
+
+.background {
+  z-index: 1;
+  position: absolute;
+  width: 7.5em;
+  height: 4em;
+  border-radius: 2.5em;
+  border: 0.25em solid #202020;
+  background: linear-gradient(to right, #484848 0%,#202020 100%);
+  transition: all 0.3s;
+}
+
+.fill {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 2em;
+  left: 0;
+  background: #484848;
+  transition: 0.75s all ease;
+}
+
+.stars1,
+.stars2 {
+  position: absolute;
+  height: 0.4em;
+  width: 0.4em;
+  background: #FFFFFF;
+  border-radius: 50%;
+  transition: 0.3s all ease;
+}
+
+.stars1 {
+  top: 6px;
+  right: 23px;
+}
+
+.stars2 {
+  top: 40px;
+  right: 48px;
+}
+
+.stars1:after,
+.stars1:before,
+.stars2:after,
+.stars2:before{
+  position: absolute;
+  content: "";
+  display: block;
+  height: 0.25em;
+  width: 0.25em;
+  background: #FFFFFF;
+  border-radius: 50%;
+  transition: 0.2s all ease;
+}
+
+.stars1:after {
+  top: 8px;
+  right: 20px;
+}
+
+.stars1:before {
+  top: 18px;
+  right: -12px;
+}
+
+.stars2:after {
+  top: -8px;
+  right: -16px;
+}
+
+.stars2:before {
+  top: 6px;
+  right: -26px;
+}
+
+.sunMoon {
+  z-index: 2;
+  position: absolute;
+  left: 0;
+  display: inline-block;
+  height: 3em;
+  width: 3em;
+  margin: 0.5em;
+  background: #FFFDF2;
+  border-radius: 50%;
+  transition: all 0.5s ease;
+
+  /* Default to Moon */
+  border: 0.25em solid #DEE2C6;
+
+  .dots {
+    position: absolute;
+    top: 3px;
+    left: 23px;
+    height: 1em;
+    width: 1em;
+    background: #EFEEDB;
+    border: 0.25em solid #DEE2C6;
+    border-radius: 50%;
+    transition: 0.4s all ease;
+  }
+
+  .dots:after,
+  .dots:before {
+    position: absolute;
+    content: "";
+    display: block;
+    height: 0.25em;
+    width: 0.25em;
+    background: #EFEEDB;
+    border: 0.25em solid #DEE2C6;
+    border-radius: 50%;
+    transition: 0.4s all ease;
+  }
+
+  .dots:after {
+    top: -4px;
+    left: -26px;
+  }
+
+  .dots:before {
+    top: 18px;
+    left: -10px;
+  }
+}
+
+/* Transition to Sun */
+
+.switch input:checked ~ .sunMoon {
+  left: calc(100% - 4em);
+  background: #F5EC59;
+  border-color: #E7C65C;
+  transform: rotate(-25deg);
+}
+
+.switch input:checked ~ .sunMoon .dots,
+.switch input:checked ~ .sunMoon .dots:after,
+.switch input:checked ~ .sunMoon .dots:before {
+  background: #FFFFFF;
+  border-color: #FFFFFF;
+}
+
+.switch input:checked ~ .sunMoon .dots {
+  height: 1.5em;
+  width: 1.5em;
+  top: 0px;
+  left: -20px;
+  transform: rotate(25deg);
+}
+
+.switch input:checked ~ .sunMoon .dots:after {
+  height: 0.65em;
+  width: 0.65em;
+  top: 2px;
+  left: -0.8em;;
+}
+
+.switch input:checked ~ .sunMoon .dots:before {
+  height: 0.4em;
+  width: 0.4em;
+  top: 6px;
+  left: 0.6em;
+}
+
+.switch input:checked ~ .background .stars1,
+.switch input:checked ~ .background .stars2 {
+  opacity: 0;
+  transform: translateY(2em);
+}
+
+.switch input:checked ~ .background {
+  border: 0.25em solid #78C1D5;
+  background: linear-gradient(to right, #78C1D5 0%, #BBE7F5 100%);
+}

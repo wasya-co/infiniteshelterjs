@@ -1,5 +1,8 @@
 
 export { default as BottomDrawer } from "./BottomDrawer"
+export { default as Breadcrumbs } from "./Breadcrumbs"
+
+export { default as DayNightToggle } from "./DayNightToggle"
 
 export { default as MainHeader } from "./MainHeader"
 export { default as MapuiLayout } from "./MapuiLayout"

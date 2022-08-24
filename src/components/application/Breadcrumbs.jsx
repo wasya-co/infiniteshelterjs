@@ -9,10 +9,15 @@ import { Route, useLocation, useHistory, Switch } from 'react-router-dom'
 import styled from 'styled-components'
 
 import config from 'config'
-import { C, logg, request, S, TwofoldContext } from "$shared"
+import {
+  DayNightToggle,
+} from './'
 import { MenuLeft } from "$components/application"
-import img from '$components/application/45x45_day-night-2.png'
-import './day_night_toggle.module.scss'
+import {
+  C, logg, request, S, TwofoldContext,
+} from "$shared"
+
+
 
 /* B */
 
@@ -27,48 +32,6 @@ const B1 = styled.div`
   padding: 0.5em;
   color: ${p => p.theme.colors.text};
 `;
-
-/* D */
-const L = styled.div`
-  color: ${p=> p.theme.colors.text};
-  margin-top: .5em;
-`;
-const WDayNight = styled.div`
-  // border: 1px solid green;
-  display: flex;
-  margin: 0 1em;
-`;
-const DayNightToggle = (props) => {
-  const { theme, toggleTheme } = props
-  return <WDayNight>
-    <L>Day</L>
-    <IonToggle checked={theme === C.themes.dark} onIonChange={toggleTheme} value="DayNight" />
-    <L>Night</L>
-  </WDayNight>
-}
-const T0 = styled.div`
-  width: 45px;
-  height: 45px;
-  // background-image: url(${img});
-`;
-const DayNightToggle2 = (props) => {
-  // logg(props, 'DayNightToggle2')
-  const { theme, toggleTheme } = props
-  const [ rotating, setRotating ] = useState(null)
-
-  const doTransition = () => {
-    setRotating('rotating')
-    setTimeout(() => {
-      setRotating(null)
-      toggleTheme()
-    }, 1 * 1000)
-  }
-
-  return <WDayNight onClick={doTransition} >
-    <T0 className={`theme-${theme} ${rotating}`} />
-    {/* <IonToggle checked={theme === C.themes.dark} onIonChange={toggleTheme} value="DayNight" /> */}
-  </WDayNight>
-}
 
 /* W */
 const W0 = styled.div`
@@ -100,7 +63,6 @@ const WBreadcrumbs = styled.div`
 
 /**
  * Breadcrumbs
- * @TODO: move to src/application
  */
 const Breadcrumbs = (props) => {
   // logg(props, 'Breakcrumbs')
@@ -126,7 +88,7 @@ const Breadcrumbs = (props) => {
   return <W0 debug={config.debug} className="Breadcrumbs" >
     { layout === C.layout_mapui && <MenuLeft variant={C.variants.inline} /> }
     <WBreadcrumbs className='WBreadcrumbs' >{ out }</WBreadcrumbs>
-    <DayNightToggle2 toggleTheme={toggleTheme} theme={theme} />
+    <DayNightToggle toggleTheme={toggleTheme} theme={theme} />
   </W0>
 }
 Breadcrumbs.propTypes = {

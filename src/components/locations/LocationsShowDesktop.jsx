@@ -5,12 +5,14 @@ import Modal from "react-modal"
 import styled from 'styled-components'
 
 import {
-  Breadcrumbs,
   ItemModal,
   MapPanel, MapPanelNoZoom,
   RatedRestrictionModal,
   WrappedMapPanel,
 } from "./"
+import {
+  Breadcrumbs,
+} from "$components/application"
 import {
   MarkersList,
   MarkerModal, MarkerContext, MarkerContextProvider,
