@@ -5,7 +5,8 @@ import {
   AuthContext,
 } from 'ishlibjs'
 
-import { C,
+import {
+  C,
   logg, // eslint-disable-line no-unused-vars
   request,
 } from "$shared"
@@ -80,7 +81,18 @@ const useApi = () => {
       request.get(`${config.apiOrigin}/api/sites/view/${config.domain}`, { params: { jwt_token: token } }).then((r) => {
         return r.data
       })
-    }
+    },
+
+    vote: (props) => {
+      const { value, voter_id, votee_id, votee_class_name } = props
+      request.post(`${config.apiOrigin}/api/v1/vote/${votee_class_name}/${votee_id}/${voter_id}/${value}`, { params: { jwt_token: token } }).then((r) => {
+        logg(r, 'voted')
+      })
+    },
+
+    unvote: () => {
+      logg('Unvote is not implemented!')
+    },
   }
 
 }

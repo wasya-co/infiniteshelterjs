@@ -39,13 +39,14 @@ const Title = styled.h2`
   color: ${p=>p.theme.colors.text};
 `;
 
+// @TODO: better management of navigateToItem
 const W0 = (props) => {
+  // logg(props, 'W0')
   const { children, navigateToItem, variant } = props
-  // @TODO: better management of navigateToItem
 
   switch (variant) {
     case C.variants.bordered:
-      return <WidgetContainer {...props} onClick={navigateToItem} cursor="pointer" >{ children }</WidgetContainer>
+      return <WidgetContainer {...props} cursor="pointer" >{ children }</WidgetContainer>
     default:
       return <Card boxShadow={2} {...props} onClick={navigateToItem} cursor="pointer" ></Card>
   }
@@ -103,7 +104,7 @@ const NewsitemContainer = ({ children, ...props }) => {
 
   } else {
     return <W0 {...{ className, navigateToItem, variant }} >
-      { children }
+      <div onClick={navigateToItem} >{ children }</div>
       <Row>
         <Col style={{ alignItems: 'center' }} >
           <Voteable item={item} />
@@ -113,7 +114,7 @@ const NewsitemContainer = ({ children, ...props }) => {
         <Col style={{ overflowWrap: 'break-word', maxWidth: 'calc(100vw - 100px)' }} >
           <Row>
             <ItemIcon {...item} />
-            <Title>{item.name}</Title>
+            <Title onClick={navigateToItem} >{item.name}</Title>
           </Row>
           <Metaline {...item} />
         </Col>

@@ -3,13 +3,20 @@ import {
   ArrowDownward as _ArrowDownward,
   ArrowUpward as _ArrowUpward,
 } from '@material-ui/icons'
-import React from 'react'
+import React, { useContext } from 'react'
 import styled from 'styled-components'
 
 import {
+  AuthContext,
   FlexCol, FlexRow,
   logg,
 } from 'ishlibjs'
+
+import {
+  C,
+  TwofoldContext,
+  useApi,
+} from "$shared"
 
 const IconUp = _ArrowUpward
 
@@ -22,48 +29,56 @@ const WCount = styled.div``;
  *
 **/
 const Voteable = (props) => {
-  // logg(props, 'Voteable')
+  logg(props, 'Voteable')
   const { item } = props
+
+  const {
+    currentUser, setCurrentUser,
+    setLoginModalOpen,
+  } = useContext(AuthContext)
+  logg(useContext(AuthContext), 'Voteable Used AuthContext')
+
+  const api = useApi()
+
+  const setLoginModalMessage = () => {} // @TODO: implement! _vp_ 2022-08-24
 
   const voteUp = () => {
 
     // HEREHERE
-    if (!current_user) { // @TODO: or how do I check? I forget
-      showModal('Login or register to vote!')
+    if (!currentUser.email) {
+      setLoginModalMessage("Please login or register to upvote or downvote.")
+      setLoginModalOpen(true)
       return
     }
 
     if (item.current_user_vote_value === C.vote_values.up) {
-      api.unvote({ voter_id: current_user.user_profile_id,
-        votee_id: item.id,
-        votee_class_name: item.item_type,
-      })
+      api.unvote()
     } else {
-      api.vote({ voter_id: current_user.user_profile_id,
+      api.vote({
         value: C.vote_values.up,
-        votee_id: item.id,
         votee_class_name: item.item_type,
+        votee_id: item.id,
+        voter_id: currentUser.id,
       })
     }
   }
   const voteDown = () => {
 
     // HEREHERE
-    if (!current_user) { // @TODO: or how do I check? I forget
-      showModal('Login or register to vote!')
+    if (!currentUser.email) {
+      setLoginModalMessage("Please login or register to upvote or downvote.")
+      setLoginModalOpen(true)
       return
     }
 
     if (item.current_user_vote_value === C.vote_values.down) {
-      api.unvote({ voter_id: current_user.user_profile_id,
-        votee_id: item.id,
-        votee_class_name: item.item_type,
-      })
+      api.unvote()
     } else {
-      api.vote({ voter_id: current_user.user_profile_id,
+      api.vote({
         value: C.vote_values.down,
-        votee_id: item.id,
         votee_class_name: item.item_type,
+        votee_id: item.id,
+        voter_id: currentUser.id,
       })
     }
   }

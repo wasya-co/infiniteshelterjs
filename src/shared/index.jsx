@@ -76,7 +76,7 @@ export const ChevronRight = styled(_ChevronRight)`
 /**
  * A Card
  */
-export const Card = styled(_Box)`
+const _Card = styled(_Box)`
   margin-bottom: 1em;
   padding: 1em;
   background: ${p => p.theme.colors.cardBackground};
@@ -85,6 +85,7 @@ export const Card = styled(_Box)`
   display: flex;
   flex-direction: column;
 `;
+export const Card = ({ children, ...props }) => <_Card className="Card" {...props}>{ children }</_Card>
 
 export { default as Collapsible } from "./Collapsible"
 export const CollapsibleContext = React.createContext({})
@@ -279,8 +280,9 @@ export const WBorderedItem = ({children, ...props}) => {
 }
 
 
-export const WidgetContainer = ({ children, ...props }) => {
-  return <WBordered {...props} >{ children }</WBordered>
+export const WidgetContainer = ({ children, ..._props }) => {
+  const { className='', ...props } = _props
+  return <WBordered className={`${className} WidgetContainer`} {...props} >{ children }</WBordered>
 }
 
 export const Wrapper = styled.div`
