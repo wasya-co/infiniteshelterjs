@@ -10,8 +10,8 @@ import {
 } from "./"
 import {
   Metaline,
-  Voteable,
 } from "$components/application"
+import Votable from "$components/Votable"
 import {
   C, Card,
   inflector,
@@ -107,7 +107,7 @@ const NewsitemContainer = ({ children, ...props }) => {
       <div onClick={navigateToItem} >{ children }</div>
       <Row>
         <Col style={{ alignItems: 'center' }} >
-          <Voteable item={item} />
+          <Votable item={item} />
 
           { /* @TODO: add premiumTier icon here */ }
         </Col>

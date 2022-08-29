@@ -13,6 +13,7 @@ import {
   AuthContext, AuthWidget,
   FlexCol, FlexRow,
 } from 'ishlibjs'
+// import styles from 'ishlibjs/dist/index.css' // @TODO: re-add!
 
 import {
   PurchaseModal,
@@ -176,19 +177,10 @@ const MyAccountWidget = (props) => {
       { currentUser.email && <AuthedWidget /> }
       <AuthWidget />
 
-
-      { active && <W1> [
-          <span>Connected with <b>{account}</b></span>
-          <button onClick={disconnect} >Disconnect</button>
-          <button onClick={myBodies} >myBodies</button> ]</W1> }
-      { !active && <W1>
-        <span>Not Connected</span>
-        <button onClick={connect} >Connect to MetaMask</button>
-      </W1> }
-
     </FlexRow>
 
-    <PurchaseModal />
+    { /* @TODO: this is confusing, it's not a modal, it's also the button. */ }
+    {/* <PurchaseModal /> */}
   </W0>
 }
 MyAccountWidget.propTypes = {
@@ -198,3 +190,14 @@ MyAccountWidget.propTypes = {
 // const WrappedMyAccountWidget = (props) => <Elements stripe={stripePromise}><MyAccountWidget {...props} /></Elements>;
 // export default WrappedMyAccountWidget
 export default MyAccountWidget
+
+
+
+// { active && <W1> [
+//   <span>Connected with <b>{account}</b></span>
+//   <button onClick={disconnect} >Disconnect</button>
+//   <button onClick={myBodies} >myBodies</button> ]</W1> }
+// { !active && <W1>
+// <span>Not Connected</span>
+// <button onClick={connect} >Connect to MetaMask</button>
+// </W1> }

@@ -16,4 +16,3 @@ export { default as PurchaseModal } from './PurchaseModal'
 export { default as Rating } from "./Rating"
 
 export { default as UnlockModal } from "./UnlockModal"
-export { default as Voteable } from './Voteable'
