@@ -42,7 +42,7 @@ const W0 = styled.div`
   align-items: center;
   justify-content: stretch;
 
-  z-index: 1;
+  z-index: 0;
 
   // height: ${p => p.theme.breadcrumbsHeight};
 `;

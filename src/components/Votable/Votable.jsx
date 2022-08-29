@@ -76,8 +76,7 @@ const Votable = (props) => {
 
     // HEREHERE
     if (!currentUser.email) {
-      setLoginModalMessage("Please login or register to upvote or downvote.")
-      setLoginModalOpen(true)
+      setLoginModalOpen("Please login or register to upvote or downvote.")
       return
     }
 
@@ -96,8 +95,7 @@ const Votable = (props) => {
 
     // HEREHERE
     if (!currentUser.email) {
-      setLoginModalMessage("Please login or register to upvote or downvote.")
-      setLoginModalOpen(true)
+      setLoginModalOpen("Please login or register to upvote or downvote.")
       return
     }
 

@@ -6,6 +6,8 @@ import {
   Link, Switch, BrowserRouter as Router, Redirect, Route as _Route, useHistory, withRouter
 } from 'react-router-dom'
 
+import styles from 'ishlibjs/dist/index.css'
+
 ReactDOM.render(<AppWrapper />, document.getElementById('root'))
 
 // If you want your app to work offline and load faster, you can change
