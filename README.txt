@@ -82,7 +82,9 @@ This application is to be test-driven, and regression bugs should gain a test wh
 
 We use jest, enzyme. See package.json and scripts/ .
 
- yarn run test
+ yarn run test # runs all tests
+ yarn run test -- <filename> # runs only one test file
+ yarn run jest -- <filename> # runs only tests marked 'current2' in this one test file
 
 See the android logs from the shell:
 

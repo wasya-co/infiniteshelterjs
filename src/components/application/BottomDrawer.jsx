@@ -1,6 +1,7 @@
 
 import _Drawer from '@material-ui/core/Drawer'
 import IconButton from '@material-ui/core/IconButton'
+import PropTypes from 'prop-types'
 import React, { Fragment as F, useContext, useState } from 'react'
 import styled from 'styled-components'
 import Web3 from 'web3'
@@ -16,12 +17,12 @@ const Drawer = styled(_Drawer)`
     // border: 1px solid cyan;
 
     background: ${p=>p.theme.colors.background};
+    z-index: 0;
   }
 
   .MuiDrawer-paperAnchorDockedBottom {
     border-top: 0;
   }
-
 `;
 
 function getLibrary(provider) {
@@ -121,6 +122,7 @@ const BottomDrawer = (props) => {
     </Drawer>
   </F>
 }
+BottomDrawer.propTypes = {} // none so far
 
 export default BottomDrawer
 

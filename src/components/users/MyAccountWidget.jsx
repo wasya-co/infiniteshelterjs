@@ -174,7 +174,7 @@ const MyAccountWidget = (props) => {
 
     <FlexRow>
 
-      { currentUser.email && <AuthedWidget /> }
+      { /* currentUser.email && <AuthedWidget /> */ }
       <AuthWidget />
 
     </FlexRow>

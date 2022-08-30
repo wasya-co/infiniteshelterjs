@@ -39,4 +39,4 @@ comfortable will resume auth and credit cards.
 1.0.0 - 2022-08-15 - Wire in next.js
                      also a better DayNightToggle
                      Also MongoidVotable
-
+        2022-08-30 - and styling of Register, Login, BottomDrawer
