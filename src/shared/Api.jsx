@@ -26,8 +26,8 @@ const useApi = () => {
         return r
       })
     },
-    doRegister: ({email, password }) => {
-      return request.post(`${config.apiOrigin}/api/users`, { email, password }).then((r) => r.data).then((r) => {
+    doRegister: ({ email, password }) => {
+      return request.post(`${config.apiOrigin}/api/users/register`, { user: { email, password }} ).then((r) => r.data).then((r) => {
         logg(r, 'done registered')
         return r
       })
@@ -57,7 +57,7 @@ const useApi = () => {
 
     getTag: (tag) => request.get(`${config.apiOrigin}/api/tags/view/${tag.slug}`).then((r) => r.data),
 
-    loginPath: '/api/users/login.json',
+    loginPath: '/api/users/login',
     longTermTokenPath: '/api/users/long_term_token',
 
     postLogin: ({ email, password }) => {

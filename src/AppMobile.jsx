@@ -150,7 +150,6 @@ const AppMobile = (props) => {
         <UnlockModal />
         <LoginModal />
         <RegisterModal />
-        <ToastContainer />
 
       </CollapsibleContextProvider>
     </TwofoldContextProvider>

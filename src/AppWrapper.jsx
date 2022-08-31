@@ -2,9 +2,9 @@
 import { Device } from '@capacitor/device'
 import React, { useContext, useEffect, useRef, useState, } from 'react'
 import { ThemeProvider } from 'styled-components'
+import { ToastContainer } from 'react-toastify'
 
 import config from 'config'
-// import 'ishlibjs/dist/index.css' // @TODO: re-add! Important! HEREHERE
 
 import { C, logg, request, S, useApi } from "$shared"
 import AppDesktop from './AppDesktop'
@@ -12,7 +12,7 @@ import AppMobile from './AppMobile'
 
 
 /**
- * Choses mobile vs desktop
+ * Chooses mobile vs desktop
  */
 const AppWrapper = (props) => {
   // logg(props, 'AppWrapper')
@@ -45,6 +45,7 @@ const AppWrapper = (props) => {
     { "ios android".includes(os) ?
       <AppMobile {...childProps} />
       : <AppDesktop {...childProps} /> }
+    <ToastContainer position="bottom-left" />
   </ThemeProvider>
 }
 

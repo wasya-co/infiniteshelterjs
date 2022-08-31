@@ -6,6 +6,7 @@ import {
   Link, Switch, BrowserRouter as Router, Redirect, Route as _Route, useHistory, withRouter
 } from 'react-router-dom'
 
+import 'react-toastify/dist/ReactToastify.css'
 import styles from 'ishlibjs/dist/index.css'
 
 ReactDOM.render(<AppWrapper />, document.getElementById('root'))
