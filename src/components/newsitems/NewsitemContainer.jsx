@@ -121,8 +121,6 @@ const NewsitemContainer = ({ children, ...props }) => {
       <Row >
         <Col style={{ alignItems: 'center' }} >
           <Votable item={item} />
-
-          { /* @TODO: add premiumTier icon here */ }
         </Col>
         <Col style={{ overflowWrap: 'break-word' }} >
           <RowInline>
