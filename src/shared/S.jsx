@@ -25,12 +25,11 @@ const lightTheme = {
     border: 'black',
     blue: '#6aa3e9',
     cardBackground: 'white',
+    cyan: "#49bcc6",
     darkGrey: '#605d5d',
     gold: '#ffe100',
     lightGrey: '#988b8b',
     red: 'red',
-
-
   }
 }
 
@@ -43,12 +42,11 @@ const darkTheme = {
     border: 'white',
     blue: '#73b0fa',
     cardBackground: '#1a1a1a',
+    cyan: "#49bcc6",
     darkGrey: '#b3afaf',
     gold: '#ffe100',
     lightGrey: '#4a4343',
     red: '#eb83a8',
-
-
   }
 }
 

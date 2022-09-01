@@ -17,7 +17,7 @@ import {
   ReportsShow,
 } from "$resources/reports"
 
-import * as classes from './ItemModal.module.scss'
+import styles from './ItemModal.module.scss'
 
 /**
  * ItemModal
@@ -26,7 +26,7 @@ import * as classes from './ItemModal.module.scss'
  *
 **/
 const ItemModal = (props) => {
-  logg(props, 'ItemModal')
+  // logg(props, 'ItemModal')
   const { item } = props
 
   const params = useParams()
@@ -44,8 +44,13 @@ const ItemModal = (props) => {
   if (!item) { return }
   if (!item.action) { item.action = C.actions.show } // set default
 
-  return <Modal isOpen={!!showItem}
-    className="ItemModal"
+  Modal.setAppElement('body')
+
+  return <Modal
+    className={`ItemModal ${styles.ItemModal}`}
+    isOpen={!!showItem}
+    // overlayClassName={styles.LoginModalOverlay}
+    // portalClassName={styles.LoginModalPortal}
   >
     <Actions >
       <CloseBtn onClick={onClose} />

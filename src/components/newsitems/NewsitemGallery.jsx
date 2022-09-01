@@ -15,8 +15,11 @@ const Images = styled.div`
 
   position: relative;
   width: 100%;
+  max-width: 600px;
   height: 0;
-  padding-bottom: 66.66%;
+  padding-bottom: min( 400px, 66.66% );
+
+  margin: auto;
 `;
 
 const Thumb0 = styled.div`
@@ -83,7 +86,7 @@ const Thumb2 = ({ children, src, ...props }) => {
  * NewsitemGallery
  */
 const NewsitemGallery = (props) => {
-  logg(props, 'NewsitemGallery')
+  // logg(props, 'NewsitemGallery')
   const { item, variant } = props
 
   const navigateToItem = () => {
@@ -92,7 +95,7 @@ const NewsitemGallery = (props) => {
   }
 
   return <NewsitemContainer item={item} variant={variant} >
-    <Images onClick={navigateToItem} >
+    <Images className='Images' onClick={navigateToItem} >
       <Thumb0 src={item.photos[0] && item.photos[0].thumb_url} />
       <Thumb1 src={item.photos[1] && item.photos[1].thumb_url} />
       <Thumb2 src={item.photos[2] && item.photos[2].thumb_url} >({item.n_photos} photos)</Thumb2>

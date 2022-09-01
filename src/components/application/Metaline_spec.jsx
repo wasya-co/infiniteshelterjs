@@ -9,14 +9,14 @@ import {
 } from "$shared"
 import AppWrapper from "$src/AppWrapper"
 
-import GoogleMaps from "./GoogleMaps"
+import Metaline from "./Metaline"
 
 configure({ adapter: new Adapter() })
 
-describe("GoogleMaps", () => {
+describe("Metaline", () => {
 
   it("renders -  ", async () => {
-    const w = mount(<AppWrapper ><GoogleMaps /></AppWrapper>)
+    const w = mount(<AppWrapper ><Metaline /></AppWrapper>)
     expect(w).toBeTruthy()
     await act(() => new Promise(setImmediate))
   })

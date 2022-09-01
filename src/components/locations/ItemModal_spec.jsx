@@ -9,14 +9,14 @@ import {
 } from "$shared"
 import AppWrapper from "$src/AppWrapper"
 
-import GoogleMaps from "./GoogleMaps"
+import ItemModal from "./ItemModal"
 
 configure({ adapter: new Adapter() })
 
-describe("GoogleMaps", () => {
+describe("ItemModal", () => {
 
   it("renders -  ", async () => {
-    const w = mount(<AppWrapper ><GoogleMaps /></AppWrapper>)
+    const w = mount(<AppWrapper ><ItemModal /></AppWrapper>)
     expect(w).toBeTruthy()
     await act(() => new Promise(setImmediate))
   })

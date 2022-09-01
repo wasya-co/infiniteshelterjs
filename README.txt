@@ -73,7 +73,8 @@ From: https://medium.com/coinmonks/web3-react-connect-users-to-metamask-or-any-w
 
 
 = Run =
- yarn run start
+ yarn run start_local
+ yarn run next_dev
 
 
 = Test =

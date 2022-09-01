@@ -38,7 +38,7 @@ export const BackBtn = () => {
   const {
     showItem, setShowItem,
   } = useContext(TwofoldContext)
-  logg(useContext(TwofoldContext), 'BackBtn usedContext')
+  // logg(useContext(TwofoldContext), 'BackBtn usedContext')
 
   const onClick = () => {
     setShowItem(null)
@@ -246,20 +246,24 @@ export { default as useWindowSize } from './useWindowSize'
 /* W */
 
 /**
- * Wrapper Bordered. This expects a list? _vp_ 2021-11-02
+ * Wrapper Bordered.
  * Used in collapsibles and MarkersList
+ *
+ * This expects a list? _vp_ 2021-11-02
  */
-export const WBordered = styled.div`
+const _WBordered = styled.div`
   border: ${p => p.theme.thinBorder};
   border-radius: ${p => p.theme.thinBorderRadius};
   background: ${p => p.theme.colors.cardBackground};
-
 
   margin-bottom: 1em;
   padding: .5em;
 
   cursor: ${p => p.onClick ? 'pointer' : null};
 `;
+export const WBordered = ({ children, ...props }) => {
+  return <_WBordered {...props} >{children}</_WBordered>
+}
 
 /**
  * Wrapper Bordered Item. Is padded, margined.

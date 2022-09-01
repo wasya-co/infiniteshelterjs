@@ -21,10 +21,10 @@ const Metaline = (props) => {
 
   return (
     <W>
-      { created_at && <span className="date"> On {pp_date(created_at)} </span>}
-      { username && <>by <span className="user"> {username} </span></> }
-      { city     && <>in <span className="city" onClick={navigateToCity}> {city.name} </span></> }
-      { tags     && tags.map((tag, i) => <span key={i} className="tags">{tag.name}</span>) }
+      { created_at && <span className="date">On {pp_date(created_at)}&nbsp;</span>}
+      { username && <>by <span className="user" style={{ textDecoration: 'underline' }} >{username}</span>&nbsp;</> }
+      {/* { city     && <>in <span className="city" onClick={navigateToCity}> {city.name} </span>&nbsp;</> } */}
+      {/* { tags     && tags.map((tag, i) => <span key={i} className="tags">{tag.name}</span>) } */}
     </W>
   );
 
