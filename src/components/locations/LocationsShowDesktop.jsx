@@ -126,7 +126,7 @@ const Handle = (props) => {
       pointer: 'cursor',
     }}
   >
-    <MenuIcon />
+    {/* <MenuIcon /> */}
     <ChevronLeft onClick={foldLeft} />
     <ChevronRight onClick={foldRight} />
     { [C.foldedRight, C.foldedLeft].indexOf(folded) !== -1  && <LongLine orientation={C.vertical} /> }
@@ -184,6 +184,8 @@ const Row = styled.div`
 
 /**
  * LocationsShowDesktop
+ *
+ * @TODO: re-introduce MenuIcon in Handle. _vp_ 2022-09-01
 **/
 const LocationsShowDesktop = (props) => {
   // logg(props, 'LocationsShowDesktop')
