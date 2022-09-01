@@ -14,7 +14,7 @@ import "./Newsitems.module.scss"
  *
 **/
 const NewsitemVideo = (props) => {
-  logg(props, 'NewsitemVideo')
+  // logg(props, 'NewsitemVideo')
   const { item, variant } = props
 
   return <NewsitemContainer item={item} variant={variant} >

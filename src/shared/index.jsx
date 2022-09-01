@@ -78,7 +78,7 @@ export const ChevronRight = styled(_ChevronRight)`
  */
 const _Card = styled(_Box)`
   margin-bottom: 1em;
-  padding: 1em;
+  padding: ${p => p.theme.smallWidth};
   background: ${p => p.theme.colors.cardBackground};
   cursor: ${p => p.cursor ? p.cursor : 'auto'};
 

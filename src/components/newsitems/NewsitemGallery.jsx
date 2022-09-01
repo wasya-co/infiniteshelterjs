@@ -1,6 +1,7 @@
 
 import PropTypes from 'prop-types'
 import React from "react"
+import { toast } from 'react-toastify'
 import styled from 'styled-components'
 
 import { Metaline } from "$components/application"
@@ -36,8 +37,13 @@ const NewsitemGallery = (props) => {
   // logg(props, 'NewsitemGallery')
   const { item, variant } = props
 
+  const navigateToItem = () => {
+    toast('this click is not implemented!')
+    logg('not implemented')
+  }
+
   return <NewsitemContainer item={item} variant={variant} >
-    <Images >
+    <Images onClick={navigateToItem} >
       { item.photos[0] && <ImageLarge src={item.photos[0].thumb_url} /> }
       { item.photos[1] && <ImageThumb1 src={item.photos[1].thumb_url} /> }
       { item.photos[2] && <ImageThumb2 src={item.photos[2].thumb_url} /> }

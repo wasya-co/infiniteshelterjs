@@ -61,7 +61,9 @@ const useApi = () => {
     longTermTokenPath: '/api/users/long_term_token',
 
     postLogin: ({ email, password }) => {
-      return request.post(`${config.apiOrigin}${config.router.loginPath}`, { email, password }).then((r) => r.data).then((resp) => {
+      return request.post(`${config.apiOrigin}${config.router.loginPath}.json`,
+        { user: { email, password }}
+      ).then((r) => r.data).then((resp) => {
         logg(resp, 'got this resp')
 
         localStorage.setItem(C.jwt_token, resp.jwt_token)
@@ -85,8 +87,12 @@ const useApi = () => {
 
     vote: (props) => {
       const { value, voter_id, votee_id, votee_class_name } = props
-      request.post(`${config.apiOrigin}/api/v1/vote/${votee_class_name}/${votee_id}/${voter_id}/${value}`, { params: { jwt_token: token } }).then((r) => {
+      return request.post(
+        `${config.apiOrigin}/api/v1/vote/${votee_class_name}/${votee_id}/${voter_id}/${value}`,
+        { params: { jwt_token: token } }
+      ).then((r) => {
         logg(r, 'voted')
+        return r
       })
     },
 

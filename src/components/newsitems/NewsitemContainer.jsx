@@ -28,9 +28,18 @@ const Col = styled.div`
   flex-direction: column;
 `;
 
-const Row = styled.div`
+const _Row = styled.div`
   display: flex;
   align-items: flex-start;
+
+  margin-top: ${p=>p.theme.smallWidth};
+`;
+const Row = ({ children, ...props }) => <_Row className='Row' {...props}>{children}</_Row>
+
+const RowInline = styled.div`
+  > * {
+    display: inline;
+  }
 `;
 
 const Title = styled.h2`
@@ -52,8 +61,15 @@ const W0 = (props) => {
   }
 }
 
+
+
 /**
  * NewsitemContainer
+ *
+ * @TODO: should be config with variants: standard container, container for a single photo, etc.
+ * but for now I'll use item.item_type
+ * _vp_ 2022-03-13
+ *
 **/
 const NewsitemContainer = ({ children, ...props }) => {
   // logg(props, 'NewsitemContainer')
@@ -74,6 +90,9 @@ const NewsitemContainer = ({ children, ...props }) => {
   } = useContext(TwofoldContext)
   // logg(useContext(TwofoldContext), 'NewsitemContainerUsedContext')
 
+  // @TODO: move this elsewhere - make generic, remember there are two routers, internal and external.
+  // move this to internal router
+  // @TODO: for Photo, navigateToItem can show full-screen pic. _vp_ 2022-04-17
   const navigateToItem = () => {
     if (item.is_premium && !item.is_purchased) {
       setItemToUnlock(item)
@@ -86,14 +105,8 @@ const NewsitemContainer = ({ children, ...props }) => {
     }
   }
 
-  /*
-   * @TODO: should be config with variants: standard container, container for a single photo, etc.
-   * but for now I'll use item.item_type
-   * _vp_ 2022-03-13
-   */
-
   if (item.item_type === C.item_types.photo) {
-    // @TODO: navigateToItem can show full-screen pic. _vp_ 2022-04-17
+
     return <W0 {...{ className, navigateToItem: () => {}, variant }} >
       <Col>
         <Title>{item.name}</Title>
@@ -104,22 +117,22 @@ const NewsitemContainer = ({ children, ...props }) => {
 
   } else {
     return <W0 {...{ className, navigateToItem, variant }} >
-      <div onClick={navigateToItem} >{ children }</div>
-      <Row>
+      { children }
+      <Row >
         <Col style={{ alignItems: 'center' }} >
           <Votable item={item} />
 
           { /* @TODO: add premiumTier icon here */ }
         </Col>
-        <Col style={{ overflowWrap: 'break-word', maxWidth: 'calc(100vw - 100px)' }} >
-          <Row>
+        <Col style={{ overflowWrap: 'break-word' }} >
+          <RowInline>
             <ItemIcon {...item} />
             <Title onClick={navigateToItem} >{item.name}</Title>
-          </Row>
+          </RowInline>
           <Metaline {...item} />
         </Col>
       </Row>
-      <p className="subhead" dangerouslySetInnerHTML={{ __html: item.subhead }} />
+      { item.subhead && item.subhead.length && <p className="subhead" dangerouslySetInnerHTML={{ __html: item.subhead }} /> }
     </W0>
   }
 }

@@ -120,7 +120,6 @@ const AppDesktop = (props) => {
 
           <BottomDrawer />
           <UnlockModal />
-          <ToastContainer />
 
         </CollapsibleContextProvider>
       </TwofoldContextProvider>

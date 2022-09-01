@@ -47,7 +47,7 @@ const TwofoldContextProvider = ({ children, ...props }) => {
 
 
   /* C */
-  const [ currentUser, setCurrentUser ] = useState(C.anonUser)
+  let [ currentUser, setCurrentUser ] = useState(C.anonUser)
   if (_setCurrentUser) {
     [ currentUser, setCurrentUser ] = [ _currentUser, _setCurrentUser ]
   }

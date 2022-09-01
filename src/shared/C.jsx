@@ -92,7 +92,7 @@ const C = {
   vertical: 'vertical',
   vote_values: {
     up: 'up',
-    downl: 'down',
+    down: 'down',
   },
 }
 export default C

@@ -21,7 +21,7 @@ import {
 import { LoginModal } from "$components/users"
 
 const AppMock = (props) => {
-  logg(props, 'AppMock')
+  // logg(props, 'AppMock')
   let {
     currentUser, setCurrentUser,
     itemToUnlock, setItemToUnlock,

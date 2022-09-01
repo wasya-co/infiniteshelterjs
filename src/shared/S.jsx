@@ -9,6 +9,9 @@ const S = {
   bottomDrawerOpenHeight: '115px',
   breadcrumbsHeight: '30px',
 
+  smallWidth: '10px',
+  mediumWidth: '20px',
+
   thinBorderWidth: '2px',
   thinBorderRadius: '5px',
 }
