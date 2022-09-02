@@ -4,7 +4,6 @@ export { default as Blocker } from './Blocker'
 export { default as Crosshair } from "./Crosshair"
 
 export { default as Equirectangular } from "./Equirectangular"
-export { default as Equirectangular2 } from "./Equirectangular2"
 export { default as Equirectangular4 } from "./Equirectangular4"
 
 export { default as TabiversePlanet } from './TabiversePlanet'

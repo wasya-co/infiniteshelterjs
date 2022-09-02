@@ -9,7 +9,7 @@ import styled from 'styled-components'
 import {
   logg,
 } from "$shared"
-import TouchControls from './touch-controls'
+import TouchControls from './vendor/TouchControls'
 
 /**
  * What is blocker? the entire canvas?
@@ -70,7 +70,7 @@ const Blocker = styled.div`
  *
  */
 const Loc = (props) => {
-  // logg(props, 'ThreePanelMobile')
+  logg(props, 'ThreePanelMobile')
   const { map } = props
 
   const history = useHistory()
@@ -86,6 +86,7 @@ const Loc = (props) => {
   useEffect(() => {
     init()
     animate()
+    document.title = "InfiniteShelter - ThreePanelMobile :: test"
   }, [])
 
   let moveForward = false
@@ -125,20 +126,19 @@ const Loc = (props) => {
 
 
 
-    // // Controls
-    // var options = {
-    // 	speedFactor: 0.5,
-    // 	delta: 1,
-    // 	rotationFactor: 0.002,
-    // 	maxPitch: 55,
-    // 	hitTest: true,
-    // 	hitTestDistance: 40
-    // };
-    // controls = new TouchControls(el, camera, options);
+    // Controls
+    var options = {
+    	speedFactor: 0.5,
+    	delta: 1,
+    	rotationFactor: 0.002,
+    	maxPitch: 55,
+    	hitTest: true,
+    	hitTestDistance: 40
+    };
+    controls = new TouchControls(blockerRef.current, camera, options);
     // controls.setPosition(0, 35, 400);
 
     // controls.addToScene(scene);
-
     // scene.add( controls.getObject() )
 
     // blockerRef.current.addEventListener( 'click', function () {
@@ -310,10 +310,13 @@ const Loc = (props) => {
     renderer.render( scene, camera )
   }
 
+  logg('here?')
+
   return <F>
     <div ref={instructionsRef} />
     <Blocker ref={blockerRef} className="Blocker" >
       <div id="Crosshair" />
+      {/* <TouchControls container={blockerRef} camera={camera} options={{}} /> */}
     </Blocker>
   </F>
 }

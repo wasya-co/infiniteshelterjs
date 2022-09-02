@@ -12,8 +12,8 @@ import { MTLLoader } from "three/examples/jsm/loaders/MTLLoader"
 import styled from 'styled-components'
 
 import { PointerLockControls } from './PointerLockControls'
-import TouchControls from "./TouchControls"
-import RotationPad from "./RotationPad"
+import TouchControls from "./vendor/TouchControls"
+import RotationPad from "./vendor/RotationPad"
 import {
   logg,
   TwofoldContext,
