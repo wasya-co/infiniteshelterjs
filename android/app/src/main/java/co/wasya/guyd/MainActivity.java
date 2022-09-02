@@ -1,4 +1,4 @@
-package co.wasya.guyd;
+package com.infiniteshelter;
 
 import com.getcapacitor.BridgeActivity;
 
