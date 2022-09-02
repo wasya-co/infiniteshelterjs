@@ -288,11 +288,9 @@ const LocationsShowDesktop = (props) => {
   const foldedLeft = folded === C.foldedLeft
   const foldedRight = folded === C.foldedRight
 
-  return <Row>
-    <MarkerContextProvider >
+  return <Row><MarkerContextProvider >
 
-    { !foldedLeft && <Left
-        className='Left'
+    { !foldedLeft && <Left className='Left'
         {...{ bottomDrawerOpen,
           folded, foldedLeft, foldedRight,
           twofoldPercent,
@@ -374,8 +372,7 @@ const LocationsShowDesktop = (props) => {
     { !ratedConfirmation && <RatedRestrictionModal {...{ ratedConfirmation, setRatedConfirmation, }} /> }
     { <MarkerModal /> }
 
-  </MarkerContextProvider>
-  </Row>
+  </MarkerContextProvider></Row>
 }
 
 export default LocationsShowDesktop

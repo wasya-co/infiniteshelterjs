@@ -1,9 +1,9 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
-    <string name="app_name">guyd</string>
-    <string name="title_activity_main">guyd</string>
-    <string name="package_name">co.wasya.guyd</string>
-    <string name="custom_url_scheme">co.wasya.guyd</string>
+    <string name="app_name">InfiniteShelter</string>
+    <string name="title_activity_main">InfiniteShelter</string>
+    <string name="package_name">com.infiniteshelter</string>
+    <string name="custom_url_scheme">com.infiniteshelter</string>
     <string name="facebook_app_id">3016949928380365</string>
     <string name="fb_login_protocol_scheme">fb3016949928380365</string>
 </resources>

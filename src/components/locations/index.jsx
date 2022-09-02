@@ -5,6 +5,7 @@ export { default as ItemModal } from "./ItemModal"
 
 export { default as LocationsShowDesktop } from "./LocationsShowDesktop"
 export { default as LocationsShowMobile } from "./LocationsShowMobile"
+export { default as LocationsShowMobile3d } from "./LocationsShowMobile3d"
 
 export { default as MapPanel } from "./MapPanel"
 export { default as MapPanelNoZoom } from "./MapPanelNoZoom"

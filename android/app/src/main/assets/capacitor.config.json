@@ -1,6 +1,6 @@
 {
-	"appId": "co.wasya.guyd",
-	"appName": "guyd",
+	"appId": "com.infiniteshelter",
+	"appName": "InfiniteShelter",
 	"bundledWebRuntime": false,
 	"npmClient": "yarn",
 	"webDir": "build",

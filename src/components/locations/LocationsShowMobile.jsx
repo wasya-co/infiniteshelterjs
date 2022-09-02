@@ -27,84 +27,24 @@ import {
   ZoomContext,
 } from "$shared"
 
-const Div1 = styled.div`
-  // border: 2px solid brown;
-
-  text-align: center;
-  display: block;
-
-  position: relative; /* required for mobile, so that zoomCtrl, etc are inside the collapsible div */
-
-  overflow: scroll;
-  max-height: 80vh; // @TODO: huh?
-`;
-
-const CollapsibleNoMargins = styled(Collapsible)`
-  margin: 0;
-  padding: 0;
-`;
 
 const _Description = styled.div`
   // border: 1px solid red;
-
   padding: 10px;
 `;
 const Description = ({ item }) => {
   return <_Description dangerouslySetInnerHTML={{ __html: item.description }} />
 }
 
-const MapWrapper = styled.div`
-  // border: 1px solid red;
-
-  position: relative;
-`;
-
-
-/* W */
-
 const W = styled.div`
   // border: 1px solid yellow;
 `;
 
-/* Z */
-
-const ZoomCtrlRoot = styled.div`
-  // border: 1px solid orange;
-
-  position: absolute;
-  top: 0;
-  left: calc(100vw - 80px);
-  background: white;
-  padding: 5px;
-
-  display: flex;
-  flex-direction: column;
-  z-index: 10;
-`;
-
-const ZoomCtrl = (props) => {
-  const { zoom, setZoom } = useContext(TwofoldContext)
-
-  const zoomIn = () => {
-    setZoom(zoom/2)
-  }
-  const zoomOut = () => {
-    setZoom(zoom*2)
-  }
-  const zoomReset = () => {
-    setZoom(1)
-  }
-
-  return <ZoomCtrlRoot >
-    <span onClick={zoomIn} >[+]</span>
-    <span onClick={zoomOut} >[-]</span>
-    <span onClick={zoomReset} >[1]</span>
-  </ZoomCtrlRoot>
-}
 
 /**
  * LocationsShowMobile
  *
+ * @TODO: what's the difference between this and LocationsShowDesktop? Let's simplify. _vp_ 2022-09-02
  */
 const LocationsShowMobile = (props) => {
   logg(props, 'LocationsShowMobile')
@@ -147,7 +87,8 @@ const LocationsShowMobile = (props) => {
 
       setLocation(res.data.map)
       setLoading(false)
-      // @TODO: setFlash here?! If I"m accessing a gallery I haven't bought access to?
+      // @TODO: setFlash here?! If I'm accessing a gallery I don't have access to?
+
     }).catch((e) => {
       logg(e, 'e13')
       history.push('/')
@@ -185,7 +126,7 @@ const LocationsShowMobile = (props) => {
   // load showItem if any
   // @TODO: this makes too many calls, improve performance
   // @TODO: move to api
-  // @TODO: this is duplicated between LocationsShowDesktop,Mobile - consolidate!
+  // @TODO: this is duplicated between LocationsShowDesktop, Mobile - consolidate!
   useEffect(() => {
     if (!match.params.item_type) { return }
 
@@ -248,3 +189,58 @@ const LocationsShowMobile = (props) => {
 }
 
 export default LocationsShowMobile
+
+
+
+
+// const Div1 = styled.div`
+//   // border: 2px solid brown;
+//   text-align: center;
+//   display: block;
+//   position: relative; /* required for mobile, so that zoomCtrl, etc are inside the collapsible div */
+//   overflow: scroll;
+//   max-height: 80vh; // @TODO: huh?
+// `;
+
+// const CollapsibleNoMargins = styled(Collapsible)`
+//   margin: 0;
+//   padding: 0;
+// `;
+
+// const MapWrapper = styled.div`
+//   // border: 1px solid red;
+//   position: relative;
+// `;
+
+// const ZoomCtrl = (props) => {
+//   const { zoom, setZoom } = useContext(TwofoldContext)
+//   const zoomIn = () => {
+//     setZoom(zoom/2)
+//   }
+//   const zoomOut = () => {
+//     setZoom(zoom*2)
+//   }
+//   const zoomReset = () => {
+//     setZoom(1)
+//   }
+//   return <ZoomCtrlRoot >
+//     <span onClick={zoomIn} >[+]</span>
+//     <span onClick={zoomOut} >[-]</span>
+//     <span onClick={zoomReset} >[1]</span>
+//   </ZoomCtrlRoot>
+// }
+
+// const ZoomCtrlRoot = styled.div`
+//   // border: 1px solid orange;
+//   position: absolute;
+//   top: 0;
+//   left: calc(100vw - 80px);
+//   background: white;
+//   padding: 5px;
+//   display: flex;
+//   flex-direction: column;
+//   z-index: 10;
+// `;
+
+
+
