@@ -1,5 +1,13 @@
 "use strict";
 
+import RotationPad from './RotationPad'
+import MovementPad from './MovementPad'
+
+/**
+ * TouchControls
+ * _vp_ 2022-09-02
+ *
+**/
 function TouchControls(container, camera, options) {
 
 	var self = this;

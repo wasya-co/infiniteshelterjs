@@ -6,15 +6,20 @@ import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader"
 import { Octree } from 'three/examples/jsm/math/Octree'
 import styled from 'styled-components'
 
-import { logg, S } from "$shared"
-import { PointerLockControls } from './PointerLockControls'
+import {
+  logg,
+} from "$shared"
+import TouchControls from './touch-controls'
 
-// @TODO: make its own component. _vp_ 2022-08-13
+/**
+ * What is blocker? the entire canvas?
+ *
+ * @TODO: make its own component. _vp_ 2022-08-13
+**/
 const Blocker = styled.div`
   border: 2px solid red;
 
   position: relative;
-  // height: calc(100% - ${p => p.breadcrumbsHeight});
   width: 700px;
   height: 350px;
 
@@ -57,13 +62,15 @@ const Blocker = styled.div`
 `;
 
 /**
- * ThreePanelDefault
+ * ThreePanelMobile
  * Markers are obejcts _vp_ 2021-11-14
  * Continue.           _vp_ 2022-08-13
+ * Continue.           _vp_ 2022-09-02
+ *
  *
  */
-const ThreePanelV4 = (props) => {
-  logg(props, 'ThreePanelV4')
+const Loc = (props) => {
+  // logg(props, 'ThreePanelMobile')
   const { map } = props
 
   const history = useHistory()
@@ -104,7 +111,7 @@ const ThreePanelV4 = (props) => {
      * aspect — Camera frustum aspect ratio.
      * near — Camera frustum near plane.
      * far — Camera frustum far plane.
-    */
+    **/
     camera = new THREE.PerspectiveCamera( 75, 2, 1, 1000 ) // fov, aspect, near, far
     camera.position.y = 10
 
@@ -116,25 +123,29 @@ const ThreePanelV4 = (props) => {
     light.position.set( 0.5, 1, 0.75 )
     scene.add( light )
 
-    controls = new PointerLockControls( camera, document.body )
 
-    blockerRef.current.addEventListener( 'click', function () {
-      logg('locked controls')
-      controls.lock()
-    } )
 
-    controls.addEventListener( 'lock', function () {
-      logg('event #lock')
-      // instructions.style.display = 'none'
-      // blocker.style.display = 'none'
-    } )
+    // // Controls
+    // var options = {
+    // 	speedFactor: 0.5,
+    // 	delta: 1,
+    // 	rotationFactor: 0.002,
+    // 	maxPitch: 55,
+    // 	hitTest: true,
+    // 	hitTestDistance: 40
+    // };
+    // controls = new TouchControls(el, camera, options);
+    // controls.setPosition(0, 35, 400);
 
-    controls.addEventListener( 'unlock', function () {
-      // blocker.style.display = 'block'
-      // instructions.style.display = ''
-    } )
+    // controls.addToScene(scene);
 
-    scene.add( controls.getObject() )
+    // scene.add( controls.getObject() )
+
+    // blockerRef.current.addEventListener( 'click', function () {
+    //   logg('locked controls')
+    //   controls.lock()
+    // } )
+
 
 
     const onKeyDown = (event) => {
@@ -190,7 +201,7 @@ const ThreePanelV4 = (props) => {
 
     /*
      * Floor
-     */
+    **/
 
     // moon floor
     texture = THREE.ImageUtils.loadTexture(`/assets/textures/moon-1.jpg`)
@@ -199,24 +210,6 @@ const ThreePanelV4 = (props) => {
     const floorMaterial = new THREE.MeshBasicMaterial({ map: texture })
     const floor = new THREE.Mesh( floorGeometry, floorMaterial )
     scene.add( floor )
-
-    /*
-     * Model Import
-     */
-    // const scenesPath = '/assets/scenes/'
-    // const objectsPath = '/assets/objects/'
-    // const texturesPath = '/assets/textures/'
-    // const manager = new THREE.LoadingManager()
-    // const mtlLoader = new MTLLoader(manager)
-    // mtlLoader.setPath(texturesPath)
-    // const onProgress = (xhr) => {
-    //   if (xhr.lengthComputable) {
-    //     const percentComplete = xhr.loaded / xhr.total * 100
-    //     console.log( Math.round( percentComplete, 2 ) + '% downloaded' )
-    //   }
-    // }
-    // const onError = () => {}
-
 
     map.markers.map((marker, idx) => {
 
@@ -236,8 +229,6 @@ const ThreePanelV4 = (props) => {
 
     })
 
-
-
     /*
      * Skybox
     **/
@@ -248,10 +239,9 @@ const ThreePanelV4 = (props) => {
       scene.background = rt.texture
     });
 
-
     /*
-     * and render
-     */
+     * Render
+    **/
     renderer = new THREE.WebGLRenderer({ antialias: true })
     renderer.setPixelRatio( window.devicePixelRatio )
     renderer.setSize( 700, 350 ) // aspect ratio 0.5
@@ -269,7 +259,7 @@ const ThreePanelV4 = (props) => {
   function animate() {
     requestAnimationFrame( animate )
     const time = performance.now()
-    if ( controls.isLocked === true ) {
+    if ( controls?.isLocked === true ) {
 
       var cameraDirection = controls.getDirection(new THREE.Vector3(0, 0, 0)).clone()
 
@@ -302,14 +292,18 @@ const ThreePanelV4 = (props) => {
         velocity.y = Math.max( 0, velocity.y )
         canJump = true
       }
-      controls.moveRight( - velocity.x * delta )
-      controls.moveForward( - velocity.z * delta )
-      controls.getObject().position.y += ( velocity.y * delta ); // new behavior
-      if ( controls.getObject().position.y < 10 ) {
-        velocity.y = 0
-        controls.getObject().position.y = 10
-        canJump = true
-      }
+
+
+      // controls.moveRight( - velocity.x * delta )
+      // controls.moveForward( - velocity.z * delta )
+      // controls.getObject().position.y += ( velocity.y * delta ); // new behavior
+      // if ( controls.getObject().position.y < 10 ) {
+      //   velocity.y = 0
+      //   controls.getObject().position.y = 10
+      //   canJump = true
+      // }
+
+
     }
     prevTime = time
 
@@ -318,10 +312,10 @@ const ThreePanelV4 = (props) => {
 
   return <F>
     <div ref={instructionsRef} />
-    <Blocker {...S} ref={blockerRef} >
+    <Blocker ref={blockerRef} className="Blocker" >
       <div id="Crosshair" />
     </Blocker>
   </F>
 }
 
-export default ThreePanelV4
+export default Loc

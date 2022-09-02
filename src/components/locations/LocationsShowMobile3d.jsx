@@ -9,10 +9,8 @@ import {
 } from "$components/application"
 import { Newsitems } from "$components/newsitems"
 import {
-  ItemModal,
-  MapPanel, MapPanelNoZoom,
-  WrappedMapPanel,
-} from "./"
+  ThreePanelMobile,
+} from "$components/3d_locations"
 import {
   MarkersList,
 } from '$resources/markers'
@@ -105,20 +103,12 @@ const LocationsShowMobile3d = (props) => {
     }
   }, [bottomDrawerOpen, folded, mapPanelRef.current, twofoldPercent, windowWidth, windowHeight])
 
-  // This is to not have MapPanel, only MapPanelNoZoom on mobile _vp_ 2022-03-16
-  let map
-  if (location) {
-    map = location.map || location
-    map = { ...map, config: { ...map.config, map_panel_type: C.map_panel_types.MapPanelNoZoom } }
-  }
-
   return (<W className='LocationsShowMobile3d' >
 
-    { location && <WrappedMapPanel
-      map={map}
+    { location && <ThreePanelMobile
+      map={location.map || location}
       ref={mapPanelRef}
       slug={match.params.slug}
-      withZoom={false}
     />}
 
     { loading  && <Loading /> }

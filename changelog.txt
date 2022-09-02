@@ -40,5 +40,5 @@ comfortable will resume auth and credit cards.
                      also a better DayNightToggle
                      Also MongoidVotable
         2022-08-30 - and styling of Register, Login, BottomDrawer
-                     and also android
+1.1.0 - 2022-09-02 - and also android
                      renamed packages to com.infiniteshelter
