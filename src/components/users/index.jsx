@@ -4,10 +4,7 @@
 import { Plugins } from '@capacitor/core'
 import { FacebookLoginResponse } from '@capacitor-community/facebook-login'
 import React, { Fragment as F, useContext, useState, } from 'react'
-import { ToastContainer, toast } from 'react-toastify'
 import styled from 'styled-components'
-
-import 'react-toastify/dist/ReactToastify.css'
 
 import config from 'config'
 import {

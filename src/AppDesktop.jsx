@@ -4,8 +4,7 @@ import React, { Fragment as F, useEffect, useState } from 'react'
 import {
   Switch, BrowserRouter as Router, Redirect, Route as _Route,
 } from 'react-router-dom'
-import { ToastContainer, toast } from 'react-toastify'
-import 'react-toastify/dist/ReactToastify.css'
+
 import styled from 'styled-components'
 
 import config from "config"
