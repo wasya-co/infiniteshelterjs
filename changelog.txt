@@ -42,4 +42,6 @@ comfortable will resume auth and credit cards.
         2022-08-30 - and styling of Register, Login, BottomDrawer
 1.1.0 - 2022-09-02 - and also android
                      renamed packages to com.infiniteshelter
-1.2.0 - 2022-09-02 - threejs touchControls, got stuck, revert?
+1.2.0 - 2022-09-02 - threejs touchControls ...
+                     looks better, can I make the MovementPad affect the camera?
+                     MovementPad is beginning to work!

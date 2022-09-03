@@ -9,57 +9,12 @@ import styled from 'styled-components'
 import {
   logg,
 } from "$shared"
+import {
+  Blocker,
+} from './'
 import TouchControls from './vendor/TouchControls'
+import MovementPad from './vendor/MovementPad'
 
-/**
- * What is blocker? the entire canvas?
- *
- * @TODO: make its own component. _vp_ 2022-08-13
-**/
-const Blocker = styled.div`
-  border: 2px solid red;
-
-  position: relative;
-  width: 700px;
-  height: 350px;
-
-  #Crosshair {
-    // border: 1px solid yellow;
-    width: 50px;
-    height: 50px;
-
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    color: white;
-
-    ::before {
-      content: '';
-      position: absolute;
-      border-color: white;
-      border-style: solid;
-      border-width: 0 0.1em 0 0;
-      height: 1em;
-      top: 0em;
-      left: 0.3em;
-      // margin-top: -1em;
-      transform: rotate(90deg);
-      // width: 0.5em;
-    }
-    ::after {
-      content: '';
-      position: absolute;
-      border-color: white;
-      border-style: solid;
-      border-width: 0 0.1em 0 0;
-      height: 1em;
-      top: 0em;
-      left: 0.3em;
-      // margin-top: -1em;
-      // width: 0.5em;
-    }
-  }
-`;
 
 /**
  * ThreePanelMobile
@@ -76,6 +31,7 @@ const Loc = (props) => {
   const history = useHistory()
 
   let camera, controls,
+    fpsBody,
     object, objects = [], markerObjects = [], markerObjectsIdxs = [],
     raycaster, renderer,
     texture,
@@ -125,17 +81,16 @@ const Loc = (props) => {
     scene.add( light )
 
 
-
     // Controls
     var options = {
-    	speedFactor: 0.5,
-    	delta: 1,
-    	rotationFactor: 0.002,
-    	maxPitch: 55,
-    	hitTest: true,
-    	hitTestDistance: 40
+      speedFactor: 0.5,
+      delta: 1,
+      rotationFactor: 0.002,
+      maxPitch: 55,
+      hitTest: true,
+      hitTestDistance: 40
     };
-    controls = new TouchControls(blockerRef.current, camera, options);
+    // controls = new TouchControls(blockerRef.current, camera, options);
     // controls.setPosition(0, 35, 400);
 
     // controls.addToScene(scene);
@@ -197,6 +152,43 @@ const Loc = (props) => {
     document.addEventListener( 'keydown', onKeyDown )
     document.addEventListener( 'keyup', onKeyUp )
 
+    const onMove = (event) => {
+      logg(event, 'onMove')
+
+      let ztouch = Math.abs(event.detail.deltaY)
+      let xtouch = Math.abs(event.detail.deltaX)
+
+      if (event.detail.deltaY == event.detail.middle) {
+        ztouch = 1;
+        moveForward = moveBackward = false
+      } else {
+        if (event.detail.deltaY > event.detail.middle) {
+          moveForward = true
+          moveBackward = false
+        }
+        else if (event.detail.deltaY < event.detail.middle) {
+          moveForward = false
+          moveBackward = true
+        }
+      }
+
+      if (event.detail.deltaX == event.detail.middle) {
+        xtouch = 1
+        moveRight = moveLeft = false
+      } else {
+        if (event.detail.deltaX < event.detail.middle) {
+          moveRight = true
+          moveLeft = false
+        }
+        else if (event.detail.deltaX > event.detail.middle) {
+          moveRight = false
+          moveLeft = true
+        }
+      }
+
+    }
+    document.addEventListener( 'move', onMove )
+
     raycaster = new THREE.Raycaster( new THREE.Vector3(), new THREE.Vector3( 0, - 1, 0 ), 0, 10 )
 
     /*
@@ -240,6 +232,16 @@ const Loc = (props) => {
     });
 
     /*
+     * Camera Holder
+    **/
+    var cameraHolder = new THREE.Object3D();
+    cameraHolder.name = "cameraHolder";
+    // cameraHolder.add(camera);
+
+    fpsBody = new THREE.Object3D();
+    fpsBody.add(cameraHolder);
+
+    /*
      * Render
     **/
     renderer = new THREE.WebGLRenderer({ antialias: true })
@@ -259,7 +261,8 @@ const Loc = (props) => {
   function animate() {
     requestAnimationFrame( animate )
     const time = performance.now()
-    if ( controls?.isLocked === true ) {
+
+    if (controls?.isLocked === true ) {
 
       var cameraDirection = controls.getDirection(new THREE.Vector3(0, 0, 0)).clone()
 
@@ -292,33 +295,99 @@ const Loc = (props) => {
         velocity.y = Math.max( 0, velocity.y )
         canJump = true
       }
-
-
-      // controls.moveRight( - velocity.x * delta )
-      // controls.moveForward( - velocity.z * delta )
-      // controls.getObject().position.y += ( velocity.y * delta ); // new behavior
-      // if ( controls.getObject().position.y < 10 ) {
-      //   velocity.y = 0
-      //   controls.getObject().position.y = 10
-      //   canJump = true
-      // }
-
-
     }
+
+    // onMove
+    if (true) {
+      const delta = ( time - prevTime ) / 1000
+      velocity.x -= velocity.x * 10.0 * delta
+      velocity.z -= velocity.z * 10.0 * delta
+      velocity.y -= 9.8 * 100.0 * delta; // 100.0 = mass
+      direction.z = Number( moveForward ) - Number( moveBackward )
+      direction.x = Number( moveRight ) - Number( moveLeft )
+      direction.normalize(); // this ensures consistent movements in all directions
+      if ( moveForward || moveBackward ) velocity.z -= direction.z * 400.0 * delta
+      if ( moveLeft || moveRight ) velocity.x -= direction.x * 400.0 * delta
+    }
+
+    camera.translateX(velocity.x);
+    // camera.translateY(velocity.y);
+    // camera.translateZ(velocity.z);
+
+    // camera.translateX(velocity.x);
+    // camera.translateY(velocity.y);
+    // camera.translateZ(velocity.z);
+
     prevTime = time
 
     renderer.render( scene, camera )
   }
-
-  logg('here?')
 
   return <F>
     <div ref={instructionsRef} />
     <Blocker ref={blockerRef} className="Blocker" >
       <div id="Crosshair" />
       {/* <TouchControls container={blockerRef} camera={camera} options={{}} /> */}
+      <MovementPad />
     </Blocker>
   </F>
 }
 
 export default Loc
+
+
+
+
+
+
+// /**
+//  * What is blocker? the entire canvas?
+//  *
+//  * @TODO: make its own component. _vp_ 2022-08-13
+// **/
+// const Blocker = styled.div`
+//   border: 2px solid red;
+
+//   position: relative;
+//   width: 700px;
+//   height: 350px;
+
+//   #Crosshair {
+//     // border: 1px solid yellow;
+//     width: 50px;
+//     height: 50px;
+
+//     position: absolute;
+//     left: 50%;
+//     top: 50%;
+//     color: white;
+
+//     ::before {
+//       content: '';
+//       position: absolute;
+//       border-color: white;
+//       border-style: solid;
+//       border-width: 0 0.1em 0 0;
+//       height: 1em;
+//       top: 0em;
+//       left: 0.3em;
+//       // margin-top: -1em;
+//       transform: rotate(90deg);
+//       // width: 0.5em;
+//     }
+//     ::after {
+//       content: '';
+//       position: absolute;
+//       border-color: white;
+//       border-style: solid;
+//       border-width: 0 0.1em 0 0;
+//       height: 1em;
+//       top: 0em;
+//       left: 0.3em;
+//       // margin-top: -1em;
+//       // width: 0.5em;
+//     }
+//   }
+// `;
+
+
