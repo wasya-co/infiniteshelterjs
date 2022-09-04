@@ -45,3 +45,4 @@ comfortable will resume auth and credit cards.
 1.2.0 - 2022-09-02 - threejs touchControls ...
                      looks better, can I make the MovementPad affect the camera?
                      MovementPad is beginning to work!
+                     and stripe
