@@ -7,4 +7,4 @@ module.exports = {
   "domain": "tgm.piousbox.com", // required! 20210831
 
   "homePath": "en/locations/show3d/three-geodesic",
-};
+}

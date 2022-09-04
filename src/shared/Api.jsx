@@ -67,7 +67,7 @@ const useApi = () => {
 
     initPayment: (p) => request.post(`${config.apiOrigin}/api/payments2`, { jwt_token: token, amount_cents: p.amountCents }).then((r) => r.data),
 
-    longTermTokenPath: '/api/users/long_term_token', // @TODO: I don't do paths like that anymore, so remove. _vp_ 2022-09-04
+    longTermTokenPath: '/api/users/long_term_token', // @TODO: move to config.router _vp_ 2022-09-04
 
     postLogin: ({ email, password }) => {
       return request.post(`${config.apiOrigin}/api/users/login.json`,
