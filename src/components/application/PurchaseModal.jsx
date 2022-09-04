@@ -3,23 +3,35 @@
 import PropTypes from 'prop-types'
 import React, { Fragment as F, useContext, useEffect, useState } from "react"
 import Modal from "react-modal"
+import { toast } from 'react-toastify'
 import { CardElement, Elements, useElements, useStripe, } from '@stripe/react-stripe-js'
 import { loadStripe } from '@stripe/stripe-js'
 import styled from 'styled-components'
 
 import {
-  Btn,
+  AuthContext,
+  ModalHeader,
+} from 'ishlibjs'
+
+import {
   logg,
-  request,
-  S,
   TwofoldContext,
   useApi,
 } from "$shared"
+
+import styles from './PurchaseModal.module.scss'
+
+const FlexRow = styled.div``;
 
 const stripePromise = loadStripe('pk_test_qr1QPmSpLdBFt1F7itdWJOj3') // @TODO: this is active, but change.
 
 const _PurchaseModal = (props) => {
   // logg(props, '_PurchaseModal')
+
+  const {
+    currentUser, setCurrentUser,
+  } = useContext(AuthContext)
+  // logg(useContext(AuthContext), 'PurchaseModalUsedAuthContext')
 
   const {
     purchaseModalOpen, setPurchaseModalOpen,
@@ -30,15 +42,15 @@ const _PurchaseModal = (props) => {
   const stripe = useStripe()
   const elements = useElements()
 
+  const [ amountCents, setAmountCents ] = useState(50)
 
-  // buy unlocks (coins)
-  // @TODO: rename
+  // @TODO: add a virual cue "Loading" on button click.
   const buyUnlocks = async (event) => {
     event.preventDefault()
-
     if (!stripe || !elements) { return }
-    const cardElement = elements.getElement(CardElement)
-    let client_secret = await api.getPayments()
+
+    // const cardElement = elements.getElement(CardElement)
+    let client_secret = await api.initPayment({ amountCents, })
 
     const result = await stripe.confirmCardPayment(client_secret.client_secret, {
       payment_method: {
@@ -47,31 +59,46 @@ const _PurchaseModal = (props) => {
     })
 
     if (result.error) {
+      toast('We are sorry, but something went wrong.')
       logg(result.error.message, 'e41 - cannot buyUnlocks()')
+
     } else {
       if (result.paymentIntent.status === 'succeeded') {
-        let response = await api.getMyAccount()
-        logg(response, 'tr2')
-        setCurrentUser(response)
-        setPurchaseModalOpen(false)
+        const handle = setInterval(async () => {
+
+          let response = await api.getMyAccount()
+          logg(response, 'tr2 success')
+          if (!response.is_purchasing) {
+            logg('clearing interval!')
+            setCurrentUser(response)
+            setPurchaseModalOpen(false)
+            clearInterval(handle)
+          }
+
+        }, 1 * 500)
+        setTimeout(() => clearInterval(handle), 10 * 1000)
       }
     }
   }
 
-  return <F>
-    {/* <Btn>Spend $</Btn> */}
+  Modal.setAppElement('body')
 
-    <Modal isOpen={purchaseModalOpen} ariaHideApp={false} >
-      <h1>
-        Buy unlocks
-        <span onClick={() => { setPurchaseModalOpen(false) } } >[x]</span>
-      </h1>
-      <form onSubmit={buyUnlocks} >
-        <CardElement />
-        <button type="submit" disabled={!stripe} >Pay</button>
-      </form>
-    </Modal>
-  </F>
+  return <Modal
+    className={`PurchaseModal ${styles.LoginModal}`}
+    isOpen={purchaseModalOpen}
+    overlayClassName={styles.LoginModalOverlay}
+    portalClassName={styles.LoginModalPortal}
+  >
+    <ModalHeader onClose={() => { setPurchaseModalOpen(false) } } >Buy unlocks</ModalHeader>
+    <form onSubmit={buyUnlocks} >
+      <FlexRow>
+        How many cents would you pay for 1 coin? Minimum 50 cents.
+        <input value={amountCents} onChange={e => setAmountCents(e.target.value)} />
+      </FlexRow>
+      <CardElement />
+      <button type="submit" disabled={!stripe} >Pay</button>
+    </form>
+  </Modal>
 }
 const PurchaseModal = (props) => <Elements stripe={stripePromise}><_PurchaseModal {...props} /></Elements>;
 export default PurchaseModal

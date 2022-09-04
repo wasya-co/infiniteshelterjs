@@ -113,7 +113,9 @@ const UnlockModal = (props) => {
 
   const cost = itemToUnlock.premium_tier
 
-  return (<Modal style={modalStyle} ariaHideApp={false} isOpen={!!itemToUnlock.id} >
+  Modal.setAppElement('body')
+
+  return (<Modal style={modalStyle} isOpen={!!itemToUnlock.id} >
     <ModalHeader onClose={() => closable && setItemToUnlock(false) } >Unlock this item?</ModalHeader>
     <p>To access this content, please unlock it first. It costs {cost} coin(s) to unlock.</p>
     { currentUser && <F>

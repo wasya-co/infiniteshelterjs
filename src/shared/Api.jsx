@@ -61,11 +61,11 @@ const useApi = () => {
       })
     },
 
-    getPayments: () => request.get(`${config.apiOrigin}/api/payments2?jwt_token=${token}`).then((r) => r.data),
-
     getReport: (slug) => request.get(`${config.apiOrigin}/api/reports/view/${slug}?jwt_token=${token}`).then((r) => r.data.report),
 
     getTag: (tag) => request.get(`${config.apiOrigin}/api/tags/view/${tag.slug}`).then((r) => r.data),
+
+    initPayment: (p) => request.post(`${config.apiOrigin}/api/payments2`, { jwt_token: token, amount_cents: p.amountCents }).then((r) => r.data),
 
     longTermTokenPath: '/api/users/long_term_token', // @TODO: I don't do paths like that anymore, so remove. _vp_ 2022-09-04
 
