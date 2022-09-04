@@ -10,6 +10,8 @@ const settings = {
   "homePath": "/en/locations/show/root",
 
   "requireLogin": false,
+
+  stripePublicKey: 'pk_test_qr1QPmSpLdBFt1F7itdWJOj3',
 };
 
 const defaultSettings = require('../default.js')
