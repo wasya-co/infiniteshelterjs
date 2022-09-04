@@ -270,7 +270,7 @@ function TouchControls(container, camera, options) {
 		self.unlockAllDirections();
 		hitObjects = [];
 		var cameraDirection = self.getDirection2(new THREE.Vector3(0, 0, 0)).clone();
-		
+
 		for (var i = 0; i < 4; i++) {
 			// Applying rotation for each direction:
 			var direction = cameraDirection.clone();
@@ -394,3 +394,5 @@ TouchControls.prototype = {
 	}
 
 };
+
+export default TouchControls
