@@ -19,13 +19,13 @@ import { Newsitems } from "$components/newsitems"
 const _Marker = styled.div`
   color: ${p => p.theme.colors.text};
 
-  margin-bottom: 10px;
-  max-width: 33%;
-  min-width: 100px;
+  margin: 0 auto 10px auto;
+  // max-width: 33%;
+  // min-width: 100px;
+  width: 120px;
 
   text-align: center;
 
-  width: min(33%, 100px);
 `;
 const Marker = ({ children, variant, ...props }) => {
   if (variant===C.variants.bordered) {
@@ -36,22 +36,25 @@ const Marker = ({ children, variant, ...props }) => {
 }
 
 /* W */
-const _W = styled.div`
+const _W0 = styled.div`
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
-  // justify-content: flex-start;
 
-  ::after {
-    content: "";
-    flex: auto;
-  }
+  // &:after {
+  //   content: "";
+  //   flex: auto;
+  // }
+
+  flex-grow: 0;
+  flex-shrink: 0;
+
 `;
-const W = ({ children, variant, ...props }) => {
+const W0 = ({ children, variant, ...props }) => {
   if (variant===C.variants.bordered) {
     return <WBordered {...props}>{children}</WBordered>
   } else {
-    return <_W {...props}>{children}</_W>
+    return <_W0 {...props}>{children}</_W0>
   }
 }
 
@@ -84,7 +87,7 @@ const MarkersList = (props) => {
 
   const out = []
   props.markers.map((m, idx) => {
-    out.push(<Marker className="Marker" key={idx} variant={variant}
+    out.push(<Marker key={idx} variant={variant}
       onClick={() => goto(m) }
     >
       <img src={m.title_img_path} /><br />
@@ -92,10 +95,15 @@ const MarkersList = (props) => {
       { m.name }
     </Marker>)
   })
+  const times = 12 - out.length % 12
+  logg(times, 'times')
+  for (let i = 0; i < times; i++) { // zero-height placeholders to prettify last row
+    out.push(<Marker style={{ height: '0' }} variant={variant} key={i} />)
+  }
 
-  return <W className="MarkersList" >
+  return <W0 className="MarkersList" >
     {out}
-  </W>
+  </W0>
 }
 
 MarkersList.propTypes = {
