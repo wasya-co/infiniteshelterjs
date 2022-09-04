@@ -13,23 +13,27 @@ import {
   request,
   S,
   TwofoldContext,
+  useApi,
 } from "$shared"
 
 const stripePromise = loadStripe('pk_test_qr1QPmSpLdBFt1F7itdWJOj3') // @TODO: this is active, but change.
 
 const _PurchaseModal = (props) => {
+  // logg(props, '_PurchaseModal')
 
   const {
     purchaseModalOpen, setPurchaseModalOpen,
   } = useContext(TwofoldContext)
   // logg(useContext(TwofoldContext), 'PurchaseModalUsedTwofoldContext')
 
+  const api = useApi()
   const stripe = useStripe()
   const elements = useElements()
 
+
   // buy unlocks (coins)
   // @TODO: rename
-  const handleSubmit = async (event) => {
+  const buyUnlocks = async (event) => {
     event.preventDefault()
 
     if (!stripe || !elements) { return }
@@ -43,7 +47,7 @@ const _PurchaseModal = (props) => {
     })
 
     if (result.error) {
-      logg(result.error.message, 'error message')
+      logg(result.error.message, 'e41 - cannot buyUnlocks()')
     } else {
       if (result.paymentIntent.status === 'succeeded') {
         let response = await api.getMyAccount()
@@ -55,15 +59,14 @@ const _PurchaseModal = (props) => {
   }
 
   return <F>
-
-    <Btn>Spend $</Btn>
+    {/* <Btn>Spend $</Btn> */}
 
     <Modal isOpen={purchaseModalOpen} ariaHideApp={false} >
       <h1>
         Buy unlocks
         <span onClick={() => { setPurchaseModalOpen(false) } } >[x]</span>
       </h1>
-      <form onSubmit={handleSubmit} >
+      <form onSubmit={buyUnlocks} >
         <CardElement />
         <button type="submit" disabled={!stripe} >Pay</button>
       </form>

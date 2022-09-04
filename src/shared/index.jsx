@@ -158,7 +158,8 @@ export const inflector = {
       case 'Gallery':
         return 'galleries'
       default:
-      return `${m.toLowerCase()}s`
+        // Report, what else?
+        return `${m.toLowerCase()}s`
     }
   },
 }

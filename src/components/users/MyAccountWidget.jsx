@@ -1,5 +1,6 @@
 
 import { ethers } from 'ethers'
+import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline'
 import PropTypes from 'prop-types'
 import React, { Fragment as F, useContext, useEffect, useState } from "react"
 import Toggle from 'react-toggle'
@@ -67,6 +68,13 @@ const Img = ({ src }) => {
 
 const injected = new InjectedConnector() // { supportedChainIds: [1, 3, 4, 5, 42], })
 
+const _CoinManager = styled.div`
+  display: flex;
+`;
+const CoinManager = ({ children, ...props }) => {
+  return <_CoinManager className="CoinManager" {...props} >{children}</_CoinManager>
+}
+
 const W0 = styled.div`
   // border: 1px solid cyan;
 
@@ -87,7 +95,7 @@ const MyAccountWidget = (props) => {
     currentUser, setCurrentUser,
     useApi,
   } = useContext(AuthContext)
-  // logg(useContext(AuthContext), 'usedAuthContext')
+  // logg(useContext(AuthContext), 'MyAccountWidgetUsedAuthContext')
 
   // @TODO: does this really belong to TwofoldContext?
   const {
@@ -150,8 +158,6 @@ const MyAccountWidget = (props) => {
     })()
   }, [])
 
-  logg('rendering once?')
-
   return <W0 className="MyAccountWidget" >
 
     { /* currentUser.profile_photo_url && <Img src={currentUser.profile_photo_url} /> */ }
@@ -159,8 +165,10 @@ const MyAccountWidget = (props) => {
 
     <FlexRow>
 
-      { currentUser.email && <Cell className="CoinManager" >[ { typeof currentUser.n_unlocks === 'undefined' ? '?' : currentUser.n_unlocks} coins&nbsp;
-        <Btn onClick={() => setPurchaseModalOpen(true) }>Add</Btn> ]</Cell> }
+      { currentUser.email && <CoinManager>
+        [&nbsp;{ typeof currentUser.n_unlocks === 'undefined' ? '?' : currentUser.n_unlocks} coins&nbsp;
+        <AddCircleOutlineIcon onClick={() => setPurchaseModalOpen(true)} />&nbsp;]
+      </CoinManager> }
 
       { /* set EditorMode */ }
       {/* <Card>

@@ -4,8 +4,6 @@ import Adapter from "enzyme-adapter-react-16"
 import React from 'react'
 import { act } from "react-dom/test-utils"
 
-configure({ adapter: new Adapter() })
-
 import {
   AppMock,
   BackBtn, Box,
@@ -17,6 +15,7 @@ import {
   WidgetContainer,
 } from './'
 
+configure({ adapter: new Adapter() })
 
 // import useApi from "$shared/Api"
 jest.mock("$shared/Api")
@@ -31,9 +30,9 @@ jest.mock('react-router-dom', () => ({
 
 
 /* B */
-describe('BackBtn - current2 ', () => {
-  test('unsets ShowItem', () => {
+describe('BackBtn -  ', () => {
 
+  test('unsets ShowItem', () => {
     const mockSetShowItem = jest.fn()
 
     const w = mount(<TwofoldContextProvider {...{ showItem: '123', setShowItem: mockSetShowItem }} >
@@ -42,8 +41,6 @@ describe('BackBtn - current2 ', () => {
     logg(w.find('.BackBtn').exists(), 'found?')
     w.find('.BackBtn').first().simulate('click')
     expect(mockSetShowItem).toHaveBeenCalled()
-
-    expect(true).toBeTruthy()
   })
 })
 

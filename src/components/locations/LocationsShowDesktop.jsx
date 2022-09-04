@@ -12,6 +12,7 @@ import {
 } from "./"
 import {
   Breadcrumbs,
+  UnlockModal,
 } from "$components/application"
 import {
   MarkersList,
@@ -48,7 +49,7 @@ const Description = ({ item={} }) => {
 }
 
 /* H */
-const WH = styled.div`
+const _Handle = styled.div`
   // border: 1px solid cyan;
 
   position: fixed;
@@ -117,7 +118,7 @@ const Handle = (props) => {
   const foldedRight = folded === C.foldedRight
 
   // draggable="true"
-  return <WH className="Handle" {...{ foldedLeft, foldedRight, twofoldPercent }}
+  return <_Handle className="Handle" {...{ foldedLeft, foldedRight, twofoldPercent }}
     onMouseMove={onMouseMove}
     onMouseDown={onMouseDown}
     onMouseLeave={onMouseUp}
@@ -130,7 +131,7 @@ const Handle = (props) => {
     <ChevronLeft onClick={foldLeft} />
     <ChevronRight onClick={foldRight} />
     { [C.foldedRight, C.foldedLeft].indexOf(folded) !== -1  && <LongLine orientation={C.vertical} /> }
-  </WH>
+  </_Handle>
 }
 
 /* I */
@@ -196,8 +197,8 @@ const LocationsShowDesktop = (props) => {
   const [ loading, setLoading ] = useState(false)
   const [ markers, setMarkers ] = useState([])
 
-  const mountedRef = useRef('init')
-  const showItemRef = useRef('init')
+  const mountedRef = useRef(C.ref.init)
+  const showItemRef = useRef(C.ref.init)
   const mapPanelRef = useRef(null)
   const api = useApi()
 
@@ -225,31 +226,16 @@ const LocationsShowDesktop = (props) => {
     }
   }, [ location ])
 
-  const showToast = async (msg) => await Toast.show({ text: msg })
-
   // Load the map
-  // @TODO: move into api object
+  // @TODO: What if I'm accessing a gallery I haven't bought access to?
   useEffect(() => {
-    setLoading(true)
-    const token = localStorage.getItem("jwt_token")
 
-    // @TODO: move to Api _vp_ 2022-08-15
-    request.get(`/api/maps/view/${match.params.slug}`, { params: { jwt_token: token } }).then(res => {
-      if (mountedRef.current === match.params.slug) { return null }
-      if (!res.data.map) {
-        setLoading(false)
-        showToast('could not get Location')
-        return null
-      }
-
-      setLocation(res.data.map)
-      if (res.data.map.rated === C.rated.nc17 && !ratedConfirmation) { // @TODO: not test-driven, bad!
+    api.getLocation({ slug: match.params.slug }).then(r => {
+      setLocation(r)
+      if (r.rated === C.rated.nc17 && !ratedConfirmation) { // @TODO: not test-driven, bad!
         setRatedConfirmation(false)
       }
-      setLoading(false)
-      // @TODO: setFlash here?! If I"m accessing a gallery I haven't bought access to?
-    }).catch((err) => {
-      logg(err, `Cannot get map ${match.params.slug}`)
+      mountedRef.current = match.params.slug
     })
 
     return () => {
@@ -327,9 +313,9 @@ const LocationsShowDesktop = (props) => {
         </Collapsible> || null }
 
         { /* Tags */ }
-        <FlexRow style={{ marginBottom: '1em', flexWrap: 'wrap' }} >
+        { location && <FlexRow style={{ marginBottom: '1em', flexWrap: 'wrap' }} >
           { location.tags.map((tag) => <Card >{tag.name}</Card> )}
-        </FlexRow>
+        </FlexRow> }
 
         { /* Actions */ }
         { editorMode && <FlexRow style={{ marginBottom: '1em' }} >
@@ -371,6 +357,8 @@ const LocationsShowDesktop = (props) => {
     { loading && <Loading /> }
     { !ratedConfirmation && <RatedRestrictionModal {...{ ratedConfirmation, setRatedConfirmation, }} /> }
     { <MarkerModal /> }
+
+    <UnlockModal />
 
   </MarkerContextProvider></Row>
 }

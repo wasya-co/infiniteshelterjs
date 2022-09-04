@@ -1,31 +1,23 @@
 
-import { IonPage, IonContent, IonButton, IonImg, IonLoading } from "@ionic/react"
 import PropTypes from 'prop-types'
 import React, { Fragment as F, useContext, useEffect, useRef, useState } from "react"
-import Modal from "react-modal"
-import { Route, useLocation, useHistory, Switch } from 'react-router-dom'
+import { useHistory, } from 'react-router-dom'
 import styled from 'styled-components'
 
 import {
   C,
-  logg, S, TwofoldContext,
+  logg,
   PurchasedIcon,
+  TwofoldContext,
   WBordered, WBorderedItem,
 } from "$shared"
-import { Metaline } from "$components/application"
-import { Newsitems } from "$components/newsitems"
 
 /* M */
 const _Marker = styled.div`
   color: ${p => p.theme.colors.text};
-
   margin: 0 auto 10px auto;
-  // max-width: 33%;
-  // min-width: 100px;
   width: 120px;
-
   text-align: center;
-
 `;
 const Marker = ({ children, variant, ...props }) => {
   if (variant===C.variants.bordered) {
@@ -40,15 +32,6 @@ const _W0 = styled.div`
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
-
-  // &:after {
-  //   content: "";
-  //   flex: auto;
-  // }
-
-  flex-grow: 0;
-  flex-shrink: 0;
-
 `;
 const W0 = ({ children, variant, ...props }) => {
   if (variant===C.variants.bordered) {
@@ -72,6 +55,7 @@ const MarkersList = (props) => {
 
   const history = useHistory()
 
+  // @TODO: move this to the api object
   const goto = (m) => {
     if (m.premium_tier && !m.is_purchased) {
       setItemToUnlock({ ...m })
@@ -96,9 +80,8 @@ const MarkersList = (props) => {
     </Marker>)
   })
   const times = 12 - out.length % 12
-  logg(times, 'times')
   for (let i = 0; i < times; i++) { // zero-height placeholders to prettify last row
-    out.push(<Marker style={{ height: '0' }} variant={variant} key={i} />)
+    out.push(<Marker variant={variant} key={`padded-${i}`} />)
   }
 
   return <W0 className="MarkersList" >

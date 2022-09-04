@@ -2,25 +2,28 @@
 import PropTypes from 'prop-types'
 import React, { Fragment as F, useContext, useEffect, useRef, } from 'react'
 import Modal from "react-modal"
-import { useHistory } from 'react-router-dom'
+import { useHistory, useRouteMatch } from 'react-router-dom'
 import styled from 'styled-components'
 
+import {
+  AuthContext,
+  ModalHeader,
+} from 'ishlibjs'
 import config from 'config'
-import './UnlockModal.module.scss'
-import { Btn, C, logg, request, TwofoldContext, useApi, } from "$shared"
 
-const Btn0 = styled.div`
-  display: inline;
-  cursor: pointer;
-`;
+import {
+  Btn,
+  C,
+  inflector,
+  logg,
+  TwofoldContext,
+} from "$shared"
+
+import './UnlockModal.module.scss'
+
 const BtnRow = styled.div`
   display: flex;
   justify-content: space-around;
-`;
-
-const Header = styled.div`
-  display: flex;
-  justify-content: space-between;
 `;
 
 const modalStyle = {
@@ -39,28 +42,48 @@ const UnlockModal = (props) => {
   // logg(props, 'UnlockModal')
 
   const {
-    currentUser, setCurrentUser,
     itemToUnlock, setItemToUnlock,
+    location, setLocation,
     loginModalOpen, setLoginModalOpen,
     purchaseModalOpen, setPurchaseModalOpen,
     ratedConfirmation, setRatedConfirmation,
   } = useContext(TwofoldContext)
   // logg(useContext(TwofoldContext), 'unlockModalUsedTwofoldContext')
 
-  const history = useHistory()
+  const {
+    currentUser, setCurrentUser,
+    useApi,
+  } = useContext(AuthContext)
+  // logg(useContext(AuthContext), 'unlockModalUsedAuthContext')
+
   const api = useApi()
+  const history = useHistory()
+  const match = useRouteMatch()
 
   const doUnlock = async () => {
+    logg(itemToUnlock, 'itemToUnlock')
+
     // @TODO: check how many unlocks I have, and offer to purchase more if not enough.
+    // @TODO: Do I Need to refresh the newsfeed somehow? _vp_ 2022-09-04
     await api.doUnlock({ kind: itemToUnlock.item_type, id: itemToUnlock.id }).then((r) => {
-      setItemToUnlock({})
+      logg(r, 'OK doUnlock')
 
-      // @TODO: fix this mess
-
+      setItemToUnlock({}) // @TODO: Change this to null if possible. Test-drive this change. _vp_ 2022-09-04
       setCurrentUser(r)
-      // refresh the newsfeed?
+
+      // @TODO: move, copy-pasted from LocationsShowDesktop
+      api.getLocation({ slug: match.params.slug }).then(r => {
+        setLocation(r)
+        if (r.rated === C.rated.nc17 && !ratedConfirmation) { // @TODO: not test-driven, bad!
+          setRatedConfirmation(false)
+        }
+      })
+
+      const resource_name = inflector.tableize(itemToUnlock.item_type)
+      history.push(`/en/locations/show/${match.params.slug}/${resource_name}/show/${itemToUnlock.slug}`)
+
     }).catch((e) => {
-      logg(e, 'e19')
+      logg(e, 'e19 - cannot doUnlock')
     })
   }
 
@@ -91,14 +114,11 @@ const UnlockModal = (props) => {
   const cost = itemToUnlock.premium_tier
 
   return (<Modal style={modalStyle} ariaHideApp={false} isOpen={!!itemToUnlock.id} >
-    <Header>
-      <h1>Unlock this item?</h1>
-      { closable && <Btn0 onClick={() => closable && setItemToUnlock(false) } >&times;</Btn0> }
-    </Header>
+    <ModalHeader onClose={() => closable && setItemToUnlock(false) } >Unlock this item?</ModalHeader>
     <p>To access this content, please unlock it first. It costs {cost} coin(s) to unlock.</p>
     { currentUser && <F>
       <p>You have <b>{currentUser.n_unlocks}</b> unlocks.</p>
-      { currentUser.n_unlocks >= cost && <Btn onClick={doUnlock} >Unlock</Btn> }
+      { currentUser.n_unlocks >= cost && <Btn className='doUnlock' onClick={doUnlock} >Unlock</Btn> }
       { currentUser.n_unlocks < cost && <F>
         <p>You don't have enough unlocks.</p>
         <Btn onClick={() => { setPurchaseModalOpen(true) ; setItemToUnlock(false)} } >Purchase more.</Btn>

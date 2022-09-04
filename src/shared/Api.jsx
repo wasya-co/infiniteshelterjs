@@ -41,12 +41,22 @@ const useApi = () => {
 
     getCities: ()   => request.get(`${config.apiOrigin}/api/cities`).then((r) => r.data),
     getCity: (slug) => request.get(`${config.apiOrigin}/api/cities/view/${slug}`),
-    getGallery: (slug) => request.get(`${config.apiOrigin}/api/galleries/view/${slug}?jwt_token=${token}`).then((r) => r.data.gallery),
+    getGallery: (slug) => {
+      return request.get(`${config.apiOrigin}/api/galleries/view/${slug}?jwt_token=${token}`
+      ).then((r) => r.data.gallery)
+    },
+    getLocation: ({ slug }) => { // _vp_ 2022-09-04
+      return request.get(`/api/maps/view/${slug}?jwt_token=${token}`).then(r => r.data).then(r => {
+        return r.map
+      }).catch((err) => {
+        return err
+      })
+    },
 
     // @TODO: test: upon 401, return anon user. _vp_ 2022-08-15
     getMyAccount: () => {
       return request.post(`/api/my/account`, { jwt_token: token, }).then((r) => r.data).catch((err) => {
-        logg(err, 'Cannot #getMyAccount')
+        // logg(err, 'Cannot #getMyAccount')
         return C.anonUser
       })
     },
@@ -57,23 +67,22 @@ const useApi = () => {
 
     getTag: (tag) => request.get(`${config.apiOrigin}/api/tags/view/${tag.slug}`).then((r) => r.data),
 
-    loginPath: '/api/users/login',
-    longTermTokenPath: '/api/users/long_term_token',
+    longTermTokenPath: '/api/users/long_term_token', // @TODO: I don't do paths like that anymore, so remove. _vp_ 2022-09-04
 
     postLogin: ({ email, password }) => {
-      return request.post(`${config.apiOrigin}${config.router.loginPath}.json`,
+      return request.post(`${config.apiOrigin}/api/users/login.json`,
         { user: { email, password }}
-      ).then((r) => r.data).then((resp) => {
-        logg(resp, 'got this resp')
-
-        localStorage.setItem(C.jwt_token, resp.jwt_token)
-        localStorage.setItem(C.current_user, JSON.stringify(resp))
-        setCurrentUser(resp) // must be done *after* setting C.jwt_token
-        setLoginModalOpen(false)
+      ).then((r) => r.data).then((r) => {
+        // logg(r, 'postLoginResponse')
+        localStorage.setItem(C.jwt_token, r.jwt_token)
+        setCurrentUser(r)
+        return r
+        // setLoginModalOpen(false)
       }).catch((e) => {
         logg(e, 'e322')
-        toast("Login failed")
-        setCurrentUser(C.anonUser)
+        return e
+        // toast("Login failed")
+        // setCurrentUser(C.anonUser)
       })
     },
 

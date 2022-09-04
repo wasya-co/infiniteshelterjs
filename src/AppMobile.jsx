@@ -117,6 +117,7 @@ const AppMobile = (props) => {
   // }
 
   return (<Router>
+    { /* @TODO: move AuthContext up to AppWrapper. _vp_ 2022-09-04 */ }
     <AuthContextProvider {...{ useApi, }} >
     <TwofoldContextProvider {...props} {...{ layout, setLayout }} >
       <CollapsibleContextProvider >
