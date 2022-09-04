@@ -13,7 +13,6 @@ import {
   AuthContext, AuthWidget,
   FlexCol, FlexRow,
 } from 'ishlibjs'
-// import styles from 'ishlibjs/dist/index.css' // @TODO: re-add!
 
 import {
   PurchaseModal,
@@ -40,15 +39,16 @@ import bodyNFT from '$src/artifacts/contracts/Body.sol/BodyNFT.json'
  */
 const bodyAddress = '0x3e1a03a9e1682f4dd95413e0be69e5b7bccaf15d'
 
-const BuyBtn = styled.span`
-  border: 1px solid ${p => p.theme.colors.text};
+// // Trash, remove
+// const BuyBtn = styled.span`
+//   border: 1px solid ${p => p.theme.colors.text};
 
-  padding: 5px;
-  cursor: pointer;
-`;
+//   padding: 5px;
+//   cursor: pointer;
+// `;
 
 const Cell = styled.div`
-  // display: flex;
+  margin-right: ${p => p.theme.smallWidth};
 `;
 
 const _Img = styled.div`
@@ -59,6 +59,7 @@ const _Img = styled.div`
   max-height: 100px;
   width: 100px;
   height: 100px;
+  margin-right: ${p => p.theme.smallWidth};
 `;
 const Img = ({ src }) => {
   return <_Img><img src={src} alt='' /></_Img>
@@ -76,34 +77,6 @@ const W0 = styled.div`
 
 const W1 = styled.div``;
 
-const AuthedWidget = (props) => {
-
-  const {
-    currentUser, setCurrentUser,
-    useApi,
-  } = useContext(AuthContext)
-
-  const {
-    editorMode, setEditorMode,
-  } = useContext(TwofoldContext)
-
-  return <F>
-    <Cell>[ { typeof currentUser.n_unlocks === 'undefined' ? '?' : currentUser.n_unlocks} coins
-      <BuyBtn onClick={() => setPurchaseModalOpen(true) }>Add</BuyBtn> ]</Cell>
-
-    <Card>
-      <label>
-      <Toggle
-        defaultChecked={editorMode}
-        icons={false}
-        onChange={() => setEditorMode(!editorMode) } />
-      <span>Editor mode</span>
-    </label>
-    </Card>
-
-  </F>
-}
-
 /**
  * MyAccountWidget
 **/
@@ -114,10 +87,13 @@ const MyAccountWidget = (props) => {
     currentUser, setCurrentUser,
     useApi,
   } = useContext(AuthContext)
+  // logg(useContext(AuthContext), 'usedAuthContext')
 
-  // const {
-  // } = useContext(TwofoldContext)
-  // // logg(useContext(TwofoldContext), 'MyAccountWidget#usedTwofoldContext')
+  // @TODO: does this really belong to TwofoldContext?
+  const {
+    editorMode, setEditorMode,
+    purchaseModalOpen, setPurchaseModalOpen,
+  } = useContext(TwofoldContext)
 
   /*
    * @TODO: avatar would be an object s.t. multiple styles/sizes are there,
@@ -167,6 +143,15 @@ const MyAccountWidget = (props) => {
     }
   }
 
+
+  useEffect(() => {
+    (async () => {
+      setCurrentUser(await api.getMyAccount())
+    })()
+  }, [])
+
+  logg('rendering once?')
+
   return <W0 className="MyAccountWidget" >
 
     { /* currentUser.profile_photo_url && <Img src={currentUser.profile_photo_url} /> */ }
@@ -174,13 +159,26 @@ const MyAccountWidget = (props) => {
 
     <FlexRow>
 
-      { /* currentUser.email && <AuthedWidget /> */ }
+      { currentUser.email && <Cell className="CoinManager" >[ { typeof currentUser.n_unlocks === 'undefined' ? '?' : currentUser.n_unlocks} coins&nbsp;
+        <Btn onClick={() => setPurchaseModalOpen(true) }>Add</Btn> ]</Cell> }
+
+      { /* set EditorMode */ }
+      {/* <Card>
+        <label>
+          <Toggle
+            defaultChecked={editorMode}
+            icons={false}
+            onChange={() => setEditorMode(!editorMode) } />
+          <span>Editor mode</span>
+        </label>
+      </Card> */}
+
       <AuthWidget />
 
     </FlexRow>
 
-    { /* @TODO: this is confusing, it's not a modal, it's also the button. */ }
-    {/* <PurchaseModal /> */}
+    <PurchaseModal />
+
   </W0>
 }
 MyAccountWidget.propTypes = {
@@ -201,3 +199,5 @@ export default MyAccountWidget
 // <span>Not Connected</span>
 // <button onClick={connect} >Connect to MetaMask</button>
 // </W1> }
+
+
