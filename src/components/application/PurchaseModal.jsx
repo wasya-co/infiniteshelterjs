@@ -12,6 +12,7 @@ import {
   AuthContext,
   ModalHeader,
 } from 'ishlibjs'
+import config from 'config'
 
 import {
   logg,
@@ -23,7 +24,7 @@ import styles from './PurchaseModal.module.scss'
 
 const FlexRow = styled.div``;
 
-const stripePromise = loadStripe('pk_test_qr1QPmSpLdBFt1F7itdWJOj3') // @TODO: this is active, but change.
+const stripePromise = loadStripe(config.stripePublicKey)
 
 const _PurchaseModal = (props) => {
   // logg(props, '_PurchaseModal')
