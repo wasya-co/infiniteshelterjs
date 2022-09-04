@@ -73,6 +73,10 @@ const C = {
     nc17: 'nc-17',
   },
   ratedConfirmation: 'rated-confirmation', // localStorage
+  ref: {
+    init: 'init',
+    loading: 'loading',
+  },
 
   // T
   theme: 'theme',

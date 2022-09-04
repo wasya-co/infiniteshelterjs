@@ -6,69 +6,32 @@ import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader"
 import { Octree } from 'three/examples/jsm/math/Octree'
 import styled from 'styled-components'
 
-import { logg, S } from "$shared"
-import { PointerLockControls } from './PointerLockControls'
+import {
+  logg,
+} from "$shared"
+import {
+  Blocker,
+} from './'
+import TouchControls from './vendor/TouchControls'
+import MovementPad from './vendor/MovementPad'
 
-// @TODO: make its own component. _vp_ 2022-08-13
-const Blocker = styled.div`
-  border: 2px solid red;
-
-  position: relative;
-  // height: calc(100% - ${p => p.breadcrumbsHeight});
-  width: 700px;
-  height: 350px;
-
-  #Crosshair {
-    // border: 1px solid yellow;
-    width: 50px;
-    height: 50px;
-
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    color: white;
-
-    ::before {
-      content: '';
-      position: absolute;
-      border-color: white;
-      border-style: solid;
-      border-width: 0 0.1em 0 0;
-      height: 1em;
-      top: 0em;
-      left: 0.3em;
-      // margin-top: -1em;
-      transform: rotate(90deg);
-      // width: 0.5em;
-    }
-    ::after {
-      content: '';
-      position: absolute;
-      border-color: white;
-      border-style: solid;
-      border-width: 0 0.1em 0 0;
-      height: 1em;
-      top: 0em;
-      left: 0.3em;
-      // margin-top: -1em;
-      // width: 0.5em;
-    }
-  }
-`;
 
 /**
- * ThreePanelDefault
+ * ThreePanelMobile
  * Markers are obejcts _vp_ 2021-11-14
  * Continue.           _vp_ 2022-08-13
+ * Continue.           _vp_ 2022-09-02
+ *
  *
  */
-const ThreePanelV4 = (props) => {
-  logg(props, 'ThreePanelV4')
+const Loc = (props) => {
+  logg(props, 'ThreePanelMobile')
   const { map } = props
 
   const history = useHistory()
 
   let camera, controls,
+    fpsBody,
     object, objects = [], markerObjects = [], markerObjectsIdxs = [],
     raycaster, renderer,
     texture,
@@ -79,6 +42,7 @@ const ThreePanelV4 = (props) => {
   useEffect(() => {
     init()
     animate()
+    document.title = "InfiniteShelter - ThreePanelMobile :: test"
   }, [])
 
   let moveForward = false
@@ -104,7 +68,7 @@ const ThreePanelV4 = (props) => {
      * aspect — Camera frustum aspect ratio.
      * near — Camera frustum near plane.
      * far — Camera frustum far plane.
-    */
+    **/
     camera = new THREE.PerspectiveCamera( 75, 2, 1, 1000 ) // fov, aspect, near, far
     camera.position.y = 10
 
@@ -116,25 +80,27 @@ const ThreePanelV4 = (props) => {
     light.position.set( 0.5, 1, 0.75 )
     scene.add( light )
 
-    controls = new PointerLockControls( camera, document.body )
 
-    blockerRef.current.addEventListener( 'click', function () {
-      logg('locked controls')
-      controls.lock()
-    } )
+    // Controls
+    var options = {
+      speedFactor: 0.5,
+      delta: 1,
+      rotationFactor: 0.002,
+      maxPitch: 55,
+      hitTest: true,
+      hitTestDistance: 40
+    };
+    // controls = new TouchControls(blockerRef.current, camera, options);
+    // controls.setPosition(0, 35, 400);
 
-    controls.addEventListener( 'lock', function () {
-      logg('event #lock')
-      // instructions.style.display = 'none'
-      // blocker.style.display = 'none'
-    } )
+    // controls.addToScene(scene);
+    // scene.add( controls.getObject() )
 
-    controls.addEventListener( 'unlock', function () {
-      // blocker.style.display = 'block'
-      // instructions.style.display = ''
-    } )
+    // blockerRef.current.addEventListener( 'click', function () {
+    //   logg('locked controls')
+    //   controls.lock()
+    // } )
 
-    scene.add( controls.getObject() )
 
 
     const onKeyDown = (event) => {
@@ -186,11 +152,48 @@ const ThreePanelV4 = (props) => {
     document.addEventListener( 'keydown', onKeyDown )
     document.addEventListener( 'keyup', onKeyUp )
 
+    const onMove = (event) => {
+      logg(event, 'onMove')
+
+      let ztouch = Math.abs(event.detail.deltaY)
+      let xtouch = Math.abs(event.detail.deltaX)
+
+      if (event.detail.deltaY == event.detail.middle) {
+        ztouch = 1;
+        moveForward = moveBackward = false
+      } else {
+        if (event.detail.deltaY > event.detail.middle) {
+          moveForward = true
+          moveBackward = false
+        }
+        else if (event.detail.deltaY < event.detail.middle) {
+          moveForward = false
+          moveBackward = true
+        }
+      }
+
+      if (event.detail.deltaX == event.detail.middle) {
+        xtouch = 1
+        moveRight = moveLeft = false
+      } else {
+        if (event.detail.deltaX < event.detail.middle) {
+          moveRight = true
+          moveLeft = false
+        }
+        else if (event.detail.deltaX > event.detail.middle) {
+          moveRight = false
+          moveLeft = true
+        }
+      }
+
+    }
+    document.addEventListener( 'move', onMove )
+
     raycaster = new THREE.Raycaster( new THREE.Vector3(), new THREE.Vector3( 0, - 1, 0 ), 0, 10 )
 
     /*
      * Floor
-     */
+    **/
 
     // moon floor
     texture = THREE.ImageUtils.loadTexture(`/assets/textures/moon-1.jpg`)
@@ -199,24 +202,6 @@ const ThreePanelV4 = (props) => {
     const floorMaterial = new THREE.MeshBasicMaterial({ map: texture })
     const floor = new THREE.Mesh( floorGeometry, floorMaterial )
     scene.add( floor )
-
-    /*
-     * Model Import
-     */
-    // const scenesPath = '/assets/scenes/'
-    // const objectsPath = '/assets/objects/'
-    // const texturesPath = '/assets/textures/'
-    // const manager = new THREE.LoadingManager()
-    // const mtlLoader = new MTLLoader(manager)
-    // mtlLoader.setPath(texturesPath)
-    // const onProgress = (xhr) => {
-    //   if (xhr.lengthComputable) {
-    //     const percentComplete = xhr.loaded / xhr.total * 100
-    //     console.log( Math.round( percentComplete, 2 ) + '% downloaded' )
-    //   }
-    // }
-    // const onError = () => {}
-
 
     map.markers.map((marker, idx) => {
 
@@ -236,8 +221,6 @@ const ThreePanelV4 = (props) => {
 
     })
 
-
-
     /*
      * Skybox
     **/
@@ -248,10 +231,19 @@ const ThreePanelV4 = (props) => {
       scene.background = rt.texture
     });
 
+    /*
+     * Camera Holder
+    **/
+    var cameraHolder = new THREE.Object3D();
+    cameraHolder.name = "cameraHolder";
+    // cameraHolder.add(camera);
+
+    fpsBody = new THREE.Object3D();
+    fpsBody.add(cameraHolder);
 
     /*
-     * and render
-     */
+     * Render
+    **/
     renderer = new THREE.WebGLRenderer({ antialias: true })
     renderer.setPixelRatio( window.devicePixelRatio )
     renderer.setSize( 700, 350 ) // aspect ratio 0.5
@@ -269,7 +261,8 @@ const ThreePanelV4 = (props) => {
   function animate() {
     requestAnimationFrame( animate )
     const time = performance.now()
-    if ( controls.isLocked === true ) {
+
+    if (controls?.isLocked === true ) {
 
       var cameraDirection = controls.getDirection(new THREE.Vector3(0, 0, 0)).clone()
 
@@ -302,15 +295,29 @@ const ThreePanelV4 = (props) => {
         velocity.y = Math.max( 0, velocity.y )
         canJump = true
       }
-      controls.moveRight( - velocity.x * delta )
-      controls.moveForward( - velocity.z * delta )
-      controls.getObject().position.y += ( velocity.y * delta ); // new behavior
-      if ( controls.getObject().position.y < 10 ) {
-        velocity.y = 0
-        controls.getObject().position.y = 10
-        canJump = true
-      }
     }
+
+    // onMove
+    if (true) {
+      const delta = ( time - prevTime ) / 1000
+      velocity.x -= velocity.x * 10.0 * delta
+      velocity.z -= velocity.z * 10.0 * delta
+      velocity.y -= 9.8 * 100.0 * delta; // 100.0 = mass
+      direction.z = Number( moveForward ) - Number( moveBackward )
+      direction.x = Number( moveRight ) - Number( moveLeft )
+      direction.normalize(); // this ensures consistent movements in all directions
+      if ( moveForward || moveBackward ) velocity.z -= direction.z * 400.0 * delta
+      if ( moveLeft || moveRight ) velocity.x -= direction.x * 400.0 * delta
+    }
+
+    camera.translateX(velocity.x);
+    // camera.translateY(velocity.y);
+    // camera.translateZ(velocity.z);
+
+    // camera.translateX(velocity.x);
+    // camera.translateY(velocity.y);
+    // camera.translateZ(velocity.z);
+
     prevTime = time
 
     renderer.render( scene, camera )
@@ -318,10 +325,69 @@ const ThreePanelV4 = (props) => {
 
   return <F>
     <div ref={instructionsRef} />
-    <Blocker {...S} ref={blockerRef} >
+    <Blocker ref={blockerRef} className="Blocker" >
       <div id="Crosshair" />
+      {/* <TouchControls container={blockerRef} camera={camera} options={{}} /> */}
+      <MovementPad />
     </Blocker>
   </F>
 }
 
-export default ThreePanelV4
+export default Loc
+
+
+
+
+
+
+// /**
+//  * What is blocker? the entire canvas?
+//  *
+//  * @TODO: make its own component. _vp_ 2022-08-13
+// **/
+// const Blocker = styled.div`
+//   border: 2px solid red;
+
+//   position: relative;
+//   width: 700px;
+//   height: 350px;
+
+//   #Crosshair {
+//     // border: 1px solid yellow;
+//     width: 50px;
+//     height: 50px;
+
+//     position: absolute;
+//     left: 50%;
+//     top: 50%;
+//     color: white;
+
+//     ::before {
+//       content: '';
+//       position: absolute;
+//       border-color: white;
+//       border-style: solid;
+//       border-width: 0 0.1em 0 0;
+//       height: 1em;
+//       top: 0em;
+//       left: 0.3em;
+//       // margin-top: -1em;
+//       transform: rotate(90deg);
+//       // width: 0.5em;
+//     }
+//     ::after {
+//       content: '';
+//       position: absolute;
+//       border-color: white;
+//       border-style: solid;
+//       border-width: 0 0.1em 0 0;
+//       height: 1em;
+//       top: 0em;
+//       left: 0.3em;
+//       // margin-top: -1em;
+//       // width: 0.5em;
+//     }
+//   }
+// `;
+
+

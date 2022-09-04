@@ -30,7 +30,7 @@ export const FbLogin = (props) => {
     if (result.accessToken) {
       request.post(`${config.apiOrigin}${api.longTermTokenPath}`, { accessToken: result.accessToken.token }).then((resp) => {
         localStorage.setItem(C.jwt_token, resp.data.jwt_token)
-        localStorage.setItem(C.current_user, JSON.stringify(resp.data) )
+        // localStorage.setItem(C.current_user, JSON.stringify(resp.data) )
         setCurrentUser(resp.data)
       }).catch((err) => {
         logg(err, `Could not post request to ${config.apiOrigin}${api.longTermTokenPath}`)
@@ -50,7 +50,7 @@ export const FbLogin2 = (props) => {
     if (result.accessToken) {
       request.post(`${config.apiOrigin}${api.longTermTokenPath}`, { accessToken: result.accessToken.token }).then((resp) => {
         localStorage.setItem(C.jwt_token, resp.data.jwt_token)
-        localStorage.setItem(C.current_user, JSON.stringify(resp.data) )
+        // localStorage.setItem(C.current_user, JSON.stringify(resp.data) )
         setCurrentUser(resp.data)
       }).catch((err) => {
         logg(err, `Could not post request to ${config.apiOrigin}${api.longTermTokenPath}`)
@@ -79,7 +79,7 @@ export const Logout = () => {
   const { currentUser, setCurrentUser } = useContext(TwofoldContext)
   const doLogout = () => {
     localStorage.removeItem(C.jwt_token)
-    localStorage.removeItem(C.current_user)
+    // localStorage.removeItem(C.current_user)
     setCurrentUser({})
   }
   return <BuyBtn onClick={doLogout}>X</BuyBtn>

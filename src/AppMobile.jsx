@@ -36,7 +36,9 @@ import { CitiesList, CitiesShow } from "$components/cities"
 import {
   GalleriesShow, Galleries, MyGalleries,
 } from "$components/galleries"
-import { LocationsShowMobile } from "$components/locations"
+import {
+  LocationsShowMobile, LocationsShowMobile3d,
+} from "$components/locations"
 import { ReportsShow } from "$resources/reports"
 import { SitesShow } from '$components/sites'
 import {
@@ -66,7 +68,7 @@ const __Container = styled(_Container)`
  * AppMobile
 **/
 const AppMobile = (props) => {
-  logg(props, 'AppMobile')
+  // logg(props, 'AppMobile')
 
   const [ layout, setLayout ] = useState(C.layout_onecol)
   // const [ bottomDrawerOpen, setBottomDrawerOpen ] = React.useState(false)
@@ -115,6 +117,7 @@ const AppMobile = (props) => {
   // }
 
   return (<Router>
+    { /* @TODO: move AuthContext up to AppWrapper. _vp_ 2022-09-04 */ }
     <AuthContextProvider {...{ useApi, }} >
     <TwofoldContextProvider {...props} {...{ layout, setLayout }} >
       <CollapsibleContextProvider >
@@ -138,6 +141,7 @@ const AppMobile = (props) => {
 
               <Route exact path="/en/reports/show/:slug" component={ReportsShow} />
 
+              <Route exact path="/en/locations/show3d/:slug" component={LocationsShowMobile3d} layout={C.layout_mapui} />
               <Route exact path="/en/locations/show/:slug" component={LocationsShowMobile} layout={C.layout_mapui} />
               <Route exact path="/en/locations/show/:slug/:item_type/show/:item_slug" component={LocationsShowMobile} layout={C.layout_mapui} />
 

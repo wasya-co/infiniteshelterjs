@@ -123,7 +123,7 @@ const MapPanelNoZoom = (props) => {
    * @TODO: need to get the ACL from api, and use it to determine what to display or not.
   **/
 
-  return <W0 className="MapPanelNoZoom W0" >
+  return <W0 className="W0 MapPanelNoZoom" >
 
     { editorMode && <Actions>
       <Card onClick={() => setMarkerModalOpen(true)} >
@@ -132,13 +132,9 @@ const MapPanelNoZoom = (props) => {
     </Actions> }
 
     <W1 className="W1" >
-
       <img
         src={map.img_path}
         style={{
-          // width: `${map.w*zoom}px`,
-          // height: `${map.h*zoom}px`,
-
           maxWidth: '100%',
           maxHeight: '100%',
           width: 'auto',

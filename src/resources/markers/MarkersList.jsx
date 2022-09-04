@@ -1,31 +1,23 @@
 
-import { IonPage, IonContent, IonButton, IonImg, IonLoading } from "@ionic/react"
 import PropTypes from 'prop-types'
 import React, { Fragment as F, useContext, useEffect, useRef, useState } from "react"
-import Modal from "react-modal"
-import { Route, useLocation, useHistory, Switch } from 'react-router-dom'
+import { useHistory, } from 'react-router-dom'
 import styled from 'styled-components'
 
 import {
   C,
-  logg, S, TwofoldContext,
+  logg,
   PurchasedIcon,
+  TwofoldContext,
   WBordered, WBorderedItem,
 } from "$shared"
-import { Metaline } from "$components/application"
-import { Newsitems } from "$components/newsitems"
 
 /* M */
 const _Marker = styled.div`
   color: ${p => p.theme.colors.text};
-
-  margin-bottom: 10px;
-  max-width: 33%;
-  min-width: 100px;
-
+  margin: 0 auto 10px auto;
+  width: 120px;
   text-align: center;
-
-  width: min(33%, 100px);
 `;
 const Marker = ({ children, variant, ...props }) => {
   if (variant===C.variants.bordered) {
@@ -36,22 +28,16 @@ const Marker = ({ children, variant, ...props }) => {
 }
 
 /* W */
-const _W = styled.div`
+const _W0 = styled.div`
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
-  // justify-content: flex-start;
-
-  ::after {
-    content: "";
-    flex: auto;
-  }
 `;
-const W = ({ children, variant, ...props }) => {
+const W0 = ({ children, variant, ...props }) => {
   if (variant===C.variants.bordered) {
     return <WBordered {...props}>{children}</WBordered>
   } else {
-    return <_W {...props}>{children}</_W>
+    return <_W0 {...props}>{children}</_W0>
   }
 }
 
@@ -69,6 +55,7 @@ const MarkersList = (props) => {
 
   const history = useHistory()
 
+  // @TODO: move this to the api object
   const goto = (m) => {
     if (m.premium_tier && !m.is_purchased) {
       setItemToUnlock({ ...m })
@@ -84,7 +71,7 @@ const MarkersList = (props) => {
 
   const out = []
   props.markers.map((m, idx) => {
-    out.push(<Marker className="Marker" key={idx} variant={variant}
+    out.push(<Marker key={idx} variant={variant}
       onClick={() => goto(m) }
     >
       <img src={m.title_img_path} /><br />
@@ -92,10 +79,14 @@ const MarkersList = (props) => {
       { m.name }
     </Marker>)
   })
+  const times = 12 - out.length % 12
+  for (let i = 0; i < times; i++) { // zero-height placeholders to prettify last row
+    out.push(<Marker variant={variant} key={`padded-${i}`} />)
+  }
 
-  return <W className="MarkersList" >
+  return <W0 className="MarkersList" >
     {out}
-  </W>
+  </W0>
 }
 
 MarkersList.propTypes = {

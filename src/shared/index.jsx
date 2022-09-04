@@ -158,7 +158,8 @@ export const inflector = {
       case 'Gallery':
         return 'galleries'
       default:
-      return `${m.toLowerCase()}s`
+        // Report, what else?
+        return `${m.toLowerCase()}s`
     }
   },
 }
@@ -282,9 +283,16 @@ const _WBorderedItem = styled.div`
   width: 18%;
   max-width: 140px;
   min-width: 120px;
+
+  &:empty {
+    height: 0;
+    border: none;
+    padding: 0;
+  };
 `;
-export const WBorderedItem = ({children, ...props}) => {
-  return <_WBorderedItem className="WBorderedItem" {...props}>{children}</_WBorderedItem>
+export const WBorderedItem = ({children, ..._props}) => {
+  const { className, ...props } = _props
+  return <_WBorderedItem className={`WBorderedItem ${className}`} {...props}>{children}</_WBorderedItem>
 }
 
 

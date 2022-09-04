@@ -4,20 +4,24 @@ import * as THREE from "three"
 import { OBJLoader } from "three/examples/jsm/loaders/OBJLoader"
 import styled from 'styled-components'
 
-import { logg, S } from "$shared"
+import {
+  logg,
+} from "$shared"
 import { PointerLockControls } from './PointerLockControls'
 
 const Blocker = styled.div`
-  height: calc(100% - ${p => p.breadcrumbsHeight});
+  height: calc(100% - ${p => p.theme.breadcrumbsHeight});
 `;
 
 /**
+ * ThreePanelV1
+ *
  * Excellent documentation. From: https://threejs.org/examples/#misc_controls_pointerlock
  * Right now the unit is 1cm, 1/10 of a meter.
  */
-
-
 const Loc = (props) => {
+  logg(props, 'ThreePanelV1')
+
   let camera, controls,
     object, objects = [],
     raycaster, renderer,
@@ -328,7 +332,7 @@ const Loc = (props) => {
 
   return <F>
     <div ref={instructionsRef} />
-    <Blocker {...S} ref={blockerRef} />
+    <Blocker ref={blockerRef} />
   </F>
 }
 

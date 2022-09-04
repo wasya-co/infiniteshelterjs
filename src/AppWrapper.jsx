@@ -1,12 +1,14 @@
 
 import { Device } from '@capacitor/device'
-import React, { useContext, useEffect, useRef, useState, } from 'react'
+import React, { useEffect, useState, } from 'react'
 import { ThemeProvider } from 'styled-components'
 import { ToastContainer } from 'react-toastify'
 
 import config from 'config'
 
-import { C, logg, request, S, useApi } from "$shared"
+import {
+  C, logg, request, S, useApi
+} from "$shared"
 import AppDesktop from './AppDesktop'
 import AppMobile from './AppMobile'
 

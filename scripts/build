@@ -1,6 +1,10 @@
 #!/bin/bash
 
+##
+## This is my own build for web, eg for https://infiniteshelter.com
+##
+
 echo "Android builds from Android studio."
-echo "./scripts/build_web_guydme ?"
+# echo "./scripts/build_web_guydme ?"
 echo "./scripts/build_web_ish ?"
 echo "./scripts/build_web_staging_ish ?"

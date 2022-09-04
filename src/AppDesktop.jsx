@@ -1,8 +1,9 @@
 
 import { Container as _Container, } from '@material-ui/core'
-import React, { Fragment as F, useEffect, useState } from 'react'
+import React, { Fragment as F, useContext, useEffect, useState } from 'react'
 import {
   Switch, BrowserRouter as Router, Redirect, Route as _Route,
+  useRouteMatch,
 } from 'react-router-dom'
 
 import styled from 'styled-components'
@@ -56,6 +57,7 @@ const Root = styled.div`
   overflow: auto;
 `;
 
+
 /**
  * AppDesktop
 **/
@@ -87,7 +89,8 @@ const AppDesktop = (props) => {
     return <_Route {...props} />
   }
 
-  return (<Router>
+  return <Router>
+    { /* @TODO: move AuthContext up to AppWrapper. _vp_ 2022-09-04 */ }
     <AuthContextProvider {...{ useApi, }} >
       <TwofoldContextProvider {...props} {...{ layout, setLayout }} >
         <CollapsibleContextProvider >
@@ -118,12 +121,11 @@ const AppDesktop = (props) => {
           </Root>
 
           <BottomDrawer />
-          <UnlockModal />
 
         </CollapsibleContextProvider>
       </TwofoldContextProvider>
     </AuthContextProvider>
-  </Router>)
+  </Router>
 }
 
 export default AppDesktop

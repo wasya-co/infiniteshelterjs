@@ -76,7 +76,7 @@
     "react-dom": "=16.13.1",
     "react-facebook-login": "^4.1.1",
     "react-modal": "^3.11.2",
-    "react-router": "5.1.2",
+    "react-router": "=5.2.0",
     "react-router-dom": "=5.2.0",
     "react-three-fiber": "^6.0.13",
     "react-toastify": "^8.0.2",
@@ -191,9 +191,8 @@
     ]
   },
   "scripts": {
-    "build": "echo '+++ +++' ; echo +++ +++ 'build_guydme (@deprecated, see ./scripts/build), build_ish, build_staging_ish (untested)?' ; echo '+++ +++'",
-    "build_guydme":      "NODE_PATH=config/environments/production_guydme:shared_modules node scripts/build.js",
-    "build_ish":         "NODE_PATH=config/environments/production_ish:shared_modules    node scripts/build.js",
+    "build": "echo '+++ +++' ; echo +++ +++ 'build_ish, or some future tenant' ; echo '+++ +++'",
+    "build_ish": "NODE_PATH=config/environments/production_ish:shared_modules    node scripts/build.js",
     "jest": "NODE_PATH=config/environments/test:shared_modules jest -t current",
     "jest2": "echo '+++ +++ usage:' ; echo '  yarn run jest2 -- <file>' ; echo '' ; NODE_PATH=config/environments/test:shared_modules jest -t current2",
     "next_build": "NODE_PATH=config/environments/production_ish:shared_modules next build",

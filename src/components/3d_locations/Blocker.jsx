@@ -12,7 +12,7 @@ const _Blocker = styled.div`
   border: 2px solid red;
 
   position: relative;
-  // height: calc(100% - ${p => p.breadcrumbsHeight});
+  // height: calc(100% - ${p => p.theme.breadcrumbsHeight});
   width: 700px;
   height: 350px;
 

@@ -7,6 +7,9 @@
 
 /android/app/src/main/assets/public
 
+!/config/environments/default.js
+/config/environments/*
+
 public/assets/objects
 
 .next

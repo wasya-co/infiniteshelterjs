@@ -40,3 +40,9 @@ comfortable will resume auth and credit cards.
                      also a better DayNightToggle
                      Also MongoidVotable
         2022-08-30 - and styling of Register, Login, BottomDrawer
+1.1.0 - 2022-09-02 - and also android
+                     renamed packages to com.infiniteshelter
+1.2.0 - 2022-09-02 - threejs touchControls ...
+                     looks better, can I make the MovementPad affect the camera?
+                     MovementPad is beginning to work!
+                     and stripe

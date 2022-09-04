@@ -1,32 +1,25 @@
 
-/*
- * @TODO: this is just a copy of equirectangular2, discard
- */
-
-import React, { Fragment as F, useContext, useEffect, useRef, useState } from "react"
+import React, { Fragment as F, useEffect, useRef } from 'react'
 import { useHistory } from 'react-router-dom'
 import * as THREE from "three"
-// import MTLLoader from 'three-mtl-loader' // @TODO: remove from package.json
-import { OBJLoader } from "three/examples/jsm/loaders/OBJLoader"
-import { MTLLoader } from "three/examples/jsm/loaders/MTLLoader"
+import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader"
+import { Octree } from 'three/examples/jsm/math/Octree'
 import styled from 'styled-components'
 
+import { logg, } from "$shared"
 import { PointerLockControls } from './PointerLockControls'
-import TouchControls from "./vendor/TouchControls"
-import RotationPad from "./vendor/RotationPad"
-import {
-  logg,
-  TwofoldContext,
-} from "$shared"
 
+// @TODO: make its own component. _vp_ 2022-08-13
 const Blocker = styled.div`
-  border: 1px dashed red;
+  border: 2px solid red;
 
   position: relative;
-  width: 100%;
-  height: 100%;
+  // height: calc(100% - ${p => p.theme.breadcrumbsHeight});
+  width: 700px;
+  height: 350px;
 
   #Crosshair {
+    // border: 1px solid yellow;
     width: 50px;
     height: 50px;
 
@@ -63,64 +56,31 @@ const Blocker = styled.div`
   }
 `;
 
-const W = styled.div`
-  border: 1px solid blue;
-  height: 90vh;
-`;
-
 /**
- * Equirectangular2
- * _vp_ 2021-11-15
- * Let's wire in a simple floor and full-window sizing.
+ * ThreePanelDesktop
+ * Markers are obejcts _vp_ 2021-11-14
+ * Continue.           _vp_ 2022-08-13
  *
- * Threejs units of measure are centimeters (cm).
  *
  */
-const Equirectangular2 = (props) => {
-  logg(props, 'Equirectangular2')
+const Loc = (props) => {
+  // logg(props, 'ThreePanelDesktop')
   const { map } = props
 
   const history = useHistory()
 
   let camera, controls,
-    markerObjects = [], markerObjectsIdxs = [],
+    object, objects = [], markerObjects = [], markerObjectsIdxs = [],
     raycaster, renderer,
     texture,
-    scene;
-
-  var width, height;
-  var viewAngle = 45,
-    near = 1,
-    far = 10000;
-  var aspect;
-  var stats;
-  var sceneObject, intersected;
-
-
-  const {
-    bottomDrawerOpen,
-    folded, setFolded,
-    itemToUnlock, setItemToUnlock,
-    mapPanelWidth, setMapPanelWidth,
-    mapPanelHeight, setMapPanelHeight,
-    ratedConfirmation, setRatedConfirmation,
-    showItem, setShowItem,
-    showUrl, setShowUrl,
-    twofoldPercent,
-  } = useContext(TwofoldContext)
+    scene
 
   const blockerRef = useRef(null)
-  const wContainerRef = useRef(null)
   const instructionsRef = useRef(null)
-
   useEffect(() => {
     init()
     animate()
   }, [])
-
-  useEffect(() => {
-    window.dispatchEvent(new Event('resize'));
-  }, [ bottomDrawerOpen, folded, twofoldPercent ])
 
   let moveForward = false
   let moveBackward = false
@@ -133,6 +93,8 @@ const Equirectangular2 = (props) => {
   const direction = new THREE.Vector3()
   const vertex = new THREE.Vector3()
   const color = new THREE.Color()
+  const loader = new GLTFLoader()
+  const worldOctree = new Octree()
 
   function init() {
 
@@ -149,9 +111,9 @@ const Equirectangular2 = (props) => {
 
     scene = new THREE.Scene()
     scene.background = new THREE.Color( 0xffffff )
-    scene.fog = new THREE.Fog( 0xffffff, 0, 750 ) // @TODO: what this?
+    scene.fog = new THREE.Fog( 0xffffff, 0, 750 )
 
-    const light = new THREE.HemisphereLight( 0xeeeeff, 0x777788, 0.75 ) // @TODO: what this?
+    const light = new THREE.HemisphereLight( 0xeeeeff, 0x777788, 0.75 )
     light.position.set( 0.5, 1, 0.75 )
     scene.add( light )
 
@@ -174,6 +136,7 @@ const Equirectangular2 = (props) => {
     } )
 
     scene.add( controls.getObject() )
+
 
     const onKeyDown = (event) => {
       switch ( event.code ) {
@@ -227,58 +190,14 @@ const Equirectangular2 = (props) => {
     raycaster = new THREE.Raycaster( new THREE.Vector3(), new THREE.Vector3( 0, - 1, 0 ), 0, 10 )
 
     /*
-     * Origin: axis helper
-     */
-    var axes = new THREE.AxisHelper(700)
-		scene.add(axes)
-
-    const wContainer = wContainerRef.current
-
-    function addControls() {
-      var options = {
-        speedFactor: 0.5,
-        delta: 1,
-        rotationFactor: 0.002,
-        maxPitch: 55,
-        hitTest: true,
-        hitTestDistance: 40
-      };
-      controls = new TouchControls({
-        container: wContainer, camera,
-        options,
-        RotationPad: rotationPad,
-        THREE,
-      });
-      controls.setPosition(0, 35, 400);
-      controls.addToScene(scene);
-      // controls.setRotation(0.15, -0.15);
-    }
-    addControls()
-
-    /*
      * Floor
      */
 
-    /**
-     * From: https://threejs.org/docs/#api/en/geometries/CircleGeometry
-     * CircleGeometry(radius : Float, segments : Integer, thetaStart : Float, thetaLength : Float)
-     *
-     * radius — Radius of the circle, default = 1.
-     * segments — Number of segments (triangles), minimum = 3, default = 8.
-     * thetaStart — Start angle for first segment, default = 0 (three o'clock position).
-     * thetaLength — The central angle, often called theta, of the circular sector. The default is 2*Pi, which makes for a complete circle.
-     */
-    let floorGeometry = new THREE.PlaneGeometry( 100, 100, 10, 10 ) // width, height, w segments, h segments
-    // let floorGeometry = new THREE.CircleGeometry(100, 32) // radius, segments, thetaStart, thetaLength
+    // moon floor
+    texture = THREE.ImageUtils.loadTexture(`/assets/textures/moon-1.jpg`)
+    let floorGeometry = new THREE.CircleGeometry(1000, 32) // radius, segments, thetaStart, thetaLength
     floorGeometry.rotateX( - Math.PI / 2 )
-    texture = THREE.ImageUtils.loadTexture(`/assets/textures/100x100_lazer-floor.png`)
-    texture.wrapS = THREE.RepeatWrapping
-    texture.wrapT = THREE.RepeatWrapping
-    texture.repeat.set( 10, 10 )
-    const floorMaterial = new THREE.MeshPhongMaterial({
-      map: texture,
-      // transparent: true,
-    })
+    const floorMaterial = new THREE.MeshBasicMaterial({ map: texture })
     const floor = new THREE.Mesh( floorGeometry, floorMaterial )
     scene.add( floor )
 
@@ -287,10 +206,10 @@ const Equirectangular2 = (props) => {
      */
     // const scenesPath = '/assets/scenes/'
     // const objectsPath = '/assets/objects/'
-    // let modelName = 'polycity' // 'wasyaco-reception' // 'tiny-house-2'
-    // const texturePath = `${modelName}/${modelName}.mtl`
-    // const modelPath = `${modelName}/${modelName}.obj`
+    // const texturesPath = '/assets/textures/'
     // const manager = new THREE.LoadingManager()
+    // const mtlLoader = new MTLLoader(manager)
+    // mtlLoader.setPath(texturesPath)
     // const onProgress = (xhr) => {
     //   if (xhr.lengthComputable) {
     //     const percentComplete = xhr.loaded / xhr.total * 100
@@ -298,39 +217,33 @@ const Equirectangular2 = (props) => {
     //   }
     // }
     // const onError = () => {}
-    // const onLoad = (materials) => {
-    //   materials.preload()
-    //   const objLoader = new OBJLoader( manager )
-    //   objLoader.setMaterials( materials )
-    //   objLoader.setPath( scenesPath)
-    //   objLoader.load( modelPath, ( object ) => {
-    //     object.traverse((child) => {
-    //       if (child.isMesh) {
-    //         child.geometry.scale(0.10, 0.10, 0.10) // @TODO: change?
-    //       }
-    //     })
-    //     object.position.x = Math.random() * 500
-    //     object.position.y = 10
-    //     object.position.z = Math.random() * 500
 
-    //     logg(object, '1st object')
-    //     scene.add( object )
-    //     markerObjects.push( object )
-    //     markerObjectsIdxs.push({ uuid: object.uuid, name: 'camaro75', slug: 'construct1' }) // @TODO: change!
 
-    //   }, onProgress, onError )
-    // }
-    // const mtlLoader = new MTLLoader(manager)
-    // mtlLoader.setPath(scenesPath)
-    // mtlLoader.load(texturePath, onLoad)
+    map.markers.map((marker, idx) => {
+
+      loader.load( marker.asset3d_path, ( gltf ) => {
+        scene.add( gltf.scene );
+        worldOctree.fromGraphNode( gltf.scene );
+        gltf.scene.traverse( child => {
+          if ( child.isMesh ) {
+            child.castShadow = true;
+            child.receiveShadow = true;
+            if ( child.material.map ) {
+              child.material.map.anisotropy = 4;
+            }
+          }
+        } )
+      })
+
+    })
+
 
 
     /*
      * Skybox
-     */
+    **/
     const textureLoader = new THREE.TextureLoader()
-    const assetPath = map.img_path
-    texture = textureLoader.load(assetPath, () => {
+    texture = textureLoader.load(`/assets/textures/space-5.jpg`, () => {
       const rt = new THREE.WebGLCubeRenderTarget(texture.image.height)
       rt.fromEquirectangularTexture(renderer, texture)
       scene.background = rt.texture
@@ -342,30 +255,16 @@ const Equirectangular2 = (props) => {
      */
     renderer = new THREE.WebGLRenderer({ antialias: true })
     renderer.setPixelRatio( window.devicePixelRatio )
-    renderer.setSize( blockerRef.current.clientWidth, blockerRef.current.clientHeight )
+    renderer.setSize( 700, 350 ) // aspect ratio 0.5
     blockerRef.current.appendChild( renderer.domElement )
     window.addEventListener( 'resize', onWindowResize )
 
   }
 
-  /* From: https://threejsfundamentals.org/threejs/lessons/threejs-responsive.html */
-  function resizeRendererToDisplaySize() {
-    const canvas = renderer.domElement
-    const width = blockerRef.current.clientWidth
-    const height = blockerRef.current.clientHeight
-    const needResize = canvas.width !== width || canvas.height !== height
-    if (needResize) {
-      renderer.setSize(width, height)
-    }
-    return needResize
-  }
   function onWindowResize() {
-    if (resizeRendererToDisplaySize()) {
-      const width = blockerRef.current.clientWidth
-      const height = blockerRef.current.clientHeight
-      camera.aspect = width / height
-      camera.updateProjectionMatrix()
-    }
+    camera.aspect = window.innerWidth / window.innerHeight
+    camera.updateProjectionMatrix()
+    renderer.setSize( window.innerWidth, window.innerHeight )
   }
 
   function animate() {
@@ -384,10 +283,10 @@ const Equirectangular2 = (props) => {
       if (intersections.length) {
         const pickedObject = intersections[0].object
 
-        // collision
-        if (intersections[0].distance < 5) {
-          moveForward = false
-        }
+        /* collision */
+        // if (intersections[0].distance < 5) {
+        //   moveForward = false
+        // }
       }
 
       const onObject = intersections.length > 0
@@ -418,14 +317,12 @@ const Equirectangular2 = (props) => {
     renderer.render( scene, camera )
   }
 
-  return <W ref={wContainerRef} >
+  return <F>
     <div ref={instructionsRef} />
     <Blocker ref={blockerRef} >
       <div id="Crosshair" />
-
-      <RotationPad />
     </Blocker>
-  </W>
+  </F>
 }
 
-export default Equirectangular2
+export default Loc

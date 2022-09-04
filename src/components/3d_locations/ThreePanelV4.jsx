@@ -7,14 +7,16 @@ import { OBJLoader } from "three/examples/jsm/loaders/OBJLoader"
 import { MTLLoader } from "three/examples/jsm/loaders/MTLLoader"
 import styled from 'styled-components'
 
-import { logg, S } from "$shared"
+import {
+  logg,
+} from "$shared"
 import { PointerLockControls } from './PointerLockControls'
 
 const Blocker = styled.div`
   border: 2px solid red;
 
   position: relative;
-  // height: calc(100% - ${p => p.breadcrumbsHeight});
+  // height: calc(100% - ${p => p.theme.breadcrumbsHeight});
   width: 700px;
   height: 350px;
 
@@ -515,7 +517,7 @@ const ThreePanelV4 = (props) => {
 
   return <F>
     <div ref={instructionsRef} />
-    <Blocker {...S} ref={blockerRef} >
+    <Blocker ref={blockerRef} >
       <div id="Crosshair" />
     </Blocker>
   </F>

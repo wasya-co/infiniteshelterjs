@@ -4,6 +4,10 @@ import React, { useState } from "react"
 import { CardElement, Elements, useElements, useStripe, } from '@stripe/react-stripe-js'
 import { act } from '@testing-library/react'
 
+import {
+  AuthContextProvider,
+} from 'ishlibjs'
+
 import { MyAccountWidget } from "$components/users"
 import { AppMock, logg } from "$shared"
 import useApi from "$shared/Api"
@@ -39,22 +43,33 @@ jest.mock('$shared/Api', () => ({
   })
 }))
 
-describe("MyAccountWidget - current2 ", () => {
+describe("MyAccountWidget -  ", () => {
 
-  it("shows email, n available unlocks - ", async () => {
-    const aCurrentUser = { email: 'test@gmail.com', n_unlocks: 1 }
-    let currentUser = false
-    let component
-    const setCurrentUser = (props) => currentUser = props
+  describe("When Loggedin -  ", () => {
+    it("shows email -  ", () => {
+      const cu = { email: 'test@gmail.com' }
 
-    setCurrentUser(aCurrentUser)
-    component = await mount(<AppMock {...{ currentUser: aCurrentUser, setCurrentUser }} ><MyAccountWidget /></AppMock>)
+      const w = mount(<AuthContextProvider {...{ currentUser: cu, setCurrentUser: () => {}, useApi: useApi }}
+      ><MyAccountWidget />
+      </AuthContextProvider>)
 
-    expect(component.text()).toMatch(/test@gmail.com/)
-    expect(component.text()).toMatch(/1 coins/)
+      expect(w.text()).toMatch(/test@gmail.com/)
+    })
+  })
 
-    await act(() => new Promise(setImmediate))
-    // await new Promise(process.nextTick)
+  it('CoinManager doesnt render if not logged in -  ', () => {
+    const w = mount(<AuthContextProvider {...{ currentUser: false, setCurrentUser: () => {}, useApi: useApi }}
+    ><MyAccountWidget />
+    </AuthContextProvider>)
+    expect( w.find('.CoinManager').length ).toEqual(0)
+  })
+
+  it('CoinManager renders if logged in - ', () => {
+    const cu = { email: 'test@gmail.com' }
+    const w = mount(<AuthContextProvider {...{ currentUser: cu, setCurrentUser: () => {}, useApi: useApi }}
+    ><MyAccountWidget />
+    </AuthContextProvider>)
+    expect( w.find('div.CoinManager').length ).toEqual(1)
   })
 
 })

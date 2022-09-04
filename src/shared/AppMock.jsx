@@ -20,6 +20,7 @@ import {
 } from "$shared"
 import { LoginModal } from "$components/users"
 
+// @TODO: this is a complete mess, remove and re-do this mock.
 const AppMock = (props) => {
   // logg(props, 'AppMock')
   let {
@@ -46,7 +47,6 @@ const AppMock = (props) => {
     setItemToUnlock = setLocalItemToUnlock
   }
   if ('undefined' === typeof loginModalOpen) {
-    logg('it was undefined')
     loginModalOpen = localLoginModalOpen
     setLoginModalOpen = setLocalLoginModalOpen
   }

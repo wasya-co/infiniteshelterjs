@@ -9,14 +9,14 @@ import {
 } from "$shared"
 import AppWrapper from "$src/AppWrapper"
 
-import Blocker from "./Blocker"
+import LocationsShowMobile3d from "./LocationsShowMobile3d"
 
 configure({ adapter: new Adapter() })
 
-describe("Blocker", () => {
+describe("LocationsShowMobile3d", () => {
 
   it("renders -  ", async () => {
-    const w = mount(<AppWrapper ><Blocker /></AppWrapper>)
+    const w = mount(<AppWrapper ><LocationsShowMobile3d /></AppWrapper>)
     expect(w).toBeTruthy()
     await act(() => new Promise(setImmediate))
   })
