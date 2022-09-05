@@ -18,7 +18,7 @@ const DayNightToggle = (props) => {
   const { toggleTheme, theme } = props
 
   return (
-    <div className={styles.container} onClick={toggleTheme} >
+    <div className={`DaynightToddle ${styles.container}`} onClick={toggleTheme} >
       <div className={styles.switch} >
         <label htmlFor="toggle">
           <input id="toggle" readOnly={true} type="checkbox" checked={theme === C.themes.light} ></input>

@@ -10,7 +10,6 @@ import {
 import { Newsitems } from "$components/newsitems"
 import {
   ItemModal,
-  MapPanel, MapPanelNoZoom,
   WrappedMapPanel,
 } from "./"
 import {
@@ -47,7 +46,7 @@ const W = styled.div`
  * @TODO: what's the difference between this and LocationsShowDesktop? Let's simplify. _vp_ 2022-09-02
  */
 const LocationsShowMobile = (props) => {
-  logg(props, 'LocationsShowMobile')
+  // logg(props, 'LocationsShowMobile')
   const {
     match,
   } = props
@@ -102,7 +101,6 @@ const LocationsShowMobile = (props) => {
 
 
   // @TODO: this can probably be much improved. Take either markers of location.map, or location itself.
-  // @TODO: why is this a redirect to /null ?!
   let markers = []
   if (location) {
     markers = location.markers // location ? location.markers.length ? location.markers : location.map.markers : null

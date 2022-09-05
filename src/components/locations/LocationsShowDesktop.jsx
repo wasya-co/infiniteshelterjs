@@ -4,16 +4,15 @@ import React, { Fragment as F, useContext, useEffect, useRef, useState } from "r
 import Modal from "react-modal"
 import styled from 'styled-components'
 
-import {
-  ItemModal,
-  MapPanel, MapPanelNoZoom,
-  RatedRestrictionModal,
-  WrappedMapPanel,
-} from "./"
+import config from 'config'
+
 import {
   Breadcrumbs,
   UnlockModal,
 } from "$components/application"
+import { CitiesList } from "$components/cities"
+import { Newsitems } from "$components/newsitems"
+import { LongLine } from "$components/TwofoldLayout"
 import {
   MarkersList,
   MarkerModal, MarkerContext, MarkerContextProvider,
@@ -21,9 +20,6 @@ import {
 import {
   ReportForm,
 } from '$resources/reports'
-import { CitiesList } from "$components/cities"
-import { Newsitems } from "$components/newsitems"
-import { LongLine } from "$components/TwofoldLayout"
 import {
   C, Card, ChevronLeft, ChevronRight, Collapsible,
   FlexCol, FlexRow,
@@ -34,6 +30,12 @@ import {
   TwofoldContext,
   useApi, useWindowSize,
 } from "$shared"
+import {
+  ItemModal,
+  MapPanel, MapPanelNoZoom,
+  RatedRestrictionModal,
+  WrappedMapPanel,
+} from "./"
 
 /* C */
 
@@ -58,7 +60,7 @@ const _Handle = styled.div`
     ? '10px'
     : p.foldedRight
     ? '98%'
-    : `calc(${p.twofoldPercent*100}% - 10px)` };
+    : `calc(${p.twofoldPercent*100}% - 0.5ex)` };
 
   display: flex;
   flex-direction: column;
@@ -189,18 +191,11 @@ const Row = styled.div`
  * @TODO: re-introduce MenuIcon in Handle. _vp_ 2022-09-01
 **/
 const LocationsShowDesktop = (props) => {
-  // logg(props, 'LocationsShowDesktop')
-  const { match } = props
-
-  const [ windowWidth, windowHeight ] = useWindowSize()
-
-  const [ loading, setLoading ] = useState(false)
-  const [ markers, setMarkers ] = useState([])
-
-  const mountedRef = useRef(C.ref.init)
-  const showItemRef = useRef(C.ref.init)
-  const mapPanelRef = useRef(null)
-  const api = useApi()
+  logg(props, 'LocationsShowDesktop')
+  const {
+    location: _location,
+    match,
+  } = props
 
   const {
     bottomDrawerOpen,
@@ -216,8 +211,25 @@ const LocationsShowDesktop = (props) => {
     twofoldPercent,
   } = useContext(TwofoldContext)
 
+  if (_location) setLocation(_location) // next_js
+
+  const api = useApi()
+  const [ windowWidth, windowHeight ] = useWindowSize()
+
+  const [ loading, setLoading ] = useState(false)
+  const [ markers, setMarkers ] = useState([])
+
+  const mountedRef = useRef(C.ref.init)
+  const showItemRef = useRef(C.ref.init)
+  const mapPanelRef = useRef(null)
+
+  // Set Markers and ?ItemToUnlock
   useEffect(() => {
     if (location) {
+      // logg(location, 'LocationsShowDesktop.location')
+
+      document.title = `${location.name} - ${config.siteTitle}`
+
       setMarkers(location.markers)
 
       if (location.is_premium && !location.is_purchased) {
@@ -232,9 +244,13 @@ const LocationsShowDesktop = (props) => {
 
     api.getLocation({ slug: match.params.slug }).then(r => {
       setLocation(r)
-      if (r.rated === C.rated.nc17 && !ratedConfirmation) { // @TODO: not test-driven, bad!
+
+      // @TODO: test-drive
+      // @TODO: this is absent in next_js
+      if (r.rated === C.rated.nc17 && !ratedConfirmation) {
         setRatedConfirmation(false)
       }
+
       mountedRef.current = match.params.slug
     })
 
@@ -243,7 +259,7 @@ const LocationsShowDesktop = (props) => {
     }
   }, [ match.params.slug ])
 
-  // set mapPanel sizes
+  // Set mapPanel sizes
   useEffect(() => {
     if (mapPanelRef.current) {
       setMapPanelWidth(mapPanelRef.current.offsetWidth)
@@ -312,13 +328,15 @@ const LocationsShowDesktop = (props) => {
           />
         </Collapsible> || null }
 
+        { /* Features? */ }
+
         { /* Tags */ }
-        { location && <FlexRow style={{ marginBottom: '1em', flexWrap: 'wrap' }} >
+        {/* { location && <FlexRow className='Tags' style={{ marginBottom: '1em', flexWrap: 'wrap' }} >
           { location.tags.map((tag) => <Card >{tag.name}</Card> )}
-        </FlexRow> }
+        </FlexRow> } */}
 
         { /* Actions */ }
-        { editorMode && <FlexRow style={{ marginBottom: '1em' }} >
+        { editorMode && <FlexRow className='Actions' style={{ marginBottom: '1em' }} >
           <Card onClick={() => setShowItem({ action: C.actions.new, item_type: C.item_types.report }) } >
             + Report
           </Card>
@@ -337,6 +355,7 @@ const LocationsShowDesktop = (props) => {
 
         { /* Description */ }
         { location.description && <Collapsible
+            className='Description'
             label={location.labels.description}
             slug={C.collapsible.description}
             variant={C.variants.bordered}

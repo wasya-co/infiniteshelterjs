@@ -33,6 +33,13 @@ const TwofoldContextProvider = ({ children, ...props }) => {
     zoom, setZoom, // it's a prop for testing only. _vp_ 2022-03-18
   } = props
 
+  // next_js
+  if ('undefined' === typeof window) {
+    return <TwofoldContext.Provider value={{}} >
+      {children}
+    </TwofoldContext.Provider>
+  }
+
   const api = useApi()
 
   /* B */

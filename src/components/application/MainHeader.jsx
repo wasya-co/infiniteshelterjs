@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 
 import { logg, C, } from "$shared"
-import { MenuLeft, } from "$components/application"
+import { SideMenu, } from "$components/application"
 
 const Header = styled.div`
   // border: 1px solid red;
@@ -31,7 +31,7 @@ const MainHeader = (props) => {
   // logg(props, 'MainMenu')
 
   return <Root>
-    <MenuLeft variant={C.variants.inline} />
+    <SideMenu variant={C.variants.inline} />
     <Header>My Local Guide</Header>
   </Root>
 }

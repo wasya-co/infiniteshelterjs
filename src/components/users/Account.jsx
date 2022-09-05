@@ -24,8 +24,8 @@ import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 
 import { FbLogin, Logout, } from "./"
-import { C, logg, logg2, TwofoldContext } from "$shared"
-import { MenuLeft } from "$components/application"
+import { C, logg, TwofoldContext } from "$shared"
+import { SideMenu } from "$components/application"
 import Greeter from '$src/artifacts/contracts/Greeter.sol/Greeter.json'
 import Token from '$src/artifacts/contracts/Token.sol/Token.json'
 
@@ -75,18 +75,14 @@ const Account = (props) => {
     // Show us the notification payload if the app is open on our device
     PushNotifications.addListener('pushNotificationReceived', (_n) => {
       const n = _n
-      logg2(n, 'pushNotificationReceived')
       setNotifications((ns) => {
-        logg2(ns, 'setNofitications')
         return [...ns, { ...n, type: 'foreground' }]
       })
     })
 
     // Method called when tapping on a notification
     PushNotifications.addListener('pushNotificationActionPerformed', ({ nofitication: n }) => {
-      logg2(n, 'pushNotificationActionPerformed')
       setNotifications((ns) => {
-        logg2(ns, 'setNofitications')
         return [...ns, { ...n, type: 'action' }]
       })
     })
@@ -172,7 +168,7 @@ const Account = (props) => {
 
   return <IonPage>
     <Grid container>
-      <MenuLeft variant={C.variants.inline} />
+      <SideMenu variant={C.variants.inline} />
       <h1>Account</h1>
     </Grid>
     <IonContent className="ion-padding">

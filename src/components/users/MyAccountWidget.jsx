@@ -1,8 +1,10 @@
 
 import { ethers } from 'ethers'
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline'
+import EditIcon from '@material-ui/icons/Edit'
 import PropTypes from 'prop-types'
 import React, { Fragment as F, useContext, useEffect, useState } from "react"
+import { toast } from 'react-toastify'
 import Toggle from 'react-toggle'
 import styled from 'styled-components'
 import Web3 from 'web3'
@@ -12,7 +14,6 @@ import { InjectedConnector } from '@web3-react/injected-connector'
 import config from "config"
 import {
   AuthContext, AuthWidget,
-  FlexCol, FlexRow,
 } from 'ishlibjs'
 
 import {
@@ -34,36 +35,60 @@ import "react-toggle/style.css"
 
 import bodyNFT from '$src/artifacts/contracts/Body.sol/BodyNFT.json'
 
+const FlexRow = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+`;
+
 /*
  * ropsten, _vp_ 2021-10-26
  * Dana, nude 1 (nude 3)
  */
 const bodyAddress = '0x3e1a03a9e1682f4dd95413e0be69e5b7bccaf15d'
 
-// // Trash, remove
-// const BuyBtn = styled.span`
-//   border: 1px solid ${p => p.theme.colors.text};
-
-//   padding: 5px;
-//   cursor: pointer;
-// `;
-
 const Cell = styled.div`
   margin-right: ${p => p.theme.smallWidth};
 `;
 
-const _Img = styled.div`
-  border: 1px solid red;
-  background: white;
+const Edit = styled(EditIcon)`
+  font-size: 18px;
+  // color: red;
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  cursor: pointer;
+`;
 
-  max-width: 100px;
-  max-height: 100px;
-  width: 100px;
-  height: 100px;
+
+/**
+ * Avatar PFP
+**/
+const _Img = styled.div`
+  border: 1px solid #333333;
+  border-radius: 4px;
+
+  // backgroundf: white;
+
+  position: relative;
+
+  // max-width: 100px;
+  // max-height: 100px;
+  width: 90px;
+  height: 90px;
+  margin: 5px;
   margin-right: ${p => p.theme.smallWidth};
+
+  background-image: url('${p => p.src}');
+  background-size: cover;
 `;
 const Img = ({ src }) => {
-  return <_Img><img src={src} alt='' /></_Img>
+  const doEdit = () => {
+    toast('Editing your avatar is not yet implemented')
+  }
+
+  return <_Img src={src}>
+    <Edit onClick={doEdit} />
+  </_Img>
 }
 
 const injected = new InjectedConnector() // { supportedChainIds: [1, 3, 4, 5, 42], })
@@ -107,7 +132,7 @@ const MyAccountWidget = (props) => {
    * @TODO: avatar would be an object s.t. multiple styles/sizes are there,
    * and it should be in a context - shared across threemap, and accountWidget.
    */
-  const [ avatar, setAvatar ] = useState("")
+  const [ avatar, setAvatar ] = useState("https://d15g8hc4183yn4.cloudfront.net/wp-content/uploads/2022/09/05174137/20220904-PFP.jpg")
   const api = useApi()
   const { active, account, library, connector, activate, deactivate } = useWeb3React()
 
@@ -160,8 +185,8 @@ const MyAccountWidget = (props) => {
 
   return <W0 className="MyAccountWidget" >
 
-    { /* currentUser.profile_photo_url && <Img src={currentUser.profile_photo_url} /> */ }
-    <Img src={avatar || currentUser?.profile_photo_url} />
+
+    { currentUser?.email && <Img src={currentUser?.profile_photo_url || avatar} /> }
 
     <FlexRow>
 

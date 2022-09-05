@@ -1,4 +1,5 @@
 
+import { useRouter } from 'next/router'
 import PropTypes from 'prop-types'
 import React, { Fragment as F, useContext, useEffect, useRef, } from 'react'
 import Modal from "react-modal"
@@ -41,6 +42,9 @@ const modalStyle = {
 const UnlockModal = (props) => {
   // logg(props, 'UnlockModal')
 
+
+  if ('undefined' === typeof window) { return null } // next_js
+
   const {
     itemToUnlock, setItemToUnlock,
     location, setLocation,
@@ -58,15 +62,25 @@ const UnlockModal = (props) => {
 
   const api = useApi()
   const history = useHistory()
-  const match = useRouteMatch()
+
+  let match
+  const router = useRouter()
+  try {
+    match = useRouteMatch()
+  } catch(e) {
+    // logg(e, 'e77')
+
+    match = { params: router.query }
+  }
+  logg(match, 'match')
 
   const doUnlock = async () => {
-    logg(itemToUnlock, 'itemToUnlock')
+    // logg(itemToUnlock, 'itemToUnlock')
 
     // @TODO: check how many unlocks I have, and offer to purchase more if not enough.
     // @TODO: Do I Need to refresh the newsfeed somehow? _vp_ 2022-09-04
     await api.doUnlock({ kind: itemToUnlock.item_type, id: itemToUnlock.id }).then((r) => {
-      logg(r, 'OK doUnlock')
+      // logg(r, 'OK doUnlock')
 
       setItemToUnlock({}) // @TODO: Change this to null if possible. Test-drive this change. _vp_ 2022-09-04
       setCurrentUser(r)

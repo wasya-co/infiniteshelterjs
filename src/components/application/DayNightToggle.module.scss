@@ -1,14 +1,17 @@
 
 
 .container {
+  // border: 1px solid red;
+
   font-size: 10px;
 
-  height: calc(100% - 2em);
-  background: #f4f4f4;
+  // height: calc(100% - 20px);
+  margin: 0 0 10px 0;
+  // background: #f4f4f4;
   display: flex;
   justify-content: center;
   align-items: center;
-
+  z-index: 0;
 }
 
 .switch {
@@ -163,7 +166,7 @@
 /* Transition to Sun */
 
 .switch input:checked ~ .sunMoon {
-  left: calc(100% - 4em);
+  left: calc(100% - 40px);
   background: #F5EC59;
   border-color: #E7C65C;
   transform: rotate(-25deg);

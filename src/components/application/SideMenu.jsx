@@ -11,12 +11,8 @@ import { useHistory } from 'react-router-dom'
 import styled from 'styled-components'
 
 import config from 'config'
-import { Menu } from "$components/application"
-import { Api, C, Debug, logg, MenuIcon, TwofoldContext, } from "$shared"
 
-const _LeftWrapper = styled.div`
-  // border: 1px solid green;
-`;
+import { Api, C, Debug, logg, MenuIcon, TwofoldContext, } from "$shared"
 
 const W0 = styled.div`
   height: 100vh;
@@ -26,7 +22,9 @@ const W0 = styled.div`
   align-content: space-between;
 `;
 
-
+/**
+ * SideMenu
+**/
 const SideMenu = (props) => {
   // logg(props, 'SideMenu')
 
@@ -35,8 +33,6 @@ const SideMenu = (props) => {
   const history = useHistory()
   const { currentUser, setCurrentUser } = useContext(TwofoldContext)
   return <F>
-
-    { /* <Menu /> */ }
 
     { /* @TODO: probably remove from here, too many variations of the button, it gotta be separate */ }
     { props.variant === C.variants.floating ?
@@ -93,32 +89,12 @@ const SideMenu = (props) => {
             </ListItem>
           ) }
 
-          <ListItem button key={'account'}
-            onClick={() => {
-              setDrawerOpen(false)
-              history.push(`/en/locations/show/${currentUser.id}`)
-            } } >
-            <span >Account</span>
-          </ListItem>
-
-          <ListItem>
-            Version 0.0.0
-          </ListItem>
-
         </List>
-        { /* <W2>
-          { loading && 'Loading...' }
-          { currentUser && <F>
-            {currentUser.email}<br />
-            {currentUser.n_stars}<br />
-            some action
-          </F> }
-        </W2> */ }
+
       </W0>
     </Drawer>
   </F>
 }
-
 SideMenu.propTypes = {
   variant: PropTypes.string,
 }

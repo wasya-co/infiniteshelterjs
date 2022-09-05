@@ -6,6 +6,7 @@ module.exports = {
   debug: false,
   homePath: "",
   requireLogin: true,
+  siteTitle: 'Infinite Shelter Location Discovery Guide',
   stripePublicKey: '',
 
   // This router isn't used. _vp_ 2022-09-04

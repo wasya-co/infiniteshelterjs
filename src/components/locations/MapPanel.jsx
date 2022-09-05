@@ -72,8 +72,11 @@ const ZoomCtrl = (props) => {
   </div>
 }
 
+/**
+ * MapPanel
+**/
 const MapPanel = (props) => {
-  // logg(props, 'MapPanel')
+  logg(props, 'MapPanel')
   const { map, withZoom=true } = props
 
   const {

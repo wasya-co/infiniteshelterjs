@@ -29,8 +29,8 @@ import {
 
 
 import { BottomDrawer,
-  Menu, MenuBottom, MenuLeft,
-  MapuiMobileLayout,
+  Menu, MenuBottom, MapuiMobileLayout,
+  SideMenu,
   UnlockModal } from "$components/application"
 import { CitiesList, CitiesShow } from "$components/cities"
 import {
@@ -121,7 +121,7 @@ const AppMobile = (props) => {
     <AuthContextProvider {...{ useApi, }} >
     <TwofoldContextProvider {...props} {...{ layout, setLayout }} >
       <CollapsibleContextProvider >
-        { layout === C.layout_onecol && <MenuLeft variant={C.variants.floating} /> }
+        { layout === C.layout_onecol && <SideMenu variant={C.variants.floating} /> }
         <Root className="Root" >
 
           <Container className="Container" >

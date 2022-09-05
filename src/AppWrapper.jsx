@@ -15,9 +15,11 @@ import AppMobile from './AppMobile'
 
 /**
  * Chooses mobile vs desktop
+ * Sets the themeProvider
+ * Sets ToastContainer
  */
 const AppWrapper = (props) => {
-  // logg(props, 'AppWrapper')
+  logg(props, 'AppWrapper')
 
   const [ os, setOs ] = useState(null)
   // info.operatingSystem === 'ios' || 'android'

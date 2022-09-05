@@ -1,9 +1,11 @@
 import React from "react"
-import { withRouter } from "react-router-dom"
+// import { withRouter } from "react-router-dom"
 import "./Application.module.scss"
 import styled from 'styled-components'
 
-import { Api, logg, request, pp_date } from "$shared"
+import {
+  Api, logg, request, pp_date,
+} from "$shared"
 
 const W = styled.div`
   margin: .5em 0;
@@ -15,9 +17,9 @@ const Metaline = (props) => {
 
   const { created_at, username, city, tags = [] } = props;
 
-  function navigateToCity(){
-    props.history.push(`/en/cities/travel-to/${city.slug}/show/newsfeed`);
-  }
+  // function navigateToCity () {
+  //   props.history.push(`/en/cities/travel-to/${city.slug}/show/newsfeed`);
+  // }
 
   return (
     <W>
@@ -30,4 +32,7 @@ const Metaline = (props) => {
 
 }
 
-export default withRouter(Metaline);
+// export default withRouter(Metaline)
+
+export default Metaline
+

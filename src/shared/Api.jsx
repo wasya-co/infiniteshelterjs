@@ -12,6 +12,8 @@ import {
 } from "$shared"
 
 const useApi = () => {
+  if ('undefined' === typeof window) { return }
+
   const {
     setCurrentUser,
     setLoginModalOpen,

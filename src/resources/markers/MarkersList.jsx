@@ -81,7 +81,7 @@ const MarkersList = (props) => {
   })
   const times = 12 - out.length % 12
   for (let i = 0; i < times; i++) { // zero-height placeholders to prettify last row
-    out.push(<Marker variant={variant} key={`padded-${i}`} />)
+    out.push(<Marker style={{ height: 0, marginBottom: 0, marginTop: 0 }} variant={variant} key={`padded-${i}`} />)
   }
 
   return <W0 className="MarkersList" >

@@ -9,13 +9,14 @@ import { Route, useLocation, useHistory, Switch } from 'react-router-dom'
 import styled from 'styled-components'
 
 import config from 'config'
-import {
-  DayNightToggle,
-} from './'
-import { MenuLeft } from "$components/application"
+
+import { SideMenu } from "$components/application"
 import {
   C, logg, request, S, TwofoldContext,
 } from "$shared"
+import {
+  DayNightToggle,
+} from './'
 
 
 
@@ -35,7 +36,7 @@ const B1 = styled.div`
 
 /* W */
 const W0 = styled.div`
-  background: ${p => p.theme.colors.cardBackground};
+  // background: ${p => p.theme.colors.cardBackground};
   border: ${p=>p.debug?'1':'0'}px solid cyan;
 
   display: flex;
@@ -86,7 +87,7 @@ const Breadcrumbs = (props) => {
   })
 
   return <W0 debug={config.debug} className="Breadcrumbs" >
-    { layout === C.layout_mapui && <MenuLeft variant={C.variants.inline} /> }
+    { layout === C.layout_mapui && <SideMenu variant={C.variants.inline} /> }
     <WBreadcrumbs className='WBreadcrumbs' >{ out }</WBreadcrumbs>
     <DayNightToggle toggleTheme={toggleTheme} theme={theme} />
   </W0>

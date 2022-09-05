@@ -86,18 +86,27 @@ const _Card = styled(_Box)`
   flex-direction: column;
 `;
 export const Card = ({ children, ..._props }) => {
-  logg(_props, 'Card')
+  // logg(_props, 'Card')
   const { navigateToItem, ...props } = _props
+
   return <_Card className="Card" {...props}>{ children }</_Card>
 }
 
 export { default as Collapsible } from "./Collapsible"
-export const CollapsibleContext = React.createContext({})
+
 /**
- * @TODO: test-driven
- */
+ * @TODO: test-drive
+**/
+export const CollapsibleContext = React.createContext({})
 export const CollapsibleContextProvider = ({ children, ...props }) => {
   // logg(props, 'CollapsibleContextProvider')
+
+  // next_js
+  if ('undefined' === typeof window) {
+    return <CollapsibleContext.Provider value={{}} >
+      {children}
+    </CollapsibleContext.Provider>
+  }
 
   let defaultCollapsibles = {
     [C.collapsible.descr]: true,
@@ -195,6 +204,8 @@ export const Loading = (p) => <_Circle><_CircularProgress /></_Circle>
  * * the logger can be turned off by making this function simply return.
  */
 const logg = (a, b="", c=null) => {
+  if ('undefined' === typeof window) { return }
+
   c = "string" === typeof c ? c : b.replace(/\W/g, "");
   if (c.length > 0) {
     window[c] = a;
@@ -206,13 +217,10 @@ const logg = (a, b="", c=null) => {
 const logg_android = (a, b="", c=null) => {
   console.log(`+++ ${b}:`, a.inspect); // eslint-disable-line no-console
 };
-const logg2 = logg
-const logg4 = logg
 const logga = logg_android
 export {
   logg,
-  logg2,
-  logg4,
+  logg_android,
   logga,
 };
 
