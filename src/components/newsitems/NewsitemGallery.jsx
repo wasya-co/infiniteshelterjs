@@ -90,8 +90,8 @@ const NewsitemGallery = (props) => {
   const { item, variant } = props
 
   const navigateToItem = () => {
-    toast('this click is not implemented!')
-    logg('not implemented')
+    toast('Error 390: this click is not implemented')
+    logg('Error 390: this click is not implemented')
   }
 
   return <NewsitemContainer item={item} variant={variant} >

@@ -211,7 +211,8 @@ const LocationsShowDesktop = (props) => {
     twofoldPercent,
   } = useContext(TwofoldContext)
 
-  if (_location) setLocation(_location) // next_js
+  // @TODO: the TwofoldContext is absent from next_js, re-add it.
+  // if (_location) setLocation(_location) // next_js
 
   const api = useApi()
   const [ windowWidth, windowHeight ] = useWindowSize()
@@ -222,6 +223,15 @@ const LocationsShowDesktop = (props) => {
   const mountedRef = useRef(C.ref.init)
   const showItemRef = useRef(C.ref.init)
   const mapPanelRef = useRef(null)
+
+  // next_js, testing @TODO: remove
+  let testNames = []
+  if (_location) {
+    logg(_location, 'ze _location')
+    _location.newsitems.map((n, idx) => {
+      testNames.push(n.name)
+    })
+  }
 
   // Set Markers and ?ItemToUnlock
   useEffect(() => {
@@ -291,6 +301,8 @@ const LocationsShowDesktop = (props) => {
   const foldedRight = folded === C.foldedRight
 
   return <Row><MarkerContextProvider >
+
+    <div className='testNames'>{testNames}</div>
 
     { !foldedLeft && <Left className='Left'
         {...{ bottomDrawerOpen,

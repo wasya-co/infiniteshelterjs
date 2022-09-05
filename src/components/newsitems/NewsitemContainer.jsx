@@ -116,6 +116,7 @@ const NewsitemContainer = ({ children, ...props }) => {
     </W0>
 
   } else {
+
     return <W0 {...{ className, navigateToItem, variant }} >
       { children }
       <Row >
@@ -132,6 +133,7 @@ const NewsitemContainer = ({ children, ...props }) => {
       </Row>
       { item.subhead && item.subhead.length && <p className="subhead" dangerouslySetInnerHTML={{ __html: item.subhead }} /> }
     </W0>
+
   }
 }
 NewsitemContainer.propTypes = {

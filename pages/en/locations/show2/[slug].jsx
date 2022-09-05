@@ -31,7 +31,7 @@ import { LocationsShowDesktop } from '$components/locations'
  * Page
 **/
 const Page = (props) => {
-  logg(props, 'Page')
+  console.log(props, 'Page')
 
   const router = useRouter()
 
@@ -58,18 +58,17 @@ const Page = (props) => {
   const [ layout, setLayout ] = useState(C.layout_onecol)
 
   const childProps = {
+    ...props,
     theme, toggleTheme,
     match: { params: { slug: router.query.slug } }
   }
-
-
 
   return <ThemeProvider theme={theme == C.themes.light ? S.lightTheme: S.darkTheme} >
     <AuthContextProvider {...{ useApi, }} >
       <TwofoldContextProvider {...props} {...{ layout, setLayout }} >
         <CollapsibleContextProvider >
 
-          <LocationsShowDesktop {...childProps} /> }
+          <LocationsShowDesktop { ...childProps } /> }
           <ToastContainer position="bottom-left" />
 
         </CollapsibleContextProvider>
@@ -99,21 +98,22 @@ const Page = (props) => {
 
 */
 export async function getStaticProps(match) {
-  // logg(match, 'getStaticPRops')
+  console.log(match, 'getStaticProps')
   const { params: { slug } } = match
 
   // const api = useApi()
   // const location = await api.getLocation({ slug: match.params.slug })
 
   // @TODO: this is from useApi(), refactor it back somewhere.
-  const location = await request.get(`/api/maps/view/${slug}`).then(r => r.data).then(r => {
+  const domain = 'http://localhost:3001'
+  const location = await request.get(`${domain}/api/maps/view/${slug}`).then(r => r.data).then(r => {
       return r.map
     }).catch((err) => {
       return err
     })
 
   console.log('location112:', location)
-  return { props: { location, } }
+  return { props: { location } }
 }
 
 /**
