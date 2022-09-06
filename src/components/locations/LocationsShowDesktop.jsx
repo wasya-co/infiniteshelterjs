@@ -1,5 +1,4 @@
 
-import { Toast } from "@capacitor/toast"
 import React, { Fragment as F, useContext, useEffect, useRef, useState } from "react"
 import Modal from "react-modal"
 import styled from 'styled-components'
@@ -8,11 +7,11 @@ import config from 'config'
 
 import {
   Breadcrumbs,
+  LongLine,
   UnlockModal,
 } from "$components/application"
-import { CitiesList } from "$components/cities"
 import { Newsitems } from "$components/newsitems"
-import { LongLine } from "$components/TwofoldLayout"
+import { TwofoldContext, } from "$components/TwofoldLayout"
 import {
   MarkersList,
   MarkerModal, MarkerContext, MarkerContextProvider,
@@ -26,8 +25,6 @@ import {
   inflector,
   Loading, logg,
   MenuIcon,
-  request,
-  TwofoldContext,
   useApi, useWindowSize,
 } from "$shared"
 import {
@@ -164,7 +161,6 @@ const Left = styled.div`
 
 
 /* R */
-
 const Right = styled.div`
   background: ${p => p.theme.colors.background};
   position: relative;
@@ -187,13 +183,13 @@ const Row = styled.div`
 
 /**
  * LocationsShowDesktop
+ * @deprecated, use LocationsShow. _vp_ 2022-09-06
  *
  * @TODO: re-introduce MenuIcon in Handle. _vp_ 2022-09-01
 **/
 const LocationsShowDesktop = (props) => {
-  logg(props, 'LocationsShowDesktop')
+  // logg(props, 'LocationsShowDesktop')
   const {
-    location: _location,
     match,
   } = props
 
@@ -211,9 +207,6 @@ const LocationsShowDesktop = (props) => {
     twofoldPercent,
   } = useContext(TwofoldContext)
 
-  // @TODO: the TwofoldContext is absent from next_js, re-add it.
-  // if (_location) setLocation(_location) // next_js
-
   const api = useApi()
   const [ windowWidth, windowHeight ] = useWindowSize()
 
@@ -223,15 +216,6 @@ const LocationsShowDesktop = (props) => {
   const mountedRef = useRef(C.ref.init)
   const showItemRef = useRef(C.ref.init)
   const mapPanelRef = useRef(null)
-
-  // next_js, testing @TODO: remove
-  let testNames = []
-  if (_location) {
-    logg(_location, 'ze _location')
-    _location.newsitems.map((n, idx) => {
-      testNames.push(n.name)
-    })
-  }
 
   // Set Markers and ?ItemToUnlock
   useEffect(() => {
@@ -301,8 +285,6 @@ const LocationsShowDesktop = (props) => {
   const foldedRight = folded === C.foldedRight
 
   return <Row><MarkerContextProvider >
-
-    <div className='testNames'>{testNames}</div>
 
     { !foldedLeft && <Left className='Left'
         {...{ bottomDrawerOpen,

@@ -4,13 +4,14 @@ import { Route, useLocation, useHistory, Switch } from 'react-router-dom'
 import styled from 'styled-components'
 
 import {
+  ThreePanelMobile,
+} from "$components/3d_locations"
+import {
   Breadcrumbs,
   Metaline,
 } from "$components/application"
 import { Newsitems } from "$components/newsitems"
-import {
-  ThreePanelMobile,
-} from "$components/3d_locations"
+import { TwofoldContext, } from "$components/TwofoldLayout"
 import {
   MarkersList,
 } from '$resources/markers'
@@ -19,8 +20,6 @@ import {
   inflector,
   Loading, logg,
   request,
-  S,
-  TwofoldContext,
   useApi, useWindowSize,
   ZoomContext,
 } from "$shared"

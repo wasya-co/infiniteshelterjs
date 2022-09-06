@@ -10,12 +10,13 @@ import {
   CloseBtn,
 } from 'ishlibjs'
 
-import { C, logg, TwofoldContext } from "$shared"
+import { TwofoldContext } from "$components/TwofoldLayout"
 import { GalleriesShow } from "$components/galleries"
 import {
   ReportsForm,
   ReportsShow,
 } from "$resources/reports"
+import { C, logg, } from "$shared"
 
 import styles from './ItemModal.module.scss'
 

@@ -41,6 +41,7 @@ import {
 } from "$components/locations"
 import { ReportsShow } from "$resources/reports"
 import { SitesShow } from '$components/sites'
+import { TwofoldContext, TwofoldContextProvider, } from "$components/TwofoldLayout"
 import {
   Account,
 } from "$components/users"
@@ -48,7 +49,6 @@ import { Videos } from "$components/videos"
 import {
   C, CollapsibleContextProvider,
   logg,
-  TwofoldContext, TwofoldContextProvider,
   useApi,
 } from "$shared"
 

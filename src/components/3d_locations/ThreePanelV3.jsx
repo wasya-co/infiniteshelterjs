@@ -10,13 +10,13 @@ import { OBJLoader } from "three/examples/jsm/loaders/OBJLoader"
 import { MTLLoader } from "three/examples/jsm/loaders/MTLLoader"
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader"
 
-import { Crosshair } from "./"
-import { PointerLockControls, } from './PointerLockControls'
+import { TwofoldContext, } from "$components/TwofoldLayout"
 import {
   C,
   logg,
-  TwofoldContext,
 } from "$shared"
+import { Crosshair } from "./"
+import { PointerLockControls, } from './PointerLockControls'
 
 const Blocker = styled.div`
   // border: 2px solid red;

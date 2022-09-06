@@ -1,15 +1,16 @@
+
 import { IonPage, IonContent, IonButton, IonImg, IonLoading } from "@ionic/react"
 import React, { Fragment as F, useContext, useEffect, useRef, useState } from "react"
 import { Route, useLocation, useHistory, Switch } from 'react-router-dom'
 import styled from 'styled-components'
 
+import { TwofoldContext, } from "$components/TwofoldLayout"
 import {
   MarkerContext,
 } from '$resources/markers'
 import {
   C, Card,
-  logg, logg4,
-  TwofoldContext,
+  logg,
   useWindowSize,
 } from "$shared"
 

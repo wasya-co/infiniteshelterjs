@@ -1,7 +1,7 @@
 
 
-export { default as TwofoldContext } from './TwofoldContext'
-import { TwofoldContextProvider } from './TwofoldContext'
+import TwofoldContext, { TwofoldContextProvider } from './TwofoldContext'
 export {
+  TwofoldContext,
   TwofoldContextProvider,
 }

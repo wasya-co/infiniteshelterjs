@@ -1,4 +1,5 @@
 
+import PropTypes from 'prop-types'
 import { Toast } from "@capacitor/toast"
 import React, { Fragment as F, useContext, useEffect, useRef, useState } from "react"
 import Modal from "react-modal"
@@ -19,14 +20,14 @@ import {
 import {
   ReportForm,
 } from '$resources/reports'
+import { TwofoldContext, } from "$components/TwofoldLayout"
 import {
   C, Card, ChevronLeft, ChevronRight, Collapsible,
   FlexCol, FlexRow,
   inflector,
-  Loading, logg,
+  Loading,
+  logg,
   MenuIcon,
-  request,
-  TwofoldContext,
   useApi, useWindowSize,
 } from "$shared"
 import {

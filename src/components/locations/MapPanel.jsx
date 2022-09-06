@@ -4,7 +4,9 @@ import { useHistory } from 'react-router-dom'
 import styled from 'styled-components'
 
 import config from 'config'
-import { logg, TwofoldContext } from "$shared"
+
+import { TwofoldContext, } from "$components/TwofoldLayout"
+import { logg } from "$shared"
 
 const Div1 = styled.div`
   // border: 3px solid green;
@@ -76,7 +78,7 @@ const ZoomCtrl = (props) => {
  * MapPanel
 **/
 const MapPanel = (props) => {
-  logg(props, 'MapPanel')
+  // logg(props, 'MapPanel')
   const { map, withZoom=true } = props
 
   const {

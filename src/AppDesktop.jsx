@@ -5,7 +5,6 @@ import {
   Switch, BrowserRouter as Router, Redirect, Route as _Route,
   useRouteMatch,
 } from 'react-router-dom'
-
 import styled from 'styled-components'
 
 import config from "config"
@@ -22,6 +21,7 @@ import { CitiesList, CitiesShow } from "$components/cities"
 // @TODO: MyGalleries doesn't look right...
 import { GalleriesShow, MyGalleries } from "$components/galleries"
 import { LocationsShowDesktop } from "$components/locations"
+import { TwofoldContext, TwofoldContextProvider } from "$components/TwofoldLayout"
 import { ReportsShow } from "$resources/reports"
 import SitesShow from '$components/sites/SitesShow1'
 import {
@@ -31,7 +31,6 @@ import { Videos } from "$components/videos"
 import {
   C, CollapsibleContextProvider,
   logg,
-  TwofoldContextProvider,
   useApi,
 } from "$shared"
 

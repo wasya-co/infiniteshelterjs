@@ -11,13 +11,13 @@ import { OBJLoader } from "three/examples/jsm/loaders/OBJLoader"
 import { MTLLoader } from "three/examples/jsm/loaders/MTLLoader"
 import styled from 'styled-components'
 
+import {
+  logg,
+} from "$shared"
+import { TwofoldContext, } from "$components/TwofoldLayout"
 import { PointerLockControls } from './PointerLockControls'
 import TouchControls from "./vendor/TouchControls"
 import RotationPad from "./vendor/RotationPad"
-import {
-  logg,
-  TwofoldContext,
-} from "$shared"
 
 const Blocker = styled.div`
   border: 1px dashed red;

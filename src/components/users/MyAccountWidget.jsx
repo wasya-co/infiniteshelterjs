@@ -19,17 +19,16 @@ import {
 import {
   PurchaseModal,
 } from '$components/application'
-import {
-  FbLogin2,
-} from "./"
+import { TwofoldContext, } from "$components/TwofoldLayout"
 import {
   Btn,
   Card,
   logg,
   request,
-  S,
-  TwofoldContext,
 } from "$shared"
+import {
+  FbLogin2,
+} from "./"
 
 import "react-toggle/style.css"
 

@@ -23,10 +23,10 @@ import {
   C, CollapsibleContextProvider,
   logg,
   S,
-  TwofoldContextProvider,
   useApi,
 } from "$shared"
 import { LocationsShow } from '$components/locations'
+import { TwofoldContext, TwofoldContextProvider } from '$components/TwofoldLayout'
 
 /**
  * LocationsShowDesktop

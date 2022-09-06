@@ -5,8 +5,9 @@ import { Route, useLocation, useHistory, Switch } from 'react-router-dom'
 import styled from 'styled-components'
 
 import { Metaline } from "$components/application"
+import { TwofoldContext } from "$components/TwofoldLayout"
 import {
-  C, logg, request, TwofoldContext, BackBtn,
+  C, logg, request, BackBtn,
 } from "$shared"
 
 import styles from "./Galleries.module.scss"

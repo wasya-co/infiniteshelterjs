@@ -23,11 +23,13 @@ import React, {
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 
-import { FbLogin, Logout, } from "./"
-import { C, logg, TwofoldContext } from "$shared"
 import { SideMenu } from "$components/application"
+import { TwofoldContext, } from "$components/TwofoldLayout"
+import { C, logg } from "$shared"
 import Greeter from '$src/artifacts/contracts/Greeter.sol/Greeter.json'
 import Token from '$src/artifacts/contracts/Token.sol/Token.json'
+
+import { FbLogin, Logout, } from "./"
 
 const isPushNotificationsAvailable = Capacitor.isPluginAvailable('PushNotifications')
 

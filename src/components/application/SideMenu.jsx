@@ -1,3 +1,4 @@
+
 import { IonApp, IonButtons, IonMenuButton } from '@ionic/react'
 import Drawer from '@material-ui/core/Drawer'
 import Fab from '@material-ui/core/Fab'
@@ -12,7 +13,8 @@ import styled from 'styled-components'
 
 import config from 'config'
 
-import { Api, C, Debug, logg, MenuIcon, TwofoldContext, } from "$shared"
+import { TwofoldContext } from "$components/TwofoldLayout"
+import { Api, C, Debug, logg, MenuIcon, } from "$shared"
 
 const W0 = styled.div`
   height: 100vh;

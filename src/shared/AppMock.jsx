@@ -12,13 +12,13 @@ import {
 import styled from 'styled-components'
 import { ThemeProvider } from 'styled-components'
 
+import { LoginModal } from "$components/users"
+import { TwofoldContextProvider, } from "$components/TwofoldLayout"
 import {
   C,
   logg,
   S,
-  TwofoldContext, TwofoldContextProvider,
 } from "$shared"
-import { LoginModal } from "$components/users"
 
 // @TODO: this is a complete mess, remove and re-do this mock.
 const AppMock = (props) => {

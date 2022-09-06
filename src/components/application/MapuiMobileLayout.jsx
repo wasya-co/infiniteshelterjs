@@ -2,7 +2,10 @@
 import React, { Fragment as F, useContext, useEffect, useRef, useState } from "react"
 import styled from 'styled-components'
 
-import { C, logg, request, S, TwofoldContext, ZoomContext } from "$shared"
+import { TwofoldContext } from "$components/TwofoldLayout"
+import {
+  C, logg, ZoomContext
+} from "$shared"
 
 const MapuiContainer = styled.div`
   // border: 1px solid cyan;
@@ -11,7 +14,7 @@ const MapuiContainer = styled.div`
   overflow-y: auto;
 
   height: calc(100vh
-    - ${p => p.bottomDrawerOpen ? p.bottomDrawerOpenHeight : p.bottomDrawerClosedHeight });
+    - ${p => p.theme.bottomDrawerOpen ? p.theme.bottomDrawerOpenHeight : p.theme.bottomDrawerClosedHeight });
 `;
 
 export {
@@ -20,7 +23,7 @@ export {
 
 const MapuiMobileLayout = (props) => {
   const { bottomDrawerOpen } = useContext(TwofoldContext)
-  return <MapuiContainer {...props} {...{ bottomDrawerOpen }} {...S} />
+  return <MapuiContainer {...props} {...{ bottomDrawerOpen }} />
 }
 
 export default MapuiMobileLayout

@@ -1,8 +1,4 @@
 
-import {
-  IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonToggle, IonList, IonItem,
-  IonLabel, IonItemDivider,
-} from '@ionic/react'
 import PropTypes from 'prop-types'
 import React, { Fragment as F, useContext, useState } from 'react'
 import { Route, useLocation, useHistory, Switch } from 'react-router-dom'
@@ -11,8 +7,10 @@ import styled from 'styled-components'
 import config from 'config'
 
 import { SideMenu } from "$components/application"
+import { TwofoldContext } from "$components/TwofoldLayout"
 import {
-  C, logg, request, S, TwofoldContext,
+  C,
+  logg,
 } from "$shared"
 import {
   DayNightToggle,

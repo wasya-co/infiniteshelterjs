@@ -14,9 +14,9 @@ import {
 } from 'ishlibjs'
 import config from 'config'
 
+import { TwofoldContext, } from "$components/TwofoldLayout"
 import {
   logg,
-  TwofoldContext,
   useApi,
 } from "$shared"
 

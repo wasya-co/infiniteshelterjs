@@ -4,18 +4,18 @@ import React, { useContext, } from "react"
 import { toast } from 'react-toastify'
 import styled from 'styled-components'
 
-import { GenericNewsitem } from "./"
 import NewsitemGallery from "$components/newsitems/NewsitemGallery"
 import NewsitemReport from "$components/newsitems/NewsitemReport"
 import NewsitemPhoto from "$components/newsitems/NewsitemPhoto"
 import NewsitemVideo from "$components/newsitems/NewsitemVideo"
+import { TwofoldContext, } from "$components/TwofoldLayout"
 import {
   Btn,
   C,
   logg,
-  TwofoldContext,
   useApi,
 } from "$shared"
+import { GenericNewsitem } from "./"
 
 import "./Newsitems.module.scss"
 

@@ -1,25 +1,23 @@
 
 import PropTypes from 'prop-types'
 import React, { Fragment as F, useEffect, useContext, useState } from "react"
-
 import { useHistory, } from "react-router-dom"
 import styled from 'styled-components'
 
 import {
-  ItemIcon,
-} from "./"
-import {
   Metaline,
 } from "$components/application"
+import { TwofoldContext, } from "$components/TwofoldLayout"
 import Votable from "$components/Votable"
 import {
   C, Card,
   inflector,
   logg,
-  request,
-  TwofoldContext,
   WidgetContainer,
 } from "$shared"
+import {
+  ItemIcon,
+} from "./"
 
 // alphabetized
 

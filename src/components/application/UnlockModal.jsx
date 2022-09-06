@@ -12,12 +12,12 @@ import {
 } from 'ishlibjs'
 import config from 'config'
 
+import { TwofoldContext, } from "$components/TwofoldLayout"
 import {
   Btn,
   C,
   inflector,
   logg,
-  TwofoldContext,
 } from "$shared"
 
 import './UnlockModal.module.scss'

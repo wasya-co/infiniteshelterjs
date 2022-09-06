@@ -15,7 +15,7 @@ import styled from 'styled-components'
 
 import config from 'config'
 import C from "./C"
-import TwofoldContext, { TwofoldContextProvider } from '$components/TwofoldContext'
+import { TwofoldContext, TwofoldContextProvider } from '$components/TwofoldLayout'
 
 /* A */
 import useApi from "./Api"

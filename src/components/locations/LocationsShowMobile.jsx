@@ -9,22 +9,21 @@ import {
 } from "$components/application"
 import { Newsitems } from "$components/newsitems"
 import {
-  ItemModal,
-  WrappedMapPanel,
-} from "./"
-import {
   MarkersList,
 } from '$resources/markers'
+import { TwofoldContext, } from "$components/TwofoldLayout"
 import {
   C, Collapsible, CollapsibleContext,
   inflector,
   Loading, logg,
   request,
-  S,
-  TwofoldContext,
   useApi, useWindowSize,
   ZoomContext,
 } from "$shared"
+import {
+  ItemModal,
+  WrappedMapPanel,
+} from "./"
 
 
 const _Description = styled.div`
@@ -72,6 +71,7 @@ const LocationsShowMobile = (props) => {
   const history = useHistory()
 
   // Get the location data
+  // @TODO: move to the api _vp_ 2022-09-06
   useEffect(() => {
     setLoading(true)
     const token = localStorage.getItem("jwt_token")
