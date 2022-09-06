@@ -11,8 +11,12 @@ let API_KEY
 // API_KEY = 'AIzaSyDTM7RYKAlUS84jN1pCmydwEKxUTAMAn6c'
 API_KEY = 'AIzaSyB8kkxbSgjmUpGmpigro-N7uXKiQmpBoyE'
 
+/**
+ * GoogleMaps2
+ * _vp_ 2022-09-06
+**/
 const App = (props) => {
-  // logg(props, 'GoogleMaps2')
+  logg(props, 'GoogleMaps2')
   const {
     map,
   } = props

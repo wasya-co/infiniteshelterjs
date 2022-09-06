@@ -1,5 +1,5 @@
 
-import { useRouter } from 'next/router'
+// import { useRouter } from 'next/router'
 import PropTypes from 'prop-types'
 import React, { Fragment as F, useContext, useEffect, useRef, } from 'react'
 import Modal from "react-modal"
@@ -41,13 +41,12 @@ const modalStyle = {
  */
 const UnlockModal = (props) => {
   // logg(props, 'UnlockModal')
-
+  const { location, } = props
 
   if ('undefined' === typeof window) { return null } // next_js
 
   const {
     itemToUnlock, setItemToUnlock,
-    location, setLocation,
     loginModalOpen, setLoginModalOpen,
     purchaseModalOpen, setPurchaseModalOpen,
     ratedConfirmation, setRatedConfirmation,
@@ -60,30 +59,34 @@ const UnlockModal = (props) => {
   } = useContext(AuthContext)
   // logg(useContext(AuthContext), 'unlockModalUsedAuthContext')
 
+  if (!itemToUnlock.id) { return null }
+
   const api = useApi()
   const history = useHistory()
+  const match = useRouteMatch()
 
-  let match
-  const router = useRouter()
-  try {
-    match = useRouteMatch()
-  } catch(e) {
-    // logg(e, 'e77')
+  // // next_js
+  // let match
+  // const router = useRouter()
+  // try {
+  //   match = useRouteMatch()
+  // } catch(e) {
+  //   // logg(e, 'e77')
+  //   match = { params: router.query }
+  // }
 
-    match = { params: router.query }
-  }
-  logg(match, 'match')
 
-  const doUnlock = async () => {
+
+  const doUnlock = () => {
     // logg(itemToUnlock, 'itemToUnlock')
 
-    // @TODO: check how many unlocks I have, and offer to purchase more if not enough.
+    // @TODO: check how many unlocks I have, and offer to purchase more if not enough. _vp_ 2022-09-06
     // @TODO: Do I Need to refresh the newsfeed somehow? _vp_ 2022-09-04
-    await api.doUnlock({ kind: itemToUnlock.item_type, id: itemToUnlock.id }).then((r) => {
+    api.doUnlock({ kind: itemToUnlock.item_type, id: itemToUnlock.id }).then((r) => {
       // logg(r, 'OK doUnlock')
 
       setItemToUnlock({}) // @TODO: Change this to null if possible. Test-drive this change. _vp_ 2022-09-04
-      setCurrentUser(r)
+      setCurrentUser(r) // @TODO: remove, this does not belong here. _vp_ 2022-09-06
 
       // @TODO: move, copy-pasted from LocationsShowDesktop
       api.getLocation({ slug: match.params.slug }).then(r => {
@@ -101,20 +104,7 @@ const UnlockModal = (props) => {
     })
   }
 
-  /* @TODO: this was here before, but should not be, right? _vp_ 2022-03-19 */
-  // const mountedRef = useRef('init')
-  // useEffect(() => {
-  //   const fn = async () => {
-  //     const r = await api.getMyAccount()
-  //     if (r) {
-  //       setCurrentUser(r)
-  //     }
-  //   }
-  //   fn()
-  //   return () => mountedRef.current = null
-  // }, [itemToUnlock.id])
 
-  if (!itemToUnlock.id) { return null }
 
   let closable = typeof itemToUnlock.closable === 'undefined' ? true : itemToUnlock.closable
 
@@ -148,6 +138,9 @@ const UnlockModal = (props) => {
     </BtnRow>
   </Modal>)
 
+}
+UnlockModal.propTypes = {
+  location: PropTypes.object.isRequired,
 }
 
 export default UnlockModal

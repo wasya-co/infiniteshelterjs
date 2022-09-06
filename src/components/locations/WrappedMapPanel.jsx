@@ -1,9 +1,6 @@
 
-
 import { CircularProgress as _CircularProgress } from '@material-ui/core'
-import { ChevronLeft, ChevronRight, Menu as MenuIcon, } from '@material-ui/icons'
-import React, { Fragment as F, useContext, useEffect, useRef, useState } from "react"
-import Modal from "react-modal"
+import React, { useContext, useEffect, useRef, useState } from "react"
 import styled from 'styled-components'
 
 import {
@@ -18,8 +15,6 @@ import {
 import {
   C, Collapsible,
   logg,
-  request,
-  TwofoldContext,
   useWindowSize,
 } from "$shared"
 
@@ -39,7 +34,7 @@ const W0 = styled.div`
  * or some other MapPanel.
  */
 const WrappedMapPanel = React.forwardRef((props, ref) => {
-  logg(props, 'WrappedMapPanel')
+  // logg(props, 'WrappedMapPanel')
   // const { map } = props
 
   if ('undefined' === typeof props.map?.slug) { return null } // next_js

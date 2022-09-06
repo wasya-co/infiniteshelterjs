@@ -84,7 +84,7 @@ const LocationsShowMobile3d = (props) => {
       setLocation(res.data.map)
       setLoading(false)
     }).catch((e) => {
-      logg(e, 'e13')
+      logg(e, 'e14')
       history.push('/')
     }).finally(() => {
     })

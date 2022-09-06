@@ -5,8 +5,6 @@ import React, { Fragment as F, useContext, useEffect, useRef, useState } from "r
 import Modal from "react-modal"
 import styled from 'styled-components'
 
-import config from 'config'
-
 import {
   Breadcrumbs,
   LongLine,
@@ -41,12 +39,9 @@ import {
 
 /* D */
 
-// @TODO: move Description into shared ?
-const _D = styled.div`
-`;
+const _D = styled.div``;
 const Description = ({ item={} }) => {
   if (!item.description) { return }
-
   return <_D className="Description" dangerouslySetInnerHTML={{ __html: item.description }} />
 }
 
@@ -150,7 +145,7 @@ const IframeModal = (props) => {
 }
 
 /* L */
-const Left = styled.div`
+const _Left = styled.div`
   background: ${p => p.theme.colors.background};
   flex: ${p => p.foldedRight ? '99%' : `${p.twofoldPercent*100}%` };
   overflow: hidden;
@@ -161,10 +156,14 @@ const Left = styled.div`
   height: calc(100vh - ${p => `calc(2*${p.theme.borderWidth})`}
     - ${p => p.bottomDrawerOpen ? p.theme.bottomDrawerOpenHeight : p.theme.bottomDrawerClosedHeight });
 `;
-
+const Left = ({ children, ...props }) => {
+  return <_Left className='Left' {...props} >
+    {children}
+  </_Left>
+}
 
 /* R */
-const Right = styled.div`
+const _Right = styled.div`
   background: ${p => p.theme.colors.background};
   position: relative;
 
@@ -175,6 +174,12 @@ const Right = styled.div`
   height: calc(100vh - ${p => `calc(2*${p.theme.borderWidth})`}
     - ${p => p.bottomDrawerOpen ? p.theme.bottomDrawerOpenHeight : p.theme.bottomDrawerClosedHeight });
 `;
+const Right = ({ children, ...props }) => {
+  return <_Right className='Right' {...props} >
+    <Handle />
+    {children}
+  </_Right>
+}
 
 const Row = styled.div`
   // border: 1px solid magenta;
@@ -185,7 +190,7 @@ const Row = styled.div`
 
 
 /**
- * LocationsShow Static
+ * LocationsShow [static]
  * _vp_ 2022-09-06
  *
  * @TODO: re-introduce MenuIcon in Handle. _vp_ 2022-09-01
@@ -195,7 +200,7 @@ const Row = styled.div`
 const LocationsShow = (props) => {
   // logg(props, 'LocationsShow')
   const {
-    location: _location,
+    location,
     match,
   } = props
 
@@ -217,9 +222,11 @@ const LocationsShow = (props) => {
   const [ windowWidth, windowHeight ] = useWindowSize()
   const [ loading, setLoading ] = useState(false)
 
-  const mountedRef = useRef(C.ref.init)
-  const showItemRef = useRef(C.ref.init)
+  // const mountedRef = useRef(C.ref.init)
+  // const showItemRef = useRef(C.ref.init)
   const mapPanelRef = useRef(null)
+
+  if (!location) { return null }
 
   // Set ?ItemToUnlock
   useEffect(() => {
@@ -230,7 +237,7 @@ const LocationsShow = (props) => {
         setItemToUnlock({ closable: false, item_type: 'Location', ...location })
       }
     }
-  }, [ location ])
+  }, [ location.id ])
 
   // Set mapPanel sizes
   useEffect(() => {
@@ -242,92 +249,50 @@ const LocationsShow = (props) => {
 
   return <Row><MarkerContextProvider >
 
-    { !foldedLeft && <Left className='Left'
-        {...{ bottomDrawerOpen,
-          folded, foldedLeft, foldedRight,
-          twofoldPercent,
-        } }
-    >
-      { <Breadcrumbs {...location} /> }
-      { location && <WrappedMapPanel
+    <Left >
+      <Breadcrumbs {...location} />
+      <WrappedMapPanel
         map={location.map ? location.map : location}
         ref={mapPanelRef}
         slug={match.params.slug}
-      /> }
-    </Left> }
+      />
+    </Left>
 
-    <Right
-        className='Right'
-        {...{
-          bottomDrawerOpen,
-          folded, foldedLeft, foldedRight,
-          twofoldPercent,
-        } }
-    >
-      <Handle />
-      { location && !foldedRight && <F>
+    <Right >
 
         { /* Markers */ }
         { location.markers.length && <Collapsible
-            config={{ collapsible: false }}
-            slug={C.collapsible.markers}
-            variant={C.variants.transparent}
-        >
-          <MarkersList markers={location.markers}
-            variant={C.variants.bordered}
-          />
+          config={{ collapsible: false }}
+          slug={C.collapsible.markers}
+          variant={C.variants.transparent}
+        ><MarkersList markers={location.markers}
+          variant={C.variants.bordered}
+        />
         </Collapsible> || null }
-
-        { /* Features? */ }
-
-        { /* Tags */ }
-        {/* { location && <FlexRow className='Tags' style={{ marginBottom: '1em', flexWrap: 'wrap' }} >
-          { location.tags.map((tag) => <Card >{tag.name}</Card> )}
-        </FlexRow> } */}
-
-        { /* Actions */ }
-        { editorMode && <FlexRow className='Actions' style={{ marginBottom: '1em' }} >
-          <Card onClick={() => setShowItem({ action: C.actions.new, item_type: C.item_types.report }) } >
-            + Report
-          </Card>
-          <Card>
-            + Photo
-          </Card>
-          <Card>
-            + Gallery
-          </Card>
-          <Card>
-            + File
-          </Card>
-          {/* <Card> + Spreadsheet </Card> */}
-          <Card> + Marker </Card>
-        </FlexRow> }
 
         { /* Description */ }
         { location.description && <Collapsible
-            className='Description'
-            label={location.labels.description}
-            slug={C.collapsible.description}
-            variant={C.variants.bordered}
-        >
-          <Description item={location} />
+          className='Description'
+          label={location.labels.description}
+          slug={C.collapsible.description}
+          variant={C.variants.bordered}
+        ><Description item={location} />
         </Collapsible> || null }
 
         { /* Newsitems */ }
         { location.newsitems.length && <Newsitems
-            variant={C.variants.bordered} newsitems={location.newsitems}
+          variant={C.variants.bordered} newsitems={location.newsitems}
         /> || null }
 
-      </F> || null }
     </Right>
 
     { showUrl && <IframeModal src={showUrl} /> }
     { showItem && <ItemModal item={showItem} /> }
     { loading && <Loading /> }
     { !ratedConfirmation && <RatedRestrictionModal {...{ ratedConfirmation, setRatedConfirmation, }} /> }
-    { <MarkerModal /> }
+    { /* <MarkerModal /> - @TODO: what is this, even? */ }
 
-    <UnlockModal />
+    { location.is_premium && <UnlockModal location={location} /> }
 
   </MarkerContextProvider></Row>
 }

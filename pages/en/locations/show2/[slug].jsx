@@ -14,30 +14,37 @@ import {
   AuthContextProvider,
 } from 'ishlibjs'
 
-// @TODO: refactor
-import {
-  request,
-} from "$shared"
-
+import { LocationsShow } from '$components/locations'
+import { TwofoldContext, TwofoldContextProvider } from '$components/TwofoldLayout'
 import {
   C, CollapsibleContextProvider,
   logg,
+  request,
   S,
   useApi,
 } from "$shared"
-import { LocationsShow } from '$components/locations'
-import { TwofoldContext, TwofoldContextProvider } from '$components/TwofoldLayout'
+
+import '@ionic/react/css/core.css'
+import '@ionic/react/css/normalize.css'
+import '@ionic/react/css/structure.css'
+import '@ionic/react/css/typography.css'
+import '@ionic/react/css/padding.css'
+import '@ionic/react/css/float-elements.css'
+import '@ionic/react/css/text-alignment.css'
+import '@ionic/react/css/text-transformation.css'
+import '@ionic/react/css/flex-utils.css'
+import '@ionic/react/css/display.css'
 
 /**
- * LocationsShowDesktop
+ * LocationsShow
 **/
 const Page = (props) => {
-  console.log(props, 'Page')
+  // console.log(props, 'Page')
 
   const router = useRouter()
 
   if (props.location.is_premium) {
-    return <h1>This location cannot be accessed right now, please try again later</h1>
+    return <h1>We apologize, this premium content is not currently available.</h1>
   }
 
   const childProps = {
@@ -47,13 +54,13 @@ const Page = (props) => {
 
   return <>
 
-    { /* @TODO: abstract and move this */ }
+    { /* @TODO: abstract and move this _vp_ 2022-09-06 */ }
     <Head>
       <title>{props.location.name} - {config.siteTitle}</title>
       <meta name="viewport" content="initial-scale=1.0, width=device-width" />
     </Head>
 
-    <ThemeProvider >
+    <ThemeProvider theme={ S.lightTheme} >
       <AuthContextProvider {...{ useApi, }} >
         <TwofoldContextProvider {...props} >
           <CollapsibleContextProvider >
@@ -113,8 +120,10 @@ export async function getStaticProps(match) {
 **/
 export async function getStaticPaths() {
   let paths = []
-  paths.push({ params: { slug: 'root' }})
   paths.push({ params: { slug: 'chicago' }})
+  paths.push({ params: { slug: 'root' }})
+  paths.push({ params: { slug: 'trading' }})
+
   return { paths, fallback: false }
 }
 // // This function gets called at build time

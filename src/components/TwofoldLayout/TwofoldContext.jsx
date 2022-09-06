@@ -25,9 +25,8 @@ const TwofoldContext = React.createContext({})
 const TwofoldContextProvider = ({ children, ...props }) => {
   // logg(props, 'TwofoldContextProvider')
   let {
-    currentUser: _currentUser, setCurrentUser: _setCurrentUser, // for testing only. _vp_ 2022-03-18
     itemToUnlock, setItemToUnlock,
-    layout, setLayout,
+    // layout, setLayout,
     showItem: _showItem, setShowItem: _setShowItem,
     theme, toggleTheme,
     zoom, setZoom, // it's a prop for testing only. _vp_ 2022-03-18
@@ -54,38 +53,37 @@ const TwofoldContextProvider = ({ children, ...props }) => {
 
 
   /* C */
-  let [ currentUser, setCurrentUser ] = useState(C.anonUser)
-  if (_setCurrentUser) {
-    [ currentUser, setCurrentUser ] = [ _currentUser, _setCurrentUser ]
-  }
+  // currentUser stuff, below
 
-  /* Get the current_user on load */
-  const mountedRef = useRef('init')
-  useEffect(() => {
-    if (!mountedRef.current) { return } // @TODO: hmmm do I need this?
+  // /* Get the current_user on load */
+  // const mountedRef = useRef('init')
+  // useEffect(() => {
+  //   if (!mountedRef.current) { return } // @TODO: hmmm do I need this?
 
-    const fn = async () => {
-      const r = await api.getMyAccount()
-      setCurrentUser(r)
-    }
-    fn()
+  //   const fn = async () => {
+  //     const r = await api.getMyAccount()
+  //     setCurrentUser(r)
+  //   }
+  //   fn()
 
-    return () => mountedRef.current = null
-  }, [currentUser])
+  //   return () => mountedRef.current = null
+  // }, [ currentUser ])
 
-  // Refresh current_user if is_purchasing
-  useEffect(() => {
-    let closure = setTimeout(() => {
+  // // Refresh current_user if is_purchasing
+  // useEffect(() => {
+  //   let closure = setTimeout(() => {
 
-      const fn = async () => {
-        const r = await api.getMyAccount()
-        setCurrentUser(r)
-      }
-      fn()
+  //     const fn = async () => {
+  //       const r = await api.getMyAccount()
+  //       setCurrentUser(r)
+  //     }
+  //     fn()
 
-    }, 1 * 1000)
-    return () => clearTimeout(closure)
-  }, [currentUser.is_purchasing])
+  //   }, 1 * 1000)
+  //   return () => clearTimeout(closure)
+  // }, [ currentUser.is_purchasing ])
+
+  // END currentUser stuff
 
   /* E */
   const [ editorMode, _setEditorMode ] = useState(JSON.parse(localStorage.getItem(C.names.editorMode)))
@@ -113,7 +111,6 @@ const TwofoldContextProvider = ({ children, ...props }) => {
   // }
 
   /* L */
-  const [ location, setLocation ] = useState(null)
   const [ loginModalOpen, setLoginModalOpen ] = useState(false)
 
   /* M */
@@ -161,16 +158,14 @@ const TwofoldContextProvider = ({ children, ...props }) => {
   return <TwofoldContext.Provider value={{
     bottomDrawerOpen, setBottomDrawerOpen,
 
-    currentUser, setCurrentUser,
-
     editorMode, setEditorMode,
 
     folded, setFolded, foldedLeft, foldedRight,
 
     itemToUnlock, setItemToUnlock,
 
-    layout, setLayout,
-    location, setLocation,
+    // layout, setLayout,
+    // location, setLocation,
     loginModalOpen, setLoginModalOpen,
 
     mapPanelHeight, setMapPanelHeight,
@@ -188,7 +183,6 @@ const TwofoldContextProvider = ({ children, ...props }) => {
 
     zoom, setZoom,
 
-    theme, toggleTheme,
   }} >{ children }</TwofoldContext.Provider>
 }
 

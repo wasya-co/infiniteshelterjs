@@ -70,34 +70,34 @@ const LocationsShowMobile = (props) => {
   const mapPanelRef = useRef(null)
   const history = useHistory()
 
-  // Get the location data
-  // @TODO: move to the api _vp_ 2022-09-06
-  useEffect(() => {
-    setLoading(true)
-    const token = localStorage.getItem("jwt_token")
-    request.get(`/api/maps/view/${match.params.slug}`, { params: { jwt_token: token } }).then(res => {
-      if (mountedRef.current === match.params.slug) return null
+  // // Get the location data
+  // // @TODO: move to the api _vp_ 2022-09-06
+  // useEffect(() => {
+  //   setLoading(true)
+  //   const token = localStorage.getItem("jwt_token")
+  //   request.get(`/api/maps/view/${match.params.slug}`, { params: { jwt_token: token } }).then(res => {
+  //     if (mountedRef.current === match.params.slug) return null
 
-      if (!res.data.map) {
-        setLoading(false)
-        showToast('could not get Location')
-        return null
-      }
+  //     if (!res.data.map) {
+  //       setLoading(false)
+  //       showToast('could not get Location')
+  //       return null
+  //     }
 
-      setLocation(res.data.map)
-      setLoading(false)
-      // @TODO: setFlash here?! If I'm accessing a gallery I don't have access to?
+  //     setLocation(res.data.map)
+  //     setLoading(false)
+  //     // @TODO: setFlash here?! If I'm accessing a gallery I don't have access to?
 
-    }).catch((e) => {
-      logg(e, 'e13')
-      history.push('/')
-    }).finally(() => {
-    })
+  //   }).catch((e) => {
+  //     logg(e, 'e13')
+  //     history.push('/')
+  //   }).finally(() => {
+  //   })
 
-    return () => {
-      mountedRef.current = match.params.slug
-    }
-  }, [ match.params.slug ])
+  //   return () => {
+  //     mountedRef.current = match.params.slug
+  //   }
+  // }, [ match.params.slug ])
 
 
   // @TODO: this can probably be much improved. Take either markers of location.map, or location itself.
