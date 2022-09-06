@@ -1,4 +1,5 @@
 
+import Head from 'next/head'
 import { useRouter } from 'next/router'
 import React, { useEffect, useState, } from 'react'
 import ReactDOM from 'react-dom'
@@ -25,56 +26,47 @@ import {
   TwofoldContextProvider,
   useApi,
 } from "$shared"
-import { LocationsShowDesktop } from '$components/locations'
+import { LocationsShow } from '$components/locations'
 
 /**
- * Page
+ * LocationsShowDesktop
 **/
 const Page = (props) => {
   console.log(props, 'Page')
 
   const router = useRouter()
 
-  const [theme, setTheme] = useState(C.themes.light)
-  const toggleTheme = (e) => {
-    if ('undefined' === typeof window) { return }
-
-    if (theme === C.themes.light) {
-      window.localStorage.setItem(C.theme, C.themes.dark)
-      setTheme(C.themes.dark)
-    } else {
-      window.localStorage.setItem(C.theme, C.themes.light)
-      setTheme(C.themes.light)
-    }
+  if (props.location.is_premium) {
+    return <h1>This location cannot be accessed right now, please try again later</h1>
   }
-  if ('undefined' !== typeof window) {
-    const tmp = window.localStorage.getItem(C.theme)
-    if (tmp && tmp !== theme) {
-      // logg(tmp, 'setting theme')
-      setTheme(tmp)
-    }
-  }
-
-  const [ layout, setLayout ] = useState(C.layout_onecol)
 
   const childProps = {
     ...props,
-    theme, toggleTheme,
     match: { params: { slug: router.query.slug } }
   }
 
-  return <ThemeProvider theme={theme == C.themes.light ? S.lightTheme: S.darkTheme} >
-    <AuthContextProvider {...{ useApi, }} >
-      <TwofoldContextProvider {...props} {...{ layout, setLayout }} >
-        <CollapsibleContextProvider >
+  return <>
 
-          <LocationsShowDesktop { ...childProps } /> }
-          <ToastContainer position="bottom-left" />
+    { /* @TODO: abstract and move this */ }
+    <Head>
+      <title>{props.location.name} - {config.siteTitle}</title>
+      <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+    </Head>
 
-        </CollapsibleContextProvider>
-      </TwofoldContextProvider>
-    </AuthContextProvider>
-  </ThemeProvider>
+    <ThemeProvider >
+      <AuthContextProvider {...{ useApi, }} >
+        <TwofoldContextProvider {...props} >
+          <CollapsibleContextProvider >
+
+            <LocationsShow { ...childProps } /> }
+            <ToastContainer position="bottom-left" />
+
+          </CollapsibleContextProvider>
+        </TwofoldContextProvider>
+      </AuthContextProvider>
+    </ThemeProvider>
+
+  </>
 }
 
 /**

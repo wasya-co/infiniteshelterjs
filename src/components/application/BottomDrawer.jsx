@@ -8,9 +8,11 @@ import Web3 from 'web3'
 import { useWeb3React, Web3ReactProvider } from "@web3-react/core"
 import { InjectedConnector } from '@web3-react/injected-connector'
 
-import { LongLine } from "$components/TwofoldLayout"
+import { LongLine } from "$components/application"
 import { MyAccountWidget } from "$components/users"
-import { C, logg, MenuIcon, S, TwofoldContext, } from "$shared"
+import {
+  C, logg, MenuIcon, S, TwofoldContext,
+} from "$shared"
 
 const Drawer = styled(_Drawer)`
   .MuiDrawer-paper {

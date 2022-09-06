@@ -15,8 +15,7 @@ import styled from 'styled-components'
 
 import config from 'config'
 import C from "./C"
-import { default as TwofoldContext } from './TwofoldContext'
-import { TwofoldContextProvider } from './TwofoldContext'
+import TwofoldContext, { TwofoldContextProvider } from '$components/TwofoldContext'
 
 /* A */
 import useApi from "./Api"
@@ -247,7 +246,6 @@ export { default as request } from "./request"
 export { default as S } from "./S"
 
 /* T */
-export { TwofoldContext, TwofoldContextProvider }
 
 /* U */
 export { default as useWindowSize } from './useWindowSize'

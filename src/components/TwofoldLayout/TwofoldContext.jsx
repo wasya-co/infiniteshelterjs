@@ -96,6 +96,8 @@ const TwofoldContextProvider = ({ children, ...props }) => {
 
   /* F */
   const [ folded, setFolded ] = useState()
+  const foldedLeft = folded === C.foldedLeft
+  const foldedRight = folded === C.foldedRight
 
   /* I */
   const [ _itemToUnlock, _setItemToUnlock ] = useState({})
@@ -163,7 +165,7 @@ const TwofoldContextProvider = ({ children, ...props }) => {
 
     editorMode, setEditorMode,
 
-    folded, setFolded,
+    folded, setFolded, foldedLeft, foldedRight,
 
     itemToUnlock, setItemToUnlock,
 

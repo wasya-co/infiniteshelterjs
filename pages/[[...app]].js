@@ -1,6 +1,9 @@
 
+import Head from 'next/head'
 import Script from 'next/script'
 import React, { useState, useEffect } from 'react'
+
+import config from 'config'
 
 import AppWrapper from '../src/AppWrapper'
 
@@ -16,6 +19,7 @@ function App() {
   }
 
   return <div>
+
     <AppWrapper />
 
     <Script

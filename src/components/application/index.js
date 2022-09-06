@@ -4,6 +4,7 @@ export { default as Breadcrumbs } from "./Breadcrumbs"
 
 export { default as DayNightToggle } from "./DayNightToggle"
 
+export { default as LongLine } from './LongLine'
 export { default as MainHeader } from "./MainHeader"
 export { default as MapuiLayout } from "./MapuiLayout"
 export { default as MapuiMobileLayout } from "./MapuiMobileLayout"
