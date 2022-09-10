@@ -17,7 +17,6 @@ import {
   LocationsShow, LocationsShowMobile3d,
 } from "$components/locations"
 import { ReportsShow } from "$components/reports"
-import { SitesShow } from '$components/sites'
 import {
   Account,
 } from "$components/users"
@@ -40,7 +39,6 @@ const AppRouter = (props) => {
     <Switch id="main" main >
 
       <Redirect exact from="/" to={config.homePath} />
-      <Route exact path="/en" ><SitesShow /></Route>
 
       <Route exact path="/en/account" component={Account} />
       <Route exact path="/en/account/my/videos" component={Videos} />
@@ -51,12 +49,13 @@ const AppRouter = (props) => {
 
       <Route exact path="/en/galleries/show/:slug" component={GalleriesShow} />
 
-      <Route exact path="/en/reports/show/:slug" component={ReportsShow} />
-
       <Route exact path="/en/locations/show/:slug" component={LocationsShow} layout={C.layout_mapui} />
       <Route exact path="/en/locations/show/:slug/:item_type/show/:item_slug" component={LocationsShow} layout={C.layout_mapui} />
       <Route exact path="/en/locations/show2/:slug" component={LocationsShow} layout={C.layout_mapui} />
       <Route exact path="/en/locations/show3d/:slug" component={LocationsShowMobile3d} layout={C.layout_mapui} />
+
+      { /* @TODO: Remove, this appears obsolete _vp_ 2022-09-10 */ }
+      <Route exact path="/en/reports/show/:slug" component={ReportsShow} />
 
     </Switch>
   </Router>

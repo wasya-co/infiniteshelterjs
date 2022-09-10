@@ -39,7 +39,6 @@ import {
   LocationsShowMobile, LocationsShowMobile3d,
 } from "$components/locations"
 import { ReportsShow } from "$components/reports"
-import { SitesShow } from '$components/sites'
 import { TwofoldContext, TwofoldContextProvider, } from "$components/TwofoldLayout"
 import {
   Account,
@@ -127,7 +126,6 @@ const AppMobile = (props) => {
             <Switch id="main" main >
 
               <Redirect exact from="/" to={config.homePath} />
-              <Route exact path="/en" ><SitesShow /></Route>
 
               <Route exact path="/en/account" component={Account} />
               <Route exact path="/en/account/my/videos" component={Videos} />

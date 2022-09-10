@@ -23,7 +23,6 @@ import { GalleriesShow, MyGalleries } from "$components/galleries"
 import { LocationsShowDesktop } from "$components/locations"
 import { TwofoldContext, TwofoldContextProvider } from "$components/TwofoldLayout"
 import { ReportsShow } from "$components/reports"
-import SitesShow from '$components/sites/SitesShow1'
 import {
   Account,
 } from "$components/users"
@@ -96,7 +95,6 @@ const AppDesktop = (props) => {
               <Switch id="main" main >
 
                 <Redirect exact from="/" to={config.homePath} />
-                <Route exact path="/en" ><SitesShow /></Route>
 
                 <Route exact path="/en/account" component={Account} />
                 <Route exact path="/en/account/my/videos" component={Videos} />

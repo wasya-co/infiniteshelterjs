@@ -1,9 +1,7 @@
 
 
 import { CircularProgress as _CircularProgress } from '@material-ui/core'
-import { ChevronLeft, ChevronRight, Menu as MenuIcon, } from '@material-ui/icons'
 import React, { Fragment as F, useContext, useEffect, useRef, useState } from "react"
-import Modal from "react-modal"
 import styled from 'styled-components'
 
 import {
@@ -14,30 +12,24 @@ import GoogleMaps from './GoogleMaps2'
 import {
   Equirectangular4,
   TabiversePlanet, ThreePanelV1, ThreePanelV2, ThreePanelV3, ThreePanelV4, ThreePanelDesktop,
-} from "$components/3d_locations"
+} from "$components/locations3d"
 import {
-  C, Collapsible,
+  C,
   logg,
-  request,
-  TwofoldContext,
-  useWindowSize,
 } from "$shared"
 
 /* W */
 const W0 = styled.div`
   overflow: hidden;
-
   flex-grow: 1;
-
-  // max-height: 100vh;
-  // min-height: 50vh;
-
 `;
 
 /**
  * Renders either MapPanel (W0 really, a simple wrapper), MapPanelNoZoom, or ThreePanelV1
  * or some other MapPanel.
- */
+ *
+ * @TODO: rename to... MapPanelImage ? There will be MapPanelGeospatial, MapPanelGallery, MapPanel3d, ...
+**/
 const WrappedMapPanel = React.forwardRef((props, ref) => {
   // logg(props, 'WrappedMapPanel')
   // const { map } = props
