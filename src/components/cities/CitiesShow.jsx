@@ -8,8 +8,11 @@ import { Newsitems } from "$components/newsitems"
 import { Venues } from "$components/venues"
 import "./Cities.module.scss"
 
+/**
+ * CitiesShow
+**/
 const CitiesShow = (props) => {
-  logg(props, 'CitiesShow')
+  // logg(props, 'CitiesShow')
   const { match } = props
 
   const api = useApi()
