@@ -150,7 +150,7 @@ const IframeModal = (props) => {
 }
 
 /* L */
-const Left = styled.div`
+const _Left = styled.div`
   background: ${p => p.theme.colors.background};
   flex: ${p => p.foldedRight ? '99%' : `${p.twofoldPercent*100}%` };
   overflow: hidden;
@@ -161,6 +161,17 @@ const Left = styled.div`
   height: calc(100vh - ${p => `calc(2*${p.theme.borderWidth})`}
     - ${p => p.bottomDrawerOpen ? p.theme.bottomDrawerOpenHeight : p.theme.bottomDrawerClosedHeight });
 `;
+const Left = ({ children, ...props }) => {
+  const {
+    bottomDrawerOpen,
+    folded, foldedLeft, foldedRight,
+    twofoldPercent,
+  } = useContext(TwofoldContext)
+  if (foldedLeft) { return null }
+  return <_Left className='Left' {...{ bottomDrawerOpen, foldedRight, twofoldPercent }} >
+    { children }
+  </_Left>
+}
 
 
 /* R */
@@ -171,12 +182,17 @@ const _Right = styled.div`
   padding: 0 0 0 1em;
   flex: ${p => p.foldedRight ? '2%' : `${(1-p.twofoldPercent)*100}%` };
   overflow-x: hidden;
-  overflox-y: auto;
+
   height: calc(100vh - ${p => `calc(2*${p.theme.borderWidth})`}
     - ${p => p.bottomDrawerOpen ? p.theme.bottomDrawerOpenHeight : p.theme.bottomDrawerClosedHeight });
 `;
 const Right = ({ children, ...props }) => {
-  return <_Right className='Right'>
+  const {
+    bottomDrawerOpen,
+    folded, foldedLeft, foldedRight,
+    twofoldPercent,
+  } = useContext(TwofoldContext)
+  return <_Right className='Right' {...{ bottomDrawerOpen, foldedRight, twofoldPercent }} >
     <Handle />
     { children }
   </_Right>
@@ -249,7 +265,7 @@ const LocationsShow = (props) => {
 
   return <Row><MarkerContextProvider >
 
-    <Left className='Left' >
+    <Left >
       <Breadcrumbs {...location} />
       <WrappedMapPanel
         map={location.map ? location.map : location}

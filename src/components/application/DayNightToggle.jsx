@@ -21,7 +21,7 @@ const DayNightToggle = (props) => {
     <div className={`DaynightToddle ${styles.container}`} onClick={toggleTheme} >
       <div className={styles.switch} >
         <label htmlFor="toggle">
-          <input id="toggle" readOnly={true} type="checkbox" checked={theme === C.themes.light} ></input>
+          <input id="toggle" readOnly={true} type="checkbox" checked={theme === C.themes.dark} ></input>
           <div className={styles.sunMoon} ><div className={styles.dots} ></div></div>
           <div className={styles.background} ><div className={styles.stars1}></div><div className={styles.stars2}></div></div>
           {/* <div className={styles.fill}></div> */}

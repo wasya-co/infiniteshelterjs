@@ -168,7 +168,7 @@ const Right = styled.div`
   padding: 0 0 0 1em;
   flex: ${p => p.foldedRight ? '2%' : `${(1-p.twofoldPercent)*100}%` };
   overflow-x: hidden;
-  overflox-y: auto;
+
   height: calc(100vh - ${p => `calc(2*${p.theme.borderWidth})`}
     - ${p => p.bottomDrawerOpen ? p.theme.bottomDrawerOpenHeight : p.theme.bottomDrawerClosedHeight });
 `;
