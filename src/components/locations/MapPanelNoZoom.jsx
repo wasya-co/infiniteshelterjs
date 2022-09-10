@@ -7,7 +7,7 @@ import styled from 'styled-components'
 import { TwofoldContext, } from "$components/TwofoldLayout"
 import {
   MarkerContext,
-} from '$resources/markers'
+} from '$components/markers'
 import {
   C, Card,
   logg,

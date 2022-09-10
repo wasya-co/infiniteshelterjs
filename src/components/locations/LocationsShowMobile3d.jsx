@@ -14,7 +14,7 @@ import { Newsitems } from "$components/newsitems"
 import { TwofoldContext, } from "$components/TwofoldLayout"
 import {
   MarkersList,
-} from '$resources/markers'
+} from '$components/markers'
 import {
   C, Collapsible, CollapsibleContext,
   inflector,

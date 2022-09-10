@@ -16,7 +16,7 @@ import {
 import {
   LocationsShow, LocationsShowMobile3d,
 } from "$components/locations"
-import { ReportsShow } from "$resources/reports"
+import { ReportsShow } from "$components/reports"
 import { SitesShow } from '$components/sites'
 import {
   Account,

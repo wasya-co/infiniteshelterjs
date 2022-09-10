@@ -15,10 +15,10 @@ import { TwofoldContext, } from "$components/TwofoldLayout"
 import {
   MarkersList,
   MarkerModal, MarkerContext, MarkerContextProvider,
-} from '$resources/markers'
+} from '$components/markers'
 import {
   ReportForm,
-} from '$resources/reports'
+} from '$components/reports'
 import {
   C, Card, ChevronLeft, ChevronRight, Collapsible,
   FlexCol, FlexRow,

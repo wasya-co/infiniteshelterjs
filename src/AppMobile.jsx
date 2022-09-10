@@ -38,7 +38,7 @@ import {
 import {
   LocationsShowMobile, LocationsShowMobile3d,
 } from "$components/locations"
-import { ReportsShow } from "$resources/reports"
+import { ReportsShow } from "$components/reports"
 import { SitesShow } from '$components/sites'
 import { TwofoldContext, TwofoldContextProvider, } from "$components/TwofoldLayout"
 import {

@@ -10,7 +10,7 @@ import {
 import { Newsitems } from "$components/newsitems"
 import {
   MarkersList,
-} from '$resources/markers'
+} from '$components/markers'
 import { TwofoldContext, } from "$components/TwofoldLayout"
 import {
   C, Collapsible, CollapsibleContext,

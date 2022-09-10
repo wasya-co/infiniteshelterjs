@@ -15,7 +15,7 @@ import { GalleriesShow } from "$components/galleries"
 import {
   ReportsForm,
   ReportsShow,
-} from "$resources/reports"
+} from "$components/reports"
 import { C, logg, } from "$shared"
 
 import styles from './ItemModal.module.scss'

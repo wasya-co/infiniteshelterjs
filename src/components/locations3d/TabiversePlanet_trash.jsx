@@ -10,7 +10,7 @@ import {
 } from './'
 import {
   MarkerContext,
-} from '$resources/markers'
+} from '$components/markers'
 import {
   C, Card,
   logg,

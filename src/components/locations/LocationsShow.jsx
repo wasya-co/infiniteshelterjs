@@ -16,10 +16,10 @@ import { Newsitems } from "$components/newsitems"
 import {
   MarkersList,
   MarkerModal, MarkerContext, MarkerContextProvider,
-} from '$resources/markers'
+} from '$components/markers'
 import {
   ReportForm,
-} from '$resources/reports'
+} from '$components/reports'
 import { TwofoldContext, } from "$components/TwofoldLayout"
 import {
   C, Card, ChevronLeft, ChevronRight, Collapsible,
