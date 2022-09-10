@@ -4,32 +4,30 @@ import { useRouter } from 'next/router'
 import React, { useEffect, useState, } from 'react'
 import ReactDOM from 'react-dom'
 import {
-  Link, Switch, BrowserRouter as Router, Redirect, Route as _Route, useHistory, withRouter
+  Link, Switch, BrowserRouter as Router, Redirect, Route as _Route, useHistory, withRouter,
 } from 'react-router-dom'
 import { ToastContainer } from 'react-toastify'
-import { ThemeProvider } from 'styled-components'
 
 import config from 'config'
 import {
   AuthContextProvider,
 } from 'ishlibjs'
 
-// @TODO: refactor
+import { ThemeProvider } from '$components/application'
+import { LocationsShow } from '$components/locations'
+import { TwofoldContextProvider } from '$components/TwofoldLayout'
 import {
   request,
-} from "$shared"
-
-import {
-  C, CollapsibleContextProvider,
+  C,
   logg,
-  S,
+  Root,
   useApi,
 } from "$shared"
-import { LocationsShow } from '$components/locations'
-import { TwofoldContext, TwofoldContextProvider } from '$components/TwofoldLayout'
+import AppWrapper2 from "$src/AppWrapper2"
 
 /**
  * LocationsShowDesktop
+ * en / locations / SHOW2 / :slug , # don't forget that it's a different path!
 **/
 const Page = (props) => {
   console.log(props, 'Page')
@@ -45,29 +43,38 @@ const Page = (props) => {
     match: { params: { slug: router.query.slug } }
   }
 
-  return <>
+  return (
+    <AuthContextProvider {...{ useApi, }} >
+      <ThemeProvider >
+        <TwofoldContextProvider >
 
-    { /* @TODO: abstract and move this */ }
-    <Head>
-      <title>{props.location.name} - {config.siteTitle}</title>
-      <meta name="viewport" content="initial-scale=1.0, width=device-width" />
-    </Head>
+          <Root>
 
-    <ThemeProvider >
-      <AuthContextProvider {...{ useApi, }} >
-        <TwofoldContextProvider {...props} >
-          <CollapsibleContextProvider >
+            <LocationsShow { ...childProps } />
 
-            <LocationsShow { ...childProps } /> }
-            <ToastContainer position="bottom-left" />
+          </Root>
 
-          </CollapsibleContextProvider>
         </TwofoldContextProvider>
-      </AuthContextProvider>
-    </ThemeProvider>
+      </ThemeProvider>
+    </AuthContextProvider>
+  );
 
-  </>
+  // return <>
+  //   { /* @TODO: abstract and move this? */ }
+  //   <Head>
+  //     <title>{props.location.name} - {config.siteTitle}</title>
+  //     <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+  //   </Head>
+  //   <AppWrapper2 />
+  // </>
 }
+
+
+
+
+
+
+
 
 /**
  *  getStaticProps

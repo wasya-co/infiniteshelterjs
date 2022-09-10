@@ -242,6 +242,13 @@ export const pp_date = (d) => (d || "" ).substring(0, 10)
 
 export { default as request } from "./request"
 
+export const Root = styled.div`
+  background: ${p => p.theme.colors.background};
+  height: 100vh;
+  overflow: auto;
+`;
+
+
 /* S */
 export { default as S } from "./S"
 

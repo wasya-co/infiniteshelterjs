@@ -3,13 +3,13 @@ import Adapter from "enzyme-adapter-react-16"
 import { configure, mount } from "enzyme"
 import React from "react"
 
-import LocationsShow from './LocationsShow'
+import AppWrapper2 from './AppWrapper2'
 
 configure({ adapter: new Adapter() })
 
-describe('LocationsShow', () => {
+describe('AppWrapper2', () => {
   it('renders', () => {
-    const w = mount(<LocationsShow />)
+    const w = mount(<AppWrapper2 />)
     expect(w).toBeTruthy()
   })
 })

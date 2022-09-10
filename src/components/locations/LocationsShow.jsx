@@ -164,7 +164,7 @@ const Left = styled.div`
 
 
 /* R */
-const Right = styled.div`
+const _Right = styled.div`
   background: ${p => p.theme.colors.background};
   position: relative;
 
@@ -175,6 +175,12 @@ const Right = styled.div`
   height: calc(100vh - ${p => `calc(2*${p.theme.borderWidth})`}
     - ${p => p.bottomDrawerOpen ? p.theme.bottomDrawerOpenHeight : p.theme.bottomDrawerClosedHeight });
 `;
+const Right = ({ children, ...props }) => {
+  return <_Right className='Right'>
+    <Handle />
+    { children }
+  </_Right>
+}
 
 const Row = styled.div`
   // border: 1px solid magenta;
@@ -195,9 +201,10 @@ const Row = styled.div`
 const LocationsShow = (props) => {
   // logg(props, 'LocationsShow')
   const {
-    location: _location,
+    location,
     match,
   } = props
+  if (!location) { return null }
 
   const {
     bottomDrawerOpen,
@@ -242,83 +249,68 @@ const LocationsShow = (props) => {
 
   return <Row><MarkerContextProvider >
 
-    { !foldedLeft && <Left className='Left'
-        {...{ bottomDrawerOpen,
-          folded, foldedLeft, foldedRight,
-          twofoldPercent,
-        } }
-    >
-      { <Breadcrumbs {...location} /> }
-      { location && <WrappedMapPanel
+    <Left className='Left' >
+      <Breadcrumbs {...location} />
+      <WrappedMapPanel
         map={location.map ? location.map : location}
         ref={mapPanelRef}
         slug={match.params.slug}
-      /> }
-    </Left> }
+      />
+    </Left>
 
-    <Right
-        className='Right'
-        {...{
-          bottomDrawerOpen,
-          folded, foldedLeft, foldedRight,
-          twofoldPercent,
-        } }
-    >
-      <Handle />
-      { location && !foldedRight && <F>
+    <Right >
 
-        { /* Markers */ }
-        { location.markers.length && <Collapsible
-            config={{ collapsible: false }}
-            slug={C.collapsible.markers}
-            variant={C.variants.transparent}
-        >
-          <MarkersList markers={location.markers}
-            variant={C.variants.bordered}
-          />
-        </Collapsible> || null }
+      { /* Markers */ }
+      { location.markers.length && <Collapsible
+          config={{ collapsible: false }}
+          slug={C.collapsible.markers}
+          variant={C.variants.transparent}
+      >
+        <MarkersList markers={location.markers}
+          variant={C.variants.bordered}
+        />
+      </Collapsible> || null }
 
-        { /* Features? */ }
+      { /* Features? */ }
 
-        { /* Tags */ }
-        {/* { location && <FlexRow className='Tags' style={{ marginBottom: '1em', flexWrap: 'wrap' }} >
-          { location.tags.map((tag) => <Card >{tag.name}</Card> )}
-        </FlexRow> } */}
+      { /* Tags */ }
+      {/* { location && <FlexRow className='Tags' style={{ marginBottom: '1em', flexWrap: 'wrap' }} >
+        { location.tags.map((tag) => <Card >{tag.name}</Card> )}
+      </FlexRow> } */}
 
-        { /* Actions */ }
-        { editorMode && <FlexRow className='Actions' style={{ marginBottom: '1em' }} >
-          <Card onClick={() => setShowItem({ action: C.actions.new, item_type: C.item_types.report }) } >
-            + Report
-          </Card>
-          <Card>
-            + Photo
-          </Card>
-          <Card>
-            + Gallery
-          </Card>
-          <Card>
-            + File
-          </Card>
-          {/* <Card> + Spreadsheet </Card> */}
-          <Card> + Marker </Card>
-        </FlexRow> }
+      { /* Actions */ }
+      { editorMode && <FlexRow className='Actions' style={{ marginBottom: '1em' }} >
+        <Card onClick={() => setShowItem({ action: C.actions.new, item_type: C.item_types.report }) } >
+          + Report
+        </Card>
+        <Card>
+          + Photo
+        </Card>
+        <Card>
+          + Gallery
+        </Card>
+        <Card>
+          + File
+        </Card>
+        {/* <Card> + Spreadsheet </Card> */}
+        <Card> + Marker </Card>
+      </FlexRow> }
 
-        { /* Description */ }
-        { location.description && <Collapsible
-            className='Description'
-            label={location.labels.description}
-            slug={C.collapsible.description}
-            variant={C.variants.bordered}
-        >
-          <Description item={location} />
-        </Collapsible> || null }
+      { /* Description */ }
+      { location.description && <Collapsible
+          className='Description'
+          label={location.labels.description}
+          slug={C.collapsible.description}
+          variant={C.variants.bordered}
+      >
+        <Description item={location} />
+      </Collapsible> || null }
 
-        { /* Newsitems */ }
-        { location.newsitems.length && <Newsitems
-            variant={C.variants.bordered} newsitems={location.newsitems}
-        /> || null }
+      { /* Newsitems */ }
+      { location.newsitems.length && <Newsitems
+          variant={C.variants.bordered} newsitems={location.newsitems}
+      /> || null }
 
-      </F> || null }
     </Right>
 
     { showUrl && <IframeModal src={showUrl} /> }

@@ -1,5 +1,5 @@
 
-import { Container as _Container, } from '@material-ui/core'
+import { Container as _Container, } from '@material-ui/core' // @TODO: I can remove this, it only adds padding to body, it seems.
 import React, { Fragment as F, useContext, useEffect, useState } from 'react'
 import {
   Switch, BrowserRouter as Router, Redirect, Route as _Route,
@@ -34,18 +34,16 @@ import {
   useApi,
 } from "$shared"
 
-import '@ionic/react/css/core.css'
-import '@ionic/react/css/normalize.css'
-import '@ionic/react/css/structure.css'
-import '@ionic/react/css/typography.css'
-import '@ionic/react/css/padding.css'
-import '@ionic/react/css/float-elements.css'
-import '@ionic/react/css/text-alignment.css'
-import '@ionic/react/css/text-transformation.css'
-import '@ionic/react/css/flex-utils.css'
-import '@ionic/react/css/display.css'
-
-// import './theme/variables.css' // removed due to next_js _vp_ 2022-08-15
+// import '@ionic/react/css/core.css'
+// import '@ionic/react/css/normalize.css'
+// import '@ionic/react/css/structure.css'
+// import '@ionic/react/css/typography.css'
+// import '@ionic/react/css/padding.css'
+// import '@ionic/react/css/float-elements.css'
+// import '@ionic/react/css/text-alignment.css'
+// import '@ionic/react/css/text-transformation.css'
+// import '@ionic/react/css/flex-utils.css'
+// import '@ionic/react/css/display.css'
 
 
 const Root = styled.div`
@@ -94,7 +92,6 @@ const AppDesktop = (props) => {
       <TwofoldContextProvider {...props} {...{ layout, setLayout }} >
         <CollapsibleContextProvider >
           <Root>
-
             <Container >
               <Switch id="main" main >
 

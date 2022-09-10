@@ -69,10 +69,8 @@ const UnlockModal = (props) => {
     match = useRouteMatch()
   } catch(e) {
     // logg(e, 'e77')
-
     match = { params: router.query }
   }
-  logg(match, 'match')
 
   const doUnlock = async () => {
     // logg(itemToUnlock, 'itemToUnlock')

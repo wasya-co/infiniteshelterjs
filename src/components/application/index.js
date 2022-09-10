@@ -9,7 +9,6 @@ export { default as MainHeader } from "./MainHeader"
 export { default as MapuiLayout } from "./MapuiLayout"
 export { default as MapuiMobileLayout } from "./MapuiMobileLayout"
 export { default as Menu } from "./Menu"
-// export { default as MenuBottom } from "./MenuBottom"
 export { default as Metaline } from "./Metaline"
 
 export { default as PurchaseModal } from './PurchaseModal'
@@ -17,5 +16,7 @@ export { default as PurchaseModal } from './PurchaseModal'
 export { default as Rating } from "./Rating"
 
 export { default as SideMenu } from "./SideMenu"
+
+export { default as ThemeProvider } from './ThemeProvider'
 
 export { default as UnlockModal } from "./UnlockModal"

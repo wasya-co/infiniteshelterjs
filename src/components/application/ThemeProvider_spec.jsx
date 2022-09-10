@@ -3,13 +3,13 @@ import Adapter from "enzyme-adapter-react-16"
 import { configure, mount } from "enzyme"
 import React from "react"
 
-import LocationsShow from './LocationsShow'
+import ThemeProvider from './ThemeProvider'
 
 configure({ adapter: new Adapter() })
 
-describe('LocationsShow', () => {
+describe('ThemeProvider', () => {
   it('renders', () => {
-    const w = mount(<LocationsShow />)
+    const w = mount(<ThemeProvider />)
     expect(w).toBeTruthy()
   })
 })
