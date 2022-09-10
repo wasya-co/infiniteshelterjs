@@ -28,9 +28,12 @@ import AppWrapper2 from "$src/AppWrapper2"
 /**
  * LocationsShowDesktop
  * en / locations / SHOW2 / :slug , # don't forget that it's a different path!
+ *
+ * @TODO: mobile looks terrible, fix. _vp_ 2022-09-09
+ *
 **/
 const Page = (props) => {
-  console.log(props, 'Page')
+  // console.log(props, 'Page')
 
   const router = useRouter()
 

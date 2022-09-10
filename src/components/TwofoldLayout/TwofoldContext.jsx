@@ -30,7 +30,7 @@ const TwofoldContextProvider = ({ children, ...props }) => {
     layout, setLayout,
     showItem: _showItem, setShowItem: _setShowItem,
     theme, toggleTheme,
-    zoom, setZoom, // it's a prop for testing only. _vp_ 2022-03-18
+    zoom=1, setZoom, // it's a prop for testing only. _vp_ 2022-03-18
   } = props
 
   // next_js
@@ -152,10 +152,9 @@ const TwofoldContextProvider = ({ children, ...props }) => {
   const [ twofoldPercent, setTwofoldPercent ] = useState(0.5)
 
   /* Z */
-  const [ localZoom, setLocalZoom ] = useState(1)
-  if (!zoom) {
-    zoom = localZoom
-    setZoom = setLocalZoom
+  const [ _zoom, _setZoom ] = useState(1)
+  if (!setZoom) {
+    [ zoom, setZoom ] = [ _zoom, _setZoom ]
   }
 
   return <TwofoldContext.Provider value={{
