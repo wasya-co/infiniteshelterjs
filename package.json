@@ -136,8 +136,6 @@
   },
   "_moduleAliases": {
     "$components": "src/components",
-    "$lib": "src/lib",
-    "$resources": "src/resources",
     "$shared": "src/shared",
     "$src": "src"
   },
