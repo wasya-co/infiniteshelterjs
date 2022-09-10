@@ -25,7 +25,7 @@ const _Marker = styled.div`
   text-align: center;
 `;
 const Marker = ({ children, ...props }) => {
-  logg(props, 'Marker')
+  // logg(props, 'Marker')
   const { variant, marker } = props
 
   if (variant===C.variants.bordered) {

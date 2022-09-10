@@ -5,7 +5,7 @@ import styled from 'styled-components'
 
 import {
   ThreePanelMobile,
-} from "$components/3d_locations"
+} from "$components/locations3d"
 import {
   Breadcrumbs,
   Metaline,

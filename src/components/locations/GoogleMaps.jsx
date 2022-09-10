@@ -5,10 +5,11 @@ import React, { Fragment as F, useContext, useEffect, useRef, useState } from "r
 import { Route, useLocation, useHistory, Switch } from 'react-router-dom'
 import styled from 'styled-components'
 
-import { TwofoldContext } from "$components/TwofoldLayout"
+
 import {
   MarkerContext,
-} from '$resources/markers'
+} from '$components/markers'
+import { TwofoldContext } from "$components/TwofoldLayout"
 import {
   C, Card,
   logg,
