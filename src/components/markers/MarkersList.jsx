@@ -121,6 +121,8 @@ const MarkersList = (props) => {
   // logg(props, 'MarkersList')
   const { variant } = props
 
+  // @TODO: re-add variant. It was there for ParagonAustin, WasyaCo, locations like that. _vp_ 2022-09-11
+
   const markers = props.markers.map((m, idx) => <Marker key={idx}
     marker={m}
   >

@@ -27,8 +27,9 @@ import styles from './ItemModal.module.scss'
  *
 **/
 const ItemModal = (props) => {
-  // logg(props, 'ItemModal')
+  logg(props, 'ItemModal')
   const { item } = props
+  if (!item) { return null }
 
   const params = useParams()
   const history = useHistory()
@@ -49,7 +50,7 @@ const ItemModal = (props) => {
 
   return <Modal
     className={`ItemModal ${styles.ItemModal}`}
-    isOpen={!!showItem}
+    isOpen={!!item}
     // overlayClassName={styles.LoginModalOverlay}
     // portalClassName={styles.LoginModalPortal}
   >

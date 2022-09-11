@@ -33,13 +33,10 @@ import {
 } from "$shared"
 import {
   ItemModal,
-  MapPanel, MapPanelNoZoom,
+  LocationProvider,
   WrappedMapPanel,
 } from "./"
 
-/* C */
-
-/* D */
 
 // @TODO: move Description into shared ?
 const _D = styled.div`
@@ -50,7 +47,6 @@ const Description = ({ item={} }) => {
   return <_D className="Description" dangerouslySetInnerHTML={{ __html: item.description }} />
 }
 
-/* H */
 const _Handle = styled.div`
   // border: 1px solid cyan;
 
@@ -136,7 +132,6 @@ const Handle = (props) => {
   </_Handle>
 }
 
-/* I */
 const IframeModal = (props) => {
   const { showUrl, setShowUrl } = useContext(TwofoldContext)
 
@@ -149,7 +144,6 @@ const IframeModal = (props) => {
   </Modal>)
 }
 
-/* L */
 const _Left = styled.div`
   background: ${p => p.theme.colors.background};
   flex: ${p => p.foldedRight ? '99%' : `${p.twofoldPercent*100}%` };
@@ -173,8 +167,6 @@ const Left = ({ children, ...props }) => {
   </_Left>
 }
 
-
-/* R */
 const _Right = styled.div`
   background: ${p => p.theme.colors.background};
   position: relative;
@@ -207,8 +199,9 @@ const Row = styled.div`
 
 
 /**
- * LocationsShow Static
+ * LocationsShow (Static)
  * _vp_ 2022-09-06
+ * _vp_ 2022-09-11
  *
  * @TODO: re-introduce MenuIcon in Handle. _vp_ 2022-09-01
  * @TODO: can this be shared across desktop and mobile? _vp_ 2022-09-06
@@ -219,8 +212,9 @@ const Row = styled.div`
 const LocationsShow = (props) => {
   logg(props, 'LocationsShow')
   const {
-    item: location,
+    location,
     match,
+    showItem,
   } = props
   if (!location) { return null }
 
@@ -236,11 +230,10 @@ const LocationsShow = (props) => {
     mapPanelWidth, setMapPanelWidth,
     mapPanelHeight, setMapPanelHeight,
     ratedConfirmation, setRatedConfirmation, // @TODO: move out of this context?
-    showItem, setShowItem,
     showUrl, setShowUrl,
     twofoldPercent,
   } = useContext(TwofoldContext)
-  // logg(useContext(TwofoldContext), 'LocationsShowUsedTwofoldContext')
+  logg(useContext(TwofoldContext), 'LocationsShowUsedTwofoldContext')
 
   // const api = useApi()
   const [ windowWidth, windowHeight ] = useWindowSize()
@@ -250,7 +243,8 @@ const LocationsShow = (props) => {
 
   // Show ItemToUnlock Modal
   useEffect(() => {
-    if (location.is_premium && ( !currentUser.email || !location.is_purchased )) { // @TODO: having location.is_purchased doesn't sound performant, expecially with caching.
+    // @TODO: having location.is_purchased doesn't sound performant, expecially with caching.
+    if (location.is_premium && ( !currentUser.email || !location.is_purchased )) {
       setItemToUnlock({ closable: false, item_type: 'Location', ...location })
     }
   }, [ location ])
@@ -263,7 +257,7 @@ const LocationsShow = (props) => {
     }
   }, [bottomDrawerOpen, folded, mapPanelRef.current, twofoldPercent, windowWidth, windowHeight])
 
-  return <Row>
+  return <Row><LocationProvider {...location} >
 
     <Left >
       <Breadcrumbs {...location} />
@@ -299,7 +293,8 @@ const LocationsShow = (props) => {
 
       { /* Newsitems */ }
       { location.newsitems.length && <Newsitems
-          variant={C.variants.bordered} newsitems={location.newsitems}
+          newsitems={location.newsitems}
+          variant={C.variants.bordered}
       /> || null }
 
     </Right>
@@ -310,11 +305,12 @@ const LocationsShow = (props) => {
 
     <UnlockModal />
 
-  </Row>
+  </LocationProvider></Row>
 }
 LocationsShow.propTypes = {
-  item: PropTypes.object,
+  location: PropTypes.object,
   match: PropTypes.object,
+  showItem: PropTypes.object,
 }
 
 export default LocationsShow

@@ -69,10 +69,15 @@ const EditModeActions = ({ children, ...props }) => {
 
 /**
  * Newsitems
+ *
+ * @TODO: variant should come from the location, right? _vp_ 2022-09-11
 **/
 const Newsitems = (props) => {
   // logg(props, 'Newsitems')
-  const { newsitems=[], variant } = props
+  const {
+    newsitems=[],
+    variant,
+  } = props
 
   if (!newsitems.length) { return <div>No Newsitems</div> }
 
@@ -110,7 +115,6 @@ const Newsitems = (props) => {
     </W0>
   )
 }
-
 Newsitems.propTypes = {
   newsitems: PropTypes.array.isRequired,
   variant: PropTypes.string,

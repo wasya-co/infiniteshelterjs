@@ -1,17 +1,22 @@
 
 import PropTypes from 'prop-types'
-import React from "react"
-import { toast } from 'react-toastify'
+import React, { useContext } from "react"
+import { useHistory } from 'react-router-dom'
 import styled from 'styled-components'
 
-import { Metaline } from "$components/application"
+import {
+  LocationContext,
+} from "$components/locations"
 import { logg } from "$shared"
+import { appPaths } from "$src/AppRouter"
 import { NewsitemContainer } from './'
 
 import "./Newsitems.module.scss"
 
-const Images = styled.div`
+const Images = styled.a`
   // border: 1px solid red;
+
+  display: block;
 
   position: relative;
   width: 100%;
@@ -89,13 +94,25 @@ const NewsitemGallery = (props) => {
   // logg(props, 'NewsitemGallery')
   const { item, variant } = props
 
-  const navigateToItem = () => {
-    toast('Error 390: this click is not implemented')
-    logg('Error 390: this click is not implemented')
+  const {
+    slug: location_slug,
+  } = useContext(LocationContext)
+
+  const history = useHistory()
+  const href = appPaths.viewGallery({ location_slug, slug: item.slug })
+
+  const goto = (e) => {
+    logg('NewsitemGallery.goto')
+
+    e.preventDefault()
+    history.push(href)
   }
 
   return <NewsitemContainer item={item} variant={variant} >
-    <Images className='Images' onClick={navigateToItem} >
+    <Images className='Images'
+      href={href}
+      onClick={goto}
+    >
       <Thumb0 src={item.photos[0] && item.photos[0].thumb_url} />
       <Thumb1 src={item.photos[1] && item.photos[1].thumb_url} />
       <Thumb2 src={item.photos[2] && item.photos[2].thumb_url} >({item.n_photos} photos)</Thumb2>

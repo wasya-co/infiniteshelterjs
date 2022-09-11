@@ -28,10 +28,16 @@ import {
 /**
  * appPaths
  *
+ * names should not end in "path", that's cruft.
+ *
 **/
 export const appPaths = {
   cityVenuesPath: (slug) => `/en/cities/travel-to/${slug}/venues`,
   cityPath: (slug) => `/en/cities/travel-to/${slug}`,
+
+  viewGallery: ({ location_slug, slug }) => {
+    return `/en/locations/show/${location_slug}/galleries/show/${slug}`
+  },
 
   locationPath: (slug) => `/en/locations/show/${slug}`,
 }

@@ -7,7 +7,10 @@ import styled from 'styled-components'
 import { Metaline } from "$components/application"
 import { TwofoldContext } from "$components/TwofoldLayout"
 import {
-  C, logg, request, BackBtn,
+  BackBtn,
+  C,
+  logg,
+  useApi,
 } from "$shared"
 
 import styles from "./Galleries.module.scss"
@@ -23,9 +26,8 @@ const W0 = styled.div`
 **/
 const GalleriesShow = (props) => {
   // logg(props, 'GalleriesShow')
-  const { match } = props // @TODO: this doesnt look like a prop, remove
+  const { match } = props
 
-  const [showLoading, setShowLoading] = useState(false) // @TODO: hmm could it be moved to TwofoldContext ?
   const [gallery, setGallery] = useState({})
 
   const mountedRef = useRef('init')
@@ -34,24 +36,19 @@ const GalleriesShow = (props) => {
     itemToUnlock, setItemToUnlock,
   } = useContext(TwofoldContext)
 
-  // @TODO: move this into api
-  let getGallery = async () => {
-    const token = localStorage.getItem(C.jwt_token)
-    await request.get(`/api/galleries/view/${match.params.slug}`, { params: { jwt_token: token } }).then(res => {
-      if (!mountedRef.current) { return }
-      const gallery = res.data.gallery
-      if (gallery.is_premium && !gallery.is_purchased) {
-        setItemToUnlock(gallery)
-      } else {
-        setGallery(res.data.gallery)
-      }
-    }).catch((err) => {
-      logg(err, 'e65')
-    })
-  }
+  const api = useApi()
 
   useEffect(() => {
-    getGallery()
+    api.getGallery(match.params.slug).then(_gallery => {
+      if (!mountedRef.current) { return }
+      logg(_gallery, '_gallery')
+
+      if (_gallery.is_premium && !_gallery.is_purchased) {
+        setItemToUnlock(_gallery)
+      } else {
+        setGallery(_gallery)
+      }
+    })
     return () => {
       mountedRef.current = null
     }
