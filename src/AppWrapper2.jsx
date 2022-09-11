@@ -13,21 +13,22 @@ import {
 } from 'ishlibjs'
 
 import {
-  C,
-  logg,
-  SsrProvider,
-  ThemeProvider,
-  useApi,
-} from "$shared"
-import AppRouter from './AppRouter'
-
-import {
   BottomDrawer,
 } from '$components/application'
 import {
   CollapsibleProvider,
   TwofoldContextProvider,
 } from "$components/TwofoldLayout"
+import {
+  C,
+  logg,
+  SsrProvider,
+  ThemeProvider,
+  useApi,
+} from "$shared"
+import AppRouter from '$src/AppRouter'
+
+
 
 // I'm using this. _vp_ 2022-09-10
 import '@ionic/react/css/core.css'
@@ -89,21 +90,10 @@ const WLoginModal = (props) => {
  *
 **/
 const AppWrapper2 = (props) => {
-  // logg(props, 'AppWrapper2')
+  logg(props, 'AppWrapper2')
   const {
     location,
   } = props
-
-  // @TODO: this is currently unused. _vp_ 2022-09-10
-  const [ os, setOs ] = useState(null)
-  const fn = async () => {
-    let info = await Device.getInfo() // info.operatingSystem === 'ios' || 'android'
-    setOs(info.operatingSystem)
-  }
-  fn()
-  if (!os) { return null }
-
-
 
   return <SsrProvider {...{ location, }} >
     <ThemeProvider >

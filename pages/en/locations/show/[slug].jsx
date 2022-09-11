@@ -7,22 +7,27 @@ import React, { useEffect, useState, } from 'react'
 
 import config from 'config'
 import {
+  AuthContext,
   AuthContextProvider,
+  LoginModal,
+  RegisterModal,
 } from 'ishlibjs'
 
-import { LocationsShow } from '$components/locations'
+import {
+  BottomDrawer,
+} from '$components/application'
 import {
   CollapsibleProvider,
   TwofoldContextProvider,
-} from '$components/TwofoldLayout'
+} from "$components/TwofoldLayout"
 import {
-  request,
   C,
   logg,
-  Root,
+  SsrProvider,
   ThemeProvider,
   useApi,
 } from "$shared"
+import AppRouter from '$src/AppRouter'
 import AppWrapper2 from '$src/AppWrapper2'
 
 /**
@@ -33,22 +38,20 @@ import AppWrapper2 from '$src/AppWrapper2'
  *
 **/
 const Page = (props) => {
-  console.log(props, 'Page')
+  console.log('+++ +++ Page:', props)
   const {
-    location,
+    item: location,
   } = props
 
-  // const router = useRouter()
-
-  if (location.is_premium) {
+  if (!location || location.is_premium) {
     return <h1>This location cannot be accessed right now, please try again later</h1>
   }
 
-  // @TODO: this is missing showItem _vp_ 2022-09-11
-  const childProps = {
-    location,
-    match: { params: { slug: location.slug } }
-  }
+  return <>
+    <SsrProvider {...{ location, }} >
+      <h1>Hello, world!</h1>
+    </SsrProvider>
+  </>
 
   return <>
     <Head>
@@ -81,15 +84,19 @@ export default Page
   defaultLocale contains the configured default locale (if enabled).
 **/
 export async function getStaticProps(match) {
-  // console.log(match, 'getStaticProps')
+  console.log('+++ +++ getStaticProps:', match)
   const { params: { slug } } = match
 
-  const api = useApi()
+  const apiOrigin = 'http://localhost:3001'
+  // const location = await api.getLocation({ slug, })
 
-  const location = await api.getLocation({ slug, })
-  logg(location, 'got Location?')
+  const item = await request.get(`${apiOrigin}/api/maps/view/${slug}`).then(r => r.data).then(r => {
+      return r.map
+    }).catch((err) => {
+      return err
+    })
 
-  return { props: { location } }
+  return { props: { item } }
 }
 
 
@@ -102,13 +109,17 @@ export async function getStaticProps(match) {
 **/
 export async function getStaticPaths() {
   let paths = []
-  paths.push({ params: { slug: '3d' }})
-  paths.push({ params: { slug: 'art-gallery' }})
-  paths.push({ params: { slug: 'chicago' }})
+
+  // paths.push({ params: { slug: '3d' }})
+  // paths.push({ params: { slug: 'art-gallery' }})
+  // paths.push({ params: { slug: 'chicago' }})
   paths.push({ params: { slug: 'root' }})
-  paths.push({ params: { slug: 'trading' }})
-  paths.push({ params: { slug: 'world' }})
-  paths.push({ params: { slug: 'yola91' }})
+  // paths.push({ params: { slug: 'trading' }})
+  // paths.push({ params: { slug: 'world' }})
+  // paths.push({ params: { slug: 'yola91' }})
+
+  console.log('+++ +++ getStaticPaths:', paths)
+
   return { paths, fallback: true }
 }
 
