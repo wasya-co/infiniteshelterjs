@@ -50,12 +50,17 @@ const W0 = styled.div`
 `;
 
 /**
- * Cities
+ * CitiesList
+ *
+ * @TODO: IonLoading can be much more HOC _vp_ 2022-09-10
 **/
-const Cities = (props) => {
-  const [cities, setCities] = useState([]);
-  const [filteredCities, setFilteredCities] = useState([]);
-  const [showLoading, setShowLoading] = useState(false);
+const CitiesList = (props) => {
+  logg(props, 'CitiesList')
+
+  const [cities, setCities] = useState([])
+  const [filteredCities, setFilteredCities] = useState([])
+  const [showLoading, setShowLoading] = useState(false)
+
   const api = useApi()
   const history = useHistory()
 
@@ -136,4 +141,4 @@ const Cities = (props) => {
   </F>
 }
 
-export default Cities;
+export default CitiesList

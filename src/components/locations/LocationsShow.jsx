@@ -209,11 +209,13 @@ const Row = styled.div`
  * @TODO: re-introduce MenuIcon in Handle. _vp_ 2022-09-01
  * @TODO: can this be shared across desktop and mobile? _vp_ 2022-09-06
  * @TODO: location.is_purchased doesn't look right... _vp_ 2022-09-06
+ *
+ * @TODO: hella enable caching all around and measure throughput. _vp_ 2022-09-10
 **/
 const LocationsShow = (props) => {
-  // logg(props, 'LocationsShow')
+  logg(props, 'LocationsShow')
   const {
-    location,
+    item: location,
     match,
   } = props
   if (!location) { return null }
@@ -236,18 +238,12 @@ const LocationsShow = (props) => {
   const [ windowWidth, windowHeight ] = useWindowSize()
   const [ loading, setLoading ] = useState(false)
 
-  const mountedRef = useRef(C.ref.init)
-  const showItemRef = useRef(C.ref.init)
   const mapPanelRef = useRef(null)
 
-  // Set ?ItemToUnlock
+  // Show ItemToUnlock Modal
   useEffect(() => {
-    if (location) {
-      // logg(location, 'LocationsShow.location')
-
-      if (location.is_premium && !location.is_purchased) {
-        setItemToUnlock({ closable: false, item_type: 'Location', ...location })
-      }
+    if (location.is_premium && ( !currentUser.email || !location.is_purchased )) { // @TODO: having location.is_purchased doesn't sound performant, expecially with caching.
+      setItemToUnlock({ closable: false, item_type: 'Location', ...location })
     }
   }, [ location ])
 

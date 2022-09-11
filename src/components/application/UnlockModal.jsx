@@ -51,6 +51,7 @@ const UnlockModal = (props) => {
   const history = useHistory()
 
   let match = useRouteMatch()
+  logg(match, 'zeMatch')
 
   const doUnlock = async () => {
 

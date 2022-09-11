@@ -54,9 +54,10 @@ import '@ionic/react/css/display.css'
  * @TODO: test: provides collapsible
  *
  * @TODO: test: has bottomDrawer
- * @TODO: test: has unlockModal
  * @TODO: test: has loginModal
  * @TODO: test: has registerModal
+ *
+ * @DONE: unlockModal cannot be here, it must be inside react-router.
  *
 **/
 const AppWrapper2 = (props) => {
@@ -80,7 +81,7 @@ const AppWrapper2 = (props) => {
           <ToastContainer position="bottom-left" />
 
           <BottomDrawer />
-          <UnlockModal />
+
           <LoginModal />
           <RegisterModal />
 
