@@ -21,4 +21,8 @@ describe("DayNightToggle", () => {
     await act(() => new Promise(setImmediate))
   })
 
+  it('toggling *once* changes the theme *once*', () => {
+    expect(false).toBeTruthy() // not implemented
+  })
+
 })

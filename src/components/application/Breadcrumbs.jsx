@@ -17,9 +17,6 @@ import {
 } from './'
 
 
-
-/* B */
-
 // One breadcrumb
 const B0 = styled.div`
   color: ${p=> p.theme.colors.text};
@@ -32,7 +29,6 @@ const B1 = styled.div`
   color: ${p => p.theme.colors.text};
 `;
 
-/* W */
 const W0 = styled.div`
   // background: ${p => p.theme.colors.cardBackground};
   border: ${p=>p.debug?'1':'0'}px solid cyan;
@@ -85,7 +81,7 @@ const Breadcrumbs = (props) => {
   })
 
   return <W0 debug={config.debug} className="Breadcrumbs" >
-    { layout === C.layout_mapui && <SideMenu variant={C.variants.inline} /> }
+    <SideMenu variant={C.variants.inline} />
     <WBreadcrumbs className='WBreadcrumbs' >{ out }</WBreadcrumbs>
     <DayNightToggle toggleTheme={toggleTheme} theme={theme} />
   </W0>

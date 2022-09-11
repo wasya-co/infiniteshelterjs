@@ -14,14 +14,13 @@ import {
 import {
   C,
   logg,
+  ThemeProvider,
   useApi,
 } from "$shared"
 import AppRouter from './AppRouter'
 
 import {
   BottomDrawer,
-  ThemeProvider,
-  UnlockModal,
 } from '$components/application'
 import {
   CollapsibleProvider,
@@ -86,12 +85,11 @@ const AppWrapper2 = (props) => {
 
             <AppRouter />
 
-            <BottomDrawer />
-
           </Root>
           <ToastContainer position="bottom-left" />
           <LoginModal />
           <RegisterModal />
+          <BottomDrawer />
 
         </CollapsibleProvider>
       </TwofoldContextProvider>

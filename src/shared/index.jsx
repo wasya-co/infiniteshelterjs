@@ -212,6 +212,7 @@ export const Root = styled.div`
 export { default as S } from "./S"
 
 /* T */
+export { default as ThemeProvider, ThemeContext } from './ThemeProvider'
 
 /* U */
 export { default as useWindowSize } from './useWindowSize'

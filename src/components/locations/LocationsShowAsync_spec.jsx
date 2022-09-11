@@ -24,8 +24,6 @@ describe('LocationsShowAsync', () => {
 
   it('calls api.getLocation - current2 ', async () => {
     const slug = 'xxSlugxx'
-
-
     let w = await mount(<LocationsShowAsync {...{ match: { params: { slug } } }} />)
 
     const api = Api.default()

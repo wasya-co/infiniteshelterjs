@@ -4,7 +4,8 @@ http://ionicframework.com/docs/theming/ */
 /** Ionic CSS Variables **/
 :root {
 
-  --ion-background-color: #dedede; /* @TODO: abstract this, allow theme switching. _vp_ 2022-09-10 */
+  /* @TODO: abstract this, allow theme switching. _vp_ 2022-09-10 */
+  --ion-background-color: #dedede;
 
   /** primary **/
   --ion-color-primary: #3880ff;
@@ -77,6 +78,10 @@ http://ionicframework.com/docs/theming/ */
   --ion-color-light-contrast-rgb: 0, 0, 0;
   --ion-color-light-shade: #d7d8da;
   --ion-color-light-tint: #f5f6f9;
+}
+
+body.dark {
+  --ion-background-color: #292929;
 }
 
 @media (prefers-color-scheme: dark) {

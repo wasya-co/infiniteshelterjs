@@ -2,23 +2,27 @@
 import Adapter from "enzyme-adapter-react-16"
 import { configure, mount } from "enzyme"
 import React, { useState } from "react"
-import { act } from '@testing-library/react'
 
 import {
   logg,
+  ThemeProvider,
 } from "$shared"
-import AppWrapper from "$src/AppWrapper"
 
+import AppWrapper2 from '$src/AppWrapper2'
 import Metaline from "./Metaline"
 
 configure({ adapter: new Adapter() })
 
+/*
+ * It works! _vp_ 2022-09-11
+**/
 describe("Metaline", () => {
 
-  it("renders -  ", async () => {
-    const w = mount(<AppWrapper ><Metaline /></AppWrapper>)
+  it("renders -  ", () => {
+    const w = mount(<ThemeProvider>
+      <Metaline />
+    </ThemeProvider>)
     expect(w).toBeTruthy()
-    await act(() => new Promise(setImmediate))
   })
 
 })

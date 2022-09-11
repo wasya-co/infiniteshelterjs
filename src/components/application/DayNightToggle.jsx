@@ -1,9 +1,11 @@
 
-import React from 'react'
+import PropTypes from 'prop-types'
+import React, { useContext } from 'react'
 
 import {
   C,
   logg,
+  ThemeContext,
 } from '$shared'
 
 import styles from './DayNightToggle.module.scss'
@@ -15,13 +17,18 @@ import styles from './DayNightToggle.module.scss'
 **/
 const DayNightToggle = (props) => {
   // logg(props, 'DayNightToggle')
-  const { toggleTheme, theme } = props
+  // const {} = props
+
+  const {
+    theme, toggleTheme,
+  } = useContext(ThemeContext)
+  logg(useContext(ThemeContext), 'DayNightToggle Used ThemeContext')
 
   return (
     <div className={`DaynightToddle ${styles.container}`} onClick={toggleTheme} >
       <div className={styles.switch} >
         <label htmlFor="toggle">
-          <input id="toggle" readOnly={true} type="checkbox" checked={theme === C.themes.dark} ></input>
+          <input readOnly={true} type="checkbox" checked={theme === C.themes.dark} ></input>
           <div className={styles.sunMoon} ><div className={styles.dots} ></div></div>
           <div className={styles.background} ><div className={styles.stars1}></div><div className={styles.stars2}></div></div>
           {/* <div className={styles.fill}></div> */}
@@ -30,5 +37,6 @@ const DayNightToggle = (props) => {
     </div>
   );
 }
+DayNightToggle.propTypes = {} // none
 
 export default DayNightToggle

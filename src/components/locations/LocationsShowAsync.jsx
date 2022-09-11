@@ -16,17 +16,13 @@ import { LocationsShow } from './'
  *
 **/
 const LocationsShowAsync = (props) => {
-  logg(props, 'LocationsShowAsync')
+  // logg(props, 'LocationsShowAsync')
   const { match } = props
 
   const [ location, setLocation ] = useState()
   const api = useApi()
-  logg(api, 'zeApi')
-
 
   useEffect(() => {
-    logg('calling?')
-
     api.getLocation({ slug: match.params.slug }).then((r) => {
       setLocation(r)
     }).catch(err => {

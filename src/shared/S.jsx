@@ -1,6 +1,8 @@
 
 /**
  * Style Constants
+ *
+ * @deprecated, use variables.css and css vars
  */
 const S = {
   // Twofold layout
