@@ -16,7 +16,7 @@ import {
 
 /**
  * Marker
- * @TODO: move somewhere to share it?
+ * @TODO: move to its own component in markers/
 **/
 const _Marker = styled.div`
   color: ${p => p.theme.colors.text};

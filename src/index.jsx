@@ -1,10 +1,8 @@
+
 import React from 'react'
 import ReactDOM from 'react-dom'
-import AppWrapper from './AppWrapper'
+import AppWrapper from './AppWrapper2'
 import * as serviceWorker from './serviceWorker'
-import {
-  Link, Switch, BrowserRouter as Router, Redirect, Route as _Route, useHistory, withRouter
-} from 'react-router-dom'
 
 import 'react-toastify/dist/ReactToastify.css'
 import styles from 'ishlibjs/dist/index.css'

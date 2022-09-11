@@ -15,32 +15,32 @@ import {
 import styles from './Markers.module.scss'
 
 /**
- * MarkerModal
+ * MarkerEditModal
  *
  * For editing/adding markers.
 **/
-const MarkerModal = (props) => {
+const MarkerEditModal = (props) => {
 
   const {
-    markerModalOpen, setMarkerModalOpen,
+    MarkerEditModalOpen, setMarkerEditModalOpen,
   } = useContext(MarkerContext)
-  // logg(useContext(MarkerContext), 'MarkerModalUsedContext')
+  // logg(useContext(MarkerContext), 'MarkerEditModalUsedContext')
 
   return <Modal
-    className={`MarkerModal ${styles.MarkerModal}`}
-    isOpen={markerModalOpen}
+    className={`MarkerEditModal ${styles.MarkerEditModal}`}
+    isOpen={MarkerEditModalOpen}
   >
     <h1>
       marker modal
-      <span onClick={() => setMarkerModalOpen(false)}>[x]</span>
+      <span onClick={() => setMarkerEditModalOpen(false)}>[x]</span>
     </h1>
     <MarkerForm />
   </Modal>
 }
 
-export default MarkerModal
+export default MarkerEditModal
 export {
   MarkerContext,
   MarkerContextProvider,
-  MarkerModal,
+  MarkerEditModal,
 }

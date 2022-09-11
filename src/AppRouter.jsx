@@ -26,6 +26,15 @@ import {
   logg,
 } from "$shared"
 
+/**
+ * paths
+ *
+ * Currently not used _vp_ 2022-09-10
+**/
+export const paths = {
+  // cityVenuesPath: (slug) => `/en/cities/travel-to/${slug}/venues`,
+  // cityPath: (slug) => `/en/cities/travel-to/${slug}`,
+}
 
 /**
  * AppRouter - obsoletes AppMobile and AppDesktop
@@ -62,4 +71,3 @@ const AppRouter = (props) => {
 }
 
 export default AppRouter
-

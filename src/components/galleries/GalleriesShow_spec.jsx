@@ -47,14 +47,9 @@ const theseProps = { match: { url: '/en/galleries/show/abba', params: '?' } }
 
 describe("GalleriesShow", () => {
 
-  // @TODO: herehere
-  test.skip(' current2 - does not show unlock modal if user is not logged in', async () => {
-    let wrapper = mount(<AppMock >
-      <GalleriesShow {...theseProps} />
-    </AppMock>)
-    expect(wrapper.find(LoginModal).length).toEqual(1)
-    expect(wrapper.find(UnlockModal).length).toEqual(0)
-    await act(() => new Promise(setImmediate))
+  it('renders', () => {
+    const w = mount(<GalleriesShow />)
+    expect(w).toBeTruthy()
   })
 
 })

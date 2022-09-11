@@ -8,14 +8,14 @@ const MarkerContext = React.createContext({})
 const MarkerContextProvider = ({ children, ...props }) => {
 
   const [ marker, setMarker ] = useState()
-  const [ markerModalOpen, setMarkerModalOpen ] = useState(false)
+  const [ MarkerEditModalOpen, setMarkerEditModalOpen ] = useState(false)
 
-  return <MarkerContext.Provider value={{ marker, setMarker, markerModalOpen, setMarkerModalOpen, }}
+  return <MarkerContext.Provider value={{ marker, setMarker, MarkerEditModalOpen, setMarkerEditModalOpen, }}
   >{children}</MarkerContext.Provider>
 }
 
 
-export { default as MarkerModal } from './MarkerModal'
+export { default as MarkerEditModal } from './MarkerEditModal'
 export {
   MarkerContext,
   MarkerContextProvider,

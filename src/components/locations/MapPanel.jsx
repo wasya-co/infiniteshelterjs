@@ -1,149 +1,153 @@
-import PropTypes from 'prop-types'
-import React, { useContext, useEffect, useRef } from 'react'
-import { useHistory } from 'react-router-dom'
+
+import { IonPage, IonContent, IonButton, IonImg, IonLoading } from "@ionic/react"
+import React, { Fragment as F, useContext, useEffect, useRef, useState } from "react"
+import { Route, useLocation, useHistory, Switch } from 'react-router-dom'
 import styled from 'styled-components'
 
-import config from 'config'
-
 import { TwofoldContext, } from "$components/TwofoldLayout"
-import { logg } from "$shared"
+import {
+  MarkerContext,
+} from '$components/markers'
+import {
+  C, Card,
+  logg,
+  useWindowSize,
+} from "$shared"
 
-const Div1 = styled.div`
-  // border: 3px solid green;
+const Actions = styled.div`
+  border: 1px solid red;
 
-  text-align: center;
-  display: block;
+  position: absolute;
+  top: 0;
+  right: 0;
 
-  position: relative;
-  overflow: auto;
-
-  height: calc(100vh - ${p => `calc(2*${p.theme.borderWidth})`}
-    - ${p => p.theme.breadcrumbsHeight}
-    - ${p => p.bottomDrawerOpen ? p.theme.bottomDrawerOpenHeight : p.theme.bottomDrawerClosedHeight });
-
+  z-index: 2;
 `;
 
-/* Same size as the map image.
- * What scrolls is this div, not the image inside it.
- */
-const Img = styled.div`
-  // border: 2px solid cyan;
-  display: inline-block;
+// W
+const W0 = styled.div`
+  border: ${p => p.theme.thinBorder};
+  border-radius: ${p => p.theme.thinBorderRadius};
+  background: ${p => p.theme.colors.background};
+
+  height: 100%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
   position: relative;
 `;
 
-const Root = styled.div`
-  border: ${p=>p.debug?'1':'0'}px solid red;
+const W1 = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
   position: relative;
-  overflow: auto;
-
-  height: calc(100vh - ${p => `calc(2*${p.theme.borderWidth})`}
-    - ${p => p.theme.breadcrumbsHeight}
-    - ${p => p.bottomDrawerOpen ? p.theme.bottomDrawerOpenHeight : p.theme.bottomDrawerClosedHeight });
-
+  height: 100%;
 `;
 
-const ZoomCtrl = (props) => {
-  const { zoom, setZoom } = useContext(TwofoldContext)
-
-  const zoomIn = () => {
-    setZoom(zoom/2)
-  }
-  const zoomOut = () => {
-    setZoom(zoom*2)
-  }
-  const zoomReset = () => {
-    setZoom(1)
-  }
-
-  return <div style={{
-    position: 'absolute',
-    top: 0,
-    right: 0,
-    zIndex: 1,
-    background: 'white',
-    padding: '5px',
-
-    display: 'flex',
-    flexDirection: 'column',
-  }} >
-    <span onClick={zoomIn} >[+]</span>
-    <span onClick={zoomOut} >[-]</span>
-    <span onClick={zoomReset} >[1]</span>
-  </div>
-}
 
 /**
  * MapPanel
+ *
+ * _vp_ 2021-09 @TODO: merge this into MapPanel, have zoom={false} as a prop
+ * But I couldn't do it in 10 mins... It's a bit complicated?
+ *
+ * _vp_ 2021-10-29 But actually this component is getting more work than the zoom one right now...
 **/
 const MapPanel = (props) => {
   // logg(props, 'MapPanel')
-  const { map, withZoom=true } = props
+  const { map } = props
 
   const {
-    bottomDrawerOpen, setBottomDrawerOpen,
-    showUrl, setShowUrl,
+    bottomDrawerOpen,
+    editorMode,
+    mapPanelWidth, mapPanelHeight,
     zoom, setZoom,
   } = useContext(TwofoldContext)
+  // logg(useContext(TwofoldContext), 'MapPanelUsedContext')
 
-  const div1Ref = useRef(null)
+  const {
+    markerModalOpen, setMarkerModalOpen,
+  } = useContext(MarkerContext)
 
   const history = useHistory()
+  const [ windowWidth, windowHeight ] = useWindowSize()
+  // logg(useWindowSize(), 'usedWindowSize')
 
+
+  /*
+   * Sets the zoom (in panelNoZoom) to full-panel _vp_ 2021-10-29
+   * w: 1184 h: 819
+   */
   useEffect(() => {
-    // div1Ref.current.scrollIntoView({ block: 'end', inline: 'center' })
-    div1Ref.current.scroll({
-      top: 200,
-      left: 200,
-      behavior: 'smooth',
-     })
-  }, [])
+    // logg([windowWidth, windowHeight, map.w, map.h], 'MapPanel setting zoom')
+    if (windowWidth === 0) { return; }
+
+    let nextZoomByWidth = windowWidth/map.w // .3 mobile // 1.94 desktop
+    let nextZoomByHeight = windowHeight/map.h // .9 mobile // .82 desktop
+    // logg4([nextZoomByWidth, nextZoomByHeight], 'nextZoomOptions')
+
+    let nextZoom = Math.min(nextZoomByWidth, nextZoomByHeight)
+    const slack = 0.01 // image should not overlap with the border... 1% slack added.
+    nextZoom = nextZoom + slack
+
+    setZoom(nextZoom)
+  }, [
+    mapPanelWidth, mapPanelHeight, map.id,
+    windowWidth, windowHeight,
+  ])
+
 
   const markers = []
-  map.markers.map((m, idx) => {
+  props.map.markers.map((m, idx) => {
     const out = <div
       key={idx}
-      onClick={() => m.url ? setShowUrl(m.url) : history.push(`/en/locations/show/${m.slug}`) }
+      onClick={() => history.push(`/en/locations/show/${m.slug}`) }
       style={{
         position: 'absolute',
-        top: ((m.y- m.centerOffsetY )/zoom),
-        left: ((m.x- m.centerOffsetX )/zoom),
+        top: m.y*zoom,
+        left: m.x*zoom,
+        zIndex: 2,
       }} ><img src={m.img_path} style={{
         display: 'block',
-        maxWidth: `${m.w/zoom}px`,
-        maxHeight: `${m.h/zoom}px`,
-        width: `${m.w/zoom}px`, height: `${m.h/zoom}px`,
+        maxWidth: `${m.w*zoom}px`,
+        maxHeight: `${m.h*zoom}px`,
+        width: 'auto', height: 'auto',
       }} /></div>
     markers.push(out)
   })
 
-  return <Root {...{ bottomDrawerOpen }} debug={config.debug} className='MapPanel' >
-    { withZoom && <ZoomCtrl /> }
+  /*
+   * @TODO: need to get the ACL from api, and use it to determine what to display or not.
+  **/
 
-    <Div1 {...{ bottomDrawerOpen }} >
-      <Img ref={div1Ref} style={{
-        width: `${map.w/zoom}px`,
-        height: `${map.h/zoom}px`,
-      }} >
-        <img
-          src={map.img_path}
-          style={{
-            width: `${map.w/zoom}px`,
-            height: `${map.h/zoom}px`,
-          }}
-        />
-        { markers }
-      </Img>
-    </Div1>
+  return <W0 className="W0 MapPanel" >
 
-  </Root>
+    { editorMode && <Actions>
+      <Card onClick={() => setMarkerModalOpen(true)} >
+        + Marker
+      </Card>
+    </Actions> }
+
+    <W1 className="W1" >
+      <img
+        src={map.img_path}
+        style={{
+          maxWidth: '100%',
+          maxHeight: '100%',
+          width: 'auto',
+          height: 'auto',
+
+          position: 'relative',
+          zIndex: 0,
+        }}
+      />
+      { markers }
+    </W1>
+  </W0>
 }
 
-MapPanel.propTypes = {
-  map: PropTypes.object.isRequired,
-  withZoom: PropTypes.bool, // @TODO: I don't like it, I'd like it to be inside a config obj.
-}
 export default MapPanel
-
-

@@ -5,10 +5,9 @@ import React, { Fragment as F, useContext, useEffect, useRef, useState } from "r
 import styled from 'styled-components'
 
 import {
-  // GoogleMaps,
-  MapPanel, MapPanelNoZoom,
+  MapPanel,
 } from "./"
-import GoogleMaps from './GoogleMaps2'
+import GoogleMaps from './GoogleMaps'
 import {
   Equirectangular4,
   TabiversePlanet, ThreePanelV1, ThreePanelV2, ThreePanelV3, ThreePanelV4, ThreePanelDesktop,
@@ -25,24 +24,21 @@ const W0 = styled.div`
 `;
 
 /**
- * Renders either MapPanel (W0 really, a simple wrapper), MapPanelNoZoom, or ThreePanelV1
+ * Renders either MapPanel (W0 really, a simple wrapper), MapPanel, or ThreePanelV1
  * or some other MapPanel.
  *
- * @TODO: rename to... MapPanelImage ? There will be MapPanelGeospatial, MapPanelGallery, MapPanel3d, ...
 **/
 const WrappedMapPanel = React.forwardRef((props, ref) => {
   // logg(props, 'WrappedMapPanel')
   // const { map } = props
-
-  if ('undefined' === typeof props.map?.slug) { return null } // next_js
 
   switch (props.map.config.map_panel_type) {
 
     case C.map_panel_types.Equirectangular:
       return <W0 ref={ref} className="Equirectangular4" ><Equirectangular4 {...props} /></W0>
 
-    case C.map_panel_types.MapPanelNoZoom:
-      return <W0 ref={ref} className="WrappedMapPanel" ><MapPanelNoZoom withZoom={false} {...props} /></W0>
+    case C.map_panel_types.MapPanel:
+      return <W0 ref={ref} className="WrappedMapPanel" ><MapPanel withZoom={false} {...props} /></W0>
 
     case C.map_panel_types.ThreePanelV1:
       switch (props.slug) {

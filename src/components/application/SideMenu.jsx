@@ -1,11 +1,8 @@
 
-import { IonApp, IonButtons, IonMenuButton } from '@ionic/react'
 import Drawer from '@material-ui/core/Drawer'
 import Fab from '@material-ui/core/Fab'
-import IconButton from '@material-ui/core/IconButton'
 import List from '@material-ui/core/List'
 import ListItem from '@material-ui/core/ListItem'
-import ListItemIcon from '@material-ui/core/ListItemIcon'
 import PropTypes from 'prop-types'
 import React, { Fragment as F, useContext, useEffect, useState } from 'react'
 import { useHistory } from 'react-router-dom'
@@ -14,7 +11,11 @@ import styled from 'styled-components'
 import config from 'config'
 
 import { TwofoldContext } from "$components/TwofoldLayout"
-import { Api, C, Debug, logg, MenuIcon, } from "$shared"
+import {
+  C,
+  logg,
+  MenuIcon,
+} from "$shared"
 
 const W0 = styled.div`
   height: 100vh;

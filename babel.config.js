@@ -59,15 +59,15 @@ module.exports = function(api) {
       [ "@babel/plugin-proposal-private-methods", { loose: true } ],
       [ "@babel/plugin-proposal-private-property-in-object", { loose: true } ],
       [ "@babel/plugin-proposal-object-rest-spread", { useBuiltIns: true } ],
-      [
-        "@babel/plugin-transform-runtime",
-        {
+      [ "@babel/plugin-transform-runtime", {
           helpers: false,
           regenerator: true,
-          corejs: false
-        }
-      ],
-      [ "@babel/plugin-transform-regenerator", { async: false } ]
+          corejs: false } ],
+      [ "@babel/plugin-transform-regenerator", { async: false } ],
+      [ "styled-components", {
+          ssr: true,
+          displayName: true,
+          preprocess: false } ]
     ].filter(Boolean)
   };
 };

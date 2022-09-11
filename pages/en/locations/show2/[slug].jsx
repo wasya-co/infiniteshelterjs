@@ -2,11 +2,11 @@
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 import React, { useEffect, useState, } from 'react'
-import ReactDOM from 'react-dom'
-import {
-  Link, Switch, BrowserRouter as Router, Redirect, Route as _Route, useHistory, withRouter,
-} from 'react-router-dom'
-import { ToastContainer } from 'react-toastify'
+// import ReactDOM from 'react-dom'
+// import {
+//   Link, Switch, BrowserRouter as Router, Redirect, Route as _Route, useHistory, withRouter,
+// } from 'react-router-dom'
+// import { ToastContainer } from 'react-toastify'
 
 import config from 'config'
 import {
@@ -46,7 +46,12 @@ const Page = (props) => {
     match: { params: { slug: router.query.slug } }
   }
 
-  return (
+  return (<>
+    <Head>
+      <title>{props.location.name} - {config.siteTitle}</title>
+      <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+    </Head>
+
     <AuthContextProvider {...{ useApi, }} >
       <ThemeProvider >
         <TwofoldContextProvider >
@@ -60,18 +65,9 @@ const Page = (props) => {
         </TwofoldContextProvider>
       </ThemeProvider>
     </AuthContextProvider>
-  );
-
-  // return <>
-  //   { /* @TODO: abstract and move this? */ }
-  //   <Head>
-  //     <title>{props.location.name} - {config.siteTitle}</title>
-  //     <meta name="viewport" content="initial-scale=1.0, width=device-width" />
-  //   </Head>
-  //   <AppWrapper2 />
-  // </>
+  </>);
 }
-
+export default Page
 
 
 
@@ -98,7 +94,7 @@ const Page = (props) => {
   // By returning { props: { posts } }, the component
   // will receive `posts` as a prop at build time
 
-*/
+**/
 export async function getStaticProps(match) {
   console.log(match, 'getStaticProps')
   const { params: { slug } } = match
@@ -120,14 +116,9 @@ export async function getStaticProps(match) {
 
 /**
  * getStaticPaths
+ *
+ * This function gets called at build time
 **/
-export async function getStaticPaths() {
-  let paths = []
-  paths.push({ params: { slug: 'root' }})
-  paths.push({ params: { slug: 'chicago' }})
-  return { paths, fallback: false }
-}
-// // This function gets called at build time
 // export async function getStaticPaths() {
 //   // Call an external API endpoint to get posts
 //   const res = await fetch('https://.../posts')
@@ -141,6 +132,14 @@ export async function getStaticPaths() {
 //   // We'll pre-render only these paths at build time.
 //   // { fallback: false } means other routes should 404.
 //   return { paths, fallback: false }
-// }
+//
+export async function getStaticPaths() {
+  let paths = []
+  paths.push({ params: { slug: 'root' }})
+  paths.push({ params: { slug: 'chicago' }})
+  return { paths, fallback: false }
+}
 
-export default Page
+
+
+

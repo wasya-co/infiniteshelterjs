@@ -1,54 +1,165 @@
 
+import * as React from "react"
+import * as ReactDom from "react-dom"
 import { Wrapper, Status } from "@googlemaps/react-wrapper"
-import { IonPage, IonContent, IonButton, IonImg, IonLoading } from "@ionic/react"
-import React, { Fragment as F, useContext, useEffect, useRef, useState } from "react"
-import { Route, useLocation, useHistory, Switch } from 'react-router-dom'
-import styled from 'styled-components'
-
 
 import {
-  MarkerContext,
-} from '$components/markers'
-import { TwofoldContext } from "$components/TwofoldLayout"
-import {
-  C, Card,
   logg,
-  useWindowSize,
-} from "$shared"
+} from '$shared'
 
-const Actions = styled.div`
-  border: 1px solid red;
+let API_KEY
+// API_KEY = 'AIzaSyDTM7RYKAlUS84jN1pCmydwEKxUTAMAn6c'
+API_KEY = 'AIzaSyB8kkxbSgjmUpGmpigro-N7uXKiQmpBoyE'
 
-  position: absolute;
-  top: 0;
-  right: 0;
+/**
+ * App
+**/
+const App = (props) => {
+  // logg(props, 'GoogleMaps2')
+  const {
+    map,
+  } = props
 
-  z-index: 2;
-`;
+  const [clicks, setClicks] = React.useState([]);
+  const [zoom, setZoom] = React.useState(12); // initial zoom
+  const [center, setCenter] = React.useState({ lat: map.x, lng: map.y })
 
-// W
-const W0 = styled.div`
-  border: ${p => p.theme.thinBorder};
-  border-radius: ${p => p.theme.thinBorderRadius};
-  background: ${p => p.theme.colors.background};
+  const onClick = (e) => {
+    // avoid directly mutating state
+    // setClicks([...clicks, e.latLng]);
+  };
 
-  height: 100%;
+  const onIdle = (m) => {
+    // console.log("onIdle");
+    m.getZoom() && setZoom(m.getZoom());
+    m.getCenter() && setCenter(m.getCenter().toJSON());
+  };
 
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  const form = (
+    <div
+      style={{
+        display: 'none',
 
-  position: relative;
-`;
+        padding: "1rem",
+        flexBasis: "250px",
+        height: "100%",
+        overflow: "auto",
+      }}
+    >
+      <label htmlFor="zoom">Zoom</label>
+      <input
+        type="number"
+        id="zoom"
+        name="zoom"
+        value={zoom}
+        onChange={(event) => setZoom(Number(event.target.value))}
+      />
+      <br />
+      <label htmlFor="lat">Latitude</label>
+      <input
+        type="number"
+        id="lat"
+        name="lat"
+        value={center.lat}
+        onChange={(event) =>
+          setCenter({ ...center, lat: Number(event.target.value) })
+        }
+      />
+      <br />
+      <label htmlFor="lng">Longitude</label>
+      <input
+        type="number"
+        id="lng"
+        name="lng"
+        value={center.lng}
+        onChange={(event) =>
+          setCenter({ ...center, lng: Number(event.target.value) })
+        }
+      />
+      <h3>{clicks.length === 0 ? "Click on map to add markers" : "Clicks"}</h3>
+      {clicks.map((latLng, i) => (
+        <pre key={i}>{JSON.stringify(latLng.toJSON(), null, 2)}</pre>
+      ))}
+      <button onClick={() => setClicks([])}>Clear</button>
+    </div>
+  );
 
-const W1 = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  return (
+    <div style={{ display: "flex", height: "100%" }}>
+      <Wrapper apiKey={API_KEY} >
+        <Map
+          center={center}
+          onClick={onClick}
+          onIdle={onIdle}
+          zoom={zoom}
+          style={{ flexGrow: "1", height: "100%" }}
+        >
+          {map.markers.map((m, i) =>
+            <Marker key={i} position={{lat: m.x, lng: m.y}} />
+          ) }
+        </Map>
+      </Wrapper>
+      {/* Basic form for controlling center and zoom of map. */}
+      {form}
+    </div>
+  );
+};
 
-  position: relative;
-  height: 100%;
-`;
+/**
+ * GoogleMaps
+**/
+const Map = ({
+  onClick,
+  onIdle,
+  children,
+  style,
+  ...options
+}) => {
+  const ref = React.useRef(null);
+  const [map, setMap] = React.useState();
+
+  React.useEffect(() => {
+    if (ref.current && !map) {
+      setMap(new window.google.maps.Map(ref.current, {}));
+    }
+  }, [ref, map]);
+
+  // because React does not do deep comparisons, a custom hook is used
+  // see discussion in https://github.com/googlemaps/js-samples/issues/946
+  useDeepCompareEffectForMaps(() => {
+    if (map) {
+      map.setOptions(options);
+    }
+  }, [map, options]);
+
+  React.useEffect(() => {
+    if (map) {
+      ["click", "idle"].forEach((eventName) =>
+        google.maps.event.clearListeners(map, eventName)
+      );
+
+      if (onClick) {
+        map.addListener("click", onClick);
+      }
+
+      if (onIdle) {
+        map.addListener("idle", () => onIdle(map));
+      }
+    }
+  }, [map, onClick, onIdle]);
+
+  return (
+    <>
+      <div ref={ref} style={style} />
+      {React.Children.map(children, (child) => {
+        if (React.isValidElement(child)) {
+          // set the map prop on the child component
+          return React.cloneElement(child, { map });
+        }
+      })}
+    </>
+  );
+};
 
 const Marker = (options) => {
   const [marker, setMarker] = React.useState();
@@ -65,115 +176,28 @@ const Marker = (options) => {
       }
     };
   }, [marker]);
+
   React.useEffect(() => {
     if (marker) {
       marker.setOptions(options);
     }
   }, [marker, options]);
+
   return null;
 };
 
-const MyMap = (props) => {
-  const {
-    center, zoom,
-  } = props
+function useDeepCompareMemoize(value) {
+  const ref = React.useRef();
 
-  const ref = useRef()
-  const [map, setMap] = React.useState()
-
-  React.useEffect(() => {
-    if (map) {
-      ["click", "idle"].forEach((eventName) =>
-        google.maps.event.clearListeners(map, eventName)
-      );
-      if (onClick) {
-        map.addListener("click", onClick);
-      }
-
-      if (onIdle) {
-        map.addListener("idle", () => onIdle(map));
-      }
-    }
-  }, [map, onClick, onIdle]);
-
-  useEffect(() => {
-    if (ref.current && !map) {
-      setMap(new window.google.maps.Map(ref.current, { center, zoom, }));
-    }
-  }, [ref, map]);
-
-  return <div ref={ref} id="GoogleMaps" />
-}
-
-const Spinner = () => <h1>Loading...</h1>
-const ErrorComponent = () => <h1>No luck loading GoogleMaps</h1>
-const render = (status) => {
-  switch (status) {
-    case Status.LOADING:
-      return <Spinner />;
-    case Status.FAILURE:
-      return <ErrorComponent />;
-    case Status.SUCCESS:
-      return <MyMap />;
+  if (value !== ref.current) {
+    ref.current = value;
   }
-};
 
-/**
- * GoogleMaps
- *
-**/
-const GoogleMaps = (props) => {
-  // logg(props, 'GoogleMaps')
-  const { map } = props
-
-  const {
-    bottomDrawerOpen,
-    editorMode,
-    mapPanelWidth, mapPanelHeight,
-    zoom, setZoom,
-  } = useContext(TwofoldContext)
-  // logg(useContext(TwofoldContext), 'GoogleMapsUsedContext')
-
-  const {
-    markerModalOpen, setMarkerModalOpen,
-  } = useContext(MarkerContext)
-
-  const history = useHistory()
-  const [ windowWidth, windowHeight ] = useWindowSize()
-  // logg(useWindowSize(), 'usedWindowSize')
-
-
-  const markers = []
-  props.map.markers.map((m, idx) => {
-    const out = <div
-      key={idx}
-      onClick={() => history.push(`/en/locations/show/${m.slug}`) }
-      style={{
-        position: 'absolute',
-        top: m.y*zoom,
-        left: m.x*zoom,
-        zIndex: 2,
-      }} ><img src={m.img_path} style={{
-        display: 'block',
-        maxWidth: `${m.w*zoom}px`,
-        maxHeight: `${m.h*zoom}px`,
-        width: 'auto', height: 'auto',
-      }} /></div>
-    markers.push(out)
-  })
-
-  return <W0 className="GoogleMaps" >
-
-    { editorMode && <Actions>
-      <Card onClick={() => setMarkerModalOpen(true)} >
-        + Marker
-      </Card>
-    </Actions> }
-
-    <Wrapper apiKey={"AIzaSyDTM7RYKAlUS84jN1pCmydwEKxUTAMAn6c"} render={render} >
-
-    </Wrapper>
-  </W0>
+  return ref.current;
 }
 
-export default GoogleMaps
+const useDeepCompareEffectForMaps = (callback, dependencies) => {
+  React.useEffect(callback, dependencies.map(useDeepCompareMemoize));
+}
+
+export default App
