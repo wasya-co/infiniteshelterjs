@@ -11,12 +11,12 @@ import {
   request,
 } from "$shared"
 
+// @TODO: create direct unwrapped access to this. _vp_ 2022-09-10
 const useApi = () => {
   if ('undefined' === typeof window) { return }
 
   const {
-    setCurrentUser,
-    setLoginModalOpen,
+    setCurrentUser, // @TODO: this should be injected here. _vp_ 2022-09-10
   } = useContext(AuthContext)
 
   const token = localStorage.getItem(C.jwt_token)

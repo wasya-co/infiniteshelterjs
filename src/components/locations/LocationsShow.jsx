@@ -234,7 +234,7 @@ const LocationsShow = (props) => {
   } = useContext(TwofoldContext)
   // logg(useContext(TwofoldContext), 'LocationsShowUsedTwofoldContext')
 
-  const api = useApi()
+  // const api = useApi()
   const [ windowWidth, windowHeight ] = useWindowSize()
   const [ loading, setLoading ] = useState(false)
 
@@ -300,7 +300,7 @@ const LocationsShow = (props) => {
     { showItem && <ItemModal item={showItem} /> }
     { loading && <Loading /> }
 
-    <UnlockModal />
+    { location.is_premium && <UnlockModal /> }
 
   </Row>
 }
