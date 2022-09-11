@@ -210,6 +210,7 @@ export const Root = styled.div`
 
 /* S */
 export { default as S } from "./S"
+export { default as SsrProvider, SsrContext } from './SsrProvider'
 
 /* T */
 export { default as ThemeProvider, ThemeContext } from './ThemeProvider'

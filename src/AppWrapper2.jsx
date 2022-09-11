@@ -1,11 +1,12 @@
 
 import { Device } from '@capacitor/device'
-import React, { useEffect, useState, } from 'react'
-import { ToastContainer } from 'react-toastify'
+import PropTypes from 'prop-types'
+import React, { useContext, useEffect, useState, } from 'react'
+import { toast, ToastContainer } from 'react-toastify'
 import styled from 'styled-components'
 
-import config from 'config'
 import {
+  AuthContext,
   AuthContextProvider,
   LoginModal,
   RegisterModal,
@@ -14,6 +15,7 @@ import {
 import {
   C,
   logg,
+  SsrProvider,
   ThemeProvider,
   useApi,
 } from "$shared"
@@ -44,6 +46,28 @@ const Root = styled.div`
 `;
 
 /**
+ * links AuthContext to LoginModal
+**/
+const WLoginModal = (props) => {
+  // logg(props, 'WLoginModal')
+
+  const {
+    setCurrentUser,
+  } = useContext(AuthContext)
+
+  const onError = (inn) => {
+    logg(inn, 'cannot login!')
+    toast('cannot login!')
+  }
+  const onSuccess = (inn) => {
+    logg('Logged in successfully.')
+    setCurrentUser(inn)
+  }
+
+  return <LoginModal {...{ onError, onSuccess }} />
+}
+
+/**
  * AppWrapper2
  * _vp_ 2022-09-09
  *
@@ -65,7 +89,10 @@ const Root = styled.div`
  *
 **/
 const AppWrapper2 = (props) => {
-  logg(props, 'AppWrapper2')
+  // logg(props, 'AppWrapper2')
+  const {
+    location,
+  } = props
 
   // @TODO: this is currently unused. _vp_ 2022-09-10
   const [ os, setOs ] = useState(null)
@@ -76,25 +103,31 @@ const AppWrapper2 = (props) => {
   fn()
   if (!os) { return null }
 
-  return <ThemeProvider >
-    <AuthContextProvider {...{ useApi, }} >
-      <TwofoldContextProvider >
-        <CollapsibleProvider >
 
-          <Root className='Root' >
 
-            <AppRouter />
+  return <SsrProvider {...{ location, }} >
+    <ThemeProvider >
+      <AuthContextProvider {...{ useApi, }} >
+        <TwofoldContextProvider >
+          <CollapsibleProvider >
 
-          </Root>
-          <ToastContainer position="bottom-left" />
-          <LoginModal />
-          <RegisterModal />
-          <BottomDrawer />
+            <Root className='Root' >
 
-        </CollapsibleProvider>
-      </TwofoldContextProvider>
-    </AuthContextProvider>
-  </ThemeProvider>
+              <AppRouter />
+
+            </Root>
+            <ToastContainer position="bottom-left" />
+            <WLoginModal />
+            <RegisterModal />
+            <BottomDrawer />
+
+          </CollapsibleProvider>
+        </TwofoldContextProvider>
+      </AuthContextProvider>
+    </ThemeProvider>
+  </SsrProvider>
 }
-
+AppWrapper2.propTypes = {
+  location: PropTypes.object, // from next_js, @TODO: add showItem. _vp_ 2022-09-11
+}
 export default AppWrapper2

@@ -210,7 +210,7 @@ const Row = styled.div`
  * @TODO: hella enable caching all around and measure throughput. _vp_ 2022-09-10
 **/
 const LocationsShow = (props) => {
-  logg(props, 'LocationsShow')
+  // logg(props, 'LocationsShow')
   const {
     location,
     match,
@@ -233,7 +233,7 @@ const LocationsShow = (props) => {
     showUrl, setShowUrl,
     twofoldPercent,
   } = useContext(TwofoldContext)
-  logg(useContext(TwofoldContext), 'LocationsShowUsedTwofoldContext')
+  // logg(useContext(TwofoldContext), 'LocationsShowUsedTwofoldContext')
 
   // const api = useApi()
   const [ windowWidth, windowHeight ] = useWindowSize()

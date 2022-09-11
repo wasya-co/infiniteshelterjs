@@ -1,12 +1,13 @@
 
 import PropTypes from 'prop-types'
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
 
 import {
   C,
   inflector,
   logg,
+  SsrContext,
   useApi,
 } from '$shared'
 import { LocationsShow } from './'
@@ -21,13 +22,15 @@ const LocationsShowAsync = (props) => {
   logg(props, 'LocationsShowAsync')
   const { match } = props
 
-  const [ location, setLocation ] = useState()
+  const {
+    location, setLocation,
+  } = useContext(SsrContext)
+  logg(useContext(SsrContext), 'LocationsShowAsync Used SsrContext')
+
   const [ showItem, setShowItem ] = useState()
   const api = useApi()
 
   useEffect(() => {
-    logg([ match.params.item_type, match.params.item_slug, match.params.slug ], 'not effecting?')
-
     const chain = [ api.getLocation({ slug: match.params.slug }) ]
     if (match.params.item_type) {
       const itemType = inflector.classify(match.params.item_type)

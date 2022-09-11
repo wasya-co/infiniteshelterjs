@@ -5,7 +5,7 @@ import React, { useState, useEffect } from 'react'
 
 import config from 'config'
 
-import AppWrapper from '../src/AppWrapper2'
+import AppWrapper2 from '../src/AppWrapper2'
 
 function App() {
   const [ isMounted, setIsMounted ] = useState(false)
@@ -20,7 +20,7 @@ function App() {
 
   return <div>
 
-    <AppWrapper />
+    <AppWrapper2 />
 
     <Script
       src="https://www.googletagmanager.com/gtag/js?id=G-W8PVZ83B9H"

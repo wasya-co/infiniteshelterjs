@@ -50,10 +50,10 @@ export const appPaths = {
  *
 **/
 const AppRouter = (props) => {
-  logg(props, 'AppRouter')
+  // logg(props, 'AppRouter')
 
   return <Router>
-    <Switch id="main" main >
+    <Switch main >
 
       <Redirect exact from="/" to={config.homePath} />
 

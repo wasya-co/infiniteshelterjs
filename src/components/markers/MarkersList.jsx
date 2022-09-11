@@ -74,7 +74,6 @@ const Marker = ({ children, ...props }) => {
   const history = useHistory()
 
   const goto = (e) => {
-    logg(marker, 'goto()')
     e.preventDefault()
 
     if (marker.premium_tier && !marker.is_purchased) {

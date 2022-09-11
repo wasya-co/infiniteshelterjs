@@ -2,7 +2,7 @@
 import PropTypes from 'prop-types'
 import React, { Fragment as F, useContext, useEffect, useRef, } from 'react'
 import Modal from "react-modal"
-import { useHistory, useRouteMatch } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 import styled from 'styled-components'
 
 import {
@@ -51,8 +51,6 @@ const UnlockModal = (props) => {
   const api = useApi()
   const history = useHistory()
 
-  let match = useRouteMatch()
-
   const doUnlock = async () => {
 
     // @TODO: check how many unlocks I have, and offer to purchase more if not enough.
@@ -64,7 +62,7 @@ const UnlockModal = (props) => {
       setCurrentUser(r)
 
       // @TODO: move, copy-pasted from LocationsShowDesktop
-      api.getLocation({ slug: match.params.slug }).then(r => {
+      api.getLocation({ slug: itemToUnlock.location_slug }).then(r => {
         setLocation(r)
         if (r.rated === C.rated.nc17 && !ratedConfirmation) { // @TODO: not test-driven, bad!
           setRatedConfirmation(false)
@@ -72,14 +70,14 @@ const UnlockModal = (props) => {
       })
 
       const resource_name = inflector.tableize(itemToUnlock.item_type)
-      history.push(`/en/locations/show/${match.params.slug}/${resource_name}/show/${itemToUnlock.slug}`)
+      history.push(`/en/locations/show/${itemToUnlock.location_slug}/${resource_name}/show/${itemToUnlock.slug}`)
 
     }).catch((e) => {
       logg(e, 'e19 - cannot doUnlock')
     })
   }
 
-  if (!itemToUnlock.id) { return null }
+  if (!itemToUnlock?.id) { return null }
 
   let closable = typeof itemToUnlock.closable === 'undefined' ? true : itemToUnlock.closable
 
@@ -114,5 +112,5 @@ const UnlockModal = (props) => {
   </Modal>)
 
 }
-
+UnlockModal.propTypes = {} // none
 export default UnlockModal

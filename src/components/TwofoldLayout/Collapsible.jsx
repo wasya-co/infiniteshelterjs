@@ -20,12 +20,12 @@ export const CollapsibleProvider = ({ children, ...props }) => {
     [C.collapsible.descr]: true,
   }
   let tmp
-  if (tmp = localStorage.getItem(C.collapsibles)) {
-    try {
+  try {
+    if (tmp = localStorage.getItem(C.collapsibles)) {
       defaultCollapsibles = JSON.parse(tmp)
-    } catch (err) {
-      logg(err, 'Could not parse collapsibles from localStorage')
     }
+  } catch (err) {
+    logg(err, 'Could not parse collapsibles from localStorage')
   }
   const [ collapsibles, _setCollapsibles ] = useState(defaultCollapsibles)
   const setCollapsibles = (m) => {

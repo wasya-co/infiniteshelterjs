@@ -15,16 +15,15 @@ export const apiPaths  = {}
 
 // @TODO: create direct unwrapped access to this. _vp_ 2022-09-10
 const useApi = () => {
-  if ('undefined' === typeof window) { return }
 
-  const {
-    setCurrentUser, // @TODO: this should be injected here. _vp_ 2022-09-10
-  } = useContext(AuthContext)
-
-  const token = localStorage.getItem(C.jwt_token)
+  let token
+  try {
+    token = localStorage.getItem(C.jwt_token)
+  } catch (err) {
+    logg(err, 'Api cannot access localStorage')
+  }
 
   return {
-
     deleteNewsitem: ({ id }) => {
       return request.delete(`${config.apiOrigin}/api/newsitems/${id}?jwt_token=${token}`).then((r) => r.data).then((r) => {
         return r
@@ -51,7 +50,7 @@ const useApi = () => {
     },
 
     getLocation: (props) => { // _vp_ 2022-09-04
-      logg(props, 'Api.getLocation()')
+      // logg(props, 'Api.getLocation()')
       const { slug } = props
 
       return request.get(`/api/maps/view/${slug}?jwt_token=${token}`).then(r => r.data).then(r => {
@@ -78,19 +77,10 @@ const useApi = () => {
     longTermTokenPath: '/api/users/long_term_token', // @TODO: move to config.router _vp_ 2022-09-04
 
     postLogin: ({ email, password }) => {
-      return request.post(`${config.apiOrigin}/api/users/login.json`,
-        { user: { email, password }}
+      return request.post(`${config.apiOrigin}/api/users/login.json`, { user: { email, password }}
       ).then((r) => r.data).then((r) => {
-        // logg(r, 'postLoginResponse')
         localStorage.setItem(C.jwt_token, r.jwt_token)
-        setCurrentUser(r)
         return r
-        // setLoginModalOpen(false)
-      }).catch((e) => {
-        logg(e, 'e322')
-        return e
-        // toast("Login failed")
-        // setCurrentUser(C.anonUser)
       })
     },
 
