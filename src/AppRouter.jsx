@@ -39,6 +39,8 @@ export const paths = {
  * AppRouter - obsoletes AppMobile and AppDesktop
  * _vp_ 2022-09-06
  *
+ * @TODO: remove mentions of layout from router, yes? _vp_ 2022-09-10
+ *
 **/
 const AppRouter = (props) => {
   logg(props, 'AppRouter')

@@ -2,6 +2,7 @@
 import { Device } from '@capacitor/device'
 import React, { useEffect, useState, } from 'react'
 import { ToastContainer } from 'react-toastify'
+import styled from 'styled-components'
 
 import config from 'config'
 import {
@@ -38,6 +39,10 @@ import '@ionic/react/css/text-alignment.css'
 import '@ionic/react/css/text-transformation.css'
 import '@ionic/react/css/flex-utils.css'
 import '@ionic/react/css/display.css'
+
+const Root = styled.div`
+  padding: 10px;
+`;
 
 /**
  * AppWrapper2
@@ -77,11 +82,14 @@ const AppWrapper2 = (props) => {
       <TwofoldContextProvider >
         <CollapsibleProvider >
 
-          <AppRouter />
+          <Root className='Root' >
+
+            <AppRouter />
+
+            <BottomDrawer />
+
+          </Root>
           <ToastContainer position="bottom-left" />
-
-          <BottomDrawer />
-
           <LoginModal />
           <RegisterModal />
 

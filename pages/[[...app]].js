@@ -5,7 +5,7 @@ import React, { useState, useEffect } from 'react'
 
 import config from 'config'
 
-import AppWrapper from '../src/AppWrapper'
+import AppWrapper from '../src/AppWrapper2'
 
 function App() {
   const [ isMounted, setIsMounted ] = useState(false)

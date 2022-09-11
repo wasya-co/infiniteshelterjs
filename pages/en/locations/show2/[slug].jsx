@@ -29,26 +29,29 @@ import AppWrapper2 from "$src/AppWrapper2"
  * LocationsShowDesktop
  * en / locations / SHOW2 / :slug , # don't forget that it's a different path!
  *
- * @TODO: mobile looks terrible, fix. _vp_ 2022-09-09
+ * @TODO: Fix mobile it looks terrible. _vp_ 2022-09-09
  *
 **/
 const Page = (props) => {
-  // console.log(props, 'Page')
+  console.log(props, 'Page')
+  const {
+    item: location,
+  } = props
 
   const router = useRouter()
 
-  if (props.location.is_premium) {
+  if (location.is_premium) {
     return <h1>This location cannot be accessed right now, please try again later</h1>
   }
 
   const childProps = {
-    ...props,
+    item: location,
     match: { params: { slug: router.query.slug } }
   }
 
   return (<>
     <Head>
-      <title>{props.location.name} - {config.siteTitle}</title>
+      <title>{location.name} - {config.siteTitle}</title>
       <meta name="viewport" content="initial-scale=1.0, width=device-width" />
     </Head>
 
@@ -96,7 +99,7 @@ export default Page
 
 **/
 export async function getStaticProps(match) {
-  console.log(match, 'getStaticProps')
+  // console.log(match, 'getStaticProps')
   const { params: { slug } } = match
 
   // const api = useApi()
@@ -104,14 +107,13 @@ export async function getStaticProps(match) {
 
   // @TODO: this is from useApi(), refactor it back somewhere.
   const domain = 'http://localhost:3001'
-  const location = await request.get(`${domain}/api/maps/view/${slug}`).then(r => r.data).then(r => {
+  const item = await request.get(`${domain}/api/maps/view/${slug}`).then(r => r.data).then(r => {
       return r.map
     }).catch((err) => {
       return err
     })
 
-  console.log('location112:', location)
-  return { props: { location } }
+  return { props: { item } }
 }
 
 /**

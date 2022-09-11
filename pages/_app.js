@@ -1,9 +1,10 @@
 
 import React from 'react'
 
-import styles from 'ishlibjs/dist/index.css'
 import 'react-toastify/dist/ReactToastify.css'
-// import '../src/theme/variables.css'
+import 'ishlibjs/dist/index.css'
+import '$src/variables.css'
+import '$src/application.scss'
 
 
 function NextApp({ Component, pageProps }) {
