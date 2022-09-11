@@ -305,7 +305,7 @@ const LocationsShow = (props) => {
   </Row>
 }
 LocationsShow.propTypes = {
-  location: PropTypes.object,
+  item: PropTypes.object,
   match: PropTypes.object,
 }
 

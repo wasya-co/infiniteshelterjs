@@ -47,7 +47,10 @@ const useApi = () => {
       return request.get(`${config.apiOrigin}/api/galleries/view/${slug}?jwt_token=${token}`
       ).then((r) => r.data.gallery)
     },
-    getLocation: ({ slug }) => { // _vp_ 2022-09-04
+    getLocation: (props) => { // _vp_ 2022-09-04
+      logg(props, 'Api.getLocation()')
+      const { slug } = props
+
       return request.get(`/api/maps/view/${slug}?jwt_token=${token}`).then(r => r.data).then(r => {
         return r.map
       }).catch((err) => {
