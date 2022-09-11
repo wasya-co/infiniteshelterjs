@@ -6,12 +6,11 @@ import {
 } from 'react-router-dom'
 import styled, { useTheme } from 'styled-components'
 
-
 import config from "config"
 
 import { CitiesList, CitiesShow } from "$components/cities"
 import {
-  GalleriesShow, MyGalleries,
+  GalleriesShow,
 } from "$components/galleries"
 import {
   LocationsShow, LocationsShowMobile3d,
@@ -20,7 +19,6 @@ import { ReportsShow } from "$components/reports"
 import {
   Account,
 } from "$components/users"
-import { Videos } from "$components/videos"
 import {
   C,
   logg,
@@ -32,8 +30,8 @@ import {
  * Currently not used _vp_ 2022-09-10
 **/
 export const paths = {
-  // cityVenuesPath: (slug) => `/en/cities/travel-to/${slug}/venues`,
-  // cityPath: (slug) => `/en/cities/travel-to/${slug}`,
+  cityVenuesPath: (slug) => `/en/cities/travel-to/${slug}/venues`,
+  cityPath: (slug) => `/en/cities/travel-to/${slug}`,
 }
 
 /**
@@ -50,8 +48,6 @@ const AppRouter = (props) => {
       <Redirect exact from="/" to={config.homePath} />
 
       <Route exact path="/en/account" component={Account} />
-      <Route exact path="/en/account/my/videos" component={Videos} />
-      <Route exact path="/en/account/my/galleries" component={MyGalleries} />
 
       <Route exact path="/en/cities"                 component={CitiesList} />
       <Route       path="/en/cities/travel-to/:name" component={CitiesShow} />

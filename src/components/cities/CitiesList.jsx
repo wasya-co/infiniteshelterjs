@@ -1,12 +1,14 @@
-import { IonPage, IonLoading, IonContent, IonIcon as _IonIcon } from '@ionic/react';
-import { funnel, bookmark, newspaperOutline, image, videocam } from 'ionicons/icons';
-import React, { Fragment as F, useEffect, useState } from "react";
-import { Link, useHistory } from "react-router-dom";
+
+import { IonPage, IonLoading, IonContent, IonIcon as _IonIcon } from '@ionic/react'
+import { funnel, bookmark, newspaperOutline, image, videocam } from 'ionicons/icons'
+import React, { Fragment as F, useEffect, useState } from "react"
+import { Link, useHistory } from "react-router-dom"
 import styled from 'styled-components'
 
-import { useApi, AppRouter,
-  logg, // eslint-disable-line no-unused-vars
-  Wrapper } from "$shared"
+import { useApi,
+  logg,
+} from "$shared"
+
 import "./Cities.module.scss"
 
 const Counts = styled.div`
@@ -43,6 +45,13 @@ const Number = styled.div`
   font-weight: 600;
 `;
 
+const W0 = styled.div`
+  height: 100vh;
+`;
+
+/**
+ * Cities
+**/
 const Cities = (props) => {
   const [cities, setCities] = useState([]);
   const [filteredCities, setFilteredCities] = useState([]);
@@ -67,7 +76,7 @@ const Cities = (props) => {
   }
 
   return <F>
-    <Wrapper className='cities' >
+    <W0 className='cities' >
       <h1 className="heading" >Cities</h1>
 
       <div className="filter-section">
@@ -85,7 +94,7 @@ const Cities = (props) => {
       </div> */ }
 
       <div className="container">
-        { filteredCities.map((city, i) => <div key={i} className="cities" onClick={() => history.push(AppRouter.cityPath(city.slug)) } >
+        { filteredCities.map((city, i) => <div key={i} className="cities" >
             <div className="img-section">
               <span className="bookmark" >
                 <IonIcon className="bookmark-icon" icon={bookmark}></IonIcon>
@@ -115,7 +124,7 @@ const Cities = (props) => {
         ) }
       </div>
       &nbsp;
-    </Wrapper>
+    </W0>
 
     <IonLoading
       isOpen={showLoading}

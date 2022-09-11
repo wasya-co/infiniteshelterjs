@@ -1,28 +1,25 @@
 
 import PropTypes from 'prop-types'
-import { Toast } from "@capacitor/toast"
 import React, { Fragment as F, useContext, useEffect, useRef, useState } from "react"
 import Modal from "react-modal"
 import styled from 'styled-components'
 
-import config from 'config'
-
 import {
   Breadcrumbs,
-  LongLine,
+  RatedRestrictionModal,
   UnlockModal,
 } from "$components/application"
 import { Newsitems } from "$components/newsitems"
 import {
   MarkersList,
-  MarkerModal, MarkerContext, MarkerContextProvider,
 } from '$components/markers'
 import {
-  ReportForm,
-} from '$components/reports'
-import { TwofoldContext, } from "$components/TwofoldLayout"
+  Collapsible,
+  LongLine,
+  TwofoldContext,
+} from "$components/TwofoldLayout"
 import {
-  C, Card, ChevronLeft, ChevronRight, Collapsible,
+  C, Card, ChevronLeft, ChevronRight,
   FlexCol, FlexRow,
   inflector,
   Loading,
@@ -33,7 +30,6 @@ import {
 import {
   ItemModal,
   MapPanel, MapPanelNoZoom,
-  RatedRestrictionModal,
   WrappedMapPanel,
 } from "./"
 
@@ -263,7 +259,7 @@ const LocationsShow = (props) => {
     }
   }, [bottomDrawerOpen, folded, mapPanelRef.current, twofoldPercent, windowWidth, windowHeight])
 
-  return <Row><MarkerContextProvider >
+  return <Row>
 
     <Left >
       <Breadcrumbs {...location} />
@@ -287,31 +283,6 @@ const LocationsShow = (props) => {
         />
       </Collapsible> || null }
 
-      { /* Features? */ }
-
-      { /* Tags */ }
-      {/* { location && <FlexRow className='Tags' style={{ marginBottom: '1em', flexWrap: 'wrap' }} >
-        { location.tags.map((tag) => <Card >{tag.name}</Card> )}
-      </FlexRow> } */}
-
-      { /* Actions */ }
-      { editorMode && <FlexRow className='Actions' style={{ marginBottom: '1em' }} >
-        <Card onClick={() => setShowItem({ action: C.actions.new, item_type: C.item_types.report }) } >
-          + Report
-        </Card>
-        <Card>
-          + Photo
-        </Card>
-        <Card>
-          + Gallery
-        </Card>
-        <Card>
-          + File
-        </Card>
-        {/* <Card> + Spreadsheet </Card> */}
-        <Card> + Marker </Card>
-      </FlexRow> }
-
       { /* Description */ }
       { location.description && <Collapsible
           className='Description'
@@ -332,12 +303,10 @@ const LocationsShow = (props) => {
     { showUrl && <IframeModal src={showUrl} /> }
     { showItem && <ItemModal item={showItem} /> }
     { loading && <Loading /> }
-    { !ratedConfirmation && <RatedRestrictionModal {...{ ratedConfirmation, setRatedConfirmation, }} /> }
-    { <MarkerModal /> }
 
     <UnlockModal />
 
-  </MarkerContextProvider></Row>
+  </Row>
 }
 LocationsShow.propTypes = {
   location: PropTypes.object,

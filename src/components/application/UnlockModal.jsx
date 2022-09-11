@@ -1,5 +1,4 @@
 
-import { useRouter } from 'next/router'
 import PropTypes from 'prop-types'
 import React, { Fragment as F, useContext, useEffect, useRef, } from 'react'
 import Modal from "react-modal"
@@ -27,30 +26,18 @@ const BtnRow = styled.div`
   justify-content: space-around;
 `;
 
-const modalStyle = {
-  overlay: {},
-  content: {
-    margin: 'auto',
-    maxWidth: '400px',
-
-  }
-}
 
 /**
  * UnlockModal
  */
 const UnlockModal = (props) => {
-  // logg(props, 'UnlockModal')
-
-
-  if ('undefined' === typeof window) { return null } // next_js
+  logg(props, 'UnlockModal')
 
   const {
     itemToUnlock, setItemToUnlock,
     location, setLocation,
     loginModalOpen, setLoginModalOpen,
     purchaseModalOpen, setPurchaseModalOpen,
-    ratedConfirmation, setRatedConfirmation,
   } = useContext(TwofoldContext)
   // logg(useContext(TwofoldContext), 'unlockModalUsedTwofoldContext')
 
@@ -63,24 +50,16 @@ const UnlockModal = (props) => {
   const api = useApi()
   const history = useHistory()
 
-  let match
-  const router = useRouter()
-  try {
-    match = useRouteMatch()
-  } catch(e) {
-    // logg(e, 'e77')
-    match = { params: router.query }
-  }
+  let match = useRouteMatch()
 
   const doUnlock = async () => {
-    // logg(itemToUnlock, 'itemToUnlock')
 
     // @TODO: check how many unlocks I have, and offer to purchase more if not enough.
     // @TODO: Do I Need to refresh the newsfeed somehow? _vp_ 2022-09-04
     await api.doUnlock({ kind: itemToUnlock.item_type, id: itemToUnlock.id }).then((r) => {
-      // logg(r, 'OK doUnlock')
 
-      setItemToUnlock({}) // @TODO: Change this to null if possible. Test-drive this change. _vp_ 2022-09-04
+      // @TODO: Change this to null if possible. Test-drive this change. _vp_ 2022-09-04
+      setItemToUnlock({})
       setCurrentUser(r)
 
       // @TODO: move, copy-pasted from LocationsShowDesktop
@@ -99,19 +78,6 @@ const UnlockModal = (props) => {
     })
   }
 
-  /* @TODO: this was here before, but should not be, right? _vp_ 2022-03-19 */
-  // const mountedRef = useRef('init')
-  // useEffect(() => {
-  //   const fn = async () => {
-  //     const r = await api.getMyAccount()
-  //     if (r) {
-  //       setCurrentUser(r)
-  //     }
-  //   }
-  //   fn()
-  //   return () => mountedRef.current = null
-  // }, [itemToUnlock.id])
-
   if (!itemToUnlock.id) { return null }
 
   let closable = typeof itemToUnlock.closable === 'undefined' ? true : itemToUnlock.closable
@@ -127,7 +93,7 @@ const UnlockModal = (props) => {
 
   Modal.setAppElement('body')
 
-  return (<Modal style={modalStyle} isOpen={!!itemToUnlock.id} >
+  return (<Modal isOpen={!!itemToUnlock.id} >
     <ModalHeader onClose={() => closable && setItemToUnlock(false) } >Unlock this item?</ModalHeader>
     <p>To access this content, please unlock it first. It costs {cost} coin(s) to unlock.</p>
     { currentUser && <F>

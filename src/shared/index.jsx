@@ -13,15 +13,11 @@ import {
 } from 'react-router-dom'
 import styled from 'styled-components'
 
-import config from 'config'
 import C from "./C"
 import { TwofoldContext, TwofoldContextProvider } from '$components/TwofoldLayout'
 
 /* A */
-import useApi from "./Api"
 export { default as useApi } from "./Api"
-export { default as AppMock } from "./AppMock"
-export { default as AppRouter } from "./AppRouter"
 
 /* B */
 
@@ -91,43 +87,6 @@ export const Card = ({ children, ..._props }) => {
   return <_Card className="Card" {...props}>{ children }</_Card>
 }
 
-export { default as Collapsible } from "./Collapsible"
-
-/**
- * @TODO: test-drive
-**/
-export const CollapsibleContext = React.createContext({})
-export const CollapsibleContextProvider = ({ children, ...props }) => {
-  // logg(props, 'CollapsibleContextProvider')
-
-  // next_js
-  if ('undefined' === typeof window) {
-    return <CollapsibleContext.Provider value={{}} >
-      {children}
-    </CollapsibleContext.Provider>
-  }
-
-  let defaultCollapsibles = {
-    [C.collapsible.descr]: true,
-  }
-  let tmp
-  if (tmp = localStorage.getItem(C.collapsibles)) {
-    try {
-      defaultCollapsibles = JSON.parse(tmp)
-    } catch (err) {
-      logg(err, 'Could not parse collapsibles from localStorage')
-    }
-  }
-  const [ collapsibles, _setCollapsibles ] = useState(defaultCollapsibles)
-  const setCollapsibles = (m) => {
-    localStorage.setItem(C.collapsibles, JSON.stringify(m))
-    _setCollapsibles(m)
-  }
-
-  return <CollapsibleContext.Provider value={{
-    collapsibles, setCollapsibles,
-  }} >{ children }</CollapsibleContext.Provider>
-}
 
 /* D */
 
@@ -314,12 +273,8 @@ export const WidgetContainer = ({ children, ..._props }) => {
   return <WBordered className={`${className} WidgetContainer`} {...props} >{ children }</WBordered>
 }
 
-export const Wrapper = styled.div`
-  height: 100vh;
-`;
-
 /* Z */
-
+// @TODO: move this into its own Zoom components, or into MapPanel
 export const ZoomContext = React.createContext({})
 
 

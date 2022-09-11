@@ -6,17 +6,26 @@ import { ToastContainer } from 'react-toastify'
 import config from 'config'
 import {
   AuthContextProvider,
+  LoginModal,
+  RegisterModal,
 } from 'ishlibjs'
 
 import {
-  C, CollapsibleContextProvider,
+  C,
   logg,
   useApi,
 } from "$shared"
 import AppRouter from './AppRouter'
 
-import ThemeProvider from '$components/application/ThemeProvider'
-import { TwofoldContextProvider } from "$components/TwofoldLayout"
+import {
+  BottomDrawer,
+  ThemeProvider,
+  UnlockModal,
+} from '$components/application'
+import {
+  CollapsibleProvider,
+  TwofoldContextProvider,
+} from "$components/TwofoldLayout"
 
 // I'm using this. _vp_ 2022-09-10
 import '@ionic/react/css/core.css'
@@ -65,7 +74,7 @@ const AppWrapper2 = (props) => {
   return <ThemeProvider >
     <AuthContextProvider {...{ useApi, }} >
       <TwofoldContextProvider >
-        <CollapsibleContextProvider >
+        <CollapsibleProvider >
 
           <AppRouter />
           <ToastContainer position="bottom-left" />
@@ -75,7 +84,7 @@ const AppWrapper2 = (props) => {
           <LoginModal />
           <RegisterModal />
 
-        </CollapsibleContextProvider>
+        </CollapsibleProvider>
       </TwofoldContextProvider>
     </AuthContextProvider>
   </ThemeProvider>

@@ -5,7 +5,7 @@ import React, { useEffect, useState } from "react"
 import styled from 'styled-components'
 
 import { logg } from "$shared"
-import { Rating } from "$components/application"
+import Rating from "./Rating"
 
 import "./Venues.module.scss"
 
