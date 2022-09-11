@@ -14,6 +14,8 @@ import styles from './DayNightToggle.module.scss'
  * DayNightToggle
  * From: https://codepen.io/fagnanm/pen/RpWNyb
  * From: https://devbeep.com/css-day-night-toggle-switch/
+ *
+ * @TODO: test-drive. toggling *once* changes the theme *once*
 **/
 const DayNightToggle = (props) => {
   // logg(props, 'DayNightToggle')

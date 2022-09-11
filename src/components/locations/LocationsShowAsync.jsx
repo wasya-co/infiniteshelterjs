@@ -16,7 +16,7 @@ import { LocationsShow } from './'
  *
 **/
 const LocationsShowAsync = (props) => {
-  // logg(props, 'LocationsShowAsync')
+  logg(props, 'LocationsShowAsync')
   const { match } = props
 
   const [ location, setLocation ] = useState()
@@ -29,7 +29,7 @@ const LocationsShowAsync = (props) => {
       logg(err, "Could not load Location.")
       toast("Could not load Location.")
     })
-  }, []) // @TODO: pretty certain need to add `match` to args to useEffect. _vp_ 2022-09-10
+  }, [ match.params.slug ])
 
   if (!location) { return  null }
   return <LocationsShow {...{ item: location, match }} />

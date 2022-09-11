@@ -239,35 +239,6 @@ export const WBordered = ({ children, ...props }) => {
   return <_WBordered {...props} >{children}</_WBordered>
 }
 
-/**
- * Wrapper Bordered Item. Is padded, margined.
- */
-const _WBorderedItem = styled.div`
-  border: ${p => p.theme.thinBorder};
-  border-radius: ${p => p.theme.thinBorderRadius};
-  background: ${p => p.theme.colors.cardBackground};
-  color: ${p => p.theme.colors.text};
-
-  margin: 0 .5em .5em 0;
-  padding: .5em;
-
-  text-align: center;
-
-  width: 18%;
-  max-width: 140px;
-  min-width: 120px;
-
-  &:empty {
-    height: 0;
-    border: none;
-    padding: 0;
-  };
-`;
-export const WBorderedItem = ({children, ..._props}) => {
-  const { className, ...props } = _props
-  return <_WBorderedItem className={`WBorderedItem ${className}`} {...props}>{children}</_WBorderedItem>
-}
-
 
 export const WidgetContainer = ({ children, ..._props }) => {
   const { className='', ...props } = _props

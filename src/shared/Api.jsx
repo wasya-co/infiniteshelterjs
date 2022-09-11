@@ -11,6 +11,8 @@ import {
   request,
 } from "$shared"
 
+export const apiPaths  = {}
+
 // @TODO: create direct unwrapped access to this. _vp_ 2022-09-10
 const useApi = () => {
   if ('undefined' === typeof window) { return }

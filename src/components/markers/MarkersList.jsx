@@ -4,19 +4,55 @@ import React, { Fragment as F, useContext, useEffect, useRef, useState } from "r
 import { useHistory, } from 'react-router-dom'
 import styled from 'styled-components'
 
-import { TwofoldContext, } from "$components/TwofoldLayout"
+import {
+  TwofoldContext,
+} from "$components/TwofoldLayout"
 import {
   C,
   logg,
   PurchasedIcon,
-  WBordered, WBorderedItem,
+  WBordered,
 } from "$shared"
+import {
+  appPaths,
+} from "$src/AppRouter"
 
-/* M */
+
+/**
+ * Wrapper Bordered Item. It is padded, margined.
+**/
+const _WBorderedItem = styled.a`
+  border: ${p => p.theme.thinBorder};
+  border-radius: ${p => p.theme.thinBorderRadius};
+  background: ${p => p.theme.colors.cardBackground};
+  color: ${p => p.theme.colors.text};
+
+  display: block;
+  text-decoration: none;
+
+  margin: 0 .5em .5em 0;
+  padding: .5em;
+
+  text-align: center;
+
+  width: 18%;
+  max-width: 140px;
+  min-width: 120px;
+
+  &:empty {
+    height: 0;
+    border: none;
+    padding: 0;
+  };
+`;
+const WBorderedItem = ({children, ..._props}) => {
+ const { className, ...props } = _props
+ return <_WBorderedItem className={`WBorderedItem ${className}`} {...props}>{children}</_WBorderedItem>
+}
+
 
 /**
  * Marker
- * @TODO: move to its own component in markers/
 **/
 const _Marker = styled.div`
   color: ${p => p.theme.colors.text};
@@ -26,15 +62,37 @@ const _Marker = styled.div`
 `;
 const Marker = ({ children, ...props }) => {
   // logg(props, 'Marker')
-  const { variant, marker } = props
+  const {
+    marker,
+  } = props
 
-  if (variant===C.variants.bordered) {
-    // HEREHERE
-    // @TODO: of course, change! Easy, I need two routers, internal and external. _vp_ 2022-09-09
-    return <a href={`/en/locations/show2/${marker.slug}`} ><WBorderedItem {...props} >{children}</WBorderedItem></a>
-  } else {
-    return <_Marker className="Marker" {...props} >{children}</_Marker>
+  const {
+    itemToUnlock, setItemToUnlock,
+    showUrl, setShowUrl,
+  } = useContext(TwofoldContext)
+
+  const history = useHistory()
+
+  const goto = (e) => {
+    logg(marker, 'goto()')
+    e.preventDefault()
+
+    if (marker.premium_tier && !marker.is_purchased) {
+      setItemToUnlock(marker)
+    } else {
+      if (marker.url) {
+        setShowUrl(marker.url) // @TODO: this should be encoded in the (server-side) router eventually. _vp_ 2022-09-11
+      }
+      else {
+        history.push(`/en/locations/show/${marker.slug}`)
+      }
+    }
   }
+
+  return <WBorderedItem
+    onClick={goto}
+    {...{ href: appPaths.locationPath(marker.slug), ...props }}
+  >{children}</WBorderedItem>
 }
 Marker.propTypes = {
   marker: PropTypes.object.isRequired,
@@ -55,59 +113,30 @@ const W0 = ({ children, variant, ...props }) => {
 }
 
 /**
- * Default
- */
+ * MarkersList
+ * @TODO: review variant, it's currently always bordered. _vp_ 2022-09-11
+ *
+**/
 const MarkersList = (props) => {
   // logg(props, 'MarkersList')
   const { variant } = props
 
-  const {
-    itemToUnlock, setItemToUnlock,
-    showUrl, setShowUrl,
-  } = useContext(TwofoldContext)
+  const markers = props.markers.map((m, idx) => <Marker key={idx}
+    marker={m}
+  >
+    <img src={m.title_img_path} /><br />
+    { m.is_purchased && <PurchasedIcon /> }
+    { m.name }
+  </Marker>)
 
-  const history = useHistory()
-
-  // @TODO: move this to the api object
-  const goto = (m) => {
-    if (m.premium_tier && !m.is_purchased) {
-      setItemToUnlock({ ...m })
-    } else {
-      if (m.url) {
-        setShowUrl(m.url)
-      }
-      else {
-        history.push(`/en/locations/show/${m.slug}`)
-      }
-    }
+  // Zero-height placeholders for the last row.
+  const times = 12 - markers.length % 12
+  for (let i = 0; i < times; i++) {
+    markers.push(<Marker key={`padded-${i}`} marker={{}} />)
   }
 
-  const out = []
-  props.markers.map((m, idx) => {
-    out.push(<Marker key={idx}
-      marker={m}
-      onClick={() => goto(m) }
-      variant={variant}
-    >
-      <img src={m.title_img_path} /><br />
-      { m.is_purchased && <PurchasedIcon /> }
-      { m.name }
-    </Marker>)
-  })
-  const times = 12 - out.length % 12
-  for (let i = 0; i < times; i++) { // zero-height placeholders to prettify last row
-    out.push(<Marker key={`padded-${i}`}
-      style={{ height: 0, marginBottom: 0, marginTop: 0 }}
-      variant={variant}
-      marker={{}}
-    />)
-  }
-
-  return <W0 className="MarkersList" >
-    {out}
-  </W0>
+  return <W0 className="MarkersList" >{ markers }</W0>
 }
-
 MarkersList.propTypes = {
   variant: PropTypes.string,
 }

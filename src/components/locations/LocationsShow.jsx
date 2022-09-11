@@ -5,6 +5,10 @@ import Modal from "react-modal"
 import styled from 'styled-components'
 
 import {
+  AuthContext,
+} from "ishlibjs"
+
+import {
   Breadcrumbs,
   RatedRestrictionModal,
   UnlockModal,
@@ -221,6 +225,10 @@ const LocationsShow = (props) => {
   if (!location) { return null }
 
   const {
+    currentUser,
+  } = useContext(AuthContext)
+
+  const {
     bottomDrawerOpen,
     editorMode,
     folded, setFolded, foldedLeft, foldedRight,
@@ -300,7 +308,7 @@ const LocationsShow = (props) => {
     { showItem && <ItemModal item={showItem} /> }
     { loading && <Loading /> }
 
-    { location.is_premium && <UnlockModal /> }
+    <UnlockModal />
 
   </Row>
 }

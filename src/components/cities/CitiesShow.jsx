@@ -5,7 +5,7 @@ import React, { useEffect, useRef, useState } from "react"
 import { Route, useLocation, useHistory, Switch } from 'react-router-dom'
 import styled from 'styled-components'
 
-import { paths } from '$src/AppRouter'
+import { appPaths } from '$src/AppRouter'
 import { useApi, logg } from "$shared"
 import { Newsitems } from "$components/newsitems"
 import { Venues } from "$components/venues"
@@ -25,7 +25,7 @@ const CitiesShow = (props) => {
 
   const api = useApi()
   const history = useHistory()
-  const thisPath = paths.cityPath(match.params.name)
+  const thisPath = appPaths.cityPath(match.params.name)
 
   const location = useLocation()
 
@@ -79,11 +79,11 @@ const CitiesShow = (props) => {
         </section> */ }
 
         <section className="section-three">
-          <div className="menu-option" onClick={() => history.push(paths.cityPath(match.params.name))} >
+          <div className="menu-option" onClick={() => history.push(appPaths.cityPath(match.params.name))} >
             <img src="/assets/newsfeed-icon.svg" alt="Newsfeed" />
             <p className={`${location.pathname == thisPath ? "selected" : ""} menu-item`}>Newsfeed</p>
           </div>
-          <div className="menu-option" onClick={() => history.push(paths.cityVenuesPath(match.params.name))} >
+          <div className="menu-option" onClick={() => history.push(appPaths.cityVenuesPath(match.params.name))} >
             <img src="/assets/venue-icon.svg" alt="Venues" />
             <p className={`${location.pathname.includes("venues") ? "selected" : ""} menu-item`}>Venues</p>
           </div>

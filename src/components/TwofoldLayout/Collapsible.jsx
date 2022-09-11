@@ -6,7 +6,7 @@ import styled from 'styled-components'
 import {
   C,
   logg,
-  WBordered, WBorderedItem,
+  WBordered,
 } from '$shared'
 
 /**

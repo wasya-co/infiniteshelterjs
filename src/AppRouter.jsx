@@ -26,13 +26,14 @@ import {
 } from "$shared"
 
 /**
- * paths
+ * appPaths
  *
- * Currently not used _vp_ 2022-09-10
 **/
-export const paths = {
+export const appPaths = {
   cityVenuesPath: (slug) => `/en/cities/travel-to/${slug}/venues`,
   cityPath: (slug) => `/en/cities/travel-to/${slug}`,
+
+  locationPath: (slug) => `/en/locations/show/${slug}`,
 }
 
 /**
