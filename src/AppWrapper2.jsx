@@ -92,12 +92,11 @@ export const WLoginModal = (props) => {
  *
 **/
 const AppWrapper2 = (props) => {
-  logg(props, 'AppWrapper2')
+  // logg(props, 'AppWrapper2')
   const {
-    location,
   } = props
 
-  return <SsrProvider {...{ location, }} >
+  return (
     <ThemeProvider >
       <AuthContextProvider {...{ useApi, }} >
         <TwofoldContextProvider >
@@ -117,7 +116,7 @@ const AppWrapper2 = (props) => {
         </TwofoldContextProvider>
       </AuthContextProvider>
     </ThemeProvider>
-  </SsrProvider>
+  )
 }
 AppWrapper2.propTypes = {
   location: PropTypes.object, // from next_js, @TODO: add showItem. _vp_ 2022-09-11

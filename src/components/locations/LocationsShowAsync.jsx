@@ -22,10 +22,8 @@ const LocationsShowAsync = (props) => {
   logg(props, 'LocationsShowAsync')
   const { match } = props
 
-  const {
-    location, setLocation,
-  } = useContext(SsrContext)
-  logg(useContext(SsrContext), 'LocationsShowAsync Used SsrContext')
+  // @TODO: this is elegantly LocationProvider _vp_ 2022-09-12
+  const [ location, setLocation ] = useState()
 
   const [ showItem, setShowItem ] = useState()
   const api = useApi()

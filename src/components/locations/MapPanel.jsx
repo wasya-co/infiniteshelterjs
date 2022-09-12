@@ -1,7 +1,6 @@
 
 import { IonPage, IonContent, IonButton, IonImg, IonLoading } from "@ionic/react"
 import React, { Fragment as F, useContext, useEffect, useRef, useState } from "react"
-import { Route, useLocation, useHistory, Switch } from 'react-router-dom'
 import styled from 'styled-components'
 
 import { TwofoldContext, } from "$components/TwofoldLayout"
@@ -11,6 +10,7 @@ import {
 import {
   C, Card,
   logg,
+  NavigationContext,
   useWindowSize,
 } from "$shared"
 
@@ -67,11 +67,15 @@ const MapPanel = (props) => {
     mapPanelWidth, mapPanelHeight,
     zoom, setZoom,
   } = useContext(TwofoldContext)
-  // logg(useContext(TwofoldContext), 'MapPanelUsedContext')
+  logg(useContext(TwofoldContext), 'MapPanelUsedContext')
 
   const {
     markerModalOpen, setMarkerModalOpen,
   } = useContext(MarkerContext)
+
+  const {
+    useHistory,
+  } = useContext(NavigationContext)
 
   const history = useHistory()
   const [ windowWidth, windowHeight ] = useWindowSize()
@@ -103,6 +107,8 @@ const MapPanel = (props) => {
 
   const markers = []
   props.map.markers.map((m, idx) => {
+    // logg(m, '111 - tmpMarker')
+
     const out = <div
       key={idx}
       onClick={() => history.push(`/en/locations/show/${m.slug}`) }

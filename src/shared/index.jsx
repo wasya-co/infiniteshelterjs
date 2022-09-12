@@ -187,6 +187,10 @@ export const MenuIcon = styled(_MenuIcon)`
   color: ${(p) => p.theme.colors.text}
 `;
 
+/* N */
+
+export { default as NavigationProvider, NavigationContext } from './NavigationProvider'
+
 /* P */
 export const PurchasedIcon = () => {
   return <div className="PurchasedIcon">[purchased]</div>

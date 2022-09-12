@@ -1,7 +1,6 @@
 
 import PropTypes from 'prop-types'
 import React, { Fragment as F, useContext, useEffect, useRef, useState } from "react"
-import { useHistory, } from 'react-router-dom'
 import styled from 'styled-components'
 
 import {
@@ -10,6 +9,7 @@ import {
 import {
   C,
   logg,
+  NavigationContext,
   PurchasedIcon,
   WBordered,
 } from "$shared"
@@ -65,6 +65,10 @@ const Marker = ({ children, ...props }) => {
   const {
     marker,
   } = props
+
+  const {
+    useHistory,
+  } = useContext(NavigationContext)
 
   const {
     itemToUnlock, setItemToUnlock,

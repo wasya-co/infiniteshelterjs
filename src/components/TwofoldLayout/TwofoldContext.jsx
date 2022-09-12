@@ -19,7 +19,7 @@ import {
 } from "$shared"
 
 /**
- * ishjs has a newer version of this. _vp_ 2022-03-05
+ * ishjs has an older version of this - discard it. _vp_ 2022-03-05, 2022-09-12
 */
 const TwofoldContext = React.createContext({})
 const TwofoldContextProvider = ({ children, ...props }) => {
@@ -33,22 +33,21 @@ const TwofoldContextProvider = ({ children, ...props }) => {
     zoom=1, setZoom, // it's a prop for testing only. _vp_ 2022-03-18
   } = props
 
-  // next_js
-  if ('undefined' === typeof window) {
-    return <TwofoldContext.Provider value={{}} >
-      {children}
-    </TwofoldContext.Provider>
-  }
 
   const api = useApi()
 
   /* B */
 
-  // @TODO: does localStorage work like this on mobile?
-  // @TODO: try and catch
-  const [ bottomDrawerOpen, _setBottomDrawerOpen ] = useState(JSON.parse(localStorage.getItem(C.bottomDrawerOpen)))
+  // bottomDrawerOpen, localStorage OK
+  let _bdo
+  const [ bottomDrawerOpen, _setBottomDrawerOpen ] = useState(_bdo)
+  try {
+    _bro = JSON.parse(localStorage.getItem(C.bottomDrawerOpen))
+  } catch (e) {} // no window
   const setBottomDrawerOpen = (m) => {
-    localStorage.setItem(C.bottomDrawerOpen, JSON.stringify(m))
+    try {
+      localStorage.setItem(C.bottomDrawerOpen, JSON.stringify(m))
+    } catch (e) {}
     _setBottomDrawerOpen(m)
   }
 
@@ -82,11 +81,12 @@ const TwofoldContextProvider = ({ children, ...props }) => {
 
 
   /* E */
-  const [ editorMode, _setEditorMode ] = useState(JSON.parse(localStorage.getItem(C.names.editorMode)))
-  const setEditorMode = (t) => {
-    localStorage.setItem(C.names.editorMode, t)
-    _setEditorMode(t)
-  }
+  // const [ editorMode, _setEditorMode ] = useState(JSON.parse(localStorage.getItem(C.names.editorMode)))
+  // const setEditorMode = (t) => {
+  //   localStorage.setItem(C.names.editorMode, t)
+  //   _setEditorMode(t)
+  // }
+  const [ editorMode, setEditorMode ] = useState(false)
 
   /* F */
   const [ folded, setFolded ] = useState()
@@ -112,11 +112,12 @@ const TwofoldContextProvider = ({ children, ...props }) => {
 
   /* R */
 
-  const [ ratedConfirmation, _setRatedConfirmation ] = useState(JSON.parse(localStorage.getItem(C.ratedConfirmation)))
-  const setRatedConfirmation = (which) => {
-    localStorage.setItem(C.ratedConfirmation, JSON.stringify(which))
-    _setRatedConfirmation(which)
-  }
+  // const [ ratedConfirmation, _setRatedConfirmation ] = useState(JSON.parse(localStorage.getItem(C.ratedConfirmation)))
+  // const setRatedConfirmation = (which) => {
+  //   localStorage.setItem(C.ratedConfirmation, JSON.stringify(which))
+  //   _setRatedConfirmation(which)
+  // }
+  const [ ratedConfirmation, setRatedConfirmation ] = useState(true)
 
   // const [ registerModalOpen, setRegisterModalOpen ] = useState(false)
 
@@ -128,15 +129,22 @@ const TwofoldContextProvider = ({ children, ...props }) => {
   const [ showUrl, setShowUrl ] = useState(false)
 
   /* T */
-  let tmp, defaultTwofoldPercent = 0.5
-  if (tmp = localStorage.getItem(C.twofoldPercent)) {
-    try {
-      defaultTwofoldPercent = JSON.parse(tmp)
-    } catch (err) {
-      logg(err, 'cannot get twofoldPercent from localStorage')
-    }
+
+  // twofoldPercent
+  // @TODO: fix, this makes no sense. _vp_ 2022-09-12
+  let _tfp
+  try {
+    _tfp = JSON.parse(localStorage.getItem(C.twofoldPercent))
+  } catch (e) {
   }
-  const [ twofoldPercent, setTwofoldPercent ] = useState(0.5)
+  logg(_tfp, '_tfp')
+  const [ twofoldPercent, _setTwofoldPercent ] = useState(_tfp||0.5)
+  const setTwofoldPercent = (p) => {
+    try {
+      localStorage.setItem(C.twofoldPercent, JSON.stringify(p))
+    } catch (e) {}
+    _setTwofoldPercent(p)
+  }
 
   /* Z */
   const [ _zoom, _setZoom ] = useState(1)
@@ -147,8 +155,6 @@ const TwofoldContextProvider = ({ children, ...props }) => {
   return <TwofoldContext.Provider value={{
     bottomDrawerOpen, setBottomDrawerOpen,
 
-    // currentUser, setCurrentUser,
-
     editorMode, setEditorMode,
 
     folded, setFolded, foldedLeft, foldedRight,
@@ -156,7 +162,6 @@ const TwofoldContextProvider = ({ children, ...props }) => {
     itemToUnlock, setItemToUnlock,
 
     layout, setLayout,
-    // loginModalOpen, setLoginModalOpen,
 
     mapPanelHeight, setMapPanelHeight,
     mapPanelWidth, setMapPanelWidth,
@@ -164,7 +169,6 @@ const TwofoldContextProvider = ({ children, ...props }) => {
     purchaseModalOpen, setPurchaseModalOpen,
 
     ratedConfirmation, setRatedConfirmation,
-    // registerModalOpen, setRegisterModalOpen,
 
     showItem, setShowItem,
     showUrl, setShowUrl,

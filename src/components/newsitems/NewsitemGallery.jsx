@@ -1,13 +1,15 @@
 
 import PropTypes from 'prop-types'
 import React, { useContext } from "react"
-import { useHistory } from 'react-router-dom'
 import styled from 'styled-components'
 
 import {
   LocationContext,
 } from "$components/locations"
-import { logg } from "$shared"
+import {
+  logg,
+  NavigationContext,
+} from "$shared"
 import { appPaths } from "$src/AppRouter"
 import { NewsitemContainer } from './'
 
@@ -100,6 +102,10 @@ const NewsitemGallery = (props) => {
   const {
     slug: location_slug,
   } = useContext(LocationContext)
+
+  const {
+    useHistory,
+  } = useContext(NavigationContext)
 
   const history = useHistory()
   const href = appPaths.viewGallery({ location_slug, slug: item.slug })

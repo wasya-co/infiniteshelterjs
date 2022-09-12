@@ -2,10 +2,6 @@
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 import React, { useEffect, useState, } from 'react'
-import {
-  Switch,
-  Redirect, Route, BrowserRouter as Router,
-} from 'react-router-dom'
 import { ToastContainer } from 'react-toastify'
 
 import config from 'config'
@@ -30,6 +26,7 @@ import {
 import {
   C,
   logg,
+  NavigationProvider,
   request,
   SsrProvider,
   ThemeProvider,
@@ -51,12 +48,20 @@ const Page = (props) => {
     item: location,
   } = props
 
-  if (!location || location.is_premium) {
+  if (!location) {
+    return <h1>Wow, this location is missing?!</h1>
+  }
+  if (location.is_premium) {
     return <h1>This location cannot be accessed right now, please try again later.</h1>
   }
 
   return <>
-    <SsrProvider {...{ location, }} >
+    <Head>
+      <title>{location.name} - {config.siteTitle} v2</title>
+      <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+    </Head>
+
+    <NavigationProvider {...{ useHistory: useRouter, }} >
       <ThemeProvider >
         <AuthContextProvider {...{ useApi, }} >
           <TwofoldContextProvider >
@@ -76,7 +81,8 @@ const Page = (props) => {
           </TwofoldContextProvider>
         </AuthContextProvider>
       </ThemeProvider>
-    </SsrProvider>
+    </NavigationProvider>
+
   </>
   return <>
     <Head>
@@ -123,6 +129,7 @@ export async function getStaticProps(match) {
       return err
     })
 
+  // console.log("+++ +++ item:", item)
   return { props: { item } }
 }
 
@@ -147,7 +154,7 @@ export async function getStaticPaths() {
 
   console.log('+++ +++ getStaticPaths:', paths)
 
-  return { paths, fallback: false }
+  return { paths, fallback: true }
 }
 
 

@@ -2,10 +2,12 @@
 import Head from 'next/head'
 import Script from 'next/script'
 import React, { useState, useEffect } from 'react'
+import { useHistory } from 'react-router-dom'
 
-import config from 'config'
-
-import AppWrapper2 from '../src/AppWrapper2'
+import {
+  NavigationProvider,
+} from "$shared"
+import AppWrapper2 from '$src/AppWrapper2'
 
 function App() {
   const [ isMounted, setIsMounted ] = useState(false)
@@ -20,7 +22,9 @@ function App() {
 
   return <div>
 
-    <AppWrapper2 />
+    <NavigationProvider {...{ useHistory, }} >
+      <AppWrapper2 />
+    </NavigationProvider>
 
     <Script
       src="https://www.googletagmanager.com/gtag/js?id=G-W8PVZ83B9H"
