@@ -15,7 +15,7 @@ module.exports = {
   domain: "",
   // required! 2021-08-31
   debug: false,
-  homePath: "",
+  // homePath: "",
   requireLogin: true,
   siteTitle: 'Infinite Shelter Location Discovery Guide',
   stripePublicKey: '',
