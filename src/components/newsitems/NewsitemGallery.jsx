@@ -89,7 +89,10 @@ const Thumb2 = ({ children, src, ...props }) => {
 
 /**
  * NewsitemGallery
- */
+ * _vp_ 2022-09-12
+ *
+ * @TODO: variant is used, but move it to LocationProvider, rather than props. _vp_ 2022-09-12
+**/
 const NewsitemGallery = (props) => {
   // logg(props, 'NewsitemGallery')
   const { item, variant } = props
@@ -101,9 +104,8 @@ const NewsitemGallery = (props) => {
   const history = useHistory()
   const href = appPaths.viewGallery({ location_slug, slug: item.slug })
 
+  // @TODO: only if purchased or free! IMPORTANT _vp_ 2022-09-12
   const goto = (e) => {
-    logg('NewsitemGallery.goto')
-
     e.preventDefault()
     history.push(href)
   }
@@ -123,6 +125,5 @@ NewsitemGallery.propTypes = {
   item: PropTypes.shape({
     photos: PropTypes.array.isRequired,
   }),
-  variant: PropTypes.string,
 }
 export default NewsitemGallery

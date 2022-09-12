@@ -2,8 +2,11 @@
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 import React, { useEffect, useState, } from 'react'
-// import ReactDOM from 'react-dom'
-// import { ToastContainer } from 'react-toastify'
+import {
+  Switch,
+  Redirect, Route, BrowserRouter as Router,
+} from 'react-router-dom'
+import { ToastContainer } from 'react-toastify'
 
 import config from 'config'
 import {
@@ -17,18 +20,23 @@ import {
   BottomDrawer,
 } from '$components/application'
 import {
+  LocationsShow,
+  LocationsShowAsync,
+} from "$components/locations"
+import {
   CollapsibleProvider,
   TwofoldContextProvider,
 } from "$components/TwofoldLayout"
 import {
   C,
   logg,
+  request,
   SsrProvider,
   ThemeProvider,
   useApi,
 } from "$shared"
 import AppRouter from '$src/AppRouter'
-import AppWrapper2 from '$src/AppWrapper2'
+import AppWrapper2, { Root, WLoginModal } from '$src/AppWrapper2'
 
 /**
  * Page
@@ -44,15 +52,32 @@ const Page = (props) => {
   } = props
 
   if (!location || location.is_premium) {
-    return <h1>This location cannot be accessed right now, please try again later</h1>
+    return <h1>This location cannot be accessed right now, please try again later.</h1>
   }
 
   return <>
     <SsrProvider {...{ location, }} >
-      <h1>Hello, world!</h1>
+      <ThemeProvider >
+        <AuthContextProvider {...{ useApi, }} >
+          <TwofoldContextProvider >
+            <CollapsibleProvider >
+
+              <Root className='Root' >
+
+                <LocationsShow location={location} match={{ params: { slug: location.slug } }} />
+
+              </Root>
+              <ToastContainer position="bottom-left" />
+              <WLoginModal />
+              <RegisterModal />
+              <BottomDrawer />
+
+            </CollapsibleProvider>
+          </TwofoldContextProvider>
+        </AuthContextProvider>
+      </ThemeProvider>
     </SsrProvider>
   </>
-
   return <>
     <Head>
       <title>{location.name} - {config.siteTitle} v2</title>
@@ -87,7 +112,9 @@ export async function getStaticProps(match) {
   console.log('+++ +++ getStaticProps:', match)
   const { params: { slug } } = match
 
-  const apiOrigin = 'http://localhost:3001'
+  let apiOrigin
+  // apiOrigin = 'http://localhost:3001'
+  apiOrigin = 'https://manager.piousbox.com'
   // const location = await api.getLocation({ slug, })
 
   const item = await request.get(`${apiOrigin}/api/maps/view/${slug}`).then(r => r.data).then(r => {
@@ -120,7 +147,7 @@ export async function getStaticPaths() {
 
   console.log('+++ +++ getStaticPaths:', paths)
 
-  return { paths, fallback: true }
+  return { paths, fallback: false }
 }
 
 

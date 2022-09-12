@@ -42,14 +42,16 @@ import '@ionic/react/css/text-transformation.css'
 import '@ionic/react/css/flex-utils.css'
 import '@ionic/react/css/display.css'
 
-const Root = styled.div`
+// @TODO: stop exporting
+export const Root = styled.div`
   padding: 10px;
 `;
 
 /**
  * links AuthContext to LoginModal
+ * @TODO: stop exporting this.
 **/
-const WLoginModal = (props) => {
+export const WLoginModal = (props) => {
   // logg(props, 'WLoginModal')
 
   const {

@@ -309,7 +309,11 @@ const LocationsShow = (props) => {
 }
 LocationsShow.propTypes = {
   location: PropTypes.object,
-  match: PropTypes.object,
+  match: PropTypes.shape({
+    params: PropTypes.shape({
+      slug: PropTypes.string.isRequired,
+    }),
+  }),
   showItem: PropTypes.object,
 }
 

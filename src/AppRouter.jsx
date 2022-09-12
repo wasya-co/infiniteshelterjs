@@ -22,6 +22,7 @@ import {
 } from "$components/users"
 import {
   C,
+  inflector,
   logg,
 } from "$shared"
 
@@ -30,13 +31,33 @@ import {
  *
  * names should not end in "path", that's cruft.
  *
+ * @TODO: test-drive: (1) when providing location_slug, (2) when providing location, (3) when neither. _vp_ 2022-09-12
+ *
 **/
 export const appPaths = {
   cityVenuesPath: (slug) => `/en/cities/travel-to/${slug}/venues`,
   cityPath: (slug) => `/en/cities/travel-to/${slug}`,
 
-  viewGallery: ({ location_slug, slug }) => {
-    return `/en/locations/show/${location_slug}/galleries/show/${slug}`
+  viewGallery: ({ location, location_slug, slug }) => {
+    if (location_slug) {
+      return `/en/locations/show/${location_slug}/galleries/show/${slug}`
+    }
+    if (location) {
+      return `/en/locations/show/${location.slug}/galleries/show/${slug}`
+    } else {
+      // return `/en/${inflector.tableize(item_type)}/show/${slug}`
+      return `/en/galleries/show/${slug}`
+    }
+  },
+
+  viewItem: ({ location, item }) => {
+    const { item_type, slug } = item
+
+    if (location) {
+      return `/en/locations/show/${location.slug}/${inflector.tableize(item_type)}/show/${slug}`
+    } else {
+      return `/en/${inflector.tableize(item_type)}/show/${slug}`
+    }
   },
 
   locationPath: (slug) => `/en/locations/show/${slug}`,
@@ -50,7 +71,7 @@ export const appPaths = {
  *
 **/
 const AppRouter = (props) => {
-  // logg(props, 'AppRouter')
+  logg(props, 'AppRouter')
 
   return <Router>
     <Switch main >

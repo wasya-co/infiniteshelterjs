@@ -7,6 +7,9 @@ import styled from 'styled-components'
 import {
   Metaline,
 } from "$components/application"
+import {
+  LocationContext,
+} from "$components/locations"
 import { TwofoldContext, } from "$components/TwofoldLayout"
 import Votable from "$components/Votable"
 import {
@@ -15,6 +18,9 @@ import {
   logg,
   WidgetContainer,
 } from "$shared"
+import {
+  appPaths,
+} from "$src/AppRouter"
 import {
   ItemIcon,
 } from "./"
@@ -40,22 +46,24 @@ const RowInline = styled.div`
   }
 `;
 
-const Title = styled.h2`
+const Title = styled.a`
   margin-top: 0;
   margin-bottom: 0;
   color: ${p=>p.theme.colors.text};
+  cursor: pointer;
+  font-size: 2em;
 `;
 
-// @TODO: better management of navigateToItem
+// @TODO: better management of variant, for ParagonAustin and such _vp_ 2022-09-12
 const W0 = (props) => {
   // logg(props, 'W0')
-  const { children, navigateToItem, variant } = props
+  const { children, variant } = props
 
   switch (variant) {
     case C.variants.bordered:
       return <WidgetContainer {...props} cursor="pointer" >{ children }</WidgetContainer>
     default:
-      return <Card boxShadow={2} {...props} onClick={navigateToItem} cursor="pointer" ></Card>
+      return <Card boxShadow={2} {...props} cursor="pointer" ></Card>
   }
 }
 
@@ -78,34 +86,35 @@ const NewsitemContainer = ({ children, ...props }) => {
   } = props
   const { item_type, slug } = item
 
-  const history = useHistory()
+  const {
+    location,
+  } = useContext(LocationContext)
 
   const {
     itemToUnlock, setItemToUnlock,
     layout,
-    location,
     showItem, setShowItem,
   } = useContext(TwofoldContext)
   // logg(useContext(TwofoldContext), 'NewsitemContainerUsedContext')
 
-  // @TODO: move this elsewhere - make generic, remember there are two routers, internal and external.
-  // move this to internal router
+  const history = useHistory()
+
+
+  // @TODO: move this elsewhere - make generic, remember there are two routers, internal and external. _vp_ 2022-09-12
+  // move this to internal router?
   // @TODO: for Photo, navigateToItem can show full-screen pic. _vp_ 2022-04-17
+  const href = appPaths.viewItem({ location, item })
   const navigateToItem = () => {
     if (item.is_premium && !item.is_purchased) {
       setItemToUnlock(item)
     } else {
-      if (layout === C.layout_mapui) {
-        history.push(`/en/locations/show/${location.slug}/${inflector.tableize(item_type)}/show/${slug}`)
-      } else {
-        history.push(`/en/${inflector.tableize(item_type)}/show/${slug}`)
-      }
+      history.push( href )
     }
   }
 
   if (item.item_type === C.item_types.photo) {
 
-    return <W0 {...{ className, navigateToItem: () => {}, variant }} >
+    return <W0 {...{ className, variant }} >
       <Col>
         <Title>{item.name}</Title>
         <Metaline {...item} />
@@ -115,7 +124,7 @@ const NewsitemContainer = ({ children, ...props }) => {
 
   } else {
 
-    return <W0 {...{ className, navigateToItem, variant }} >
+    return <W0 {...{ className, variant }} >
       { children }
       <Row >
         <Col style={{ alignItems: 'center' }} >
@@ -124,7 +133,7 @@ const NewsitemContainer = ({ children, ...props }) => {
         <Col style={{ overflowWrap: 'break-word' }} >
           <RowInline>
             <ItemIcon {...item} />
-            <Title onClick={navigateToItem} >{item.name}</Title>
+            <Title href={href} onClick={navigateToItem} >{item.name}</Title>
           </RowInline>
           <Metaline {...item} />
         </Col>
