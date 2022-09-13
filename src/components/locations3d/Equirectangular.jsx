@@ -11,7 +11,7 @@ import {
   Blocker,
 } from './'
 import { logg, S } from "$shared"
-import { PointerLockControls } from './PointerLockControls'
+import { PointerLockControls } from './vendor/PointerLockControls'
 
 
 /**

@@ -15,7 +15,7 @@ import {
   logg,
 } from "$shared"
 import { TwofoldContext, } from "$components/TwofoldLayout"
-import { PointerLockControls } from './PointerLockControls'
+import { PointerLockControls } from './vendor/PointerLockControls'
 import TouchControls from "./vendor/TouchControls"
 import RotationPad from "./vendor/RotationPad"
 

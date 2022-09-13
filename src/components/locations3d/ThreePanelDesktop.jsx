@@ -1,13 +1,14 @@
 
 import React, { Fragment as F, useEffect, useRef } from 'react'
-import { useHistory } from 'react-router-dom'
 import * as THREE from "three"
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader"
 import { Octree } from 'three/examples/jsm/math/Octree'
 import styled from 'styled-components'
 
-import { logg, } from "$shared"
-import { PointerLockControls } from './PointerLockControls'
+import {
+  logg,
+} from "$shared"
+import { PointerLockControls } from './vendor/PointerLockControls'
 
 // @TODO: make its own component. _vp_ 2022-08-13
 const Blocker = styled.div`
@@ -60,14 +61,12 @@ const Blocker = styled.div`
  * ThreePanelDesktop
  * Markers are obejcts _vp_ 2021-11-14
  * Continue.           _vp_ 2022-08-13
- *
+ * Continue.           _vp_ 2022-09-13
  *
  */
 const Loc = (props) => {
-  // logg(props, 'ThreePanelDesktop')
+  logg(props, 'ThreePanelDesktop')
   const { map } = props
-
-  const history = useHistory()
 
   let camera, controls,
     object, objects = [], markerObjects = [], markerObjectsIdxs = [],

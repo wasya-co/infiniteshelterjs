@@ -32,9 +32,14 @@ import {
   useApi, useWindowSize,
 } from "$shared"
 import {
+  AppContext,
+} from "$src/AppWrapper2"
+import {
   ItemModal,
   LocationProvider,
+  LocationsShowMobile3d,
   WrappedMapPanel,
+
 } from "./"
 
 
@@ -226,6 +231,10 @@ const LocationsShow = (props) => {
   } = useContext(AuthContext)
 
   const {
+    os,
+  } = useContext(AppContext)
+
+  const {
     bottomDrawerOpen,
     editorMode,
     folded, setFolded, foldedLeft, foldedRight,
@@ -259,6 +268,10 @@ const LocationsShow = (props) => {
       setMapPanelHeight(mapPanelRef.current.offsetHeight)
     }
   }, [bottomDrawerOpen, folded, mapPanelRef.current, twofoldPercent, windowWidth, windowHeight])
+
+  if (['ios', 'android'].indexOf(os) !== -1) {
+    return <LocationsShowMobile3d {...{ ...props, location }} />
+  }
 
   return <Row><LocationProvider {...location} >
 

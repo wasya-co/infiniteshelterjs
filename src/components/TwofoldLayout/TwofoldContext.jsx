@@ -137,7 +137,6 @@ const TwofoldContextProvider = ({ children, ...props }) => {
     _tfp = JSON.parse(localStorage.getItem(C.twofoldPercent))
   } catch (e) {
   }
-  logg(_tfp, '_tfp')
   const [ twofoldPercent, _setTwofoldPercent ] = useState(_tfp||0.5)
   const setTwofoldPercent = (p) => {
     try {

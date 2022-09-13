@@ -7,7 +7,7 @@ import styled from 'styled-components'
 import {
   logg,
 } from "$shared"
-import { PointerLockControls } from './PointerLockControls'
+import { PointerLockControls } from './vendor/PointerLockControls'
 
 const Blocker = styled.div`
   height: calc(100% - ${p => p.theme.breadcrumbsHeight});

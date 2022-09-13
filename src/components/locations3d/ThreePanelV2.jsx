@@ -8,7 +8,7 @@ import { MTLLoader } from "three/examples/jsm/loaders/MTLLoader"
 import styled from 'styled-components'
 
 import { logg, S } from "$shared"
-import { PointerLockControls } from './PointerLockControls'
+import { PointerLockControls } from './vendor/PointerLockControls'
 
 const Blocker = styled.div`
   border: 2px solid red;

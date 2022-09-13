@@ -24,7 +24,7 @@ const DayNightToggle = (props) => {
   const {
     theme, toggleTheme,
   } = useContext(ThemeContext)
-  logg(useContext(ThemeContext), 'DayNightToggle Used ThemeContext')
+  // logg(useContext(ThemeContext), 'DayNightToggle Used ThemeContext')
 
   return (
     <div className={`DaynightToddle ${styles.container}`} onClick={toggleTheme} >

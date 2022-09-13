@@ -16,7 +16,7 @@ import {
   logg,
 } from "$shared"
 import { Crosshair } from "./"
-import { PointerLockControls, } from './PointerLockControls'
+import { PointerLockControls, } from './vendor/PointerLockControls'
 
 const Blocker = styled.div`
   // border: 2px solid red;

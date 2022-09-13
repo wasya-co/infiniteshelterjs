@@ -24,8 +24,8 @@ const W0 = styled.div`
 `;
 
 /**
- * Renders either MapPanel (W0 really, a simple wrapper), MapPanel, or ThreePanelV1
- * or some other MapPanel.
+ * Renders either MapPanel (W0 really, a simple wrapper), or ThreePanelV1, etc.
+ * @TODO: on on MapPanel2D, markers don't scale well but should. Also, re-review z-index of markers. _vp_ 2022-09-13
  *
 **/
 const WrappedMapPanel = React.forwardRef((props, ref) => {
@@ -43,16 +43,16 @@ const WrappedMapPanel = React.forwardRef((props, ref) => {
     case C.map_panel_types.ThreePanelV1:
       switch (props.slug) {
 
-        // legacy, remove all three: _vp_ 2022-08-13
-        case 'threev1':
-          return <W0><ThreePanelV1 {...props} /></W0>
-        case 'threev2':
-          return <W0><ThreePanelV2 {...props} /></W0>
-        case 'threev3':
-          return <W0><ThreePanelV3 {...props} /></W0>
+        // // Legacy, remove all three _vp_ 2022-08-13
+        // case 'threev1':
+        //   return <W0><ThreePanelV1 {...props} /></W0>
+        // case 'threev2':
+        //   return <W0><ThreePanelV2 {...props} /></W0>
+        // case 'threev3':
+        //   return <W0><ThreePanelV3 {...props} /></W0>
 
         default:
-          return <W0><ThreePanelDesktop {...props} /></W0>
+          return <ThreePanelDesktop {...props} />
       }
 
     case C.map_panel_types.TabiversePlanet: // markers are objects
@@ -65,7 +65,7 @@ const WrappedMapPanel = React.forwardRef((props, ref) => {
       return <W0><GoogleMaps {...props} /></W0>
 
     default:
-      logg(null, `This map_panel_type is not implemented! ${props.map.config.map_panel_type}`)
+      logg(null, `This map_panel_type is not implemented!: ${props.map.config.map_panel_type}`)
       return <W0 ref={ref} className="WrappedMapPanel" ><MapPanel {...props} /></W0>
   }
 })

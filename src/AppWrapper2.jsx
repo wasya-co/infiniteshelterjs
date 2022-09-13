@@ -70,6 +70,13 @@ export const WLoginModal = (props) => {
   return <LoginModal {...{ onError, onSuccess }} />
 }
 
+export const AppContext = React.createContext({})
+export const AppProvider = ({ children, ...props }) => {
+  return <AppContext.Provider value={{ ...props }} >
+    { children }
+  </AppContext.Provider>
+}
+
 /**
  * AppWrapper2
  * _vp_ 2022-09-09
@@ -78,6 +85,7 @@ export const WLoginModal = (props) => {
  *
  *
  * @TODO: test: has toast container
+ * @TODO: os / mobile detection?
  *
  * @TODO: test: provides theme
  * @TODO: test: provides auth
@@ -85,7 +93,7 @@ export const WLoginModal = (props) => {
  * @TODO: test: provides collapsible
  *
  * @TODO: test: has bottomDrawer
- * @TODO: test: has loginModal
+ * @TODO: test: has loginModal and WLoginModal ?
  * @TODO: test: has registerModal
  *
  * @DONE: unlockModal cannot be here, it must be inside react-router.
@@ -93,32 +101,39 @@ export const WLoginModal = (props) => {
 **/
 const AppWrapper2 = (props) => {
   // logg(props, 'AppWrapper2')
-  const {
-  } = props
+  const {} = props
+
+  // @TODO: test-drive _vp_ 2022-09-13
+  const [ os, setOs ] = useState(null)
+  const fn = async () => {
+    let info = await Device.getInfo() // info.operatingSystem === 'ios' || 'android'
+    setOs(info.operatingSystem)
+  }
+  fn()
 
   return (
-    <ThemeProvider >
-      <AuthContextProvider {...{ useApi, }} >
-        <TwofoldContextProvider >
-          <CollapsibleProvider >
+    <AppProvider {...{ os }} >
+      <ThemeProvider >
+        <AuthContextProvider {...{ useApi, }} >
+          <TwofoldContextProvider >
+            <CollapsibleProvider >
 
-            <Root className='Root' >
+              <Root className='Root' >
 
-              <AppRouter />
+                <AppRouter />
 
-            </Root>
-            <ToastContainer position="bottom-left" />
-            <WLoginModal />
-            <RegisterModal />
-            <BottomDrawer />
+              </Root>
+              <ToastContainer position="bottom-left" />
+              <WLoginModal />
+              <RegisterModal />
+              <BottomDrawer />
 
-          </CollapsibleProvider>
-        </TwofoldContextProvider>
-      </AuthContextProvider>
-    </ThemeProvider>
+            </CollapsibleProvider>
+          </TwofoldContextProvider>
+        </AuthContextProvider>
+      </ThemeProvider>
+    </AppProvider>
   )
 }
-AppWrapper2.propTypes = {
-  location: PropTypes.object, // from next_js, @TODO: add showItem. _vp_ 2022-09-11
-}
+AppWrapper2.propTypes = {} // none
 export default AppWrapper2
