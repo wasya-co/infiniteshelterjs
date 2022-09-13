@@ -1,6 +1,5 @@
 
 import React, { Fragment as F, useEffect, useRef } from 'react'
-import { useHistory } from 'react-router-dom'
 import * as THREE from "three"
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader"
 import { Octree } from 'three/examples/jsm/math/Octree'
@@ -28,8 +27,6 @@ const Loc = (props) => {
   logg(props, 'ThreePanelMobile')
   const { map } = props
 
-  const history = useHistory()
-
   let camera, controls,
     fpsBody,
     object, objects = [], markerObjects = [], markerObjectsIdxs = [],
@@ -42,7 +39,6 @@ const Loc = (props) => {
   useEffect(() => {
     init()
     animate()
-    document.title = "InfiniteShelter - ThreePanelMobile :: test"
   }, [])
 
   let moveForward = false
@@ -152,13 +148,18 @@ const Loc = (props) => {
     document.addEventListener( 'keydown', onKeyDown )
     document.addEventListener( 'keyup', onKeyUp )
 
+    const onStopMove = (e) => {
+      // logg(e, 'onStopMove')
+      moveRight = moveLeft = moveForward = moveBackward = false
+    }
+
     const onMove = (event) => {
       logg(event, 'onMove')
 
       let ztouch = Math.abs(event.detail.deltaY)
       let xtouch = Math.abs(event.detail.deltaX)
 
-      if (event.detail.deltaY == event.detail.middle) {
+      if (event.detail.deltaY === event.detail.middle) {
         ztouch = 1;
         moveForward = moveBackward = false
       } else {
@@ -172,7 +173,7 @@ const Loc = (props) => {
         }
       }
 
-      if (event.detail.deltaX == event.detail.middle) {
+      if (event.detail.deltaX === event.detail.middle) {
         xtouch = 1
         moveRight = moveLeft = false
       } else {
@@ -188,6 +189,7 @@ const Loc = (props) => {
 
     }
     document.addEventListener( 'move', onMove )
+    document.addEventListener( 'stopMove', onStopMove )
 
     raycaster = new THREE.Raycaster( new THREE.Vector3(), new THREE.Vector3( 0, - 1, 0 ), 0, 10 )
 
@@ -264,25 +266,25 @@ const Loc = (props) => {
 
     if (controls?.isLocked === true ) {
 
-      var cameraDirection = controls.getDirection(new THREE.Vector3(0, 0, 0)).clone()
+      // var cameraDirection = controls.getDirection(new THREE.Vector3(0, 0, 0)).clone()
 
       /* for standing on things */
       // raycaster.ray.origin.copy( controls.getObject().position )
       // raycaster.ray.origin.y -= 10
 
-      raycaster = new THREE.Raycaster( camera.position, cameraDirection )
-      const intersections = raycaster.intersectObjects( markerObjects, true )
-      if (intersections.length) {
-        const pickedObject = intersections[0].object
+      // raycaster = new THREE.Raycaster( camera.position, cameraDirection )
+      // const intersections = raycaster.intersectObjects( markerObjects, true )
+      // if (intersections.length) {
+      //   const pickedObject = intersections[0].object
+      //   /* collision */
+      //   if (intersections[0].distance < 5) {
+      //     moveForward = false
+      //   }
+      // }
 
-        /* collision */
-        // if (intersections[0].distance < 5) {
-        //   moveForward = false
-        // }
-      }
+      // const onObject = intersections.length > 0
 
-      const onObject = intersections.length > 0
-      const delta = ( time - prevTime ) / 1000
+      let delta = ( time - prevTime ) / 1000
       velocity.x -= velocity.x * 10.0 * delta
       velocity.z -= velocity.z * 10.0 * delta
       velocity.y -= 9.8 * 100.0 * delta; // 100.0 = mass
@@ -291,10 +293,11 @@ const Loc = (props) => {
       direction.normalize(); // this ensures consistent movements in all directions
       if ( moveForward || moveBackward ) velocity.z -= direction.z * 400.0 * delta
       if ( moveLeft || moveRight ) velocity.x -= direction.x * 400.0 * delta
-      if ( onObject === true ) {
-        velocity.y = Math.max( 0, velocity.y )
-        canJump = true
-      }
+
+      // if ( onObject === true ) {
+      //   velocity.y = Math.max( 0, velocity.y )
+      //   canJump = true
+      // }
     }
 
     // onMove
@@ -310,13 +313,10 @@ const Loc = (props) => {
       if ( moveLeft || moveRight ) velocity.x -= direction.x * 400.0 * delta
     }
 
+    // logg(velocity, 'velocity')
     camera.translateX(velocity.x);
     // camera.translateY(velocity.y);
-    // camera.translateZ(velocity.z);
-
-    // camera.translateX(velocity.x);
-    // camera.translateY(velocity.y);
-    // camera.translateZ(velocity.z);
+    camera.translateZ(velocity.z);
 
     prevTime = time
 
@@ -335,59 +335,5 @@ const Loc = (props) => {
 
 export default Loc
 
-
-
-
-
-
-// /**
-//  * What is blocker? the entire canvas?
-//  *
-//  * @TODO: make its own component. _vp_ 2022-08-13
-// **/
-// const Blocker = styled.div`
-//   border: 2px solid red;
-
-//   position: relative;
-//   width: 700px;
-//   height: 350px;
-
-//   #Crosshair {
-//     // border: 1px solid yellow;
-//     width: 50px;
-//     height: 50px;
-
-//     position: absolute;
-//     left: 50%;
-//     top: 50%;
-//     color: white;
-
-//     ::before {
-//       content: '';
-//       position: absolute;
-//       border-color: white;
-//       border-style: solid;
-//       border-width: 0 0.1em 0 0;
-//       height: 1em;
-//       top: 0em;
-//       left: 0.3em;
-//       // margin-top: -1em;
-//       transform: rotate(90deg);
-//       // width: 0.5em;
-//     }
-//     ::after {
-//       content: '';
-//       position: absolute;
-//       border-color: white;
-//       border-style: solid;
-//       border-width: 0 0.1em 0 0;
-//       height: 1em;
-//       top: 0em;
-//       left: 0.3em;
-//       // margin-top: -1em;
-//       // width: 0.5em;
-//     }
-//   }
-// `;
 
 
