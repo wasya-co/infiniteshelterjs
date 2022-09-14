@@ -20,6 +20,7 @@ import MovementPad from './vendor/MovementPad'
  * Markers are obejcts _vp_ 2021-11-14
  * Continue.           _vp_ 2022-08-13
  * Continue.           _vp_ 2022-09-02
+ * Continue.           _vp_ 2022-09-14
  *
  *
  */
@@ -76,6 +77,8 @@ const Loc = (props) => {
     light.position.set( 0.5, 1, 0.75 )
     scene.add( light )
 
+    const axesHelper = new THREE.AxesHelper( 5 )
+    scene.add( axesHelper )
 
     // Controls
     var options = {

@@ -97,20 +97,15 @@ const Loc = (props) => {
 
   function init() {
 
-    /**
-     * PerspectiveCamera( fov : Number, aspect : Number, near : Number, far : Number )
-     *
-     * fov — Camera frustum vertical field of view.
-     * aspect — Camera frustum aspect ratio.
-     * near — Camera frustum near plane.
-     * far — Camera frustum far plane.
-    */
     camera = new THREE.PerspectiveCamera( 75, 2, 1, 1000 ) // fov, aspect, near, far
     camera.position.y = 10
 
     scene = new THREE.Scene()
     scene.background = new THREE.Color( 0xffffff )
     scene.fog = new THREE.Fog( 0xffffff, 0, 750 )
+
+    const axesHelper = new THREE.AxesHelper( 5 )
+    scene.add( axesHelper )
 
     const light = new THREE.HemisphereLight( 0xeeeeff, 0x777788, 0.75 )
     light.position.set( 0.5, 1, 0.75 )
@@ -189,8 +184,8 @@ const Loc = (props) => {
     raycaster = new THREE.Raycaster( new THREE.Vector3(), new THREE.Vector3( 0, - 1, 0 ), 0, 10 )
 
     /*
-     * Floor
-     */
+     * Ground
+    **/
 
     // moon floor
     texture = THREE.ImageUtils.loadTexture(`/assets/textures/moon-1.jpg`)
@@ -202,7 +197,7 @@ const Loc = (props) => {
 
     /*
      * Model Import
-     */
+    **/
     // const scenesPath = '/assets/scenes/'
     // const objectsPath = '/assets/objects/'
     // const texturesPath = '/assets/textures/'
@@ -251,7 +246,7 @@ const Loc = (props) => {
 
     /*
      * and render
-     */
+    **/
     renderer = new THREE.WebGLRenderer({ antialias: true })
     renderer.setPixelRatio( window.devicePixelRatio )
     renderer.setSize( 700, 350 ) // aspect ratio 0.5

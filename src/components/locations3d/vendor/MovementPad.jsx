@@ -1,6 +1,7 @@
 
 import React, { useEffect, useRef } from 'react'
 import styled from 'styled-components'
+import bg from './MovementPadBg.png'
 
 import {
   logg,
@@ -9,10 +10,10 @@ import {
 const _Region = styled.div`
   width: 100%;
   height: 100%;
-  background: rgba(126, 126, 0, .5);
+  background: center center url("${p => p.bgImg}") rgba(255,0,0,.5);
 `;
 const Region = ({ children, ref, ...props }) => {
-  return <_Region innerRef={ref} className='Region' {...props} >
+  return <_Region innerRef={ref} className='Region' {...props} bgImg={bg}>
     {children}
   </_Region>
 }
@@ -24,6 +25,7 @@ const _Pad = styled.div`
   // top: container.find("canvas").height() + container.position().top - regionRef.currentouterHeight() - 10,
   // left: 20,
 
+
   top: 50px;
   right: 150px;
 
@@ -33,7 +35,7 @@ const _Pad = styled.div`
   border: 1px solid cyan;
 `;
 const Pad = ({ children, ...props }) => {
-  return <_Pad className='MovementPad' {...props} >
+  return <_Pad className='MovementPad' {...props} bgImg={bg} >
     {children}
   </_Pad>
 }
@@ -41,7 +43,9 @@ const Pad = ({ children, ...props }) => {
 
 /**
  * MovementPad
- * _vp_ 2022-09-02
+ * _vp_ 2022-09-02 :: Continue
+ * _vp_ 2022-09-14 :: Continue, add 'reset' btn
+ *
 **/
 const MovementPad = (props) => {
   logg(props, 'MovementPad')
@@ -185,15 +189,15 @@ const MovementPad = (props) => {
   // resetHandlePosition()
 
   return <Pad >
-    <div className='Region'
-      style={{ width: '100px', height: '100px', background: 'rgba(255,0,0,.5)' }}
+    <Region
       onTouchEnd={onTouchEnd}
       onTouchCancel={onTouchEnd}
       onTouchStart={onTouchStart}
       onTouchMove={onTouchMove}
       ref={regionRef}
-    ><Handle />
-    </div>
+    >
+      <Handle />
+    </Region>
   </Pad>
 };
 
