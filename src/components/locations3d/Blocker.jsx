@@ -12,11 +12,13 @@ const _Blocker = styled.div`
   border: 2px solid red;
 
   position: relative;
-  // height: calc(100% - ${p => p.theme.breadcrumbsHeight});
-  width: 700px;
-  height: 350px;
+  height: calc(100vh - ${p => p.theme.breadcrumbsHeight} - ${p => p.theme.smallWidth});
+
+  // width: 700px;
+  // height: 350px;
 
   #Crosshair {
+    // display: none; // @TODO: it's not really center, so lets not show it. _vp_ 2022-09-14
     // border: 1px solid yellow;
     width: 50px;
     height: 50px;
@@ -54,8 +56,12 @@ const _Blocker = styled.div`
   }
 `;
 
-const Blocker = ({children, ...props }) => {
-  return <_Blocker className="Blocker" {...props}>{children}</_Blocker>
-}
-
-export default _Blocker
+/**
+ * @TODO: is this mobile-only for now? _vp_ 2022-09-14
+**/
+export default React.forwardRef((props, ref) => {
+  const { children, ..._props } = props
+  return <_Blocker ref={ref} className="Blocker" {..._props} >
+    {children}
+  </_Blocker>
+})

@@ -44,21 +44,13 @@ const Loc = (props) => {
   logg(props, 'ThreePanelMobile')
   const { map } = props
 
-  let camera, controls,
-    fpsBody,
-    markerObjects = [], markerObjectsIdxs = [],
-    object, objects = [],
-    raycaster, renderer,
-    scene,
-    texture // sky and floor, maybe all textures will share this memory?
-
-
-  const blockerRef = useRef(null)
-  const instructionsRef = useRef(null)
-  useEffect(() => {
-    init()
-    animate()
-  }, [])
+  let camera, controls
+  let fpsBody
+  let markerObjects = [], markerObjectsIdxs = []
+  let object, objects = []
+  let raycaster, renderer
+  let scene
+  let texture // sky and floor, maybe all textures will share this memory?
 
   let moveForward = false
   let moveBackward = false
@@ -73,6 +65,21 @@ const Loc = (props) => {
   const color = new THREE.Color()
   const loader = new GLTFLoader()
   const worldOctree = new Octree()
+
+  const blockerRef = useRef(null)
+  const instructionsRef = useRef(null)
+  useEffect(() => {
+    init()
+    animate()
+    onWindowResize()
+  }, [])
+
+  const onWindowResize = () => {
+    logg(camera, 'resizing...')
+    camera.aspect = blockerRef.current.clientWidth / blockerRef.current.clientHeight
+    camera.updateProjectionMatrix()
+    renderer.setSize( blockerRef.current.clientWidth, blockerRef.current.clientHeight )
+  }
 
   function init() {
 
@@ -110,11 +117,7 @@ const Loc = (props) => {
     //   controls.lock()
     // } )
 
-    const onWindowResize = () => {
-      camera.aspect = window.innerWidth / window.innerHeight
-      camera.updateProjectionMatrix()
-      renderer.setSize( window.innerWidth, window.innerHeight )
-    }
+
 
     const onKeyDown = (event) => {
       switch ( event.code ) {
@@ -176,14 +179,14 @@ const Loc = (props) => {
      * -2..+2 deltaX = left/right
     **/
     const onMove = ({ detail }) => {
-      logg(detail, 'onMove')
+      // logg(detail, 'onMove')
       const {
         deltaX, deltaY,
       } = detail
 
       const v = new THREE.Vector3(deltaX, 0, -deltaY)
       v.normalize()
-      logg(v, 'normalized added velocity')
+      v.multiplyScalar(0.2) // move slower
       velocity.add( v )
     }
 

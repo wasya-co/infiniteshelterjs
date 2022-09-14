@@ -190,8 +190,9 @@
     ]
   },
   "scripts": {
-    "build": "echo '+++ +++' ; echo +++ +++ 'build_ish, or some future tenant' ; echo '+++ +++'",
-    "build_ish": "NODE_PATH=config/environments/production_ish:shared_modules    node scripts/build.js",
+    "build": "echo '+++ +++' ; echo +++ +++ 'build_ish, build_staging, ...' ; echo '+++ +++'",
+    "build_ish": "NODE_PATH=config/environments/production_ish:shared_modules     node scripts/build.js",
+    "build_staging": "NODE_PATH=config/environments/staging_ish:shared_modules    node scripts/build.js",
     "jest": "NODE_PATH=config/environments/test:shared_modules jest -t current",
     "jest2": "echo '+++ +++ usage:' ; echo '  yarn run jest2 -- <file>' ; echo '' ; NODE_PATH=config/environments/test:shared_modules jest -t current2",
     "next_build": "NODE_PATH=config/environments/production_ish:shared_modules next build",

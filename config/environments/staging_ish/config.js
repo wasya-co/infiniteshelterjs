@@ -10,7 +10,7 @@ const settings = {
   "debug": false,
 
   APP_ENV: 'development_web',
-  "homePath": "/en/locations/show/root",
+  "homePath": "/en/locations/show/three-geodesic",
 
   "requireLogin": false,
 };
