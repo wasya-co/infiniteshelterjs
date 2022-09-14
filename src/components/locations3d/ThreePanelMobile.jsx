@@ -75,7 +75,6 @@ const Loc = (props) => {
   }, [])
 
   const onWindowResize = () => {
-    logg(camera, 'resizing...')
     camera.aspect = blockerRef.current.clientWidth / blockerRef.current.clientHeight
     camera.updateProjectionMatrix()
     renderer.setSize( blockerRef.current.clientWidth, blockerRef.current.clientHeight )
