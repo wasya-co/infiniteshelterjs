@@ -1,21 +1,28 @@
 
 import React, { useEffect, useRef } from 'react'
 import styled from 'styled-components'
-import bg from './MovementPadBg.png'
 
+import { C } from "$components/locations3d/ThreePanelMobile"
 import {
   logg,
 } from "$shared"
+import bgImg from './MovementPadBg.png'
+import aimSvg from './aim.svg'
 
 const _Region = styled.div`
   width: 100%;
   height: 100%;
-  background: center center url("${p => p.bgImg}") rgba(255,0,0,.5);
+  background: rgba(126, 126, 0, .5);
 `;
 const Region = ({ children, ref, ...props }) => {
-  return <_Region innerRef={ref} className='Region' {...props} bgImg={bg}>
+  return <_Region innerRef={ref} className='Region' {...props} >
     {children}
   </_Region>
+}
+
+const _C = {
+  thresh: 0.2, // the center eg 20% of the pad are insensitive.
+  ...C,
 }
 
 const _Handle = styled.div``;
@@ -24,7 +31,6 @@ const Handle = ({ children, ...props }) => <_Handle className='Handle' {...props
 const _Pad = styled.div`
   // top: container.find("canvas").height() + container.position().top - regionRef.currentouterHeight() - 10,
   // left: 20,
-
 
   top: 50px;
   right: 150px;
@@ -35,7 +41,7 @@ const _Pad = styled.div`
   border: 1px solid cyan;
 `;
 const Pad = ({ children, ...props }) => {
-  return <_Pad className='MovementPad' {...props} bgImg={bg} >
+  return <_Pad className='MovementPad' {...props} >
     {children}
   </_Pad>
 }
@@ -43,8 +49,8 @@ const Pad = ({ children, ...props }) => {
 
 /**
  * MovementPad
- * _vp_ 2022-09-02 :: Continue
- * _vp_ 2022-09-14 :: Continue, add 'reset' btn
+ * _vp_ 2022-09-02 ::
+ * _vp_ 2022-09-14 :: Continue, MovementPad helper, axesHelper,
  *
 **/
 const MovementPad = (props) => {
@@ -61,8 +67,6 @@ const MovementPad = (props) => {
   const handleData = {}
 
   if (regionRef.current) {
-    logg(regionRef.current, 'setting regionData')
-
     regionData.w = regionRef.current.clientWidth
     regionData.radius = regionData.w / 2
     regionData.h = regionRef.current.clientHeight
@@ -76,8 +80,6 @@ const MovementPad = (props) => {
     // handleData.radius = handleData.width / 2;
 
     // regionData.radius = regionData.width / 2 - handleData.radius;
-
-    logg(regionData, 'set RegionData1')
   }
 
   const onTouchEnd = (e) => { // and touchcancel
@@ -88,15 +90,15 @@ const MovementPad = (props) => {
   }
 
   const onTouchMove = (e) => {
-    logg(e, 'onTouchMove')
+    // logg(e, 'onTouchMove')
     if (!mouseDown) return
     update(e.touches[0].pageX, e.touches[0].pageY);
   }
 
   const onTouchStart = (e) => {
     // logg(e, 'onTouchStart')
-    e.persist()
     // logg([e.targetTouches[0].pageX, e.targetTouches[0].pageY], 'onTouchStart')
+    e.persist()
 
     mouseDown = true
     // handle.css("opacity", "1.0")
@@ -139,6 +141,12 @@ const MovementPad = (props) => {
     deltaY = -2 + (2+2) * (deltaY - (-regionData.radius)) / (regionData.radius - (-regionData.radius));
     deltaX = Math.round(deltaX * 10) / 10;
     deltaY = Math.round(deltaY * 10) / 10;
+    // touching the center is insensitive
+    if (Math.abs(deltaX) < _C.thresh && Math.abs(deltaY) < _C.thresh) {
+      deltaX = 0
+      deltaY = 0
+    }
+
     // console.log(deltaX, deltaY);
 
     sendEvent(-deltaX, deltaY, 0);
@@ -156,7 +164,7 @@ const MovementPad = (props) => {
       return
     }
 
-    logg([dx, dy, middle, mouseDown], 'sendEvent')
+    // logg([dx, dy, middle, mouseDown], 'sendEvent')
 
     // stop moving after 1sec ? _vp_ 2022-09-13
     clearTimeout(eventStopTimeout);
@@ -167,15 +175,22 @@ const MovementPad = (props) => {
 
     eventStopTimeout
 
-    var moveEvent = new CustomEvent("move", {
+    var moveEvent = new CustomEvent(_C.events.move, {
       detail: {
         "deltaX": dx,
         "deltaY": dy,
-        "middle": middle,
       },
       bubbles: false
     })
     document.dispatchEvent(moveEvent)
+  }
+
+  const resetPosition = () => {
+    const ev = new CustomEvent(_C.events.gotoPosition, {
+      detail: _C.origin,
+      bubbles: false
+    })
+    document.dispatchEvent(ev)
   }
 
   const resetHandlePosition = () => {
@@ -188,8 +203,11 @@ const MovementPad = (props) => {
 
   // resetHandlePosition()
 
+
+
   return <Pad >
-    <Region
+    <div className='Region'
+      style={{ width: '100px', height: '100px', background: `center center url("${bgImg}") rgba(255,0,0,.5)` }}
       onTouchEnd={onTouchEnd}
       onTouchCancel={onTouchEnd}
       onTouchStart={onTouchStart}
@@ -197,7 +215,8 @@ const MovementPad = (props) => {
       ref={regionRef}
     >
       <Handle />
-    </Region>
+    </div>
+    <img style={{ width: 25, height: 25, position: 'absolute', right: 0, top: 125 }} src={aimSvg} onClick={resetPosition} />
   </Pad>
 };
 

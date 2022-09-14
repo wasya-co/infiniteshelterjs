@@ -1,12 +1,12 @@
 
-import React, { Fragment as F, useEffect, useRef } from 'react'
+import React, { Fragment as F, useEffect, useRef, useState } from 'react'
 import * as THREE from "three"
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader"
 import { Octree } from 'three/examples/jsm/math/Octree'
 import styled from 'styled-components'
 
 import {
-  logg,
+  logg, logg_v,
 } from "$shared"
 import {
   Blocker,
@@ -14,13 +14,29 @@ import {
 import TouchControls from './vendor/TouchControls'
 import MovementPad from './vendor/MovementPad'
 
+/**
+ * Local Constants
+**/
+const _C = {
+  epsilon: 0.001,
+  events: {
+    move: 'move',
+    stopMove: 'stopMove',
+    gotoPosition: 'gotoPosition',
+  },
+  origin: [0, 10, 0],
+}
+export {
+  _C as C,
+}
 
 /**
  * ThreePanelMobile
- * Markers are obejcts _vp_ 2021-11-14
- * Continue.           _vp_ 2022-08-13
- * Continue.           _vp_ 2022-09-02
- * Continue.           _vp_ 2022-09-14
+ *
+ * _vp_ 2021-11-14 :: Markers are objects
+ * _vp_ 2022-08-13 :: Cont.
+ * _vp_ 2022-09-02 :: Cont.
+ * _vp_ 2022-09-14 :: local constants,
  *
  *
  */
@@ -30,10 +46,12 @@ const Loc = (props) => {
 
   let camera, controls,
     fpsBody,
-    object, objects = [], markerObjects = [], markerObjectsIdxs = [],
+    markerObjects = [], markerObjectsIdxs = [],
+    object, objects = [],
     raycaster, renderer,
-    texture,
-    scene
+    scene,
+    texture // sky and floor, maybe all textures will share this memory?
+
 
   const blockerRef = useRef(null)
   const instructionsRef = useRef(null)
@@ -50,7 +68,7 @@ const Loc = (props) => {
 
   let prevTime = performance.now()
   const velocity = new THREE.Vector3()
-  const direction = new THREE.Vector3()
+
   const vertex = new THREE.Vector3()
   const color = new THREE.Color()
   const loader = new GLTFLoader()
@@ -58,16 +76,8 @@ const Loc = (props) => {
 
   function init() {
 
-    /**
-     * PerspectiveCamera( fov : Number, aspect : Number, near : Number, far : Number )
-     *
-     * fov — Camera frustum vertical field of view.
-     * aspect — Camera frustum aspect ratio.
-     * near — Camera frustum near plane.
-     * far — Camera frustum far plane.
-    **/
     camera = new THREE.PerspectiveCamera( 75, 2, 1, 1000 ) // fov, aspect, near, far
-    camera.position.y = 10
+    camera.position.set(..._C.origin)
 
     scene = new THREE.Scene()
     scene.background = new THREE.Color( 0xffffff )
@@ -100,7 +110,11 @@ const Loc = (props) => {
     //   controls.lock()
     // } )
 
-
+    const onWindowResize = () => {
+      camera.aspect = window.innerWidth / window.innerHeight
+      camera.updateProjectionMatrix()
+      renderer.setSize( window.innerWidth, window.innerHeight )
+    }
 
     const onKeyDown = (event) => {
       switch ( event.code ) {
@@ -156,95 +170,88 @@ const Loc = (props) => {
       moveRight = moveLeft = moveForward = moveBackward = false
     }
 
-    const onMove = (event) => {
-      logg(event, 'onMove')
+    /*
+     * The coords of the event.detail are that of the pad:
+     * -2..+2 deltaY = backward/forward
+     * -2..+2 deltaX = left/right
+    **/
+    const onMove = ({ detail }) => {
+      logg(detail, 'onMove')
+      const {
+        deltaX, deltaY,
+      } = detail
 
-      let ztouch = Math.abs(event.detail.deltaY)
-      let xtouch = Math.abs(event.detail.deltaX)
-
-      if (event.detail.deltaY === event.detail.middle) {
-        ztouch = 1;
-        moveForward = moveBackward = false
-      } else {
-        if (event.detail.deltaY > event.detail.middle) {
-          moveForward = true
-          moveBackward = false
-        }
-        else if (event.detail.deltaY < event.detail.middle) {
-          moveForward = false
-          moveBackward = true
-        }
-      }
-
-      if (event.detail.deltaX === event.detail.middle) {
-        xtouch = 1
-        moveRight = moveLeft = false
-      } else {
-        if (event.detail.deltaX < event.detail.middle) {
-          moveRight = true
-          moveLeft = false
-        }
-        else if (event.detail.deltaX > event.detail.middle) {
-          moveRight = false
-          moveLeft = true
-        }
-      }
-
+      const v = new THREE.Vector3(deltaX, 0, -deltaY)
+      v.normalize()
+      logg(v, 'normalized added velocity')
+      velocity.add( v )
     }
-    document.addEventListener( 'move', onMove )
-    document.addEventListener( 'stopMove', onStopMove )
+
+    const gotoPosition = ({ detail }) => {
+      // logg(detail, 'going to position')
+      camera.position.set( ...detail )
+    }
+
+    document.addEventListener(_C.events.move, onMove )
+    document.addEventListener(_C.events.stopMove, onStopMove )
+    document.addEventListener(_C.events.gotoPosition, gotoPosition )
 
     raycaster = new THREE.Raycaster( new THREE.Vector3(), new THREE.Vector3( 0, - 1, 0 ), 0, 10 )
 
     /*
-     * Floor
+     * Populate objects
     **/
+    if (true) {
+      /*
+      * Floor
+      **/
 
-    // moon floor
-    texture = THREE.ImageUtils.loadTexture(`/assets/textures/moon-1.jpg`)
-    let floorGeometry = new THREE.CircleGeometry(1000, 32) // radius, segments, thetaStart, thetaLength
-    floorGeometry.rotateX( - Math.PI / 2 )
-    const floorMaterial = new THREE.MeshBasicMaterial({ map: texture })
-    const floor = new THREE.Mesh( floorGeometry, floorMaterial )
-    scene.add( floor )
+      // moon floor
+      texture = THREE.ImageUtils.loadTexture(`/assets/textures/moon-1.jpg`)
+      let floorGeometry = new THREE.CircleGeometry(1000, 32) // radius, segments, thetaStart, thetaLength
+      floorGeometry.rotateX( - Math.PI / 2 )
+      const floorMaterial = new THREE.MeshBasicMaterial({ map: texture })
+      const floor = new THREE.Mesh( floorGeometry, floorMaterial )
+      scene.add( floor )
 
-    map.markers.map((marker, idx) => {
+      map.markers.map((marker, idx) => {
 
-      loader.load( marker.asset3d_path, ( gltf ) => {
-        scene.add( gltf.scene );
-        worldOctree.fromGraphNode( gltf.scene );
-        gltf.scene.traverse( child => {
-          if ( child.isMesh ) {
-            child.castShadow = true;
-            child.receiveShadow = true;
-            if ( child.material.map ) {
-              child.material.map.anisotropy = 4;
+        loader.load( marker.asset3d_path, ( gltf ) => {
+          scene.add( gltf.scene );
+          worldOctree.fromGraphNode( gltf.scene );
+          gltf.scene.traverse( child => {
+            if ( child.isMesh ) {
+              child.castShadow = true;
+              child.receiveShadow = true;
+              if ( child.material.map ) {
+                child.material.map.anisotropy = 4;
+              }
             }
-          }
-        } )
+          } )
+        })
+
       })
 
-    })
+      /*
+      * Skybox
+      **/
+      const textureLoader = new THREE.TextureLoader()
+      texture = textureLoader.load(`/assets/textures/space-5.jpg`, () => {
+        const rt = new THREE.WebGLCubeRenderTarget(texture.image.height)
+        rt.fromEquirectangularTexture(renderer, texture)
+        scene.background = rt.texture
+      });
 
-    /*
-     * Skybox
-    **/
-    const textureLoader = new THREE.TextureLoader()
-    texture = textureLoader.load(`/assets/textures/space-5.jpg`, () => {
-      const rt = new THREE.WebGLCubeRenderTarget(texture.image.height)
-      rt.fromEquirectangularTexture(renderer, texture)
-      scene.background = rt.texture
-    });
+      /*
+      * Camera Holder
+      **/
+      var cameraHolder = new THREE.Object3D();
+      cameraHolder.name = "cameraHolder";
+      // cameraHolder.add(camera);
 
-    /*
-     * Camera Holder
-    **/
-    var cameraHolder = new THREE.Object3D();
-    cameraHolder.name = "cameraHolder";
-    // cameraHolder.add(camera);
-
-    fpsBody = new THREE.Object3D();
-    fpsBody.add(cameraHolder);
+      fpsBody = new THREE.Object3D();
+      fpsBody.add(cameraHolder);
+    }
 
     /*
      * Render
@@ -254,75 +261,49 @@ const Loc = (props) => {
     renderer.setSize( 700, 350 ) // aspect ratio 0.5
     blockerRef.current.appendChild( renderer.domElement )
     window.addEventListener( 'resize', onWindowResize )
-
   }
 
-  function onWindowResize() {
-    camera.aspect = window.innerWidth / window.innerHeight
-    camera.updateProjectionMatrix()
-    renderer.setSize( window.innerWidth, window.innerHeight )
-  }
 
+  // @TODO: it's not a camera, the camera must be held by something, to do object collision. _vp_ 2022-09-14
+  // @TODO: add collisions, boundary?
+  // @TODO: re-implement jumping and gravity, from threejs fps example. _vp_ 2022-09-14
   function animate() {
     requestAnimationFrame( animate )
+    const direction = new THREE.Vector3()
     const time = performance.now()
+    const delta = ( time - prevTime ) / 1000
 
-    if (controls?.isLocked === true ) {
-
-      // var cameraDirection = controls.getDirection(new THREE.Vector3(0, 0, 0)).clone()
-
-      /* for standing on things */
-      // raycaster.ray.origin.copy( controls.getObject().position )
-      // raycaster.ray.origin.y -= 10
-
-      // raycaster = new THREE.Raycaster( camera.position, cameraDirection )
-      // const intersections = raycaster.intersectObjects( markerObjects, true )
-      // if (intersections.length) {
-      //   const pickedObject = intersections[0].object
-      //   /* collision */
-      //   if (intersections[0].distance < 5) {
-      //     moveForward = false
-      //   }
-      // }
-
-      // const onObject = intersections.length > 0
-
-      let delta = ( time - prevTime ) / 1000
+    /*
+     * Friction
+    **/
+    if (Math.abs(velocity.x) < _C.epsilon) {
+      velocity.x = 0
+    } else {
       velocity.x -= velocity.x * 10.0 * delta
+    }
+    if (Math.abs(velocity.y) < _C.epsilon) {
+      velocity.y = 0
+    } else {
+      // gravity
+      // velocity.y -= 9.8 * 100.0 * delta; // 100.0 = mass
+    }
+    if (Math.abs(velocity.z) < _C.epsilon) {
+      velocity.z = 0
+    } else {
       velocity.z -= velocity.z * 10.0 * delta
-      velocity.y -= 9.8 * 100.0 * delta; // 100.0 = mass
-      direction.z = Number( moveForward ) - Number( moveBackward )
-      direction.x = Number( moveRight ) - Number( moveLeft )
-      direction.normalize(); // this ensures consistent movements in all directions
-      if ( moveForward || moveBackward ) velocity.z -= direction.z * 400.0 * delta
-      if ( moveLeft || moveRight ) velocity.x -= direction.x * 400.0 * delta
-
-      // if ( onObject === true ) {
-      //   velocity.y = Math.max( 0, velocity.y )
-      //   canJump = true
-      // }
     }
 
-    // onMove
-    if (true) {
-      const delta = ( time - prevTime ) / 1000
-      velocity.x -= velocity.x * 10.0 * delta
-      velocity.z -= velocity.z * 10.0 * delta
-      velocity.y -= 9.8 * 100.0 * delta; // 100.0 = mass
-      direction.z = Number( moveForward ) - Number( moveBackward )
-      direction.x = Number( moveRight ) - Number( moveLeft )
-      direction.normalize(); // this ensures consistent movements in all directions
-      if ( moveForward || moveBackward ) velocity.z -= direction.z * 400.0 * delta
-      if ( moveLeft || moveRight ) velocity.x -= direction.x * 400.0 * delta
-    }
+    // if ( moveForward || moveBackward ) velocity.z -= direction.z * 400.0 * delta
+    // if ( moveLeft || moveRight ) velocity.x -= direction.x * 400.0 * delta
 
-    // logg(velocity, 'velocity')
+    // velocity.z -= direction.z * 400.0 * delta
+    // velocity.x -= direction.x * 400.0 * delta
+
+
     camera.translateX(velocity.x);
-    // camera.translateY(velocity.y);
     camera.translateZ(velocity.z);
 
     prevTime = time
-
     renderer.render( scene, camera )
   }
 

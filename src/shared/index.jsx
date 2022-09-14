@@ -168,9 +168,21 @@ const logg = (a, b="", c=null) => {
   if (c.length > 0) {
     window[c] = a;
   }
-
   console.log(`+++ ${b}:`, a); // eslint-disable-line no-console
 };
+// loggs a non-empty vector
+const logg_v = (a, b="", c=null) => {
+  // threejs
+  if ('undefined' !== typeof a) {
+    if ('undefined' !== typeof a.z) { // it's a vector
+      if (a.x+a.y+a.z !== 0) {
+        console.log(`+++ ${b}:`, a); // eslint-disable-line no-console
+      }
+      return
+    }
+  }
+  logg(a, b, c)
+}
 // optimized for Android (e.g. it inspects and doesn't use window)
 const logg_android = (a, b="", c=null) => {
   console.log(`+++ ${b}:`, a.inspect); // eslint-disable-line no-console
@@ -179,6 +191,7 @@ const logga = logg_android
 export {
   logg,
   logg_android,
+  logg_v,
   logga,
 };
 
