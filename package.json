@@ -207,13 +207,9 @@
     "postinstall": "link-module-alias",
     "resources": "cordova-res ios && cordova-res android && node scripts/resources.js",
     "start": "echo '+++ +++'; echo '+++ +++ start_local , or start_devremote ?'; echo '+++ +++'",
-    "start_devremote": "        HTTPS=true  HOST=tgm.mac             PORT=3002  NODE_PATH=config/environments/devremote:shared_modules               node scripts/start.js",
+    "start_devremote": "        HTTPS=true                           PORT=3002  NODE_PATH=config/environments/devremote:shared_modules               node scripts/start.js",
     "start_local": "            HTTPS=true                           PORT=3002  NODE_PATH=config/environments/development_web:shared_modules         node scripts/start.js",
-    "start_local2": "           HTTPS=true  HOST=infiniteshelter.mac PORT=3002  NODE_PATH=config/environments/development_web:shared_modules         SSL_CRT_FILE=config/ssl/infiniteshelter.mac.pem SSL_KEY_FILE=config/ssl/infiniteshelter.mac-key.pem node scripts/start.js",
-    "start_local_guydme": "     HTTPS=true  HOST=tgm.mac             PORT=3002  NODE_PATH=config/environments/development_web_guydme:shared_modules  node scripts/start.js",
-    "start_local_ish": "        HTTPS=true  HOST=tgm.mac             PORT=3002  NODE_PATH=config/environments/development_web_ish:shared_modules     node scripts/start.js",
     "start_mobile_trash": "     HTTPS=true  HOST=tgm.mac             PORT=3002  NODE_PATH=config/environments/development_mobile:shared_modules      node scripts/start.js",
-    "start_production_guydme": "HTTPS=true  HOST=tgm.mac             PORT=3002  NODE_PATH=config/environments/production_guydme:shared_modules       node scripts/start.js",
     "sync": "NODE_PATH=config/environments/production:shared_modules ionic capacitor sync",
     "test": "NODE_OPTIONS=--max_old_space_size=4096 NODE_PATH=config/environments/test:shared_modules       jest --maxWorkers=20% "
   }

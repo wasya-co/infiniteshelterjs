@@ -6,6 +6,7 @@ http://ionicframework.com/docs/theming/ */
 
   /* @TODO: abstract this, allow theme switching. _vp_ 2022-09-10 */
   --ion-background-color: #dedede;
+  --ion-border-color: #999999;
 
   /** primary **/
   --ion-color-primary: #3880ff;
@@ -82,6 +83,7 @@ http://ionicframework.com/docs/theming/ */
 
 body.dark {
   --ion-background-color: #292929;
+  --ion-border-color: #5a5a5a;
 }
 
 @media (prefers-color-scheme: dark) {

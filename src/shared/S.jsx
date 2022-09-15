@@ -24,7 +24,7 @@ const lightTheme = {
   colors: {
     text: 'black',
     background: '#dedede',
-    border: 'black',
+    border: 'black', // removing this...
     blue: '#6aa3e9',
     cardBackground: 'white',
     cyan: "#49bcc6",
@@ -41,7 +41,7 @@ const darkTheme = {
   colors: {
     text: 'white',
     background: '#292929',
-    border: 'white',
+    border: 'white', // removing this...
     blue: '#73b0fa',
     cardBackground: '#1a1a1a',
     cyan: "#49bcc6",
