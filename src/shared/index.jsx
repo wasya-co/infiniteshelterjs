@@ -244,7 +244,7 @@ export { default as useWindowSize } from './useWindowSize'
  * This expects a list? _vp_ 2021-11-02
  */
 const _WBordered = styled.div`
-  border: ${p => p.theme.thinBorder};
+  border: 2px solid var(--ion-border-color);
   border-radius: ${p => p.theme.thinBorderRadius};
   background: ${p => p.theme.colors.cardBackground};
 

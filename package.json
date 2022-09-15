@@ -58,9 +58,7 @@
     "html-webpack-plugin": "4.0.0-beta.11",
     "identity-obj-proxy": "3.0.0",
     "ionicons": "^5.0.0",
-    "jest-environment-jsdom-fourteen": "1.0.1",
-    "jest-resolve": "24.9.0",
-    "jest-watch-typeahead": "0.4.2",
+
     "mini-css-extract-plugin": "0.9.0",
     "next": "^12.2.5",
     "optimize-css-assets-webpack-plugin": "5.0.3",
@@ -131,6 +129,8 @@
     "enzyme-adapter-react-16": "^1.15.2",
     "ionic": "^5.4.16",
     "jest-environment-jsdom-sixteen": "^1.0.3",
+    "jest-resolve": "24.9.0",
+    "jest-watch-typeahead": "0.4.2",
     "link-module-alias": "^1.2.0",
     "native-run": "^1.0.0",
     "react-scripts": "4.0.3"
@@ -160,7 +160,7 @@
       "<rootDir>/src/**/*.{spec,test}.{js,jsx,ts,tsx}",
       "**/*_spec.jsx"
     ],
-    "testEnvironment": "jest-environment-jsdom-fourteen",
+    "testEnvironment": "jest-environment-jsdom-sixteen",
     "transformIgnorePatterns": [
       "<rootDir>/node_modules/(?!(@capacitor-community|three)/)"
     ],
@@ -193,7 +193,9 @@
     "build": "echo '+++ +++' ; echo +++ +++ 'build_ish, build_staging, ...' ; echo '+++ +++'",
     "build_ish": "NODE_PATH=config/environments/production_ish:shared_modules     node scripts/build.js",
     "build_staging": "NODE_PATH=config/environments/staging_ish:shared_modules    node scripts/build.js",
-    "jest": "NODE_PATH=config/environments/test:shared_modules jest -t current",
+    "jest": "NODE_PATH=config/environments/test:shared_modules jest -t current0",
+    "jest0": "echo '+++ +++ usage:' ; echo '  yarn run jest0 -- <file>' ; echo '' ; NODE_PATH=config/environments/test:shared_modules jest -t current0",
+    "jest1": "echo '+++ +++ usage:' ; echo '  yarn run jest1 -- <file>' ; echo '' ; NODE_PATH=config/environments/test:shared_modules jest -t current1",
     "jest2": "echo '+++ +++ usage:' ; echo '  yarn run jest2 -- <file>' ; echo '' ; NODE_PATH=config/environments/test:shared_modules jest -t current2",
     "next_build": "NODE_PATH=config/environments/production_ish:shared_modules next build",
     "next_dev": "NODE_PATH=config/environments/development_web:shared_modules next dev -- --port 3004",

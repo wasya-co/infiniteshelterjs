@@ -5,14 +5,18 @@ import React from 'react'
 import { act } from "react-dom/test-utils"
 
 import {
+  TwofoldContext, TwofoldContextProvider,
+} from "$components/TwofoldLayout"
+import {
+  ThemeProvider,
+} from "$shared"
+import {
   AppMock,
   BackBtn, Box,
   FlexCol, FlexRow,
   inflector,
   logg,
-  TwofoldContext, TwofoldContextProvider,
-  WBordered,
-  WidgetContainer,
+  WBordered, WidgetContainer,
 } from './'
 
 configure({ adapter: new Adapter() })
@@ -115,7 +119,7 @@ it('WBordered', () => {
   expect(w).toBeTruthy()
 })
 
-describe("WidgetContainer - current2", () => {
+describe("WidgetContainer - ", () => {
 
   it("cursor pointer", async () => {
     const w = mount(<AppMock>
