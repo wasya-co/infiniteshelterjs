@@ -43,11 +43,16 @@ const _W0 = styled.a`
   //   height: 0;
   //   border: none;
   //   padding: 0;
-  //   margin: 0 .5em 0 0;
+  //   margin-top: 0;
+  //   margin-bottom: 0;
   // };
 
 `;
 export const MarkerEmpty = styled.div`
+  width: 18%;
+  max-width: 140px;
+  min-width: 120px;
+
   height: 0;
   border: none;
   padding: 0;

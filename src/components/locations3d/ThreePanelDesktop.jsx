@@ -15,12 +15,15 @@ import { PointerLockControls } from './vendor/PointerLockControls'
 
 /**
  * ThreePanelDesktop
+ *
+ * Units are centimeters
+ *
  * Markers are obejcts _vp_ 2021-11-14
  * Continue.           _vp_ 2022-08-13
  * Continue.           _vp_ 2022-09-13
  *
  */
-const Loc = (props) => {
+const ThreePanelDesktop = (props) => {
   logg(props, 'ThreePanelDesktop')
   const { map } = props
 
@@ -64,10 +67,45 @@ const Loc = (props) => {
     const axesHelper = new THREE.AxesHelper( 5 )
     scene.add( axesHelper )
 
-    const light = new THREE.HemisphereLight( 0xeeeeff, 0x777788, 0.75 )
-    light.position.set( 0.5, 1, 0.75 )
-    scene.add( light )
+    /*
+     * Lights
+    **/
+    {
+    // // Illuminate everytyhing
+    // const light = new THREE.HemisphereLight( 0xeeeeff, 0x777788, 0.75 )
+    // light.position.set( 0.5, 1, 0.75 )
+    // scene.add( light )
 
+    // Shadow
+    const white = 0xffffff
+    const shadowLightIntensity = 5
+    const shadowLightPosition = [ 0*10, 40*10, -10*100 ]
+    const shadowLight = new THREE.DirectionalLight(white, shadowLightIntensity)
+    shadowLight.castShadow = true
+    // shadowLight.shadow.mapSize.width = 512
+    // shadowLight.shadow.mapSize.height = 512
+
+    shadowLight.shadow.camera.bottom = -150
+    shadowLight.shadow.camera.top = 150
+    shadowLight.shadow.camera.left = -150
+    shadowLight.shadow.camera.right = 150
+    shadowLight.shadow.camera.near = 10
+    shadowLight.shadow.camera.far = 5000
+    shadowLight.shadow.camera.updateProjectionMatrix()
+
+    shadowLight.position.set( ...shadowLightPosition )
+    scene.add( shadowLight )
+    // const helper = new THREE.DirectionalLightHelper( shadowLight, 5 )
+    const helper = new THREE.CameraHelper(shadowLight.shadow.camera)
+    scene.add( helper )
+    }
+
+
+
+    /*
+     * Controls
+    **/
+    {
     controls = new PointerLockControls( camera, document.body )
 
     blockerRef.current.addEventListener( 'click', function () {
@@ -139,6 +177,8 @@ const Loc = (props) => {
     document.addEventListener( 'keyup', onKeyUp )
 
     raycaster = new THREE.Raycaster( new THREE.Vector3(), new THREE.Vector3( 0, - 1, 0 ), 0, 10 )
+    }
+
 
     /*
      * Ground
@@ -148,8 +188,11 @@ const Loc = (props) => {
     texture = THREE.ImageUtils.loadTexture(`/assets/textures/moon-1.jpg`)
     let floorGeometry = new THREE.CircleGeometry(1000, 32) // radius, segments, thetaStart, thetaLength
     floorGeometry.rotateX( - Math.PI / 2 )
-    const floorMaterial = new THREE.MeshBasicMaterial({ map: texture })
+    let floorMaterial
+    // floorMaterial = new THREE.MeshBasicMaterial({ map: texture })
+    floorMaterial = new THREE.MeshStandardMaterial({ color: 0x333333 })
     const floor = new THREE.Mesh( floorGeometry, floorMaterial )
+    floor.receiveShadow = true
     scene.add( floor )
 
     /*
@@ -173,14 +216,14 @@ const Loc = (props) => {
     map.markers.map((marker, idx) => {
 
       loader.load( marker.asset3d_path, ( gltf ) => {
-        scene.add( gltf.scene );
-        worldOctree.fromGraphNode( gltf.scene );
+        scene.add( gltf.scene )
+        worldOctree.fromGraphNode( gltf.scene )
         gltf.scene.traverse( child => {
           if ( child.isMesh ) {
-            child.castShadow = true;
-            child.receiveShadow = true;
+            child.castShadow = true
+            // child.receiveShadow = true
             if ( child.material.map ) {
-              child.material.map.anisotropy = 4;
+              child.material.map.anisotropy = 4
             }
           }
         } )
@@ -207,6 +250,7 @@ const Loc = (props) => {
     renderer = new THREE.WebGLRenderer({ antialias: true })
     renderer.setPixelRatio( window.devicePixelRatio )
     renderer.setSize( 700, 350 ) // aspect ratio 0.5
+    renderer.shadowMap.enabled = true
     blockerRef.current.appendChild( renderer.domElement )
     window.addEventListener( 'resize', onWindowResize )
   }
@@ -275,4 +319,4 @@ const Loc = (props) => {
   </F>
 }
 
-export default Loc
+export default ThreePanelDesktop
