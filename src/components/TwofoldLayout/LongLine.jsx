@@ -12,7 +12,7 @@ import { C, logg } from "$shared"
  * Turns out I need this still - part of the layout.
  */
 const LongLine = styled.div`
-  border: ${p => p.theme.thinBorder};
+  border: 2px solid var(--ion-border-color);
   border-radius: ${p => p.theme.thinBorderRadius};
 
   flex-grow: 1;

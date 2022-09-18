@@ -99,3 +99,11 @@ describe("MarkersList - ", () => {
 
 
 })
+
+describe('Marker', () => {
+  it('current2 - uses destination_slug for href', () => {
+    const destination_slug = 'destination'
+    const w = mount(<Marker marker={{ destination_slug, }) />)
+    w.find('a').href.shouldEqual(`/en/locations/show/${destination_slug}`)
+  })
+})

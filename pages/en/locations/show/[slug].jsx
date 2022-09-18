@@ -147,7 +147,7 @@ export async function getStaticPaths() {
   // paths.push({ params: { slug: '3d' }})
   // paths.push({ params: { slug: 'art-gallery' }})
   // paths.push({ params: { slug: 'chicago' }})
-  paths.push({ params: { slug: 'root' }})
+  // paths.push({ params: { slug: 'root' }})
   // paths.push({ params: { slug: 'trading' }})
   // paths.push({ params: { slug: 'world' }})
   // paths.push({ params: { slug: 'yola91' }})

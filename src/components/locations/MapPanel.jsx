@@ -26,7 +26,7 @@ const Actions = styled.div`
 
 // W
 const W0 = styled.div`
-  border: ${p => p.theme.thinBorder};
+  border: 2px solid var(--ion-border-color);
   border-radius: ${p => p.theme.thinBorderRadius};
   background: ${p => p.theme.colors.background};
 

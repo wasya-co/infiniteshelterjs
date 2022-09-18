@@ -65,7 +65,6 @@ const WrappedMapPanel = React.forwardRef((props, ref) => {
       return <W0><GoogleMaps {...props} /></W0>
 
     default:
-      logg(null, `This map_panel_type is not implemented!: ${props.map.config.map_panel_type}`)
       return <W0 ref={ref} className="WrappedMapPanel" ><MapPanel {...props} /></W0>
   }
 })

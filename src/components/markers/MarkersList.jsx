@@ -17,12 +17,11 @@ import {
   appPaths,
 } from "$src/AppRouter"
 
-
 /**
  * Wrapper Bordered Item. It is padded, margined.
 **/
 const _WBorderedItem = styled.a`
-  border: ${p => p.theme.thinBorder};
+  border: 2px solid var(--ion-border-color);
   border-radius: ${p => p.theme.thinBorderRadius};
   background: ${p => p.theme.colors.cardBackground};
   color: ${p => p.theme.colors.text};
@@ -43,10 +42,12 @@ const _WBorderedItem = styled.a`
     height: 0;
     border: none;
     padding: 0;
+    margin-top: 0;
+    margin-bottom: 0;
   };
 `;
 const WBorderedItem = ({children, ..._props}) => {
- const { className, ...props } = _props
+ const { className='', ...props } = _props
  return <_WBorderedItem className={`WBorderedItem ${className}`} {...props}>{children}</_WBorderedItem>
 }
 
@@ -54,12 +55,6 @@ const WBorderedItem = ({children, ..._props}) => {
 /**
  * Marker
 **/
-const _Marker = styled.div`
-  color: ${p => p.theme.colors.text};
-  margin: 0 auto 10px auto;
-  width: 120px;
-  text-align: center;
-`;
 const Marker = ({ children, ...props }) => {
   // logg(props, 'Marker')
   const {
@@ -77,6 +72,8 @@ const Marker = ({ children, ...props }) => {
 
   const history = useHistory()
 
+  const href = appPaths.locationPath(marker.destination_slug)
+
   const goto = (e) => {
     e.preventDefault()
 
@@ -87,14 +84,14 @@ const Marker = ({ children, ...props }) => {
         setShowUrl(marker.url) // @TODO: this should be encoded in the (server-side) router eventually. _vp_ 2022-09-11
       }
       else {
-        history.push(`/en/locations/show/${marker.slug}`)
+        history.push(href)
       }
     }
   }
 
   return <WBorderedItem
     onClick={goto}
-    {...{ href: appPaths.locationPath(marker.slug), ...props }}
+    {...{ href, ...props }}
   >{children}</WBorderedItem>
 }
 Marker.propTypes = {
@@ -121,7 +118,7 @@ const W0 = ({ children, variant, ...props }) => {
  *
 **/
 const MarkersList = (props) => {
-  // logg(props, 'MarkersList')
+  logg(props, 'MarkersList')
   const { variant } = props
 
   // @TODO: re-add variant. It was there for ParagonAustin, WasyaCo, locations like that. _vp_ 2022-09-11
@@ -134,7 +131,7 @@ const MarkersList = (props) => {
     { m.name }
   </Marker>)
 
-  // Zero-height placeholders for the last row.
+  // Zero-height padding for the last row.
   const times = 12 - markers.length % 12
   for (let i = 0; i < times; i++) {
     markers.push(<Marker key={`padded-${i}`} marker={{}} />)

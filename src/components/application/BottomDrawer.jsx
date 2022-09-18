@@ -42,7 +42,7 @@ const Inner0 = styled.div`
 `;
 
 const Inner1 = styled.div`
-  border: ${p => p.theme.thinBorder};
+  border: 2px solid var(--ion-border-color);
   border-radius: ${p => p.theme.thinBorderRadius};
 
   background: ${p=>p.theme.colors.background};
