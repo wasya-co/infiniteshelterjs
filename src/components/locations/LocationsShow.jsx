@@ -23,6 +23,7 @@ import {
   TwofoldContext,
 } from "$components/TwofoldLayout"
 import {
+  AppContext,
   C, Card, ChevronLeft, ChevronRight,
   FlexCol, FlexRow,
   inflector,
@@ -31,9 +32,6 @@ import {
   MenuIcon,
   useApi, useWindowSize,
 } from "$shared"
-import {
-  AppContext,
-} from "$src/AppWrapper2"
 import {
   ItemModal,
   LocationProvider,

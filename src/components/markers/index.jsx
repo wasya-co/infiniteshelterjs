@@ -14,7 +14,7 @@ const MarkerContextProvider = ({ children, ...props }) => {
   >{children}</MarkerContext.Provider>
 }
 
-
+export { default as Marker } from './Marker'
 export { default as MarkerEditModal } from './MarkerEditModal'
 export {
   MarkerContext,

@@ -7,8 +7,8 @@ import {
   LocationContext,
 } from "$components/locations"
 import {
+  AppContext,
   logg,
-  NavigationContext,
 } from "$shared"
 import { appPaths } from "$src/AppRouter"
 import { NewsitemContainer } from './'
@@ -105,7 +105,7 @@ const NewsitemGallery = (props) => {
 
   const {
     useHistory,
-  } = useContext(NavigationContext)
+  } = useContext(AppContext)
 
   const history = useHistory()
   const href = appPaths.viewGallery({ location_slug, slug: item.slug })

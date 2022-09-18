@@ -1,6 +1,6 @@
 /*
  *  $shared / index
- */
+**/
 // alphabetized
 import { arrowBack } from 'ionicons/icons'
 import { IonIcon } from '@ionic/react'
@@ -8,9 +8,6 @@ import { CircularProgress as _CircularProgress } from '@material-ui/core'
 import _Box from '@material-ui/core/Box'
 import { ChevronLeft as _ChevronLeft, ChevronRight as _ChevronRight, Menu as _MenuIcon, } from '@material-ui/icons'
 import React, { useContext, useEffect, useState } from 'react'
-import {
-  Link, Switch, BrowserRouter as Router, Redirect, Route as _Route, useHistory, withRouter
-} from 'react-router-dom'
 import styled from 'styled-components'
 
 import C from "./C"
@@ -18,6 +15,10 @@ import { TwofoldContext, TwofoldContextProvider } from '$components/TwofoldLayou
 
 /* A */
 export { default as useApi } from "./Api"
+export {
+  default as AppProvider,
+  AppContext,
+} from './AppProvider'
 
 /* B */
 
@@ -29,6 +30,7 @@ const BackIcon = styled(IonIcon)`
   cursor: pointer;
 `;
 export const BackBtn = () => {
+  const { useHistory } = useContext(AppContext)
   const history = useHistory()
   const {
     showItem, setShowItem,
@@ -201,8 +203,6 @@ export const MenuIcon = styled(_MenuIcon)`
 `;
 
 /* N */
-
-export { default as NavigationProvider, NavigationContext } from './NavigationProvider'
 
 /* P */
 export const PurchasedIcon = () => {

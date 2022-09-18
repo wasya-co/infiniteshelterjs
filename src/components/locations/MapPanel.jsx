@@ -8,9 +8,9 @@ import {
   MarkerContext,
 } from '$components/markers'
 import {
+  AppContext,
   C, Card,
   logg,
-  NavigationContext,
   useWindowSize,
 } from "$shared"
 
@@ -67,7 +67,7 @@ const MapPanel = (props) => {
     mapPanelWidth, mapPanelHeight,
     zoom, setZoom,
   } = useContext(TwofoldContext)
-  logg(useContext(TwofoldContext), 'MapPanelUsedContext')
+  // logg(useContext(TwofoldContext), 'MapPanelUsedContext')
 
   const {
     markerModalOpen, setMarkerModalOpen,
@@ -75,7 +75,7 @@ const MapPanel = (props) => {
 
   const {
     useHistory,
-  } = useContext(NavigationContext)
+  } = useContext(AppContext)
 
   const history = useHistory()
   const [ windowWidth, windowHeight ] = useWindowSize()
