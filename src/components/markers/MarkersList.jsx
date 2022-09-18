@@ -16,7 +16,7 @@ import {
 import {
   appPaths,
 } from "$src/AppRouter"
-import { Marker } from './'
+import { Marker, MarkerEmpty } from './'
 
 /* W */
 const _W0 = styled.div`
@@ -43,23 +43,31 @@ const MarkersList = (props) => {
 
   // @TODO: re-add variant. It was there for ParagonAustin, WasyaCo, locations like that. _vp_ 2022-09-11
 
-  const markers = props.markers.map((m, idx) => <Marker key={idx}
-    marker={m}
-  >
-    <img src={m.title_img_path} /><br />
-    { m.is_purchased && <PurchasedIcon /> }
-    { m.name }
-  </Marker>)
+  const markers = []
+  props.markers.map((m, idx) => {
+    if (m.destination_slug) {
+      markers.push(<Marker key={idx}
+        marker={m}
+      >
+        <img src={m.title_img_path} /><br />
+        { m.is_purchased && <PurchasedIcon /> }
+        { m.name }
+      </Marker>)
+    }
+  })
 
   // Zero-height padding for the last row.
   const times = 12 - markers.length % 12
   for (let i = 0; i < times; i++) {
-    markers.push(<Marker key={`padded-${i}`} marker={{}} />)
+    markers.push(<MarkerEmpty key={`padded-${i}`} />)
   }
 
   return <W0 className="MarkersList" >{ markers }</W0>
 }
 MarkersList.propTypes = {
+  markers: PropTypes.arrayOf( PropTypes.shape({
+    destination_slug: PropTypes.string,
+  }) ).isRequired,
   variant: PropTypes.string,
 }
 export default MarkersList

@@ -1,11 +1,12 @@
+
 import Adapter from "enzyme-adapter-react-16"
-import * as enzyme from "enzyme"
-import { mount } from "enzyme"
+import { mount, configure } from "enzyme"
 import React from "react"
 import { act } from "react-dom/test-utils"
 import { useHistory } from 'react-router-dom'
 
 import {
+  AppProvider,
   C,
   logg,
   NavigationProvider,
@@ -15,7 +16,7 @@ import {
   Marker, MarkersList,
 } from "./"
 
-enzyme.configure({ adapter: new Adapter() })
+configure({ adapter: new Adapter() })
 
 
 
@@ -30,16 +31,17 @@ describe("MarkersList - ", () => {
   })
 
   it("renders - ", () => {
-    let component = mount(<>
-      <NavigationProvider {...{ useHistory }} >
+    const w = mount(<>
+      <AppProvider >
         <MarkersList {...theseProps} />
-      </NavigationProvider>
+      </AppProvider>
     </>)
-    expect(component).toBeTruthy()
+    expect(w).toBeTruthy()
   })
 
   // for 3D
-  it("Markers without destination aren't listed", () => {
+  it("current2 - Markers without destination aren't listed", () => {
+
     const theseProps = {
       markers: [
         { name: 'one', destination_slug: 'one' },
@@ -48,11 +50,14 @@ describe("MarkersList - ", () => {
       ]
     }
     const w = mount(<>
-      <NavigationProvider {...{ useHistory }} >
+      <AppProvider >
         <MarkersList {...theseProps} />)
-      </NavigationProvider>
+      </AppProvider>
     </>)
+
+    // logg(w.find(Marker).at(0), 'first marker?')
     expect(w.find(Marker).length).toEqual(2)
+
   })
 
 })
@@ -85,7 +90,7 @@ describe("MarkersList Premium func", () => {
     await act(() => new Promise(setImmediate))
   })
 
-  it('displays purchased? status - current', async () => {
+  it('displays purchased? status - ', async () => {
     const theseProps = { markers: [
       { slug: 'some-slug', premium_tier: 1, is_purchased: true }
     ] }

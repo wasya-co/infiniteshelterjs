@@ -39,13 +39,19 @@ const _W0 = styled.a`
   max-width: 140px;
   min-width: 120px;
 
-  &:empty {
-    height: 0;
-    border: none;
-    padding: 0;
-    margin-top: 0;
-    margin-bottom: 0;
-  };
+  // &:empty {
+  //   height: 0;
+  //   border: none;
+  //   padding: 0;
+  //   margin: 0 .5em 0 0;
+  // };
+
+`;
+export const MarkerEmpty = styled.div`
+  height: 0;
+  border: none;
+  padding: 0;
+  margin: 0 .5em 0 0;
 `;
 const W0 = ({children, ..._props}) => {
  const { className='', ...props } = _props
