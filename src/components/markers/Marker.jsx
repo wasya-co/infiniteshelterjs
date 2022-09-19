@@ -23,9 +23,9 @@ import {
 **/
 const _W0 = styled.a`
   border: 2px solid var(--ion-border-color);
-  border-radius: ${p => p.theme.thinBorderRadius};
-  background: ${p => p.theme.colors.cardBackground};
-  color: ${p => p.theme.colors.text};
+  border-radius: var(--ion-border-radius);
+  background: var(--ion-card-background-color);
+  color: var(--ion-color);
 
   display: block;
   text-decoration: none;
@@ -38,15 +38,6 @@ const _W0 = styled.a`
   width: 18%;
   max-width: 140px;
   min-width: 120px;
-
-  // &:empty {
-  //   height: 0;
-  //   border: none;
-  //   padding: 0;
-  //   margin-top: 0;
-  //   margin-bottom: 0;
-  // };
-
 `;
 export const MarkerEmpty = styled.div`
   width: 18%;
@@ -88,7 +79,6 @@ const Marker = ({ children, ...props }) => {
 
   const goto = (e) => {
     e.preventDefault()
-
     if (marker.premium_tier && !marker.is_purchased) {
       setItemToUnlock(marker)
     } else {

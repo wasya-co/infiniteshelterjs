@@ -5,7 +5,7 @@ import styled from 'styled-components'
 
 import {
   AuthContext,
-  FlexCol, FlexRow,
+  FlexCol as _FlexCol, FlexRow,
   logg,
 } from 'ishlibjs'
 
@@ -14,6 +14,10 @@ import {
   TwofoldContext,
   useApi,
 } from "$shared"
+
+const FlexCol = styled(_FlexCol)`
+  color: var(--ion-color);
+`;
 
 const _IconUp = ({ fill, ...props }) => {
   return <div {...props} >

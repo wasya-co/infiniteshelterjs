@@ -9,49 +9,40 @@ import { MTLLoader } from "three/examples/jsm/loaders/MTLLoader"
 import styled from 'styled-components'
 
 const _Blocker = styled.div`
-  // border: 2px solid red;
+  border: 2px solid var(--ion-highlight-color);
+  border-radius: var(--ion-border-radius);
 
   position: relative;
-  height: calc(100vh - ${p => p.theme.breadcrumbsHeight} - ${p => p.theme.smallWidth});
-
-  // width: 700px;
-  // height: 350px;
+  height: 100%;
 
   #Crosshair {
-    // display: none; // @TODO: it's not really center, so lets not show it. _vp_ 2022-09-14
-    // border: 1px solid yellow;
     width: 50px;
     height: 50px;
 
     position: absolute;
-    left: 50%;
-    top: 50%;
-    color: white;
+    left: calc(50% - 0px);
+    top: calc(50% - 4px);
 
     ::before {
       content: '';
       position: absolute;
-      border-color: white;
+      border-color: var(--ion-highlight-color);
       border-style: solid;
-      border-width: 0 0.1em 0 0;
-      height: 1em;
+      border-width: 0 2px 0 0;
+      height: 16px;
       top: 0em;
-      left: 0.3em;
-      // margin-top: -1em;
+      left: 0;
       transform: rotate(90deg);
-      // width: 0.5em;
     }
     ::after {
       content: '';
       position: absolute;
-      border-color: white;
+      border-color: var(--ion-highlight-color);
       border-style: solid;
-      border-width: 0 0.1em 0 0;
-      height: 1em;
+      border-width: 0 2px 0 0;
+      height: 16px;
       top: 0em;
-      left: 0.3em;
-      // margin-top: -1em;
-      // width: 0.5em;
+      left: 0;
     }
   }
 `;

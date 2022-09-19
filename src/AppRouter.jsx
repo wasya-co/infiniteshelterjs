@@ -50,7 +50,7 @@ export const appPaths = {
     }
   },
 
-  viewItem: ({ location, item }) => {
+  viewItem: ({ item, location }) => {
     const { item_type, slug } = item
 
     if (location) {

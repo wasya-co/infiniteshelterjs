@@ -7,15 +7,14 @@
 const S = {
   // Twofold layout
   borderWidth: '10px',
-  bottomDrawerClosedHeight: '20px',
-  bottomDrawerOpenHeight: '115px',
+  bottomDrawerClosedHeight: '24px',
+  bottomDrawerOpenHeight: '124px',
   breadcrumbsHeight: '30px',
 
   smallWidth: '10px',
   mediumWidth: '20px',
 
   thinBorderWidth: '2px',
-  thinBorderRadius: '5px',
 }
 
 const lightTheme = {

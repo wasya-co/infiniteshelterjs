@@ -13,7 +13,6 @@ export const GenericNewsitem = (props) => {
   const { item } = props
 
   return <F>
-    generic newsitem
     <div dangerouslySetInnerHTML={{ __html: item.description }} />
   </F>
 }

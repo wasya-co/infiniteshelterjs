@@ -13,6 +13,7 @@ import {
   RatedRestrictionModal,
   UnlockModal,
 } from "$components/application"
+import { ItemModal, } from "$components/ItemModal"
 import { Newsitems } from "$components/newsitems"
 import {
   MarkersList,
@@ -33,7 +34,6 @@ import {
   useApi, useWindowSize,
 } from "$shared"
 import {
-  ItemModal,
   LocationProvider,
   LocationsShowMobile3d,
   WrappedMapPanel,
@@ -157,7 +157,7 @@ const _Left = styled.div`
   display: flex;
   flex-direction: column;
 
-  height: calc(100vh - ${p => `calc(2*${p.theme.borderWidth})`}
+  height: calc(100vh - ${p => p.theme.borderWidth}
     - ${p => p.bottomDrawerOpen ? p.theme.bottomDrawerOpenHeight : p.theme.bottomDrawerClosedHeight });
 `;
 const Left = ({ children, ...props }) => {
@@ -173,7 +173,7 @@ const Left = ({ children, ...props }) => {
 }
 
 const _Right = styled.div`
-  background: ${p => p.theme.colors.background};
+  // background: ${p => p.theme.colors.background};
   position: relative;
 
   padding: 0 0 0 1em;
@@ -242,7 +242,7 @@ const LocationsShow = (props) => {
     showUrl, setShowUrl,
     twofoldPercent,
   } = useContext(TwofoldContext)
-  logg(useContext(TwofoldContext), 'LocationsShowUsedTwofoldContext')
+  // logg(useContext(TwofoldContext), 'LocationsShowUsedTwofoldContext')
 
   // const api = useApi()
   const [ windowWidth, windowHeight ] = useWindowSize()
@@ -285,7 +285,8 @@ const LocationsShow = (props) => {
 
       { /* Markers */ }
       { location.markers.length && <Collapsible
-          config={{ collapsible: false }}
+          className='Markers'
+          label={location.labels.markers}
           slug={C.collapsible.markers}
           variant={C.variants.transparent}
       >
@@ -305,10 +306,17 @@ const LocationsShow = (props) => {
       </Collapsible> || null }
 
       { /* Newsitems */ }
-      { location.newsitems.length && <Newsitems
+      { location.newsitems.length && <Collapsible
+          className='Newsitems'
+          label={location.labels.newsitems}
+          slug={C.collapsible.newsitems}
+          variant={C.variants.transparent}
+      >
+        <Newsitems
           newsitems={location.newsitems}
           variant={C.variants.bordered}
-      /> || null }
+        />
+      </Collapsible> || null }
 
     </Right>
 

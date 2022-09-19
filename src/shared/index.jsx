@@ -72,11 +72,12 @@ export const ChevronRight = styled(_ChevronRight)`
 
 /**
  * A Card
+ * @deprecated, use WBordered instead. _vp_ 2022-09-19
  */
 const _Card = styled(_Box)`
   margin-bottom: 1em;
   padding: ${p => p.theme.smallWidth};
-  background: ${p => p.theme.colors.cardBackground};
+  background: var(--ion-card-background-color);
   cursor: ${p => p.cursor ? p.cursor : 'auto'};
 
   display: flex;
@@ -238,30 +239,27 @@ export { default as useWindowSize } from './useWindowSize'
 /* W */
 
 /**
- * Wrapper Bordered.
- * Used in collapsibles and MarkersList
+ * Wrapper Bordered
  *
- * This expects a list? _vp_ 2021-11-02
+ * Used in collapsibles and MarkersList
+ * prefer this to Card.
  */
 const _WBordered = styled.div`
   border: 2px solid var(--ion-border-color);
   border-radius: ${p => p.theme.thinBorderRadius};
-  background: ${p => p.theme.colors.cardBackground};
+  background: var(--ion-card-background-color);
+  color: var(--ion-color);
 
   margin-bottom: 1em;
   padding: .5em;
 
   cursor: ${p => p.onClick ? 'pointer' : null};
 `;
-export const WBordered = ({ children, ...props }) => {
-  return <_WBordered {...props} >{children}</_WBordered>
-}
-
-
-export const WidgetContainer = ({ children, ..._props }) => {
+export const WBordered = ({ children, ..._props }) => {
   const { className='', ...props } = _props
-  return <WBordered className={`${className} WidgetContainer`} {...props} >{ children }</WBordered>
+  return <_WBordered className={`${className} WBordered`} {...props} >{children}</_WBordered>
 }
+
 
 /* Z */
 // @TODO: move this into its own Zoom components, or into MapPanel

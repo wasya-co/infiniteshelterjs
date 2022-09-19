@@ -16,7 +16,7 @@ import {
   C, Card,
   inflector,
   logg,
-  WidgetContainer,
+  WBordered,
 } from "$shared"
 import {
   appPaths,
@@ -46,12 +46,20 @@ const RowInline = styled.div`
   }
 `;
 
-const Title = styled.a`
+const A = styled.a`
+  color: var(--ion-color);
+  text-decoration: none;
+`;
+
+const TitleA = styled.a`
   margin-top: 0;
   margin-bottom: 0;
-  color: ${p=>p.theme.colors.text};
-  cursor: pointer;
+
+  color: var(--ion-color);
+  // cursor: pointer;
+
   font-size: 2em;
+  text-decoration: none;
 `;
 
 // @TODO: better management of variant, for ParagonAustin and such _vp_ 2022-09-12
@@ -61,9 +69,9 @@ const W0 = (props) => {
 
   switch (variant) {
     case C.variants.bordered:
-      return <WidgetContainer {...props} cursor="pointer" >{ children }</WidgetContainer>
+      return <WBordered {...props} >{ children }</WBordered>
     default:
-      return <Card boxShadow={2} {...props} cursor="pointer" ></Card>
+      throw 'not implemented, how do I show a newsitem without a border?'
   }
 }
 
@@ -80,15 +88,15 @@ const W0 = (props) => {
 const NewsitemContainer = ({ children, ...props }) => {
   // logg(props, 'NewsitemContainer')
   const {
-    className,
+    className, // @TODO: this is silly, remove _vp_ 2022-09-19
     item,
-    variant,
+    variant, // @TODO: this is silly, remove _vp_ 2022-09-19
   } = props
-  const { item_type, slug } = item
 
   const {
-    location,
+    slug: destination_slug,
   } = useContext(LocationContext)
+  logg(useContext(LocationContext), 'NewsitemContainer Used LocationContext')
 
   const {
     itemToUnlock, setItemToUnlock,
@@ -103,8 +111,9 @@ const NewsitemContainer = ({ children, ...props }) => {
   // @TODO: move this elsewhere - make generic, remember there are two routers, internal and external. _vp_ 2022-09-12
   // move this to internal router?
   // @TODO: for Photo, navigateToItem can show full-screen pic. _vp_ 2022-04-17
-  const href = appPaths.viewItem({ location, item })
-  const navigateToItem = () => {
+  const href = appPaths.viewItem({ item, location: {slug: destination_slug} })
+  const navigateToItem = (e) => {
+    e.preventDefault()
     if (item.is_premium && !item.is_purchased) {
       setItemToUnlock(item)
     } else {
@@ -113,7 +122,6 @@ const NewsitemContainer = ({ children, ...props }) => {
   }
 
   if (item.item_type === C.item_types.photo) {
-
     return <W0 {...{ className, variant }} >
       <Col>
         <Title>{item.name}</Title>
@@ -133,12 +141,16 @@ const NewsitemContainer = ({ children, ...props }) => {
         <Col style={{ overflowWrap: 'break-word' }} >
           <RowInline>
             <ItemIcon {...item} />
-            <Title href={href} onClick={navigateToItem} >{item.name}</Title>
+            <TitleA href={href} onClick={navigateToItem} >{item.name}</TitleA>
           </RowInline>
           <Metaline {...item} />
         </Col>
       </Row>
-      { item.subhead && item.subhead.length && <p className="subhead" dangerouslySetInnerHTML={{ __html: item.subhead }} /> }
+      { item.subhead?.length && <A className="subhead"
+        href={href}
+        onClick={navigateToItem}
+        dangerouslySetInnerHTML={{ __html: item.subhead }}
+      /> || null }
     </W0>
 
   }

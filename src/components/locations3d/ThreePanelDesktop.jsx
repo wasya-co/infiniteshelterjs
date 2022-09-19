@@ -295,6 +295,8 @@ const ThreePanelDesktop = (props) => {
   }
 
   const onWindowResize = () => {
+    // logg([blockerRef.current.clientWidth, blockerRef.current.clientHeight], 'resizingTo')
+
     camera.aspect = blockerRef.current.clientWidth / blockerRef.current.clientHeight
     camera.updateProjectionMatrix()
     renderer.setSize( blockerRef.current.clientWidth, blockerRef.current.clientHeight )
@@ -370,7 +372,7 @@ const ThreePanelDesktop = (props) => {
   }
 
   return <F>
-    <div ref={instructionsRef} />
+    <div ref={instructionsRef} className='Instructions empty' />
     <Blocker ref={blockerRef} className="Blocker" >
       <div id="Crosshair" />
     </Blocker>

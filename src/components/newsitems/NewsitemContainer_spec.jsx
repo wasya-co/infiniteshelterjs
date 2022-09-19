@@ -25,8 +25,8 @@ describe('NewsitemContainer', () => {
     expect(w).toBeTruthy()
   })
 
-  it.skip('nagivates', () => {
-    expect(false).toEqual(true) // @TODO
+  it('nagivates', () => {
+    throw 'not implemented'
   })
 
 })

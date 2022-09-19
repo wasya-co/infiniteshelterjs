@@ -44,8 +44,7 @@ const ItemModal = (props) => {
     setShowItem(null)
   }
 
-  if (!item) { return }
-  if (!item.action) { item.action = C.actions.show } // set default
+  if (!item.action) { item.action = C.actions.show } // set default, but @TODO: make sure I don't have to useState()
 
   Modal.setAppElement('body')
 
@@ -58,7 +57,7 @@ const ItemModal = (props) => {
     <Actions >
       <CloseBtn onClick={onClose} />
     </Actions>
-    { item.item_type === C.item_types.report && item.action === C.actions.show && <ReportsShow match={{ params: { slug: item.reportname } }} /> }
+    { item.item_type === C.item_types.report && item.action === C.actions.show && <ReportsShow item={item} match={{ params: { slug: item.reportname } }} /> }
     { item.item_type === C.item_types.report && item.action === C.actions.new && <ReportsForm /> }
     { item.item_type === C.item_types.gallery && <GalleriesShow match={{ params: { slug: item.slug } }} /> }
     .^.

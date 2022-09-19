@@ -60,6 +60,7 @@ const C = {
     MapPanelNoZoom: "MapPanelNoZoom",
     TabiversePlanet: "TabiversePlanet",
     ThreePanelV1: "ThreePanelV1",
+    ThreePanelV1Fullscreen: "ThreePanelV1Fullscreen",
     ThreePanelV4: "ThreePanelV4",
   },
 
