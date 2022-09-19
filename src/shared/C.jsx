@@ -20,6 +20,7 @@ const C = {
     extra1: "extra1-sec",
     extra2: "extra2-sec",
     extra3: "extra3-sec",
+    newsitems: "newsitems-sec",
     map: "map-sec",
     markers: "markers-sec",
   },

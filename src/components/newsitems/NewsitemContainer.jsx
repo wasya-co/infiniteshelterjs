@@ -124,7 +124,7 @@ const NewsitemContainer = ({ children, ...props }) => {
   if (item.item_type === C.item_types.photo) {
     return <W0 {...{ className, variant }} >
       <Col>
-        <Title>{item.name}</Title>
+        <TitleA>{item.name}</TitleA>
         <Metaline {...item} />
       </Col>
       { children }
