@@ -9,7 +9,7 @@ import { MTLLoader } from "three/examples/jsm/loaders/MTLLoader"
 import styled from 'styled-components'
 
 const _Blocker = styled.div`
-  border: 2px solid red;
+  // border: 2px solid red;
 
   position: relative;
   height: calc(100vh - ${p => p.theme.breadcrumbsHeight} - ${p => p.theme.smallWidth});

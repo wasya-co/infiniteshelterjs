@@ -17,6 +17,7 @@ import {
   ReportsShow,
 } from "$components/reports"
 import { C, logg, } from "$shared"
+import { appPaths } from "$src/AppRouter"
 
 import styles from './ItemModal.module.scss'
 
@@ -39,7 +40,7 @@ const ItemModal = (props) => {
   } = useContext(TwofoldContext)
 
   const onClose = () => {
-    history.push(config.router.locationPath(params.slug))
+    history.push(appPaths.location(params.slug))
     setShowItem(null)
   }
 

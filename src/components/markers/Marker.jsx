@@ -84,7 +84,7 @@ const Marker = ({ children, ...props }) => {
 
   const history = useHistory()
 
-  const href = appPaths.locationPath(marker.destination_slug)
+  const href = appPaths.location(marker.destination_slug)
 
   const goto = (e) => {
     e.preventDefault()

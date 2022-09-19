@@ -60,7 +60,7 @@ export const appPaths = {
     }
   },
 
-  locationPath: (slug) => `/en/locations/show/${slug}`,
+  location: (slug) => `/en/locations/show/${slug}`,
 }
 
 /**
