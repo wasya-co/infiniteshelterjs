@@ -8,9 +8,9 @@ import {
   MarkerContext,
 } from '$components/markers'
 import {
+  AppContext,
   C, Card,
   logg,
-  NavigationContext,
   useWindowSize,
 } from "$shared"
 
@@ -26,8 +26,8 @@ const Actions = styled.div`
 
 // W
 const W0 = styled.div`
-  border: ${p => p.theme.thinBorder};
-  border-radius: ${p => p.theme.thinBorderRadius};
+  border: 2px solid var(--ion-border-color);
+  border-radius: var(--ion-border-radius);
   background: ${p => p.theme.colors.background};
 
   height: 100%;
@@ -67,7 +67,7 @@ const MapPanel = (props) => {
     mapPanelWidth, mapPanelHeight,
     zoom, setZoom,
   } = useContext(TwofoldContext)
-  logg(useContext(TwofoldContext), 'MapPanelUsedContext')
+  // logg(useContext(TwofoldContext), 'MapPanelUsedContext')
 
   const {
     markerModalOpen, setMarkerModalOpen,
@@ -75,7 +75,7 @@ const MapPanel = (props) => {
 
   const {
     useHistory,
-  } = useContext(NavigationContext)
+  } = useContext(AppContext)
 
   const history = useHistory()
   const [ windowWidth, windowHeight ] = useWindowSize()

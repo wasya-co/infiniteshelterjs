@@ -2,20 +2,20 @@
 /**
  * Style Constants
  *
+ * @TODO: remove this file entirely. _vp_ 2022-09-20
  * @deprecated, use variables.css and css vars
  */
 const S = {
   // Twofold layout
   borderWidth: '10px',
-  bottomDrawerClosedHeight: '20px',
-  bottomDrawerOpenHeight: '115px',
+  bottomDrawerClosedHeight: '24px',
+  bottomDrawerOpenHeight: '124px',
   breadcrumbsHeight: '30px',
 
   smallWidth: '10px',
   mediumWidth: '20px',
 
   thinBorderWidth: '2px',
-  thinBorderRadius: '5px',
 }
 
 const lightTheme = {
@@ -24,7 +24,7 @@ const lightTheme = {
   colors: {
     text: 'black',
     background: '#dedede',
-    border: 'black',
+    border: 'black', // removing this...
     blue: '#6aa3e9',
     cardBackground: 'white',
     cyan: "#49bcc6",
@@ -41,7 +41,7 @@ const darkTheme = {
   colors: {
     text: 'white',
     background: '#292929',
-    border: 'white',
+    border: 'white', // removing this...
     blue: '#73b0fa',
     cardBackground: '#1a1a1a',
     cyan: "#49bcc6",

@@ -33,7 +33,7 @@ const _Pad = styled.div`
   // left: 20,
 
   top: 50px;
-  right: 150px;
+  right: 50px;
 
   position: absolute;
   width: 100px;

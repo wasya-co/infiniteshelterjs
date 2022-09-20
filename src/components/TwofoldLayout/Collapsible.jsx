@@ -55,7 +55,7 @@ const Label = styled.div`
 `;
 
 const WTransparent = styled.div`
-  background: ${p => p.theme.colors.background};
+  // background: ${p => p.theme.colors.background};
   padding: 0 .5em .5em .5em;
 `;
 const W0 = ({ children, variant, ...props }) => {
@@ -74,7 +74,7 @@ const W0 = ({ children, variant, ...props }) => {
  * @TODO: test-driven _vp_ 2021-10-29
  */
 const Collapsible = ({ children, ...props }) => {
-  // logg(props, 'Collapsible')
+  logg(props, 'Collapsible')
   const {
     className='', config={},
     slug,
@@ -96,7 +96,6 @@ const Collapsible = ({ children, ...props }) => {
     { !folded && <Inner>{ children }</Inner> }
   </W0>
 }
-
 Collapsible.propTypes = {
   className: PropTypes.string,
   config: PropTypes.shape({

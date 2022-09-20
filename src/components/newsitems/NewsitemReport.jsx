@@ -11,13 +11,15 @@ import { Api, C, logg, request, TwofoldContext } from "$shared"
 
 import "./Newsitems.module.scss"
 
-
+/**
+ * NewsitemReport
+**/
 const NewsitemReport = (props) => {
   // logg(props, "NewsitemReport");
   const { item, variant, } = props
-  return (<NewsitemContainer item={item} variant={variant} />)
-}
 
+  return <NewsitemContainer {...props} />
+}
 NewsitemReport.propTypes = {
   item: PropTypes.object.isRequired,
   variant: PropTypes.string,

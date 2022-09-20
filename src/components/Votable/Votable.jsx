@@ -1,19 +1,23 @@
 
+import PropTypes from 'prop-types'
 import React, { useContext, useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
 import styled from 'styled-components'
 
 import {
   AuthContext,
-  FlexCol, FlexRow,
+  FlexCol as _FlexCol, FlexRow,
   logg,
 } from 'ishlibjs'
 
 import {
   C,
-  TwofoldContext,
   useApi,
 } from "$shared"
+
+const FlexCol = styled(_FlexCol)`
+  color: var(--ion-color);
+`;
 
 const _IconUp = ({ fill, ...props }) => {
   return <div {...props} >
@@ -77,16 +81,8 @@ const Votable = (props) => {
 
   const [ currentUserVoteValue, setCurrentUserVoteValue ] = useState(item.current_user_vote_value)
   useEffect(() => {
-
-    // logg(currentUserVoteValue, 'currentUserVoteValue')
-    // logg(C.vote_values.up, 'one?')
-    // logg(C.vote_values.down, 'two?')
-    // logg(currentUserVoteValue === C.vote_values.up, 'three?')
-    // logg(currentUserVoteValue === C.vote_values.down, 'four?')
-
-
     if (currentUserVoteValue === C.vote_values.up) {
-      setUpFill('#cc3333')
+      setUpFill('#cc3333') // @TODO: abstract these colors _vp_ 2022-09-19
       setDownFill('#cecece')
     }
     if (currentUserVoteValue === C.vote_values.down) {
@@ -133,6 +129,7 @@ const Votable = (props) => {
       // })
     }
   }
+
   const voteDown = () => {
     if (!currentUser.email) {
       setLoginModalOpen("Please login or register to upvote or downvote.")
@@ -170,7 +167,6 @@ const Votable = (props) => {
   </FlexCol>
 }
 Votable.propTypes = {
-
-};
-
+  item: PropTypes.object.isRequired,
+}
 export default Votable

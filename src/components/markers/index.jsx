@@ -4,7 +4,12 @@ import React, {
 } from 'react'
 import Modal from 'react-modal'
 
+
 const MarkerContext = React.createContext({})
+
+/**
+ * MarkerProvider - for editing, right? _vp_ 2022-09-18
+**/
 const MarkerContextProvider = ({ children, ...props }) => {
 
   const [ marker, setMarker ] = useState()
@@ -14,11 +19,13 @@ const MarkerContextProvider = ({ children, ...props }) => {
   >{children}</MarkerContext.Provider>
 }
 
-
-export { default as MarkerEditModal } from './MarkerEditModal'
 export {
   MarkerContext,
   MarkerContextProvider,
 }
+
+
+export { default as Marker, MarkerEmpty } from './Marker'
+export { default as MarkerEditModal } from './MarkerEditModal'
 export { default as MarkersList } from "./MarkersList"
 export { default as MarkerForm } from './MarkerForm'

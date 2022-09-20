@@ -50,10 +50,13 @@ const useApi = () => {
     },
 
     getLocation: (props) => { // _vp_ 2022-09-04
-      // logg(props, 'Api.getLocation()')
-      const { slug } = props
+      const {
+        newsitems_page: _npg,
+        slug,
+      } = props
 
-      return request.get(`/api/maps/view/${slug}?jwt_token=${token}`).then(r => r.data).then(r => {
+      return request.get(`/api/maps/view/${slug}?jwt_token=${token}&newsitems_page=${_npg}`
+      ).then(r => r.data).then(r => {
         return r.map
       }).catch((err) => {
         return err
@@ -63,7 +66,6 @@ const useApi = () => {
     // @TODO: test: upon 401, return anon user. _vp_ 2022-08-15
     getMyAccount: () => {
       return request.post(`/api/my/account`, { jwt_token: token, }).then((r) => r.data).catch((err) => {
-        // logg(err, 'Cannot #getMyAccount')
         return C.anonUser
       })
     },

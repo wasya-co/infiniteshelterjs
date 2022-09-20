@@ -1,6 +1,6 @@
 /*
  *  $shared / index
- */
+**/
 // alphabetized
 import { arrowBack } from 'ionicons/icons'
 import { IonIcon } from '@ionic/react'
@@ -8,9 +8,6 @@ import { CircularProgress as _CircularProgress } from '@material-ui/core'
 import _Box from '@material-ui/core/Box'
 import { ChevronLeft as _ChevronLeft, ChevronRight as _ChevronRight, Menu as _MenuIcon, } from '@material-ui/icons'
 import React, { useContext, useEffect, useState } from 'react'
-import {
-  Link, Switch, BrowserRouter as Router, Redirect, Route as _Route, useHistory, withRouter
-} from 'react-router-dom'
 import styled from 'styled-components'
 
 import C from "./C"
@@ -18,6 +15,10 @@ import { TwofoldContext, TwofoldContextProvider } from '$components/TwofoldLayou
 
 /* A */
 export { default as useApi } from "./Api"
+export {
+  default as AppProvider,
+  AppContext,
+} from './AppProvider'
 
 /* B */
 
@@ -29,6 +30,7 @@ const BackIcon = styled(IonIcon)`
   cursor: pointer;
 `;
 export const BackBtn = () => {
+  const { useHistory } = useContext(AppContext)
   const history = useHistory()
   const {
     showItem, setShowItem,
@@ -70,11 +72,12 @@ export const ChevronRight = styled(_ChevronRight)`
 
 /**
  * A Card
+ * @deprecated, use WBordered instead. _vp_ 2022-09-19
  */
 const _Card = styled(_Box)`
   margin-bottom: 1em;
   padding: ${p => p.theme.smallWidth};
-  background: ${p => p.theme.colors.cardBackground};
+  background: var(--ion-card-background-color);
   cursor: ${p => p.cursor ? p.cursor : 'auto'};
 
   display: flex;
@@ -202,8 +205,6 @@ export const MenuIcon = styled(_MenuIcon)`
 
 /* N */
 
-export { default as NavigationProvider, NavigationContext } from './NavigationProvider'
-
 /* P */
 export const PurchasedIcon = () => {
   return <div className="PurchasedIcon">[purchased]</div>
@@ -238,30 +239,27 @@ export { default as useWindowSize } from './useWindowSize'
 /* W */
 
 /**
- * Wrapper Bordered.
- * Used in collapsibles and MarkersList
+ * Wrapper Bordered
  *
- * This expects a list? _vp_ 2021-11-02
+ * Used in collapsibles and MarkersList
+ * prefer this to Card.
  */
 const _WBordered = styled.div`
-  border: ${p => p.theme.thinBorder};
-  border-radius: ${p => p.theme.thinBorderRadius};
-  background: ${p => p.theme.colors.cardBackground};
+  border: 2px solid var(--ion-border-color);
+  border-radius: var(--ion-border-radius);
+  background: var(--ion-card-background-color);
+  color: var(--ion-color);
 
   margin-bottom: 1em;
   padding: .5em;
 
   cursor: ${p => p.onClick ? 'pointer' : null};
 `;
-export const WBordered = ({ children, ...props }) => {
-  return <_WBordered {...props} >{children}</_WBordered>
-}
-
-
-export const WidgetContainer = ({ children, ..._props }) => {
+export const WBordered = ({ children, ..._props }) => {
   const { className='', ...props } = _props
-  return <WBordered className={`${className} WidgetContainer`} {...props} >{ children }</WBordered>
+  return <_WBordered className={`${className} WBordered`} {...props} >{children}</_WBordered>
 }
+
 
 /* Z */
 // @TODO: move this into its own Zoom components, or into MapPanel

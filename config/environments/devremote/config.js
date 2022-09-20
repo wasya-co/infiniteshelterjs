@@ -1,16 +1,17 @@
 
-const all = {
+const settings = {
   "apiOrigin": "https://manager.piousbox.com",
-  "appIndexPath": "src/index",
 
   "domain": "tgm.piousbox.com", // required! 20210831
+
   "debug": false,
 
-  "homeLocation": "/en/locations/show/construct0",
+  APP_ENV: 'development_web',
+  "homePath": "/en/locations/show/art-gallery",
 
   "requireLogin": false,
-
+  stripePublicKey: 'pk_test_qr1QPmSpLdBFt1F7itdWJOj3',
 };
 
-const default = require('../default.js')
-module.exports = { ...default, ...all }
+const defaultSettings = require('../default.js')
+module.exports = { ...defaultSettings, ...settings }

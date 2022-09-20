@@ -18,6 +18,7 @@ import {
   inflector,
   logg,
 } from "$shared"
+// import { appPaths } from "$src/AppRouter"
 
 import './UnlockModal.module.scss'
 

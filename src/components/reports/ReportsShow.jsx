@@ -4,42 +4,35 @@ import styled from 'styled-components'
 import PropTypes from 'prop-types'
 
 import {
-  useApi, Card as Box, logg, request
+  logg,
 } from "$shared"
 
 const W0 = styled.div``;
 
 /**
  * ReportsShow
+ *
+ * @TODO: logged in and no access ?
+ * @TODO: logged in and access ?
 **/
 const ReportsShow = (props) => {
   // logg(props, "ReportsShow")
+  const {
+    item,
+  } = props
+  let {
+    descr,
+  } = item
 
-  let [ item, setItem ] = useState({})
-  let api = useApi()
-
-  useEffect(() => {
-    api.getReport(props.match.params.slug).then((data) => {
-      setItem(data)
-    }).catch((err) => {
-      logg(err, 'cannot getReport')
-    })
-  }, [])
-
-  // @TODO: logged in and no access
-
-  // @TODO: logged in and access
-
+  if (item.raw_json?.id) {
+    descr = item.raw_json.content.rendered
+  }
   return (<W0>
-    {/* <Box boxShadow={2}> */}
-      <h1>{item.name}</h1>
-      <div className="description" dangerouslySetInnerHTML={{ __html: item.description }} />
-    {/* </Box> */}
+    <h1>{item.name}</h1>
+    <div className="description" dangerouslySetInnerHTML={{ __html: descr }} />
   </W0>)
 }
 ReportsShow.propTypes = {
-  // none?
-};
-
-// @TODO: wrap in login HOC
+  item: PropTypes.object.isRequired,
+}
 export default ReportsShow

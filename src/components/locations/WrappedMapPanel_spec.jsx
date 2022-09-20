@@ -5,10 +5,9 @@ import React, { useState } from "react"
 import { act } from '@testing-library/react'
 
 import {
+  AppProvider,
   logg,
 } from "$shared"
-import AppWrapper from "$src/AppWrapper"
-
 import WrappedMapPanel from "./WrappedMapPanel"
 
 configure({ adapter: new Adapter() })
@@ -16,7 +15,9 @@ configure({ adapter: new Adapter() })
 describe("WrappedMapPanel", () => {
 
   it("renders -  ", async () => {
-    const w = mount(<AppWrapper ><WrappedMapPanel /></AppWrapper>)
+    const w = mount(<AppProvider >
+      <WrappedMapPanel />
+    </AppProvider>)
     expect(w).toBeTruthy()
     await act(() => new Promise(setImmediate))
   })

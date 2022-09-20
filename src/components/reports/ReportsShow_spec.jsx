@@ -1,7 +1,6 @@
 
 import Adapter from "enzyme-adapter-react-16"
-import * as enzyme from "enzyme"
-import { mount } from "enzyme"
+import { configure, mount } from "enzyme"
 import React from "react"
 import {
   Link, Switch, BrowserRouter as Router, Redirect, Route as _Route, useHistory, withRouter
@@ -20,7 +19,7 @@ import useApi from "$shared/Api"
 
 jest.mock('$shared/Api')
 
-enzyme.configure({ adapter: new Adapter() })
+configure({ adapter: new Adapter() })
 
 const theseProps = { match: { url: '/en/reports/show/1', params: '?' } }
 

@@ -5,14 +5,18 @@ import React from 'react'
 import { act } from "react-dom/test-utils"
 
 import {
+  TwofoldContext, TwofoldContextProvider,
+} from "$components/TwofoldLayout"
+import {
+  ThemeProvider,
+} from "$shared"
+import {
   AppMock,
   BackBtn, Box,
   FlexCol, FlexRow,
   inflector,
   logg,
-  TwofoldContext, TwofoldContextProvider,
-  WBordered,
-  WidgetContainer,
+  WBordered, WidgetContainer,
 } from './'
 
 configure({ adapter: new Adapter() })
@@ -43,6 +47,34 @@ describe('BackBtn -  ', () => {
     expect(mockSetShowItem).toHaveBeenCalled()
   })
 })
+
+
+// logg(getComputedStyle(w.find(_WBordered).getDOMNode()), 'computed style')
+describe(' - WBordered', () => {
+
+  it('current0 - WBordered - observes --ion-border-color css variable, pointer if onClick', () => {
+    document.documentElement.style.setProperty("--ion-border-color", "red")
+    const w = mount(<ThemeProvider >
+      <WBordered onClick={() => {}} >Hello</WBordered>
+    </ThemeProvider>)
+    const node = w.find(WBordered).getDOMNode()
+    const computed = getComputedStyle(node)
+    expect(computed.cursor).toEqual('pointer')
+    expect(computed.border).toEqual('2px solid red')
+  })
+
+  it('pointer is undefined', () => {
+    const w = mount(
+      <ThemeProvider >
+        <WBordered >Hello</WBordered>
+      </ThemeProvider>
+    )
+    const computed = getComputedStyle(w.find(_WBordered).getDOMNode())
+    expect(computed.cursor).toBeFalsy()
+  })
+
+})
+
 
 test('Box', () => {
   const box = <Box />
@@ -87,7 +119,7 @@ it('WBordered', () => {
   expect(w).toBeTruthy()
 })
 
-describe("WidgetContainer - current2", () => {
+describe("WidgetContainer - ", () => {
 
   it("cursor pointer", async () => {
     const w = mount(<AppMock>

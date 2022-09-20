@@ -9,3 +9,11 @@ div {
 body {
   background-color: var(--ion-background-color);
 }
+
+::-webkit-scrollbar {
+  background-color: transparent;
+  border: 2px solid var(--ion-border-color);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--ion-border-color);
+}

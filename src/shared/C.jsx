@@ -20,6 +20,7 @@ const C = {
     extra1: "extra1-sec",
     extra2: "extra2-sec",
     extra3: "extra3-sec",
+    newsitems: "newsitems-sec",
     map: "map-sec",
     markers: "markers-sec",
   },
@@ -60,6 +61,7 @@ const C = {
     MapPanelNoZoom: "MapPanelNoZoom",
     TabiversePlanet: "TabiversePlanet",
     ThreePanelV1: "ThreePanelV1",
+    ThreePanelV1Fullscreen: "ThreePanelV1Fullscreen",
     ThreePanelV4: "ThreePanelV4",
   },
 

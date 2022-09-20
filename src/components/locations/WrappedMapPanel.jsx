@@ -23,6 +23,16 @@ const W0 = styled.div`
   flex-grow: 1;
 `;
 
+// full-width
+const FW = styled.div`
+  // border: 1px solid red;
+  // position: absolute;
+  // top: 0;
+  // right: 0;
+  // left: 0;
+  // bottom: 10px;
+`;
+
 /**
  * Renders either MapPanel (W0 really, a simple wrapper), or ThreePanelV1, etc.
  * @TODO: on on MapPanel2D, markers don't scale well but should. Also, re-review z-index of markers. _vp_ 2022-09-13
@@ -31,6 +41,12 @@ const W0 = styled.div`
 const WrappedMapPanel = React.forwardRef((props, ref) => {
   logg(props, 'WrappedMapPanel')
   // const { map } = props
+
+  // // Testing overrides
+  // switch (props.slug) {
+  //   case 'root':
+  //     return <FW ref={ref} ><ThreePanelDesktop {...props} /></FW>
+  // }
 
   switch (props.map.config.map_panel_type) {
 
@@ -41,19 +57,10 @@ const WrappedMapPanel = React.forwardRef((props, ref) => {
       return <W0 ref={ref} className="WrappedMapPanel" ><MapPanel withZoom={false} {...props} /></W0>
 
     case C.map_panel_types.ThreePanelV1:
-      switch (props.slug) {
+      return <ThreePanelDesktop {...props} />
 
-        // // Legacy, remove all three _vp_ 2022-08-13
-        // case 'threev1':
-        //   return <W0><ThreePanelV1 {...props} /></W0>
-        // case 'threev2':
-        //   return <W0><ThreePanelV2 {...props} /></W0>
-        // case 'threev3':
-        //   return <W0><ThreePanelV3 {...props} /></W0>
-
-        default:
-          return <ThreePanelDesktop {...props} />
-      }
+    case C.map_panel_types.ThreePanelV1Fullscreen:
+      return <FW ref={ref} className='FW' ><ThreePanelDesktop {...props} /></FW>
 
     case C.map_panel_types.TabiversePlanet: // markers are objects
       return <W0><TabiversePlanet {...props} /></W0>
@@ -65,7 +72,6 @@ const WrappedMapPanel = React.forwardRef((props, ref) => {
       return <W0><GoogleMaps {...props} /></W0>
 
     default:
-      logg(null, `This map_panel_type is not implemented!: ${props.map.config.map_panel_type}`)
       return <W0 ref={ref} className="WrappedMapPanel" ><MapPanel {...props} /></W0>
   }
 })

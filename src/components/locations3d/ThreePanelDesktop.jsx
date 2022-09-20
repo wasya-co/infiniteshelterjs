@@ -1,72 +1,40 @@
 
-import React, { Fragment as F, useEffect, useRef } from 'react'
+import React, { Fragment as F, useContext, useEffect, useRef } from 'react'
 import * as THREE from "three"
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader"
 import { Octree } from 'three/examples/jsm/math/Octree'
 import styled from 'styled-components'
 
 import {
+  AppContext,
   logg,
 } from "$shared"
+import {
+  Blocker,
+} from './'
 import { PointerLockControls } from './vendor/PointerLockControls'
-
-// @TODO: make its own component. _vp_ 2022-08-13
-const Blocker = styled.div`
-  border: 2px solid red;
-
-  position: relative;
-  // height: calc(100% - ${p => p.theme.breadcrumbsHeight});
-  width: 700px;
-  height: 350px;
-
-  #Crosshair {
-    // border: 1px solid yellow;
-    width: 50px;
-    height: 50px;
-
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    color: white;
-
-    ::before {
-      content: '';
-      position: absolute;
-      border-color: white;
-      border-style: solid;
-      border-width: 0 0.1em 0 0;
-      height: 1em;
-      top: 0em;
-      left: 0.3em;
-      // margin-top: -1em;
-      transform: rotate(90deg);
-      // width: 0.5em;
-    }
-    ::after {
-      content: '';
-      position: absolute;
-      border-color: white;
-      border-style: solid;
-      border-width: 0 0.1em 0 0;
-      height: 1em;
-      top: 0em;
-      left: 0.3em;
-      // margin-top: -1em;
-      // width: 0.5em;
-    }
-  }
-`;
+import { appPaths } from "$src/AppRouter"
 
 /**
  * ThreePanelDesktop
+ *
+ * Units are centimeters
+ *
  * Markers are obejcts _vp_ 2021-11-14
  * Continue.           _vp_ 2022-08-13
  * Continue.           _vp_ 2022-09-13
  *
  */
-const Loc = (props) => {
+const ThreePanelDesktop = (props) => {
   logg(props, 'ThreePanelDesktop')
   const { map } = props
+
+  const {
+    useHistory,
+  } = useContext(AppContext)
+
+  const history = useHistory()
+  let markers2destinationSlugs = {}
 
   let camera, controls,
     object, objects = [], markerObjects = [], markerObjectsIdxs = [],
@@ -79,6 +47,7 @@ const Loc = (props) => {
   useEffect(() => {
     init()
     animate()
+    onWindowResize()
   }, [])
 
   let moveForward = false
@@ -92,8 +61,11 @@ const Loc = (props) => {
   const direction = new THREE.Vector3()
   const vertex = new THREE.Vector3()
   const color = new THREE.Color()
-  const loader = new GLTFLoader()
+  const textureLoader = new THREE.TextureLoader()
+  const gltfLoader = new GLTFLoader()
   const worldOctree = new Octree()
+  let pickedObject
+  let pickedObjectSavedColor
 
   function init() {
 
@@ -107,10 +79,47 @@ const Loc = (props) => {
     const axesHelper = new THREE.AxesHelper( 5 )
     scene.add( axesHelper )
 
-    const light = new THREE.HemisphereLight( 0xeeeeff, 0x777788, 0.75 )
-    light.position.set( 0.5, 1, 0.75 )
-    scene.add( light )
+    /*
+     * Lights
+    **/
+    {
 
+    // // Illuminate everytyhing
+    // const light = new THREE.HemisphereLight( 0xeeeeff, 0x777788, 0.75 )
+    // light.position.set( 0.5, 1, 0.75 )
+    // scene.add( light )
+
+    // Shadow
+    const white = 0xffffff
+    const shadowLightIntensity = 2
+    const shadowLightPosition = [ 0*10, 40*10, -10*100 ]
+    const shadowLight = new THREE.DirectionalLight(white, shadowLightIntensity)
+    shadowLight.castShadow = true
+    // shadowLight.shadow.mapSize.width = 512
+    // shadowLight.shadow.mapSize.height = 512
+
+    shadowLight.shadow.camera.bottom = -150
+    shadowLight.shadow.camera.top = 150
+    shadowLight.shadow.camera.left = -150
+    shadowLight.shadow.camera.right = 150
+    shadowLight.shadow.camera.near = 10
+    shadowLight.shadow.camera.far = 5000
+    shadowLight.shadow.camera.updateProjectionMatrix()
+
+    shadowLight.position.set( ...shadowLightPosition )
+    scene.add( shadowLight )
+    // const helper = new THREE.DirectionalLightHelper( shadowLight, 5 )
+    const helper = new THREE.CameraHelper(shadowLight.shadow.camera)
+    scene.add( helper )
+
+    } // endLights
+
+
+
+    /*
+     * Controls
+    **/
+    {
     controls = new PointerLockControls( camera, document.body )
 
     blockerRef.current.addEventListener( 'click', function () {
@@ -132,7 +141,21 @@ const Loc = (props) => {
     scene.add( controls.getObject() )
 
 
+    const onClick = (event) => {
+      // e.preventDefault()
+      if (pickedObject) {
+        // logg(pickedObject, 'pickedObject')
+        // logg(markers2destinationSlugs, 'all of them')
+        history.push( appPaths.location({
+          slug: markers2destinationSlugs[pickedObject.uuid].destination_slug
+        }) )
+      }
+    }
+
+
     const onKeyDown = (event) => {
+      // logg(event.code, '#onKeyDown')
+
       switch ( event.code ) {
         case 'ArrowUp':
         case 'KeyW':
@@ -180,85 +203,105 @@ const Loc = (props) => {
 
     document.addEventListener( 'keydown', onKeyDown )
     document.addEventListener( 'keyup', onKeyUp )
+    document.addEventListener( 'click', onClick )
 
     raycaster = new THREE.Raycaster( new THREE.Vector3(), new THREE.Vector3( 0, - 1, 0 ), 0, 10 )
+    } // endControls
+
 
     /*
      * Ground
     **/
-
+    {
     // moon floor
-    texture = THREE.ImageUtils.loadTexture(`/assets/textures/moon-1.jpg`)
+    texture = textureLoader.load(`/assets/textures/moon-1.jpg`)
     let floorGeometry = new THREE.CircleGeometry(1000, 32) // radius, segments, thetaStart, thetaLength
     floorGeometry.rotateX( - Math.PI / 2 )
-    const floorMaterial = new THREE.MeshBasicMaterial({ map: texture })
+    let floorMaterial
+    // floorMaterial = new THREE.MeshBasicMaterial({ map: texture })
+    // floorMaterial = new THREE.MeshStandardMaterial({ color: 0x333333 })
+    floorMaterial = new THREE.MeshPhongMaterial({
+      map: texture,
+      side: THREE.DoubleSide,
+    })
     const floor = new THREE.Mesh( floorGeometry, floorMaterial )
+    floor.receiveShadow = true
     scene.add( floor )
+    } // endGround
 
     /*
-     * Model Import
+     * Load models of markers
     **/
-    // const scenesPath = '/assets/scenes/'
-    // const objectsPath = '/assets/objects/'
-    // const texturesPath = '/assets/textures/'
-    // const manager = new THREE.LoadingManager()
-    // const mtlLoader = new MTLLoader(manager)
-    // mtlLoader.setPath(texturesPath)
-    // const onProgress = (xhr) => {
-    //   if (xhr.lengthComputable) {
-    //     const percentComplete = xhr.loaded / xhr.total * 100
-    //     console.log( Math.round( percentComplete, 2 ) + '% downloaded' )
-    //   }
-    // }
-    // const onError = () => {}
-
-
+    {
     map.markers.map((marker, idx) => {
 
-      loader.load( marker.asset3d_path, ( gltf ) => {
-        scene.add( gltf.scene );
-        worldOctree.fromGraphNode( gltf.scene );
+      gltfLoader.load( marker.asset3d_path, ( gltf ) => {
+
+        gltf.scene.position.x = marker.x
+        gltf.scene.position.y = marker.y
+        // @TODO: and Z ?!
+        // @TODO: and parent-child relationships ?!
+        scene.add( gltf.scene )
+        worldOctree.fromGraphNode( gltf.scene )
+
+        /*
+         * Picking
+        **/
+        if (marker.destination_slug) {
+          markerObjects.push( gltf.scene )
+        }
+
+
         gltf.scene.traverse( child => {
           if ( child.isMesh ) {
-            child.castShadow = true;
-            child.receiveShadow = true;
+            child.castShadow = true
+            // child.receiveShadow = true
             if ( child.material.map ) {
-              child.material.map.anisotropy = 4;
+              child.material.map.anisotropy = 4
             }
+
+            /*
+            * Picking
+            **/
+            if (marker.destination_slug) {
+              markers2destinationSlugs[child.uuid] = { destination_slug: marker.destination_slug }
+            }
+
           }
         } )
       })
 
     })
-
+    } // endLoadModels
 
 
     /*
      * Skybox
     **/
-    const textureLoader = new THREE.TextureLoader()
     texture = textureLoader.load(`/assets/textures/space-5.jpg`, () => {
       const rt = new THREE.WebGLCubeRenderTarget(texture.image.height)
-      rt.fromEquirectangularTexture(renderer, texture)
+      // rt.fromEquirectangularTexture(renderer, texture)
       scene.background = rt.texture
     });
 
 
     /*
-     * and render
+     * Render
     **/
     renderer = new THREE.WebGLRenderer({ antialias: true })
     renderer.setPixelRatio( window.devicePixelRatio )
     renderer.setSize( 700, 350 ) // aspect ratio 0.5
+    renderer.shadowMap.enabled = true
     blockerRef.current.appendChild( renderer.domElement )
     window.addEventListener( 'resize', onWindowResize )
-
   }
 
-  function onWindowResize() {
-    camera.aspect = window.innerWidth / window.innerHeight
+  const onWindowResize = () => {
+    // logg([blockerRef.current.clientWidth, blockerRef.current.clientHeight], 'resizingTo')
+
+    camera.aspect = blockerRef.current.clientWidth / blockerRef.current.clientHeight
     camera.updateProjectionMatrix()
-    renderer.setSize( window.innerWidth, window.innerHeight )
+    renderer.setSize( blockerRef.current.clientWidth, blockerRef.current.clientHeight )
   }
 
   function animate() {
@@ -266,16 +309,27 @@ const Loc = (props) => {
     const time = performance.now()
     if ( controls.isLocked === true ) {
 
-      var cameraDirection = controls.getDirection(new THREE.Vector3(0, 0, 0)).clone()
+      /*
+       * Picking
+      **/
 
       /* for standing on things */
       // raycaster.ray.origin.copy( controls.getObject().position )
       // raycaster.ray.origin.y -= 10
 
+      // And for picking _vp_ 2022-09-18
+      var cameraDirection = controls.getDirection(new THREE.Vector3(0, 0, 0)).clone()
       raycaster = new THREE.Raycaster( camera.position, cameraDirection )
       const intersections = raycaster.intersectObjects( markerObjects, true )
+
+      if (pickedObject) {
+        pickedObject.material.emissive.setHex(pickedObjectSavedColor)
+        pickedObject = undefined
+      }
       if (intersections.length) {
-        const pickedObject = intersections[0].object
+        pickedObject = intersections[0].object
+        pickedObjectSavedColor = pickedObject.material.emissive.getHex()
+        pickedObject.material.emissive.setHex(0xFFFF00);
 
         /* collision */
         // if (intersections[0].distance < 5) {
@@ -312,11 +366,11 @@ const Loc = (props) => {
   }
 
   return <F>
-    <div ref={instructionsRef} />
-    <Blocker ref={blockerRef} >
+    <div ref={instructionsRef} className='Instructions empty' />
+    <Blocker ref={blockerRef} className="Blocker" >
       <div id="Crosshair" />
     </Blocker>
   </F>
 }
 
-export default Loc
+export default ThreePanelDesktop
