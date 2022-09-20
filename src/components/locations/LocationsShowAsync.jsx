@@ -2,6 +2,7 @@
 import PropTypes from 'prop-types'
 import React, { useContext, useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
+import { useLocation } from 'react-router-dom'
 
 import {
   C,
@@ -15,7 +16,8 @@ import { LocationsShow } from './'
 /**
  * LocationsShowAsync
  *
- * useEffect with react-router, delegate to LocationsShow
+ * uses react-router for search params
+ *
  *
 **/
 const LocationsShowAsync = (props) => {
@@ -25,11 +27,22 @@ const LocationsShowAsync = (props) => {
   // @TODO: this is elegantly LocationProvider _vp_ 2022-09-12
   const [ location, setLocation ] = useState()
 
+  // @TODO: this is so ugly... _vp_ 2022-09-20
+  function useQuery() {
+    const { search } = useLocation()
+    return React.useMemo(() => new URLSearchParams(search), [search]);
+  }
+  const q = useQuery()
+  match.params  = { ...match.params,
+    newsitems_page: q.get('newsitems_page') || 1,
+  }
+
+
   const [ showItem, setShowItem ] = useState()
   const api = useApi()
 
   useEffect(() => {
-    const chain = [ api.getLocation({ slug: match.params.slug }) ]
+    const chain = [ api.getLocation( match.params ) ]
     if (match.params.item_type) {
       const itemType = inflector.classify(match.params.item_type)
       switch (itemType) {
@@ -45,7 +58,7 @@ const LocationsShowAsync = (props) => {
       }
     }
     Promise.all(chain).then(rs => {
-      logg(rs, 'LocationsShowAsync.chainResults')
+      // logg(rs, 'LocationsShowAsync.chainResults')
       setLocation(rs[0])
       // @TODO: test-drive this. Clicking from a location-gallery back to location, should un-set the showItem. _vp_ 2022-09-11
       rs[1] ? setShowItem(rs[1]) : setShowItem(null)
@@ -53,7 +66,7 @@ const LocationsShowAsync = (props) => {
       // logg(err, "Could not load Location.")
       // toast("Could not load Location.")
     })
-  }, [ match.params.item_type, match.params.item_slug, match.params.slug ])
+  }, [ match.params.item_type, match.params.item_slug, match.params.slug, match.params.newsitems_page ])
 
   if (!location) { return  null }
   return <LocationsShow {...{ location, match, showItem }} />

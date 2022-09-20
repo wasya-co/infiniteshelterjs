@@ -60,7 +60,12 @@ export const appPaths = {
     }
   },
 
-  location: (slug) => `/en/locations/show/${slug}`,
+  location: ({ slug, newsitems_page }) => {
+    const newsitems_page_str = newsitems_page ?
+      `newsitems_page=${newsitems_page}` : null
+
+    return `/en/locations/show/${slug}?${newsitems_page_str}`
+  },
 }
 
 /**

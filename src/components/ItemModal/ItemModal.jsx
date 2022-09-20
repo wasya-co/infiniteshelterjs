@@ -40,7 +40,7 @@ const ItemModal = (props) => {
   } = useContext(TwofoldContext)
 
   const onClose = () => {
-    history.push(appPaths.location(params.slug))
+    history.push( appPaths.location({ slug: params.slug }) )
     setShowItem(null)
   }
 

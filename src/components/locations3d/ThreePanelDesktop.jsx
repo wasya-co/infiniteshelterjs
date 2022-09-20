@@ -146,7 +146,9 @@ const ThreePanelDesktop = (props) => {
       if (pickedObject) {
         // logg(pickedObject, 'pickedObject')
         // logg(markers2destinationSlugs, 'all of them')
-        history.push( appPaths.location(markers2destinationSlugs[pickedObject.uuid].destination_slug) )
+        history.push( appPaths.location({
+          slug: markers2destinationSlugs[pickedObject.uuid].destination_slug
+        }) )
       }
     }
 
@@ -320,22 +322,14 @@ const ThreePanelDesktop = (props) => {
       raycaster = new THREE.Raycaster( camera.position, cameraDirection )
       const intersections = raycaster.intersectObjects( markerObjects, true )
 
-      // logg(camera.position, 'camera position')
-      // logg(cameraDirection, 'cameraDirection')
-      logg(intersections.length, 'intersections')
-
       if (pickedObject) {
-        // logg(pickedObject, 'pickedObject')
         pickedObject.material.emissive.setHex(pickedObjectSavedColor)
         pickedObject = undefined
       }
       if (intersections.length) {
         pickedObject = intersections[0].object
         pickedObjectSavedColor = pickedObject.material.emissive.getHex()
-        // pickedObject.material.emissive.setHex((time * 8) % 2 > 1 ? 0xFFFF00 : 0xFF0000);
         pickedObject.material.emissive.setHex(0xFFFF00);
-
-        // logg(pickedObject, 'pickedObject')
 
         /* collision */
         // if (intersections[0].distance < 5) {

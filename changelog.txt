@@ -57,3 +57,4 @@ comfortable will resume auth and credit cards.
 2.6.0 - 2022-09-19 - lets make map full-screen on desktop.
                      full-screen is on hold, no need to implement it.
                      Lotsa cleanup, testing. Obj: charge ppl, and pay via a stripe connect. Last objective.
+                     pagination of newsitems in a location...
