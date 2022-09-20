@@ -5,13 +5,14 @@ import List from '@material-ui/core/List'
 import ListItem from '@material-ui/core/ListItem'
 import PropTypes from 'prop-types'
 import React, { Fragment as F, useContext, useEffect, useState } from 'react'
-import { useHistory } from 'react-router-dom'
+// import { useHistory } from 'react-router-dom'
 import styled from 'styled-components'
 
 import config from 'config'
 
 import { TwofoldContext } from "$components/TwofoldLayout"
 import {
+  AppContext,
   C,
   logg,
   MenuIcon,
@@ -30,6 +31,11 @@ const W0 = styled.div`
 **/
 const SideMenu = (props) => {
   // logg(props, 'SideMenu')
+  const {} = props
+
+  const {
+    useHistory,
+  } = useContext(AppContext)
 
   const [ drawerOpen, setDrawerOpen ] = React.useState(false)
   const [ loading, setLoading ] = useState(false)

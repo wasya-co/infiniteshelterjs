@@ -7,14 +7,14 @@
 
 /android/app/src/main/assets/public
 
-!/config/environments/default.js
 /config/environments/*
+!/config/environments/default.js
+!/config/environments/example.js
+
 
 public/assets/objects
 
-!.next
-.next/cache
-.next/trace
+.next
 
 ## this is what https://guyd.me and infiniteshelter.com uses... I cant ignore these at the moment.
 # /build

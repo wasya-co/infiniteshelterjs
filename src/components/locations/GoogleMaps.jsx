@@ -3,13 +3,11 @@ import * as React from "react"
 import * as ReactDom from "react-dom"
 import { Wrapper, Status } from "@googlemaps/react-wrapper"
 
+import config from 'config'
+
 import {
   logg,
 } from '$shared'
-
-let API_KEY
-// API_KEY = 'AIzaSyDTM7RYKAlUS84jN1pCmydwEKxUTAMAn6c'
-API_KEY = 'AIzaSyB8kkxbSgjmUpGmpigro-N7uXKiQmpBoyE'
 
 /**
  * App
@@ -86,7 +84,7 @@ const App = (props) => {
 
   return (
     <div style={{ display: "flex", height: "100%" }}>
-      <Wrapper apiKey={API_KEY} >
+      <Wrapper apiKey={config.GOOGLE_MAPS_KEY} >
         <Map
           center={center}
           onClick={onClick}

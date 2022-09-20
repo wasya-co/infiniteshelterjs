@@ -5,35 +5,37 @@ import React, { useEffect, useState, } from 'react'
 import { ToastContainer } from 'react-toastify'
 
 import config from 'config'
-import {
-  AuthContext,
-  AuthContextProvider,
-  LoginModal,
-  RegisterModal,
-} from 'ishlibjs'
+// import {
+//   AuthContext,
+//   AuthContextProvider,
+//   LoginModal,
+//   RegisterModal,
+// } from 'ishlibjs'
 
 import {
   BottomDrawer,
 } from '$components/application'
 import {
   LocationsShow,
-  LocationsShowAsync,
+  // LocationsShowAsync,
 } from "$components/locations"
+// import {
+//   CollapsibleProvider,
+//   TwofoldContextProvider,
+// } from "$components/TwofoldLayout"
 import {
-  CollapsibleProvider,
-  TwofoldContextProvider,
-} from "$components/TwofoldLayout"
-import {
+  AppProvider,
   C,
   logg,
-  NavigationProvider,
+  // NavigationProvider,
   request,
-  SsrProvider,
-  ThemeProvider,
+  // SsrProvider,
+  // ThemeProvider,
   useApi,
 } from "$shared"
-import AppRouter from '$src/AppRouter'
-import AppWrapper2, { Root, WLoginModal } from '$src/AppWrapper2'
+// import AppRouter from '$src/AppRouter'
+// import AppWrapper2, { Root, WLoginModal } from '$src/AppWrapper2'
+import { Root } from '$src/WrappedApp'
 
 /**
  * Page
@@ -49,11 +51,11 @@ const Page = (props) => {
   } = props
 
   if (!location) {
-    return <h1>Wow, this location is missing?!</h1>
+    return null
   }
-  if (location.is_premium) {
-    return <h1>This location cannot be accessed right now, please try again later.</h1>
-  }
+  // if (location.is_premium) {
+  //   return <h1>This location cannot be accessed right now, please try again later.</h1>
+  // }
 
   return <>
     <Head>
@@ -61,36 +63,24 @@ const Page = (props) => {
       <meta name="viewport" content="initial-scale=1.0, width=device-width" />
     </Head>
 
-    <NavigationProvider {...{ useHistory: useRouter, }} >
-      <ThemeProvider >
-        <AuthContextProvider {...{ useApi, }} >
-          <TwofoldContextProvider >
-            <CollapsibleProvider >
+    <AppProvider {...{ useHistory: useRouter }} >
 
-              <Root className='Root' >
+      <Root className='Root' >
 
-                <LocationsShow location={location} match={{ params: { slug: location.slug } }} />
+        <LocationsShow location={location} match={{ params: { slug: location.slug } }} />
 
-              </Root>
-              <ToastContainer position="bottom-left" />
-              <WLoginModal />
-              <RegisterModal />
-              <BottomDrawer />
+      </Root>
 
-            </CollapsibleProvider>
-          </TwofoldContextProvider>
-        </AuthContextProvider>
-      </ThemeProvider>
-    </NavigationProvider>
+      <BottomDrawer />
+      <ToastContainer position="bottom-left" />
 
+      {/* <WLoginModal />
+      <RegisterModal /> */}
+
+
+    </AppProvider>
   </>
-  return <>
-    <Head>
-      <title>{location.name} - {config.siteTitle} v2</title>
-      <meta name="viewport" content="initial-scale=1.0, width=device-width" />
-    </Head>
-    <AppWrapper2 {...{ location }} />
-  </>
+
 }
 export default Page
 

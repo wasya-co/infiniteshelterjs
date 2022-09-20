@@ -8,7 +8,6 @@ import {
   ThemeProvider,
 } from "$shared"
 
-import AppWrapper2 from '$src/AppWrapper2'
 import Metaline from "./Metaline"
 
 configure({ adapter: new Adapter() })

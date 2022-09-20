@@ -27,8 +27,8 @@ import '@ionic/react/css/text-transformation.css'
 import '@ionic/react/css/flex-utils.css'
 import '@ionic/react/css/display.css'
 
-// @TODO: stop exporting
-const Root = styled.div`
+// @TODO: stop exporting, move to AppProvider, along with BottomDrawer and ToastContainer.
+export const Root = styled.div`
   padding: 10px;
 `;
 
@@ -59,9 +59,8 @@ const WrappedApp = (props) => {
 
     </Root>
 
-    <ToastContainer position="bottom-left" />
-
     <BottomDrawer />
+    <ToastContainer position="bottom-left" />
 
   </AppProvider>)
 }

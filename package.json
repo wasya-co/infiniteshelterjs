@@ -144,8 +144,8 @@
       "<rootDir>/src"
     ],
     "collectCoverageFrom": [
-      "src/**/*.{js,jsx,ts,tsx}",
-      "!src/**/*.d.ts"
+      "src/**/*.{js,jsx}",
+      "!src/*trash*"
     ],
     "setupFiles": [
       "react-app-polyfill/jsdom",

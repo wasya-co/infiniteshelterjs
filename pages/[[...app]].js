@@ -7,7 +7,7 @@ import { useHistory } from 'react-router-dom'
 import {
   NavigationProvider,
 } from "$shared"
-import AppWrapper2 from '$src/AppWrapper2'
+import WrappedApp from '$src/WrappedApp'
 
 function App() {
   const [ isMounted, setIsMounted ] = useState(false)
@@ -22,9 +22,7 @@ function App() {
 
   return <div>
 
-    <NavigationProvider {...{ useHistory, }} >
-      <AppWrapper2 />
-    </NavigationProvider>
+      <WrappedApp />
 
     <Script
       src="https://www.googletagmanager.com/gtag/js?id=G-W8PVZ83B9H"

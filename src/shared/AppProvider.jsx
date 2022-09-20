@@ -75,7 +75,7 @@ const AppProvider = ({ children, ...props }) => {
   fn()
 
 
-  return (<AppContext.Provider value={{
+  return <AppContext.Provider value={{
     os,
     useHistory,
   }} >
@@ -93,7 +93,7 @@ const AppProvider = ({ children, ...props }) => {
         </TwofoldContextProvider>
       </AuthContextProvider>
     </ThemeProvider>
-  </AppContext.Provider>)
+  </AppContext.Provider>
 }
 AppProvider.propTypes = {}
 export default AppProvider
