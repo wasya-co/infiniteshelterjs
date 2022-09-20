@@ -20,9 +20,9 @@ function App() {
     return null
   }
 
-  return <div>
+  return <>
 
-      <WrappedApp />
+    <WrappedApp />
 
     <Script
       src="https://www.googletagmanager.com/gtag/js?id=G-W8PVZ83B9H"
@@ -38,7 +38,7 @@ function App() {
       `}
     </Script>
 
-  </div>
+  </>
 }
 
 export default App
