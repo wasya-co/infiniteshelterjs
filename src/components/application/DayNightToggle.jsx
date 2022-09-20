@@ -19,7 +19,7 @@ import styles from './DayNightToggle.module.scss'
 **/
 const DayNightToggle = (props) => {
   // logg(props, 'DayNightToggle')
-  // const {} = props
+  const {} = props
 
   const {
     theme, toggleTheme,

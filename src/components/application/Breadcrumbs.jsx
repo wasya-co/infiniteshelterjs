@@ -1,36 +1,35 @@
 
 import PropTypes from 'prop-types'
 import React, { Fragment as F, useContext, useState } from 'react'
-import { Route, useLocation, useHistory, Switch } from 'react-router-dom'
 import styled from 'styled-components'
 
 import config from 'config'
 
-import { SideMenu } from "$components/application"
-import { TwofoldContext } from "$components/TwofoldLayout"
 import {
+  SideMenu,
+  DayNightToggle,
+} from "$components/application"
+import {
+  AppContext,
+  appPaths,
   C,
   logg,
 } from "$shared"
-import {
-  DayNightToggle,
-} from './'
 
 
 // One breadcrumb
-const B0 = styled.div`
-  color: ${p=> p.theme.colors.text};
-  // padding-right: 0.5em;
+const B0 = styled.a`
+  color: var(--ion-color);
+  display: block;
 `;
 
 // The divider
 const B1 = styled.div`
   padding: 0.5em;
-  color: ${p => p.theme.colors.text};
+  color: var(--ion-color);
 `;
 
 const W0 = styled.div`
-  // background: ${p => p.theme.colors.cardBackground};
   border: ${p=>p.debug?'1':'0'}px solid cyan;
 
   display: flex;
@@ -38,19 +37,13 @@ const W0 = styled.div`
   justify-content: stretch;
 
   z-index: 0;
-
-  // height: ${p => p.theme.breadcrumbsHeight};
 `;
 
 const WBreadcrumbs = styled.div`
   display: block;
   flex-grow: 1;
-  // flex-direction: row;
-  // flex-grow: 1;
-  // flex-wrap: wrap;
 
   > * {
-    // border: 1px solid red;
     display: inline;
   }
 `;
@@ -62,19 +55,26 @@ const WBreadcrumbs = styled.div`
 const Breadcrumbs = (props) => {
   // logg(props, 'Breakcrumbs')
   const { breadcrumbs=[] } = props
-  const { layout, toggleTheme, theme } = useContext(TwofoldContext)
+
+  const {
+    useHistory,
+  } = useContext(AppContext)
   const history = useHistory()
 
   const out = []
   breadcrumbs.map((b, idx) => {
-    if (idx+1 === props.breadcrumbs.length) {
-      // last one
-      out.push(<B0 key={idx} >{b.name}</B0>)
+    if (idx+1 === props.breadcrumbs.length) { // last one
+      out.push(<B0 key={idx}
+      >{b.name}</B0>)
     } else {
-      out.push(<B0
-        key={idx}
-        style={{ textDecoration: 'underline', cursor: 'pointer' }}
-        onClick={() => history.push(`/en/locations/show/${b.slug}`) }
+      const href = appPaths.location({ slug: b.slug })
+      const goto = (e) => {
+        e.preventDefault()
+        history.push( href )
+      }
+      out.push(<B0 key={idx}
+        href={href}
+        onClick={goto}
       >{b.name}</B0>)
       out.push(<B1 key={`${idx}-divider`} >&gt;</B1>)
     }
@@ -83,7 +83,7 @@ const Breadcrumbs = (props) => {
   return <W0 debug={config.debug} className="Breadcrumbs" >
     <SideMenu variant={C.variants.inline} />
     <WBreadcrumbs className='WBreadcrumbs' >{ out }</WBreadcrumbs>
-    <DayNightToggle toggleTheme={toggleTheme} theme={theme} />
+    <DayNightToggle />
   </W0>
 }
 Breadcrumbs.propTypes = {
