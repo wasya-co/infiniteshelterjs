@@ -2,6 +2,7 @@
 /**
  * Style Constants
  *
+ * @TODO: remove this file entirely. _vp_ 2022-09-20
  * @deprecated, use variables.css and css vars
  */
 const S = {

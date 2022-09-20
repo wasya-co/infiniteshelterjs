@@ -121,6 +121,8 @@ const NewsitemContainer = ({ children, ...props }) => {
     }
   }
 
+
+
   if (item.item_type === C.item_types.photo) {
     return <W0 {...{ className, variant }} >
       <Col>

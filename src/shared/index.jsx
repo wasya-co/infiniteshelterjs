@@ -246,7 +246,7 @@ export { default as useWindowSize } from './useWindowSize'
  */
 const _WBordered = styled.div`
   border: 2px solid var(--ion-border-color);
-  border-radius: ${p => p.theme.thinBorderRadius};
+  border-radius: var(--ion-border-radius);
   background: var(--ion-card-background-color);
   color: var(--ion-color);
 

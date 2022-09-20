@@ -4,6 +4,8 @@ import React, { useContext, } from "react"
 import { toast } from 'react-toastify'
 import styled from 'styled-components'
 
+import config from 'config'
+
 import NewsitemGallery from "$components/newsitems/NewsitemGallery"
 import NewsitemReport from "$components/newsitems/NewsitemReport"
 import NewsitemPhoto from "$components/newsitems/NewsitemPhoto"
@@ -29,6 +31,13 @@ const W0 = styled.div`
 
 const W1 = styled.div`
   position: relative;
+  ::before {
+    content: '${p => p.debug && p._key}';
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    color: var(--ion-debug-color);
+  }
 `;
 
 const _EditModeActions = styled.div`
@@ -106,7 +115,7 @@ const Newsitems = (props) => {
         }
 
         return (
-          <W1 key={idx} className={`premium-${premium_tier}`} >
+          <W1 key={idx} _key={idx+1} className={`premium-${premium_tier}`} debug={config.debug} >
             <EditModeActions item={newsitem} />
             { item }
           </W1>

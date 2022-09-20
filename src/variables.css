@@ -6,6 +6,8 @@ http://ionicframework.com/docs/theming/ */
 
   /* this part doesn't change from light to dark: */
   --ion-border-radius: 5px;
+  --ion-border-radius-lg: 15px;
+  --ion-debug-color: red;
 
   /* @TODO: abstract this, allow theme switching. _vp_ 2022-09-10 */
   --ion-background-color: #dedede;

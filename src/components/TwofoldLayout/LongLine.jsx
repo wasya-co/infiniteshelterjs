@@ -13,7 +13,7 @@ import { C, logg } from "$shared"
  */
 const LongLine = styled.div`
   border: 2px solid var(--ion-border-color);
-  border-radius: ${p => p.theme.thinBorderRadius};
+  border-radius: var(--ion-border-radius);
 
   flex-grow: 1;
 

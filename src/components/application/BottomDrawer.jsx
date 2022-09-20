@@ -43,7 +43,7 @@ const Inner0 = styled.div`
 
 const Inner1 = styled.div`
   border: 2px solid var(--ion-border-color);
-  border-radius: ${p => p.theme.thinBorderRadius};
+  border-radius: var(--ion-border-radius);
 
   background: ${p=>p.theme.colors.background};
   height: calc(${p=>p.theme.bottomDrawerOpenHeight} + 1*${p=>p.theme.borderHeight});
