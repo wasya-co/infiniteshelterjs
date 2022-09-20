@@ -58,3 +58,7 @@ comfortable will resume auth and credit cards.
                      full-screen is on hold, no need to implement it.
                      Lotsa cleanup, testing. Obj: charge ppl, and pay via a stripe connect. Last objective.
                      pagination of newsitems in a location...
+                     a lot of nice changes in this revision! and released.
+2.7.0 - 2022-09-20 - next_js builds in branch `deploy` now.
+                     lets...
+                       jests should pass.

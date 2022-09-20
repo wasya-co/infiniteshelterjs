@@ -7,7 +7,7 @@ import { act } from '@testing-library/react'
 import {
   logg,
 } from "$shared"
-import AppWrapper from "$src/AppWrapper"
+import WrappedApp from "$src/WrappedApp"
 
 import DayNightToggle from "./DayNightToggle"
 
@@ -16,7 +16,7 @@ configure({ adapter: new Adapter() })
 describe("DayNightToggle", () => {
 
   it("renders -  ", async () => {
-    const w = mount(<AppWrapper ><DayNightToggle /></AppWrapper>)
+    const w = mount(<WrappedApp ><DayNightToggle /></WrappedApp>)
     expect(w).toBeTruthy()
     await act(() => new Promise(setImmediate))
   })

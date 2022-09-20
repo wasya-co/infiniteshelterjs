@@ -4,10 +4,11 @@ import { mount } from "enzyme"
 import React from "react"
 import { act } from "react-dom/test-utils"
 
-import { AppMock, C, logg, } from "$shared"
+import { WrappedApp, C, logg, } from "$shared"
 import useApi from "$shared/Api"
 
 import UnlockModal from "./UnlockModal"
+import WrappedApp from "$src/WrappedApp"
 
 enzyme.configure({ adapter: new Adapter() })
 
@@ -42,22 +43,22 @@ const theseProps = { match: { url: '/en/cities/travel-to/chicago', params: '?' }
 describe("UnlockModal -  ", () => {
 
   it("renders", async () => {
-    let component = mount(<AppMock>
+    let component = mount(<WrappedApp >
       <UnlockModal {...theseProps} />
-    </AppMock>)
+    </WrappedApp>)
     expect(component).toBeTruthy()
     await act(() => new Promise(setImmediate))
   })
 
   // Nice!
   it("says to purchase more if not enough coins", async () => {
-    const appMockProps = {
+    const theseProps = {
       currentUser: { n_unlocks: -1 }, setCurrentUser: () => {},
       itemToUnlock: { id: 'some-id', premium_tier: 1 },
     }
-    let component = await mount(<AppMock {...appMockProps} >
+    let component = await mount(<WrappedApp {...theseProps} >
       <UnlockModal {...theseProps} />
-    </AppMock>)
+    </WrappedApp>)
     expect(component.text()).toMatch(/You don't have enough unlocks/)
     await act(() => new Promise(setImmediate))
   })
@@ -65,13 +66,13 @@ describe("UnlockModal -  ", () => {
   // I need async/await here, for the doUnlock() propagation.
   it('Refreshes currentUser after unlocking - current2 ', async () => {
     const setCu = jest.fn()
-    const appMockProps = {
+    const theseProps = {
       currentUser: { n_unlocks: 2 }, setCurrentUser: setCu,
       itemToUnlock: { id: 'some-id', premium_tier: 1 },
     }
-    const w = mount(<AppMock {...appMockProps} >
+    const w = mount(<WrappedApp {...theseProps} >
       <UnlockModal {...theseProps} />
-    </AppMock>)
+    </WrappedApp>)
 
     // logg(w.debug(), 'zeDebug')
     expect(setCu).toHaveBeenCalled()
