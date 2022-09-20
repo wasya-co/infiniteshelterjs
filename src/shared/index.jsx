@@ -11,14 +11,17 @@ import React, { useContext, useEffect, useState } from 'react'
 import styled from 'styled-components'
 
 import C from "./C"
+import AppProvider, {
+  AppContext,
+} from './AppProvider'
 import { TwofoldContext, TwofoldContextProvider } from '$components/TwofoldLayout'
 
 /* A */
 export { default as useApi } from "./Api"
 export {
-  default as AppProvider,
+  AppProvider,
   AppContext,
-} from './AppProvider'
+}
 export { appPaths } from '$src/AppRouter'
 
 /* B */

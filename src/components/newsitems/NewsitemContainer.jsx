@@ -98,7 +98,7 @@ const NewsitemContainer = ({ children, ...props }) => {
   const {
     slug: destination_slug,
   } = useContext(LocationContext)
-  logg(useContext(LocationContext), 'NewsitemContainer Used LocationContext')
+  // logg(useContext(LocationContext), 'NewsitemContainer Used LocationContext')
 
   const {
     itemToUnlock, setItemToUnlock,
