@@ -8,7 +8,8 @@ import {
 } from 'react-router-dom'
 
 import PurchaseModal from "./PurchaseModal"
-import { AppMock, C, logg, } from "$shared"
+import { C, logg, } from "$shared"
+import WrappedApp from "$src/WrappedApp"
 import useApi from "$shared/Api"
 
 enzyme.configure({ adapter: new Adapter() })
@@ -20,9 +21,9 @@ const theseProps = { match: { url: '/en/cities/travel-to/chicago', params: '?' }
 describe("PurchaseModal - current2 ", () => {
 
   it("renders", async () => {
-    let component = mount(<AppMock>
+    let component = mount(<WrappedApp >
       <PurchaseModal {...theseProps} />
-    </AppMock>)
+    </WrappedAPp>)
     expect(component).toBeTruthy()
     await act(() => new Promise(setImmediate))
   })

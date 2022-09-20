@@ -47,7 +47,7 @@ comfortable will resume auth and credit cards.
                      MovementPad is beginning to work!
                      and stripe
 1.3.0 - 2022-09-05 - MenuLeft->SideMenu, cleanup
-                     massive changes to next_js config, making pre-fetched server-side page for LocationsShowDesktop. 
+                     massive changes to next_js config, making pre-fetched server-side page for LocationsShowDesktop.
 2.1.0 - 2022-09-09 - I skipped 2.0.0 and based on 1.3.0. Only bugfixes, tests, and minimal changes to make next_js statically compile a LocationsShow.
 2.2.0 - 2022-09-10 - refactoring and making show2 work on next_js. Release when this is ready?
                      lets deploy
@@ -58,3 +58,7 @@ comfortable will resume auth and credit cards.
                      full-screen is on hold, no need to implement it.
                      Lotsa cleanup, testing. Obj: charge ppl, and pay via a stripe connect. Last objective.
                      pagination of newsitems in a location...
+                     a lot of nice changes in this revision! and released.
+                     google_maps_key is in config now.
+2.7.0 - 2022-09-20 - next_js builds in branch `deploy` now.
+                     2 more jests pass. All jests should pass. Then, let's iterate. Then, let's ether.

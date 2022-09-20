@@ -1,6 +1,7 @@
 
 import Head from 'next/head'
 import { useRouter } from 'next/router'
+import Script from 'next/script'
 import React, { useEffect, useState, } from 'react'
 import { ToastContainer } from 'react-toastify'
 
@@ -79,6 +80,20 @@ const Page = (props) => {
 
 
     </AppProvider>
+
+    <Script
+      src="https://www.googletagmanager.com/gtag/js?id=G-W8PVZ83B9H"
+      strategy="lazyOnload"
+    />
+    <Script id="google-analytics" strategy="lazyOnload">
+      {`
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){window.dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'G-W8PVZ83B9H');
+      `}
+    </Script>
   </>
 
 }

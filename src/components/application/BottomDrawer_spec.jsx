@@ -6,7 +6,7 @@ import { act } from '@testing-library/react'
 import {
   logg,
 } from "$shared"
-import AppWrapper from "$src/AppWrapper"
+import WrappedApp from "$src/WrappedApp"
 
 import BottomDrawer from "./BottomDrawer"
 
@@ -15,7 +15,7 @@ configure({ adapter: new Adapter() })
 describe("BottomDrawer", () => {
 
   it("renders -  ", async () => {
-    const w = mount(<AppWrapper ><BottomDrawer /></AppWrapper>)
+    const w = mount(<WrappedApp ><BottomDrawer /></WrappedApp>)
     expect(w).toBeTruthy()
     await act(() => new Promise(setImmediate))
   })
