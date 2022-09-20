@@ -63,9 +63,11 @@ const TitleA = styled.a`
 `;
 
 // @TODO: better management of variant, for ParagonAustin and such _vp_ 2022-09-12
-const W0 = (props) => {
+const W0 = ({ children, ...props }) => {
   // logg(props, 'W0')
-  const { children, variant } = props
+  const {
+    variant,
+  } = props
 
   switch (variant) {
     case C.variants.bordered:
