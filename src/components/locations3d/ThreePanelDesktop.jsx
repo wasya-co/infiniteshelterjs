@@ -10,6 +10,9 @@ import {
   logg,
 } from "$shared"
 import {
+  TwofoldContext,
+} from "$components/TwofoldLayout"
+import {
   Blocker,
 } from './'
 import { PointerLockControls } from './vendor/PointerLockControls'
@@ -26,12 +29,16 @@ import { appPaths } from "$src/AppRouter"
  *
  */
 const ThreePanelDesktop = (props) => {
-  logg(props, 'ThreePanelDesktop')
+  // logg(props, 'ThreePanelDesktop')
   const { map } = props
 
   const {
     useHistory,
   } = useContext(AppContext)
+
+  // const {
+  //   resizeCount,
+  // } = useContext(TwofoldContext)
 
   const history = useHistory()
   let markers2destinationSlugs = {}
@@ -49,6 +56,11 @@ const ThreePanelDesktop = (props) => {
     animate()
     onWindowResize()
   }, [])
+
+  // useEffect(() => {
+  //   onWindowResize()
+  // }, [resizeCount])
+
 
   let moveForward = false
   let moveBackward = false
@@ -297,10 +309,14 @@ const ThreePanelDesktop = (props) => {
   }
 
   const onWindowResize = () => {
-    // logg([blockerRef.current.clientWidth, blockerRef.current.clientHeight], 'resizingTo')
+    logg([blockerRef.current.clientWidth, blockerRef.current.clientHeight], 'ThreePanelDesktop. OnWindowResize')
+
+    // if (!blockerRef.current) { return }
+    // if (!camera) { return }
 
     camera.aspect = blockerRef.current.clientWidth / blockerRef.current.clientHeight
     camera.updateProjectionMatrix()
+
     renderer.setSize( blockerRef.current.clientWidth, blockerRef.current.clientHeight )
   }
 
