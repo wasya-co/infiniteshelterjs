@@ -8,13 +8,21 @@ http://ionicframework.com/docs/theming/ */
   --ion-border-radius: 5px;
   --ion-border-radius-lg: 15px;
   --ion-debug-color: red;
+  --ion-small-padding: 10px;
+  --handle-width: 30px;
 
   /* @TODO: abstract this, allow theme switching. _vp_ 2022-09-10 */
   --ion-background-color: #dedede;
   --ion-card-background-color: #dedede;
   --ion-border-color: #999999;
+  --ion-inactive-color: #999999;
   --ion-highlight-color: #ff9999;
   --ion-color: #333333;
+
+
+
+
+
 
   /** primary **/
   --ion-color-primary: #3880ff;
@@ -93,6 +101,7 @@ body.dark {
   --ion-background-color: #292929;
   --ion-card-background-color: #292929;
   --ion-border-color: #5a5a5a;
+  --ion-inactive-color: #5a5a5a;
   --ion-highlight-color: #9999ff;
   --ion-color: #dedede;
 }

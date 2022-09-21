@@ -62,3 +62,8 @@ comfortable will resume auth and credit cards.
                      google_maps_key is in config now.
 2.7.0 - 2022-09-20 - next_js builds in branch `deploy` now.
                      2 more jests pass. All jests should pass. Then, let's iterate. Then, let's ether.
+                     Bugfix #2576 - Handle looks wrong when folded-right
+                     .
+                     .
+                     .
+                     .

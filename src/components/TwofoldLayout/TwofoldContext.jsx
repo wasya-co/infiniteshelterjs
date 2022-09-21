@@ -1,27 +1,21 @@
 
-import { arrowBack } from 'ionicons/icons'
-import { IonIcon } from '@ionic/react'
 import { CircularProgress as _CircularProgress } from '@material-ui/core'
 import _Box from '@material-ui/core/Box'
 import { ChevronLeft as _ChevronLeft, ChevronRight as _ChevronRight, Menu as _MenuIcon, } from '@material-ui/icons'
 import React, { useEffect, useRef, useState } from 'react'
-import {
-  Link, Switch, BrowserRouter as Router, Redirect, Route as _Route, useHistory, withRouter
-} from 'react-router-dom'
-import styled from 'styled-components'
 
-import config from 'config'
 import {
   C,
   logg,
-  request,
-  useApi,
 } from "$shared"
 
+const TwofoldContext = React.createContext({})
+
 /**
+ * TwofoldContextProvider
+ *
  * ishjs has an older version of this - discard it. _vp_ 2022-03-05, 2022-09-12
 */
-const TwofoldContext = React.createContext({})
 const TwofoldContextProvider = ({ children, ...props }) => {
   // logg(props, 'TwofoldContextProvider')
   let {
@@ -29,12 +23,8 @@ const TwofoldContextProvider = ({ children, ...props }) => {
     itemToUnlock, setItemToUnlock,
     layout, setLayout,
     showItem: _showItem, setShowItem: _setShowItem,
-    theme, toggleTheme,
     zoom=1, setZoom, // it's a prop for testing only. _vp_ 2022-03-18
   } = props
-
-
-  const api = useApi()
 
   /* B */
 
@@ -119,6 +109,9 @@ const TwofoldContextProvider = ({ children, ...props }) => {
   // }
   const [ ratedConfirmation, setRatedConfirmation ] = useState(true)
 
+  const [ resizeCount, setResizeCount ] = useState(0)
+  const touchResize = () => setResizeCount(resizeCount+1)
+
   // const [ registerModalOpen, setRegisterModalOpen ] = useState(false)
 
   /* S */
@@ -168,6 +161,7 @@ const TwofoldContextProvider = ({ children, ...props }) => {
     purchaseModalOpen, setPurchaseModalOpen,
 
     ratedConfirmation, setRatedConfirmation,
+    resizeCount, touchResize,
 
     showItem, setShowItem,
     showUrl, setShowUrl,
@@ -176,7 +170,6 @@ const TwofoldContextProvider = ({ children, ...props }) => {
 
     zoom, setZoom,
 
-    theme, toggleTheme,
   }} >{ children }</TwofoldContext.Provider>
 }
 

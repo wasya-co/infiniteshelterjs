@@ -29,7 +29,7 @@ import '@ionic/react/css/display.css'
 
 // @TODO: stop exporting, move to AppProvider, along with BottomDrawer and ToastContainer.
 export const Root = styled.div`
-  padding: 10px;
+  padding: var(--ion-small-padding);
 `;
 
 

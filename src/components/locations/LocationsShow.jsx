@@ -4,13 +4,13 @@ import React, { Fragment as F, useContext, useEffect, useRef, useState } from "r
 import Modal from "react-modal"
 import styled from 'styled-components'
 
+import config from 'config'
 import {
   AuthContext,
 } from "ishlibjs"
 
 import {
   Breadcrumbs,
-  RatedRestrictionModal,
   UnlockModal,
 } from "$components/application"
 import { ItemModal, } from "$components/ItemModal"
@@ -26,12 +26,9 @@ import {
 import {
   AppContext,
   C, Card, ChevronLeft, ChevronRight,
-  FlexCol, FlexRow,
-  inflector,
   Loading,
   logg,
-  MenuIcon,
-  useApi, useWindowSize,
+  useWindowSize,
 } from "$shared"
 import {
   LocationProvider,
@@ -39,37 +36,71 @@ import {
   WrappedMapPanel,
 } from "./"
 
+/**
+ * MoveLeftRightIcon
+**/
+const _MoveLeftRightIcon = ({ fill='var(--ion-inactive-color)', ...props }) => {
 
-// @TODO: move Description into shared ?
-const _D = styled.div`
-`;
+  return <div {...props} >
+    <svg width="17" height="17" viewBox="0 -0.5 17 17" version="1.1" xmlns="http://www.w3.org/2000/svg"
+    >
+      <defs></defs>
+      <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><g transform="translate(1.000000, 0.000000)" fill={fill} >
+        <path d="M5.958,8.951 L5.958,7.007 L3.979,7.007 L3.97900001,5.06677246 C3.97900001,4.57762889 0.265,7.332 0.265,7.332 C-0.095,7.696 -0.095,8.29 0.264,8.655 C0.264,8.655 3.97900001,11.4734899 3.97900001,10.9475709 L3.979,8.951 L5.958,8.951 Z" class="si-glyph-fill"></path><path d="M10.002,7 L10.002,8.973 L12.048,8.973 L12.048,11 C12.048,11.4553833 15.695,8.684 15.695,8.684 C16.055,8.336 16.055,7.771 15.695,7.423 C15.695,7.423 11.980774,4.64377734 11.980774,5.03546143 L12.048,7 L10.002,7 Z" class="si-glyph-fill"></path><rect x="7" y="0" width="2" height="16" class="si-glyph-fill"></rect></g></g>
+    </svg>
+ </div>
+}
+const MoveLeftRightIcon = () => {
+  return <_MoveLeftRightIcon />
+}
+
+/**
+ * Description
+ *
+ * @TODO: move Description into shared ?
+**/
+const _D = styled.div``;
 const Description = ({ item={} }) => {
   if (!item.description) { return }
-
   return <_D className="Description" dangerouslySetInnerHTML={{ __html: item.description }} />
 }
 
-const _Handle = styled.div`
-  // border: 1px solid cyan;
 
-  position: fixed;
-  top: 5px;
-  left: ${p => p.foldedLeft
-    ? '10px'
-    : p.foldedRight
-    ? '98%'
-    : `calc(${p.twofoldPercent*100}% - 0.5ex)` };
+/**
+ * Handle
+**/
+const _Handle = styled.div`
+  border: ${p => p.debug ? 1 : 0 }px solid green;
+  // background: rgba(64, 64, 64, 0.5);
+
+  position: absolute;
+  top: 0;
+  bottom: 0;
+
+  left: ${p => p.foldedLeft ? 0 :
+    p.foldedRight ? 'auto' :
+    `${p.twofoldPercent*100}%` };
+  right: ${p => p.foldedRight ? 0 : 'auto' };
 
   display: flex;
   flex-direction: column;
   align-items: center;
 
-  width: 30px;
-  height: 95%; /* @TODO: this needs to account for bottom being open */
+  width: var(--handle-width);
+
+  z-index: 2;
 `;
 const Handle = (props) => {
-  const [ w ] = useWindowSize()
+  const {} = props
 
+  const {
+    folded, setFolded,
+    foldedLeft, foldedRight,
+    twofoldPercent, setTwofoldPercent,
+  } = useContext(TwofoldContext)
+  // logg(useContext(TwofoldContext), 'Handle Used TwofoldContext')
+
+  const [ w ] = useWindowSize()
   const [ offsetX, setOffsetX ] = useState()
   const [ dragging, setDragging ] = useState(false)
 
@@ -88,11 +119,6 @@ const Handle = (props) => {
       setFolded(C.foldedRight)
     }
   }
-
-  const {
-    folded, setFolded,
-    twofoldPercent, setTwofoldPercent,
-  } = useContext(TwofoldContext)
 
   const onMouseDown = (e) => {
     setDragging(true)
@@ -114,26 +140,24 @@ const Handle = (props) => {
     // document.removeEventListener('mousedown', onMouseDown)
   }
 
-  const foldedLeft = folded === C.foldedLeft
-  const foldedRight = folded === C.foldedRight
-
   // draggable="true"
-  return <_Handle className="Handle" {...{ foldedLeft, foldedRight, twofoldPercent }}
-    onMouseMove={onMouseMove}
-    onMouseDown={onMouseDown}
-    onMouseLeave={onMouseUp}
-    onMouseUp={onMouseUp}
-    style={{
-      pointer: 'cursor',
-    }}
+  return <_Handle className="Handle"
+    debug={config.debug}
+    {...{ foldedLeft, foldedRight, twofoldPercent }}
+    // onMouseMove={onMouseMove}
+    // onMouseDown={onMouseDown}
+    // onMouseLeave={onMouseUp}
+    // onMouseUp={onMouseUp}
   >
-    {/* <MenuIcon /> */}
     <ChevronLeft onClick={foldLeft} />
     <ChevronRight onClick={foldRight} />
+    <MoveLeftRightIcon />
     { [C.foldedRight, C.foldedLeft].indexOf(folded) !== -1  && <LongLine orientation={C.vertical} /> }
   </_Handle>
 }
 
+
+// @TODO: belongs in TwofoldLayout _vp_ 2022-09-21
 const IframeModal = (props) => {
   const { showUrl, setShowUrl } = useContext(TwofoldContext)
 
@@ -146,6 +170,7 @@ const IframeModal = (props) => {
   </Modal>)
 }
 
+
 /**
  * Left
 **/
@@ -157,6 +182,7 @@ const _Left = styled.div`
   display: flex;
   flex-direction: column;
 
+  margin-right: ${p => p.foldedRight ? '30px' : 0 };
   height: calc(100vh - ${p => p.theme.borderWidth}
     - ${p => p.bottomDrawerOpen ? p.theme.bottomDrawerOpenHeight : p.theme.bottomDrawerClosedHeight });
 `;
@@ -172,13 +198,20 @@ const Left = ({ children, ...props }) => {
   </_Left>
 }
 
+
+/**
+ * Right
+**/
 const _Right = styled.div`
-  // background: ${p => p.theme.colors.background};
   position: relative;
 
-  padding: 0 0 0 1em;
-  flex: ${p => p.foldedRight ? '2%' : `${(1-p.twofoldPercent)*100}%` };
+  padding: 0 0 0 var(--handle-width);
+  display: ${p => p.foldedRight ? 'none' : 'flex'};
+  // flex: ${p => p.foldedRight ? '2%' : `${(1-p.twofoldPercent)*100}%` };
+  flex: ${p => `${(1-p.twofoldPercent)*100}%`};
   overflow-x: hidden;
+
+  flex-direction: column;
 
   height: calc(100vh - ${p => `calc(2*${p.theme.borderWidth})`}
     - ${p => p.bottomDrawerOpen ? p.theme.bottomDrawerOpenHeight : p.theme.bottomDrawerClosedHeight });
@@ -190,12 +223,12 @@ const Right = ({ children, ...props }) => {
     twofoldPercent,
   } = useContext(TwofoldContext)
   return <_Right className='Right' {...{ bottomDrawerOpen, foldedRight, twofoldPercent }} >
-    <Handle />
     { children }
   </_Right>
 }
 
-const Row = styled.div`
+
+const W0 = styled.div`
   // border: 1px solid magenta;
 
   display: flex;
@@ -244,7 +277,6 @@ const LocationsShow = (props) => {
   } = useContext(TwofoldContext)
   // logg(useContext(TwofoldContext), 'LocationsShowUsedTwofoldContext')
 
-  // const api = useApi()
   const [ windowWidth, windowHeight ] = useWindowSize()
   const [ loading, setLoading ] = useState(false)
 
@@ -270,7 +302,7 @@ const LocationsShow = (props) => {
     return <LocationsShowMobile3d {...{ ...props, location }} />
   }
 
-  return <Row><LocationProvider {...location} >
+  return <W0><LocationProvider {...location} >
 
     <Left >
       <Breadcrumbs {...location} />
@@ -280,7 +312,7 @@ const LocationsShow = (props) => {
         slug={match.params.slug}
       />
     </Left>
-
+    <Handle />
     <Right >
 
       { /* Markers */ }
@@ -326,7 +358,7 @@ const LocationsShow = (props) => {
 
     <UnlockModal />
 
-  </LocationProvider></Row>
+  </LocationProvider></W0>
 }
 LocationsShow.propTypes = {
   location: PropTypes.object,
