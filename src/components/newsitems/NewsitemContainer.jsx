@@ -14,7 +14,6 @@ import { TwofoldContext, } from "$components/TwofoldLayout"
 import Votable from "$components/Votable"
 import {
   C, Card,
-  inflector,
   logg,
   WBordered,
 } from "$shared"

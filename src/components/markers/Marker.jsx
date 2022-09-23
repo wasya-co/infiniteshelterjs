@@ -99,8 +99,8 @@ const Marker = ({ children, ...props }) => {
     onClick={goto}
     {...{ href, ...props }}
   >
-    <ItemIcon {...marker } />
-    { children }
+    <img src={marker.title_img_path} /><br />
+    <ItemIcon {...marker } /> { marker.name }
   </W0>
 }
 Marker.propTypes = {

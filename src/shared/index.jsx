@@ -210,9 +210,6 @@ export const MenuIcon = styled(_MenuIcon)`
 /* N */
 
 /* P */
-export const PurchasedIcon = () => {
-  return <div className="PurchasedIcon">[purchased]</div>
-}
 
 /**
  * pretty print date
