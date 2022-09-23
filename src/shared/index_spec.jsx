@@ -12,7 +12,6 @@ import {
   ThemeProvider,
 } from "$shared"
 import {
-  AppMock,
   BackBtn, Box,
   FlexCol, FlexRow,
   inflector,
@@ -25,11 +24,18 @@ configure({ adapter: new Adapter() })
 // import useApi from "$shared/Api"
 jest.mock("$shared/Api")
 
+// From: https://stackoverflow.com/questions/58392815/how-to-mock-usehistory-hook-in-jest
+jest.mock('react-router-dom', () => ({
+  ...jest.requireActual('react-router-dom'),
+  useHistory: () => ({
+    goBack: jest.fn()
+  })
+}));
 
 /* B */
 describe('BackBtn -  ', () => {
 
-  test('unsets ShowItem', () => {
+  test(' - unsets ShowItem', async () => {
     const mockSetShowItem = jest.fn()
 
     const w = mount(
@@ -38,9 +44,10 @@ describe('BackBtn -  ', () => {
           <BackBtn />
         </TwofoldContextProvider>
       </AppProvider>)
-    logg(w.find('.BackBtn').exists(), 'found?')
+
     w.find('.BackBtn').first().simulate('click')
     expect(mockSetShowItem).toHaveBeenCalled()
+    // await process.nextTick(() => {})
   })
 
 })
@@ -57,7 +64,7 @@ describe(' - WBordered', () => {
     expect(computed.cursor).toEqual('pointer')
   })
 
-  it('current2 - pointer is undefined', () => {
+  it('pointer is undefined', () => {
     const w = mount(
       <ThemeProvider >
         <WBordered >Hello</WBordered>
@@ -78,16 +85,6 @@ test('Box', () => {
 
 
 /* F */
-
-test('FlexCol', () => {
-  const w = mount(<FlexCol />)
-  expect(w).toBeTruthy()
-})
-
-test('FlexRow', () => {
-  const w = mount(<FlexRow />)
-  expect(w).toBeTruthy()
-})
 
 
 /* I */
@@ -113,16 +110,4 @@ describe('TwofoldContext', () => {
 it('WBordered', () => {
   const w = <WBordered />
   expect(w).toBeTruthy()
-})
-
-describe("WidgetContainer - ", () => {
-
-  it("cursor pointer", async () => {
-    const w = mount(<AppMock>
-      <WidgetContainer data-testid='id1' onClick={() => true } />
-    </AppMock>)
-    expect(w.find('div').getDOMNode()).toHaveStyle('cursor: pointer')
-    await act(() => new Promise(setImmediate))
-  })
-
 })

@@ -191,10 +191,10 @@
     "build": "echo '+++ +++' ; echo +++ +++ 'build_ish, build_staging, ...' ; echo '+++ +++'",
     "build_ish": "NODE_PATH=config/environments/production_ish:shared_modules     node scripts/build.js",
     "build_staging": "NODE_PATH=config/environments/staging_ish:shared_modules    node scripts/build.js",
-    "jest": "NODE_PATH=config/environments/test:shared_modules jest -t current0 --silent",
-    "jest0": "echo '+++ +++ usage:' ; echo '  yarn run jest0 -- <file>' ; echo '' ; NODE_PATH=config/environments/test:shared_modules jest -t current0 --silent",
-    "jest1": "echo '+++ +++ usage:' ; echo '  yarn run jest1 -- <file>' ; echo '' ; NODE_PATH=config/environments/test:shared_modules jest -t current1 --silent",
-    "jest2": "echo '+++ +++ usage:' ; echo '  yarn run jest2 -- <file>' ; echo '' ; NODE_PATH=config/environments/test:shared_modules jest -t current2 --silent",
+    "jest": "NODE_PATH=config/environments/test:shared_modules jest -t current0",
+    "jest0": "echo '+++ +++ usage:' ; echo '  yarn run jest0 -- <file>' ; echo '' ; NODE_PATH=config/environments/test:shared_modules jest -t current0",
+    "jest1": "echo '+++ +++ usage:' ; echo '  yarn run jest1 -- <file>' ; echo '' ; NODE_PATH=config/environments/test:shared_modules jest -t current1",
+    "jest2": "echo '+++ +++ usage:' ; echo '  yarn run jest2 -- <file>' ; echo '' ; NODE_PATH=config/environments/test:shared_modules jest -t current2",
     "next_build": "NODE_PATH=config/environments/production_ish:shared_modules next build",
     "next_dev": "NODE_PATH=config/environments/development_web:shared_modules next dev -- --port 3004",
     "next_devp": "NODE_PATH=config/environments/production_ish:shared_modules next dev -- --port 3004",
@@ -211,6 +211,6 @@
     "start_local": "            HTTPS=true                           PORT=3002  NODE_PATH=config/environments/development_web:shared_modules         node scripts/start.js",
     "start_mobile_trash": "     HTTPS=true  HOST=tgm.mac             PORT=3002  NODE_PATH=config/environments/development_mobile:shared_modules      node scripts/start.js",
     "sync": "NODE_PATH=config/environments/production:shared_modules ionic capacitor sync",
-    "test": "NODE_OPTIONS=--max_old_space_size=4096 NODE_PATH=config/environments/test:shared_modules       jest --maxWorkers=20% --silent"
+    "test": "NODE_OPTIONS=--max_old_space_size=4096 NODE_PATH=config/environments/test:shared_modules       jest --maxWorkers=20%"
   }
 }
