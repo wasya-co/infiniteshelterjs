@@ -35,9 +35,4 @@ describe('TwofoldContext - ', () => {
     await act(() => new Promise(setImmediate))
   })
 
-  // @TODO: re-implement? _vp_ 2022-09-10
-  it.skip('Get the current_user on load', () => {
-    throw 'not implemented'
-  })
-
 })

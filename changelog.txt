@@ -64,6 +64,7 @@ comfortable will resume auth and credit cards.
                      2 more jests pass. All jests should pass. Then, let's iterate. Then, let's ether.
                      Bugfix #2576 - Handle looks wrong when folded-right
 2.8.0 - 2022-09-23 - Markers in MarkersList now show the premium/purchased icon
+                     specs cleanup
                      .
                      .
                      .

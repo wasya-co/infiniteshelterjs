@@ -79,11 +79,11 @@ const WClosed = styled.div`
  */
 const BottomDrawer = (props) => {
   // logg(props, 'BottomDrawer')
+  const {} = props
 
-  const { bottomDrawerOpen, layout, setBottomDrawerOpen } = useContext(TwofoldContext)
-
-  // @TODO: move the component to layout_onecol then
-  if (layout === C.layout_onecol) { return null; }
+  const {
+    bottomDrawerOpen, setBottomDrawerOpen,
+  } = useContext(TwofoldContext)
 
   return <F>
 
@@ -97,10 +97,9 @@ const BottomDrawer = (props) => {
       <LongLine orientation={C.horizontal} />
     </WClosed>
 
-
     <Drawer anchor={"bottom"}
       elevation={1}
-      open={bottomDrawerOpen}
+      open={!!bottomDrawerOpen}
       onClose={() => setBottomDrawerOpen(false)}
       BackdropProps={{ invisible: true }}
       variant={"persistent"}
