@@ -67,6 +67,7 @@ const AppProvider = ({ children, ...props }) => {
   } = props
 
   // @TODO: test-drive _vp_ 2022-09-13
+  // @TODO: this probably doesn't accommodate next_js, and raises a jest warning. _vp_ 2022-09-23
   const [ os, setOs ] = useState(null)
   const fn = async () => {
     let info = await Device.getInfo() // info.operatingSystem === 'ios' || 'android'

@@ -16,7 +16,7 @@ const W0 = styled.div``;
  * @TODO: logged in and access ?
 **/
 const ReportsShow = (props) => {
-  // logg(props, "ReportsShow")
+  logg(props, "ReportsShow")
   const {
     item,
   } = props
@@ -24,7 +24,7 @@ const ReportsShow = (props) => {
     descr,
   } = item
 
-  if (item.raw_json?.id) {
+  if (item.raw_json?.content?.rendered) {
     descr = item.raw_json.content.rendered
   }
   return (<W0>

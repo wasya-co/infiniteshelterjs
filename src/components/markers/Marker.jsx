@@ -4,6 +4,9 @@ import React, { Fragment as F, useContext, useEffect, useRef, useState } from "r
 import styled from 'styled-components'
 
 import {
+  ItemIcon,
+} from '$components/newsitems'
+import {
   TwofoldContext,
 } from "$components/TwofoldLayout"
 import {
@@ -64,16 +67,17 @@ const Marker = ({ children, ...props }) => {
     marker,
   } = props
 
+
   const {
     useHistory,
   } = useContext(AppContext)
+  const history = useHistory()
 
   const {
     itemToUnlock, setItemToUnlock,
     showUrl, setShowUrl,
   } = useContext(TwofoldContext)
 
-  const history = useHistory()
 
   const href = appPaths.location({ slug: marker.destination_slug })
 
@@ -94,7 +98,10 @@ const Marker = ({ children, ...props }) => {
   return <W0
     onClick={goto}
     {...{ href, ...props }}
-  >{children}</W0>
+  >
+    <img src={marker.title_img_path} /><br />
+    <ItemIcon {...marker } /> { marker.name }
+  </W0>
 }
 Marker.propTypes = {
   marker: PropTypes.object.isRequired,

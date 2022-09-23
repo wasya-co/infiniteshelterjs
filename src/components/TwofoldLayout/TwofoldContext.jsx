@@ -28,18 +28,22 @@ const TwofoldContextProvider = ({ children, ...props }) => {
 
   /* B */
 
-  // bottomDrawerOpen, localStorage OK
-  let _bdo
+  // bottomDrawerOpen
+  let _bdo = true // for unregistered users, the drawer is open
   const [ bottomDrawerOpen, _setBottomDrawerOpen ] = useState(_bdo)
-  try {
-    _bro = JSON.parse(localStorage.getItem(C.bottomDrawerOpen))
-  } catch (e) {} // no window
   const setBottomDrawerOpen = (m) => {
     try {
       localStorage.setItem(C.bottomDrawerOpen, JSON.stringify(m))
     } catch (e) {}
     _setBottomDrawerOpen(m)
   }
+  useEffect(() => {
+    try {
+      let tmp = JSON.parse(localStorage.getItem(C.bottomDrawerOpen))
+      _setBottomDrawerOpen(tmp)
+    } catch (e) {} // no window, or cannot parse json
+  }, [])
+
 
 
   // let [ currentUser, setCurrentUser ] = useState(C.anonUser)

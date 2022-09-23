@@ -130,12 +130,16 @@ const W0 = ({ children, ...props }) => <_W0 className='ItemIcon' {...props}>{chi
     case C.item_types.video:
       out.push(<IconVideo key='IconVideo' />)
       break
+    case C.item_types.location:
+      // nothing, we're inside a Marker
+      break
     default:
       out.push(<span key='unknown-kind'>[&nbsp;?&nbsp;]</span>)
   }
   return <W0>{out}</W0>
 }
 ItemIcon.propTypes = {
+  is_premium: PropTypes.bool,
   is_purchased: PropTypes.bool, // .isRequired,
   item_type: PropTypes.string.isRequired,
   premium_tier: PropTypes.number,

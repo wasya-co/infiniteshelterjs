@@ -13,7 +13,8 @@ http://ionicframework.com/docs/theming/ */
 
   /* @TODO: abstract this, allow theme switching. _vp_ 2022-09-10 */
   --ion-background-color: #dedede;
-  --ion-card-background-color: #dedede;
+  --ion-card-background-color: #efefef;
+  --ion-card-color: #333333;
   --ion-border-color: #999999;
   --ion-inactive-color: #999999;
   --ion-highlight-color: #ff9999;
@@ -100,6 +101,7 @@ http://ionicframework.com/docs/theming/ */
 body.dark {
   --ion-background-color: #292929;
   --ion-card-background-color: #292929;
+  --ion-card-color: #dedede;
   --ion-border-color: #5a5a5a;
   --ion-inactive-color: #5a5a5a;
   --ion-highlight-color: #9999ff;

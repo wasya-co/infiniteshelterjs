@@ -66,8 +66,6 @@ const _Img = styled.div`
   border: 1px solid #333333;
   border-radius: 4px;
 
-  // backgroundf: white;
-
   position: relative;
 
   // max-width: 100px;

@@ -211,6 +211,6 @@
     "start_local": "            HTTPS=true                           PORT=3002  NODE_PATH=config/environments/development_web:shared_modules         node scripts/start.js",
     "start_mobile_trash": "     HTTPS=true  HOST=tgm.mac             PORT=3002  NODE_PATH=config/environments/development_mobile:shared_modules      node scripts/start.js",
     "sync": "NODE_PATH=config/environments/production:shared_modules ionic capacitor sync",
-    "test": "NODE_OPTIONS=--max_old_space_size=4096 NODE_PATH=config/environments/test:shared_modules       jest --maxWorkers=20% "
+    "test": "NODE_OPTIONS=--max_old_space_size=4096 NODE_PATH=config/environments/test:shared_modules       jest --maxWorkers=20%"
   }
 }

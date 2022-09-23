@@ -7,7 +7,6 @@ import { act } from '@testing-library/react'
 import {
   logg,
 } from "$shared"
-import AppWrapper from "$src/AppWrapper"
 
 import LongLine from "./LongLine"
 
@@ -16,7 +15,7 @@ configure({ adapter: new Adapter() })
 describe("LongLine", () => {
 
   it("renders -  ", async () => {
-    const w = mount(<AppWrapper ><LongLine /></AppWrapper>)
+    const w = mount(<LongLine />)
     expect(w).toBeTruthy()
     await act(() => new Promise(setImmediate))
   })

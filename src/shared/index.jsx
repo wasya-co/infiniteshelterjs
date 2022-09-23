@@ -34,8 +34,12 @@ const BackIcon = styled(IonIcon)`
   cursor: pointer;
 `;
 export const BackBtn = () => {
-  const { useHistory } = useContext(AppContext)
+
+  const {
+    useHistory,
+  } = useContext(AppContext)
   const history = useHistory()
+
   const {
     showItem, setShowItem,
   } = useContext(TwofoldContext)
@@ -112,9 +116,15 @@ export const FlexRow = styled.div`
 /**
  * Like the rails inflector, has methods:
  * tableize()
+ *
+ * @TODO: move into appRouter
  */
 export const inflector = {
   classify: (m) => {
+    if (m === 'locations') {
+      return '::Gameui::Map'
+    }
+
     if (m.slice(-3)==='ies') {
       m = m.slice(0, -3) + 'y'
     }
@@ -131,6 +141,8 @@ export const inflector = {
     switch(m) {
       case 'Gallery':
         return 'galleries'
+      case '::Gameui::Map':
+        return 'locations'
       default:
         // Report, what else?
         return `${m.toLowerCase()}s`
@@ -210,9 +222,6 @@ export const MenuIcon = styled(_MenuIcon)`
 /* N */
 
 /* P */
-export const PurchasedIcon = () => {
-  return <div className="PurchasedIcon">[purchased]</div>
-}
 
 /**
  * pretty print date

@@ -46,13 +46,7 @@ const MarkersList = (props) => {
   const markers = []
   props.markers.map((m, idx) => {
     if (m.destination_slug) {
-      markers.push(<Marker key={idx}
-        marker={m}
-      >
-        <img src={m.title_img_path} /><br />
-        { m.is_purchased && <PurchasedIcon /> }
-        { m.name }
-      </Marker>)
+      markers.push(<Marker key={idx} marker={m} />)
     }
   })
 

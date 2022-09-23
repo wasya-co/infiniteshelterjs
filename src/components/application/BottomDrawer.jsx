@@ -45,7 +45,7 @@ const Inner1 = styled.div`
   border: 2px solid var(--ion-border-color);
   border-radius: var(--ion-border-radius);
 
-  background: ${p=>p.theme.colors.background};
+  // background: var(--ion-background-color);
   height: calc(${p=>p.theme.bottomDrawerOpenHeight} + 1*${p=>p.theme.borderHeight});
   margin: ${p=>p.theme.borderWidth};
 
@@ -56,7 +56,7 @@ const Inner1 = styled.div`
 const Inner2 = styled.div`
   // border: 1px solid green;
 
-  background: ${p=>p.theme.colors.cardBackground};
+  // background: var(--ion-background-color);
   height: 100px;
   display: flex;
 `;
@@ -79,11 +79,11 @@ const WClosed = styled.div`
  */
 const BottomDrawer = (props) => {
   // logg(props, 'BottomDrawer')
+  const {} = props
 
-  const { bottomDrawerOpen, layout, setBottomDrawerOpen } = useContext(TwofoldContext)
-
-  // @TODO: move the component to layout_onecol then
-  if (layout === C.layout_onecol) { return null; }
+  const {
+    bottomDrawerOpen, setBottomDrawerOpen,
+  } = useContext(TwofoldContext)
 
   return <F>
 
@@ -97,10 +97,9 @@ const BottomDrawer = (props) => {
       <LongLine orientation={C.horizontal} />
     </WClosed>
 
-
     <Drawer anchor={"bottom"}
       elevation={1}
-      open={bottomDrawerOpen}
+      open={!!bottomDrawerOpen}
       onClose={() => setBottomDrawerOpen(false)}
       BackdropProps={{ invisible: true }}
       variant={"persistent"}

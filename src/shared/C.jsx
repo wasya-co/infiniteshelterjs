@@ -38,6 +38,7 @@ const C = {
   // I
   item_types: {
     gallery: 'Gallery',
+    location: '::Gameui::Map',
     report: 'Report',
     photo: 'Photo',
     video: 'Video',

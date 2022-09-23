@@ -8,10 +8,10 @@ import {
   TwofoldContext, TwofoldContextProvider,
 } from "$components/TwofoldLayout"
 import {
+  AppProvider,
   ThemeProvider,
 } from "$shared"
 import {
-  AppMock,
   BackBtn, Box,
   FlexCol, FlexRow,
   inflector,
@@ -24,43 +24,44 @@ configure({ adapter: new Adapter() })
 // import useApi from "$shared/Api"
 jest.mock("$shared/Api")
 
+// From: https://stackoverflow.com/questions/58392815/how-to-mock-usehistory-hook-in-jest
 jest.mock('react-router-dom', () => ({
   ...jest.requireActual('react-router-dom'),
   useHistory: () => ({
-    // push: jest.fn(),
-    goBack: jest.fn(),
-  }),
+    goBack: jest.fn()
+  })
 }));
-
 
 /* B */
 describe('BackBtn -  ', () => {
 
-  test('unsets ShowItem', () => {
+  test(' - unsets ShowItem', async () => {
     const mockSetShowItem = jest.fn()
 
-    const w = mount(<TwofoldContextProvider {...{ showItem: '123', setShowItem: mockSetShowItem }} >
-      <BackBtn />
-    </TwofoldContextProvider>)
-    logg(w.find('.BackBtn').exists(), 'found?')
+    const w = mount(
+      <AppProvider >
+        <TwofoldContextProvider {...{ showItem: '123', setShowItem: mockSetShowItem }} >
+          <BackBtn />
+        </TwofoldContextProvider>
+      </AppProvider>)
+
     w.find('.BackBtn').first().simulate('click')
     expect(mockSetShowItem).toHaveBeenCalled()
+    // await process.nextTick(() => {})
   })
+
 })
 
 
-// logg(getComputedStyle(w.find(_WBordered).getDOMNode()), 'computed style')
 describe(' - WBordered', () => {
 
-  it('current0 - WBordered - observes --ion-border-color css variable, pointer if onClick', () => {
-    document.documentElement.style.setProperty("--ion-border-color", "red")
+  it(' - WBordered - observes pointer if onClick', () => {
     const w = mount(<ThemeProvider >
       <WBordered onClick={() => {}} >Hello</WBordered>
     </ThemeProvider>)
     const node = w.find(WBordered).getDOMNode()
     const computed = getComputedStyle(node)
     expect(computed.cursor).toEqual('pointer')
-    expect(computed.border).toEqual('2px solid red')
   })
 
   it('pointer is undefined', () => {
@@ -69,7 +70,8 @@ describe(' - WBordered', () => {
         <WBordered >Hello</WBordered>
       </ThemeProvider>
     )
-    const computed = getComputedStyle(w.find(_WBordered).getDOMNode())
+    const node = w.find(WBordered).getDOMNode()
+    const computed = getComputedStyle(node)
     expect(computed.cursor).toBeFalsy()
   })
 
@@ -81,17 +83,8 @@ test('Box', () => {
   expect(box).toBeTruthy()
 })
 
+
 /* F */
-
-test('FlexCol', () => {
-  const w = mount(<FlexCol />)
-  expect(w).toBeTruthy()
-})
-
-test('FlexRow', () => {
-  const w = mount(<FlexRow />)
-  expect(w).toBeTruthy()
-})
 
 
 /* I */
@@ -117,16 +110,4 @@ describe('TwofoldContext', () => {
 it('WBordered', () => {
   const w = <WBordered />
   expect(w).toBeTruthy()
-})
-
-describe("WidgetContainer - ", () => {
-
-  it("cursor pointer", async () => {
-    const w = mount(<AppMock>
-      <WidgetContainer data-testid='id1' onClick={() => true } />
-    </AppMock>)
-    expect(w.find('div').getDOMNode()).toHaveStyle('cursor: pointer')
-    await act(() => new Promise(setImmediate))
-  })
-
 })

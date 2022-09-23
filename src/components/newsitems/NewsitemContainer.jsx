@@ -14,7 +14,6 @@ import { TwofoldContext, } from "$components/TwofoldLayout"
 import Votable from "$components/Votable"
 import {
   C, Card,
-  inflector,
   logg,
   WBordered,
 } from "$shared"
@@ -109,11 +108,7 @@ const NewsitemContainer = ({ children, ...props }) => {
 
   const history = useHistory()
 
-
-  // @TODO: move this elsewhere - make generic, remember there are two routers, internal and external. _vp_ 2022-09-12
-  // move this to internal router?
-  // @TODO: for Photo, navigateToItem can show full-screen pic. _vp_ 2022-04-17
-  const href = appPaths.viewItem({ item, location: {slug: destination_slug} })
+  const href = appPaths.item({ item, location: {slug: destination_slug} })
   const navigateToItem = (e) => {
     e.preventDefault()
     if (item.is_premium && !item.is_purchased) {
@@ -122,7 +117,6 @@ const NewsitemContainer = ({ children, ...props }) => {
       history.push( href )
     }
   }
-
 
 
   if (item.item_type === C.item_types.photo) {

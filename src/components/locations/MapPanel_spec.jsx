@@ -7,11 +7,11 @@ import {
   Link, Switch, BrowserRouter as Router, Redirect, Route as _Route, withRouter
 } from 'react-router-dom'
 
-import MapPanelNoZoom from "./MapPanelNoZoom"
 import {
   AppMock, C, logg,
 } from "$shared"
 import useWindowSize from "$shared/useWindowSize"
+import MapPanel from './MapPanel'
 
 enzyme.configure({ adapter: new Adapter() })
 jest.mock("$shared/Api")
@@ -36,7 +36,7 @@ const theseProps = {
   },
 }
 
-describe("MapPanelNoZoom - ", () => {
+describe("MapPanel - ", () => {
 
   afterEach(() => {
     jest.clearAllMocks()
@@ -44,7 +44,7 @@ describe("MapPanelNoZoom - ", () => {
 
   it("renders -  ", async () => {
     let component = mount(<AppMock>
-      <MapPanelNoZoom {...theseProps} />
+      <MapPanel {...theseProps} />
     </AppMock>)
     expect(component).toBeTruthy()
     await act(() => new Promise(setImmediate))
@@ -55,7 +55,7 @@ describe("MapPanelNoZoom - ", () => {
     const mockSetZoom = jest.fn(() => 'done setZoom')
 
     let component = await mount(<AppMock {...{ zoom, setZoom: mockSetZoom }} >
-      <MapPanelNoZoom {...theseProps} />
+      <MapPanel {...theseProps} />
     </AppMock>)
     expect(mockSetZoom).toHaveBeenCalled()
     await act(() => new Promise(setImmediate))
