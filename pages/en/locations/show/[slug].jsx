@@ -129,10 +129,10 @@ export async function getStaticProps(match) {
   // const location = await api.getLocation({ slug, })
 
   const item = await request.get(`${apiOrigin}/api/maps/view/${slug}`).then(r => r.data).then(r => {
-      return r.map
-    }).catch((err) => {
-      return err
-    })
+    return r.map
+  }).catch((err) => {
+    return err
+  })
 
   // console.log("+++ +++ item:", item)
   return { props: { item } }

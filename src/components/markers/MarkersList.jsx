@@ -4,13 +4,8 @@ import React, { Fragment as F, useContext, useEffect, useRef, useState } from "r
 import styled from 'styled-components'
 
 import {
-  TwofoldContext,
-} from "$components/TwofoldLayout"
-import {
   C,
   logg,
-  NavigationContext,
-  PurchasedIcon,
   WBordered,
 } from "$shared"
 import {
@@ -38,7 +33,7 @@ const W0 = ({ children, variant, ...props }) => {
  *
 **/
 const MarkersList = (props) => {
-  // logg(props, 'MarkersList')
+  logg(props, 'MarkersList')
   const { variant } = props
 
   // @TODO: re-add variant. It was there for ParagonAustin, WasyaCo, locations like that. _vp_ 2022-09-11
@@ -50,7 +45,6 @@ const MarkersList = (props) => {
         marker={m}
       >
         <img src={m.title_img_path} /><br />
-        { m.is_purchased && <PurchasedIcon /> }
         { m.name }
       </Marker>)
     }

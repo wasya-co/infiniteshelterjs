@@ -58,7 +58,7 @@ const W1 = styled.div`
  * _vp_ 2021-10-29 But actually this component is getting more work than the zoom one right now...
 **/
 const MapPanel = (props) => {
-  // logg(props, 'MapPanel')
+  logg(props, 'MapPanel')
   const { map } = props
 
   const {
@@ -106,9 +106,7 @@ const MapPanel = (props) => {
 
 
   const markers = []
-  props.map.markers.map((m, idx) => {
-    // logg(m, '111 - tmpMarker')
-
+  props.map.markers?.map((m, idx) => {
     const out = <div
       key={idx}
       onClick={() => history.push(`/en/locations/show/${m.slug}`) }

@@ -42,13 +42,15 @@ const WrappedMapPanel = React.forwardRef((props, ref) => {
   logg(props, 'WrappedMapPanel')
   // const { map } = props
 
+  if (!props.map) { return null }
+
   // // Testing overrides
   // switch (props.slug) {
   //   case 'root':
   //     return <FW ref={ref} ><ThreePanelDesktop {...props} /></FW>
   // }
 
-  switch (props.map.config.map_panel_type) {
+  switch (props.map.config?.map_panel_type) {
 
     case C.map_panel_types.Equirectangular:
       return <W0 ref={ref} className="Equirectangular4" ><Equirectangular4 {...props} /></W0>

@@ -1,23 +1,37 @@
 
-.ReactModal__Overlay {
-  margin-top: 100vh;
-  // transition: margin 2000ms ease-in-out;
+.UnlockModal {
+  background-color: papayawhip;
+
+  max-width: 500px;
+  min-width: 300px;
+
+  margin: auto;
+
+  inset: 40px;
+  border: 1px solid rgb(204, 204, 204);
+  overflow: auto;
+  border-radius: 4px;
+  outline: none;
+  padding: 20px;
+}
+
+.UnlockModalOverlay {
+  position: fixed;
+  inset: 0px;
+  background-color: rgba(125,125,125, 0.3);
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
   z-index: 2;
 }
 
-.ReactModal__Overlay--after-open {
-  margin-top: 0;
-}
+.UnlockModalPortal {}
 
-.ReactModal__Overlay--before-close {
+.Notice {
+  border: 1px solid green;
+  padding: 10px;
+  margin: 10px;
+  width: 100%;
 }
-
-.ReactModal__Content {
-  // margin-top: 100vh;
-  // transition: margin 2000ms ease-in-out;
-}
-.ReactModal__Content--after-open {
-  // margin-top: 0;
-}
-.ReactModal__Content--before-close {}

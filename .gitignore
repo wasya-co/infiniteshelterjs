@@ -15,6 +15,7 @@
 public/assets/objects
 
 .next/cache
+.next/trace
 
 ## this is what https://guyd.me and infiniteshelter.com uses... I cant ignore these at the moment.
 # /build
