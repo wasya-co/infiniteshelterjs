@@ -316,7 +316,7 @@ const LocationsShow = (props) => {
     <Right >
 
       { /* Markers */ }
-      { location.markers?.length && <Collapsible
+      { location.markers.length && <Collapsible
           className='Markers'
           label={location.labels.markers}
           slug={C.collapsible.markers}
@@ -338,7 +338,7 @@ const LocationsShow = (props) => {
       </Collapsible> || null }
 
       { /* Newsitems */ }
-      { location.newsitems?.length && <Collapsible
+      { location.newsitems.length && <Collapsible
           className='Newsitems'
           label={location.labels.newsitems}
           slug={C.collapsible.newsitems}
