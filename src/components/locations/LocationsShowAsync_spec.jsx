@@ -5,17 +5,14 @@ import React from "react"
 import { act } from "react-dom/test-utils"
 
 import * as Api from "$shared/Api"
-import LocationsShowAsync from './LocationsShowAsync'
+import {
+  LocationsRestricted,
+  LocationsShowAsync,
+} from './'
 
 configure({ adapter: new Adapter() })
-
-Api.default = jest.fn().mockImplementation(() => {
-  return {
-    getLocation: jest.fn(() => new Promise(() => {}, () => {}) ),
-  }
-})
-
 describe('LocationsShowAsync', () => {
+
   it('renders', () => {
     const slug = 'xxSlugxx'
     const w = mount(<LocationsShowAsync {...{ match: { params: { slug } } }} />)
@@ -23,6 +20,12 @@ describe('LocationsShowAsync', () => {
   })
 
   it('calls api.getLocation - current2 ', async () => {
+    Api.default = jest.fn().mockImplementation(() => {
+      return {
+        getLocation: jest.fn(() => new Promise(() => {}, () => {}) ),
+      }
+    })
+
     const slug = 'xxSlugxx'
     let w = await mount(<LocationsShowAsync {...{ match: { params: { slug } } }} />)
 
@@ -30,6 +33,12 @@ describe('LocationsShowAsync', () => {
     expect(api.getLocation).toHaveBeenCalled()
 
     await act(async () => new Promise(setImmediate))
+  })
+
+  it('renders LocationsRestricted if not logged in, is_premium', () => {
+    const slug = 'xxSlugxx'
+    let w = await mount(<LocationsShowAsync {...{ match: { params: { slug } } }} />)
+    expect(w.find(LocationsRestricted).exists()).toBeTruthy()
   })
 
 })

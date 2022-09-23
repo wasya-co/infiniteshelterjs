@@ -8,6 +8,7 @@ import config from 'config'
 import {
   Actions,
   CloseBtn,
+  ModalHeader,
 } from 'ishlibjs'
 
 import { TwofoldContext } from "$components/TwofoldLayout"
@@ -40,6 +41,7 @@ const ItemModal = (props) => {
   } = useContext(TwofoldContext)
 
   const onClose = () => {
+    setShowItem(false)
     history.push( appPaths.location({ slug: params.slug }) )
     setShowItem(null)
   }
@@ -51,12 +53,11 @@ const ItemModal = (props) => {
   return <Modal
     className={`ItemModal ${styles.ItemModal}`}
     isOpen={!!item}
-    // overlayClassName={styles.LoginModalOverlay}
-    // portalClassName={styles.LoginModalPortal}
+    overlayClassName={styles.ItemModalOverlay}
+    portalClassName={styles.ItemModalPortal}
   >
-    <Actions >
-      <CloseBtn onClick={onClose} />
-    </Actions>
+    <ModalHeader onClose={onClose} >_</ModalHeader>
+
     { item.item_type === C.item_types.report && item.action === C.actions.show && <ReportsShow item={item} match={{ params: { slug: item.reportname } }} /> }
     { item.item_type === C.item_types.report && item.action === C.actions.new && <ReportsForm /> }
     { item.item_type === C.item_types.gallery && <GalleriesShow match={{ params: { slug: item.slug } }} /> }

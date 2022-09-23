@@ -4,11 +4,13 @@ import { mount } from "enzyme"
 import React from "react"
 import { act } from "react-dom/test-utils"
 
-import { WrappedApp, C, logg, } from "$shared"
+import {
+  C, logg,
+} from "$shared"
 import useApi from "$shared/Api"
-
-import UnlockModal from "./UnlockModal"
 import WrappedApp from "$src/WrappedApp"
+import UnlockModal from "./UnlockModal"
+
 
 enzyme.configure({ adapter: new Adapter() })
 
@@ -64,7 +66,7 @@ describe("UnlockModal -  ", () => {
   })
 
   // I need async/await here, for the doUnlock() propagation.
-  it('Refreshes currentUser after unlocking - current2 ', async () => {
+  it('Refreshes currentUser after unlocking -  ', async () => {
     const setCu = jest.fn()
     const theseProps = {
       currentUser: { n_unlocks: 2 }, setCurrentUser: setCu,

@@ -116,9 +116,15 @@ export const FlexRow = styled.div`
 /**
  * Like the rails inflector, has methods:
  * tableize()
+ *
+ * @TODO: move into appRouter
  */
 export const inflector = {
   classify: (m) => {
+    if (m === 'locations') {
+      return '::Gameui::Map'
+    }
+
     if (m.slice(-3)==='ies') {
       m = m.slice(0, -3) + 'y'
     }
@@ -135,6 +141,8 @@ export const inflector = {
     switch(m) {
       case 'Gallery':
         return 'galleries'
+      case '::Gameui::Map':
+        return 'locations'
       default:
         // Report, what else?
         return `${m.toLowerCase()}s`

@@ -10,6 +10,9 @@ import {
 } from 'ishlibjs'
 import config from 'config'
 
+import {
+  LocationContext,
+} from "$components/locations"
 import { TwofoldContext, } from "$components/TwofoldLayout"
 import {
   AppContext,
@@ -18,7 +21,7 @@ import {
   inflector,
   logg,
 } from "$shared"
-// import { appPaths } from "$src/AppRouter"
+import { appPaths } from "$src/AppRouter"
 
 import * as styles from './UnlockModal.module.scss'
 
@@ -30,17 +33,17 @@ const BtnRow = styled.div`
 
 /**
  * UnlockModal
+ *
+ * Alphabetized contexts
 **/
 const UnlockModal = (props) => {
   // logg(props, 'UnlockModal')
   const {} = props
 
   const {
-    itemToUnlock, setItemToUnlock,
-    purchaseModalOpen, setPurchaseModalOpen,
-    ratedConfirmation, setRatedConfirmation,
-  } = useContext(TwofoldContext)
-  // logg(useContext(TwofoldContext), 'unlockModalUsedTwofoldContext')
+    useHistory,
+  } = useContext(AppContext)
+  const history = useHistory()
 
   const {
     currentUser, setCurrentUser,
@@ -49,10 +52,15 @@ const UnlockModal = (props) => {
   } = useContext(AuthContext)
   // logg(useContext(AuthContext), 'unlockModalUsedAuthContext')
 
+  const location = useContext(LocationContext)
+  // logg(location, 'UnlockModal Used LocationContext')
+
   const {
-    useHistory,
-  } = useContext(AppContext)
-  const history = useHistory()
+    itemToUnlock, setItemToUnlock,
+    purchaseModalOpen, setPurchaseModalOpen,
+    ratedConfirmation, setRatedConfirmation,
+  } = useContext(TwofoldContext)
+  logg(useContext(TwofoldContext), 'unlockModalUsedTwofoldContext')
 
   const api = useApi()
 
@@ -62,13 +70,13 @@ const UnlockModal = (props) => {
     // @TODO: check how many unlocks I have, and offer to purchase more if not enough.
     // @TODO: Do I Need to refresh the newsfeed? _vp_ 2022-09-04
     await api.doUnlock({ kind: itemToUnlock.item_type, id: itemToUnlock.id }).then((r) => {
+      logg(r, 'UnlockModal Unlocked')
 
       // @TODO: Change this to null if possible. Test-drive this change. _vp_ 2022-09-04
       setItemToUnlock({})
       setCurrentUser(r)
 
-      const resource_name = inflector.tableize(itemToUnlock.item_type)
-      history.push(`/en/locations/show/${itemToUnlock.location_slug}/${resource_name}/show/${itemToUnlock.slug}`)
+      history.push(appPaths.item({ item: itemToUnlock, location, }))
 
     }).catch((e) => {
       logg(e, 'e19 - cannot doUnlock')

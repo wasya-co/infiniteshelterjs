@@ -45,7 +45,7 @@ const Inner1 = styled.div`
   border: 2px solid var(--ion-border-color);
   border-radius: var(--ion-border-radius);
 
-  background: ${p=>p.theme.colors.background};
+  // background: var(--ion-background-color);
   height: calc(${p=>p.theme.bottomDrawerOpenHeight} + 1*${p=>p.theme.borderHeight});
   margin: ${p=>p.theme.borderWidth};
 
@@ -56,7 +56,7 @@ const Inner1 = styled.div`
 const Inner2 = styled.div`
   // border: 1px solid green;
 
-  background: ${p=>p.theme.colors.cardBackground};
+  // background: var(--ion-background-color);
   height: 100px;
   display: flex;
 `;

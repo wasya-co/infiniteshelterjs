@@ -11,7 +11,10 @@ import {
   SsrContext,
   useApi,
 } from '$shared'
-import { LocationsShow } from './'
+import {
+  LocationsRestricted,
+  LocationsShow,
+} from './'
 
 /**
  * LocationsShowAsync
@@ -54,11 +57,11 @@ const LocationsShowAsync = (props) => {
           break
         default:
           logg(itemType, 'Cannot get this item type!')
-          toast('Cannot get this item type!')
+          toast(`Cannot get this item type: ${itemType}`)
       }
     }
     Promise.all(chain).then(rs => {
-      // logg(rs, 'LocationsShowAsync.chainResults')
+      logg(rs, 'LocationsShowAsync ChainResults')
       setLocation(rs[0])
       // @TODO: test-drive this. Clicking from a location-gallery back to location, should un-set the showItem. _vp_ 2022-09-11
       rs[1] ? setShowItem(rs[1]) : setShowItem(null)
@@ -66,9 +69,14 @@ const LocationsShowAsync = (props) => {
       // logg(err, "Could not load Location.")
       // toast("Could not load Location.")
     })
-  }, [ match.params.item_type, match.params.item_slug, match.params.slug, match.params.newsitems_page ])
+  }, [
+    match.params.item_type,
+    match.params.item_slug,
+    match.params.slug,
+    match.params.newsitems_page ])
 
   if (!location) { return  null }
+  if (location.is_premium && !location.is_purchased) { return <LocationsRestricted /> }
   return <LocationsShow {...{ location, match, showItem }} />
 }
 LocationsShowAsync.propTypes = {

@@ -1,18 +1,41 @@
 
+html.plt-mobile .ItemModal {
+  inset: 0px;
+  border: 0px;
+  padding: 0px;
+}
 
 .ItemModal {
-  position: absolute;
-  inset: 20px;
+  background-color: var(--ion-card-background-color);
+  color: var(--ion-card-color);
+
+  overflow: auto;
+  max-height: 90vh;
+
+  max-width: 800px;
+  min-width: 300px;
+  width: 80vw;
+
+  margin: auto;
+
+  inset: 40px;
   border: 1px solid rgb(204, 204, 204);
-  background: rgb(255, 255, 255);
   overflow: auto;
   border-radius: 4px;
   outline: none;
   padding: 20px;
 }
 
-html.plt-mobile .ItemModal {
+.ItemModalOverlay {
+  position: fixed;
   inset: 0px;
-  border: 0px;
-  padding: 0px;
+  background-color: rgba(125,125,125, 0.3);
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  z-index: 2;
 }
+
+.ItemModalPortal {}

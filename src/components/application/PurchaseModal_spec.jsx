@@ -18,14 +18,14 @@ jest.mock("$shared/Api")
 
 const theseProps = { match: { url: '/en/cities/travel-to/chicago', params: '?' } }
 
-describe("PurchaseModal - current2 ", () => {
+describe("PurchaseModal -  ", () => {
 
   it("renders", async () => {
     let component = mount(<WrappedApp >
       <PurchaseModal {...theseProps} />
-    </WrappedAPp>)
+    </WrappedApp>)
     expect(component).toBeTruthy()
-    await act(() => new Promise(setImmediate))
+    // await act(() => new Promise(setImmediate))
   })
 
   // it("says to purchase more if not enough coins", async () => {

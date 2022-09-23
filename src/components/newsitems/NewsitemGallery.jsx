@@ -108,7 +108,7 @@ const NewsitemGallery = (props) => {
   } = useContext(AppContext)
 
   const history = useHistory()
-  const href = appPaths.viewGallery({ location_slug, slug: item.slug })
+  const href = appPaths.gallery({ location_slug, slug: item.slug })
 
   // @TODO: only if purchased or free! IMPORTANT _vp_ 2022-09-12
   const goto = (e) => {

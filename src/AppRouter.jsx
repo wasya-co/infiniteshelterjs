@@ -29,16 +29,35 @@ import {
 /**
  * appPaths
  *
- * names should not end in "path", that's cruft.
- *
  * @TODO: test-drive: (1) when providing location_slug, (2) when providing location, (3) when neither. _vp_ 2022-09-12
+ * @TODO: for Photo, can show full-screen pic. _vp_ 2022-04-17
  *
 **/
 export const appPaths = {
   cityVenuesPath: (slug) => `/en/cities/travel-to/${slug}/venues`,
   cityPath: (slug) => `/en/cities/travel-to/${slug}`,
 
-  viewGallery: ({ location, location_slug, slug }) => {
+  item: (props) => {
+    let item, location
+    if (props.item_type) {
+      item = props
+    } else {
+      ({ item, location } = props)
+    }
+    const { item_type, slug } = item
+
+    if (item_type === C.item_types.location) {
+      return `/en/locations/show/${slug}`
+    }
+
+    if (location) {
+      return `/en/locations/show/${location.slug}/${inflector.tableize(item_type)}/show/${slug}`
+    } else {
+      return `/en/${inflector.tableize(item_type)}/show/${slug}`
+    }
+  },
+
+  gallery: ({ location, location_slug, slug }) => {
     if (location_slug) {
       return `/en/locations/show/${location_slug}/galleries/show/${slug}`
     }
@@ -47,16 +66,6 @@ export const appPaths = {
     } else {
       // return `/en/${inflector.tableize(item_type)}/show/${slug}`
       return `/en/galleries/show/${slug}`
-    }
-  },
-
-  viewItem: ({ item, location }) => {
-    const { item_type, slug } = item
-
-    if (location) {
-      return `/en/locations/show/${location.slug}/${inflector.tableize(item_type)}/show/${slug}`
-    } else {
-      return `/en/${inflector.tableize(item_type)}/show/${slug}`
     }
   },
 
