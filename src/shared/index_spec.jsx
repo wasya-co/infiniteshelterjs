@@ -8,6 +8,7 @@ import {
   TwofoldContext, TwofoldContextProvider,
 } from "$components/TwofoldLayout"
 import {
+  AppProvider,
   ThemeProvider,
 } from "$shared"
 import {
@@ -24,14 +25,6 @@ configure({ adapter: new Adapter() })
 // import useApi from "$shared/Api"
 jest.mock("$shared/Api")
 
-jest.mock('react-router-dom', () => ({
-  ...jest.requireActual('react-router-dom'),
-  useHistory: () => ({
-    // push: jest.fn(),
-    goBack: jest.fn(),
-  }),
-}));
-
 
 /* B */
 describe('BackBtn -  ', () => {
@@ -39,37 +32,39 @@ describe('BackBtn -  ', () => {
   test('unsets ShowItem', () => {
     const mockSetShowItem = jest.fn()
 
-    const w = mount(<TwofoldContextProvider {...{ showItem: '123', setShowItem: mockSetShowItem }} >
-      <BackBtn />
-    </TwofoldContextProvider>)
+    const w = mount(
+      <AppProvider >
+        <TwofoldContextProvider {...{ showItem: '123', setShowItem: mockSetShowItem }} >
+          <BackBtn />
+        </TwofoldContextProvider>
+      </AppProvider>)
     logg(w.find('.BackBtn').exists(), 'found?')
     w.find('.BackBtn').first().simulate('click')
     expect(mockSetShowItem).toHaveBeenCalled()
   })
+
 })
 
 
-// logg(getComputedStyle(w.find(_WBordered).getDOMNode()), 'computed style')
 describe(' - WBordered', () => {
 
-  it('current0 - WBordered - observes --ion-border-color css variable, pointer if onClick', () => {
-    document.documentElement.style.setProperty("--ion-border-color", "red")
+  it(' - WBordered - observes pointer if onClick', () => {
     const w = mount(<ThemeProvider >
       <WBordered onClick={() => {}} >Hello</WBordered>
     </ThemeProvider>)
     const node = w.find(WBordered).getDOMNode()
     const computed = getComputedStyle(node)
     expect(computed.cursor).toEqual('pointer')
-    expect(computed.border).toEqual('2px solid red')
   })
 
-  it('pointer is undefined', () => {
+  it('current2 - pointer is undefined', () => {
     const w = mount(
       <ThemeProvider >
         <WBordered >Hello</WBordered>
       </ThemeProvider>
     )
-    const computed = getComputedStyle(w.find(_WBordered).getDOMNode())
+    const node = w.find(WBordered).getDOMNode()
+    const computed = getComputedStyle(node)
     expect(computed.cursor).toBeFalsy()
   })
 
@@ -80,6 +75,7 @@ test('Box', () => {
   const box = <Box />
   expect(box).toBeTruthy()
 })
+
 
 /* F */
 

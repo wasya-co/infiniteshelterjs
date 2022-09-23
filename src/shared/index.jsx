@@ -34,8 +34,12 @@ const BackIcon = styled(IonIcon)`
   cursor: pointer;
 `;
 export const BackBtn = () => {
-  const { useHistory } = useContext(AppContext)
+
+  const {
+    useHistory,
+  } = useContext(AppContext)
   const history = useHistory()
+
   const {
     showItem, setShowItem,
   } = useContext(TwofoldContext)
