@@ -14,7 +14,6 @@
 
 public/assets/objects
 
-.next
 .next/cache
 .next/trace
 !.next/.keep
