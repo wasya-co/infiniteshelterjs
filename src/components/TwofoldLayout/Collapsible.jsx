@@ -74,7 +74,7 @@ const W0 = ({ children, variant, ...props }) => {
  * @TODO: test-driven _vp_ 2021-10-29
  */
 const Collapsible = ({ children, ...props }) => {
-  logg(props, 'Collapsible')
+  // logg(props, 'Collapsible')
   const {
     className='', config={},
     slug,
