@@ -38,13 +38,18 @@ export const appPaths = {
   cityPath: (slug) => `/en/cities/travel-to/${slug}`,
 
   item: (props) => {
+    // logg(props, 'appPaths.item')
+
     let item, location
     if (props.item_type) {
       item = props
     } else {
       ({ item, location } = props)
     }
-    const { item_type, slug } = item
+    let { item_type, slug } = item
+    if (!slug) { // for Photo only
+      slug = item.id
+    }
 
     if (item_type === C.item_types.location) {
       return `/en/locations/show/${slug}`

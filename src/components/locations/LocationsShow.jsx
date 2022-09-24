@@ -46,7 +46,8 @@ const _MoveLeftRightIcon = ({ fill='var(--ion-inactive-color)', ...props }) => {
     >
       <defs></defs>
       <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><g transform="translate(1.000000, 0.000000)" fill={fill} >
-        <path d="M5.958,8.951 L5.958,7.007 L3.979,7.007 L3.97900001,5.06677246 C3.97900001,4.57762889 0.265,7.332 0.265,7.332 C-0.095,7.696 -0.095,8.29 0.264,8.655 C0.264,8.655 3.97900001,11.4734899 3.97900001,10.9475709 L3.979,8.951 L5.958,8.951 Z" class="si-glyph-fill"></path><path d="M10.002,7 L10.002,8.973 L12.048,8.973 L12.048,11 C12.048,11.4553833 15.695,8.684 15.695,8.684 C16.055,8.336 16.055,7.771 15.695,7.423 C15.695,7.423 11.980774,4.64377734 11.980774,5.03546143 L12.048,7 L10.002,7 Z" class="si-glyph-fill"></path><rect x="7" y="0" width="2" height="16" class="si-glyph-fill"></rect></g></g>
+        <path d="M5.958,8.951 L5.958,7.007 L3.979,7.007 L3.97900001,5.06677246 C3.97900001,4.57762889 0.265,7.332 0.265,7.332 C-0.095,7.696 -0.095,8.29 0.264,8.655 C0.264,8.655 3.97900001,11.4734899 3.97900001,10.9475709 L3.979,8.951 L5.958,8.951 Z"
+        ></path><path d="M10.002,7 L10.002,8.973 L12.048,8.973 L12.048,11 C12.048,11.4553833 15.695,8.684 15.695,8.684 C16.055,8.336 16.055,7.771 15.695,7.423 C15.695,7.423 11.980774,4.64377734 11.980774,5.03546143 L12.048,7 L10.002,7 Z"></path><rect x="7" y="0" width="2" height="16"></rect></g></g>
     </svg>
  </div>
 }
@@ -259,6 +260,7 @@ const LocationsShow = (props) => {
   const {
     currentUser,
   } = useContext(AuthContext)
+  logg(useContext(AuthContext), 'LocationsShow Used AuthContext')
 
   const {
     os,
@@ -275,7 +277,7 @@ const LocationsShow = (props) => {
     showUrl, setShowUrl,
     twofoldPercent,
   } = useContext(TwofoldContext)
-  // logg(useContext(TwofoldContext), 'LocationsShowUsedTwofoldContext')
+  logg(useContext(TwofoldContext), 'LocationsShowUsedTwofoldContext')
 
   const [ windowWidth, windowHeight ] = useWindowSize()
   const [ loading, setLoading ] = useState(false)
@@ -286,9 +288,14 @@ const LocationsShow = (props) => {
   useEffect(() => {
     // @TODO: having location.is_purchased doesn't sound performant, expecially with caching.
     if (location.is_premium && ( !currentUser.email || !location.is_purchased )) {
-      setItemToUnlock({ closable: false, item_type: 'Location', ...location })
+      setItemToUnlock({
+        closable: false,
+        item_type: C.item_types.location,
+        ...location })
+    } else {
+      setItemToUnlock(false)
     }
-  }, [ location ])
+  }, [ currentUser, location ])
 
   // Set mapPanel sizes
   useEffect(() => {

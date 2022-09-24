@@ -13,7 +13,7 @@ const ImageLarge = styled.img`
   max-width: 100%;
 `;
 
-const W = styled.div`
+const W0 = styled.div`
   display: flex;
   justify-content: center;
 `;
@@ -26,9 +26,9 @@ const NewsitemPhoto = (props) => {
   const { item, variant } = props
 
   return <NewsitemContainer className='Newsitem NewsitemPhoto' {...{ item, variant }} >
-    <W>
+    <W0>
       { item.photos[0] && <ImageLarge src={item.photos[0].large_url} /> }
-    </W>
+    </W0>
   </NewsitemContainer>
 }
 

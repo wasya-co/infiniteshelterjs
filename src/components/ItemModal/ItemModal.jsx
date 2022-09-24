@@ -11,6 +11,7 @@ import {
   ModalHeader,
 } from 'ishlibjs'
 
+import { PhotosShow } from '$components/photos'
 import { TwofoldContext } from "$components/TwofoldLayout"
 import { GalleriesShow } from "$components/galleries"
 import {
@@ -58,6 +59,7 @@ const ItemModal = (props) => {
   >
     <ModalHeader onClose={onClose} >_</ModalHeader>
 
+    { item.item_type === C.item_types.photo && <PhotosShow item={item} /> }
     { item.item_type === C.item_types.report && item.action === C.actions.show && <ReportsShow item={item} match={{ params: { slug: item.reportname } }} /> }
     { item.item_type === C.item_types.report && item.action === C.actions.new && <ReportsForm /> }
     { item.item_type === C.item_types.gallery && <GalleriesShow match={{ params: { slug: item.slug } }} /> }

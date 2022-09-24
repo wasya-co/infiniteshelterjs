@@ -40,7 +40,6 @@ const LocationsShowAsync = (props) => {
     newsitems_page: q.get('newsitems_page') || 1,
   }
 
-
   const [ showItem, setShowItem ] = useState()
   const api = useApi()
 
@@ -51,6 +50,9 @@ const LocationsShowAsync = (props) => {
       switch (itemType) {
         case C.item_types.gallery:
           chain.push( api.getGallery(match.params.item_slug) )
+          break
+        case C.item_types.photo:
+          chain.push( api.getPhoto(match.params.item_slug) )
           break
         case C.item_types.report:
           chain.push( api.getReport(match.params.item_slug) )
@@ -63,8 +65,10 @@ const LocationsShowAsync = (props) => {
     Promise.all(chain).then(rs => {
       logg(rs, 'LocationsShowAsync ChainResults')
       setLocation(rs[0])
+
       // @TODO: test-drive this. Clicking from a location-gallery back to location, should un-set the showItem. _vp_ 2022-09-11
       rs[1] ? setShowItem(rs[1]) : setShowItem(null)
+
     }).catch(err => {
       // logg(err, "Could not load Location.")
       // toast("Could not load Location.")

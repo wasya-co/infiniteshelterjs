@@ -98,6 +98,7 @@ const SideMenu = (props) => {
             </ListItem>
           ) }
 
+          <ListItem>REACT_ENV: {config.REACT_ENV}</ListItem>
         </List>
 
       </W0>

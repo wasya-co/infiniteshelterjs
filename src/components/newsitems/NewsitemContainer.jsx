@@ -118,40 +118,26 @@ const NewsitemContainer = ({ children, ...props }) => {
     }
   }
 
-
-  if (item.item_type === C.item_types.photo) {
-    return <W0 {...{ className, variant }} >
-      <Col>
-        <TitleA>{item.name}</TitleA>
+  return <W0 {...{ className, variant }} >
+    { children }
+    <Row >
+      <Col style={{ alignItems: 'center' }} >
+        <Votable item={item} />
+      </Col>
+      <Col style={{ overflowWrap: 'break-word' }} >
+        <RowInline>
+          <ItemIcon {...item} />
+          <TitleA href={href} onClick={navigateToItem} >{item.name}</TitleA>
+        </RowInline>
         <Metaline {...item} />
       </Col>
-      { children }
-    </W0>
-
-  } else {
-
-    return <W0 {...{ className, variant }} >
-      { children }
-      <Row >
-        <Col style={{ alignItems: 'center' }} >
-          <Votable item={item} />
-        </Col>
-        <Col style={{ overflowWrap: 'break-word' }} >
-          <RowInline>
-            <ItemIcon {...item} />
-            <TitleA href={href} onClick={navigateToItem} >{item.name}</TitleA>
-          </RowInline>
-          <Metaline {...item} />
-        </Col>
-      </Row>
-      { item.subhead?.length && <A className="subhead"
-        href={href}
-        onClick={navigateToItem}
-        dangerouslySetInnerHTML={{ __html: item.subhead }}
-      /> || null }
-    </W0>
-
-  }
+    </Row>
+    { item.subhead?.length && <A className="subhead"
+      href={href}
+      onClick={navigateToItem}
+      dangerouslySetInnerHTML={{ __html: item.subhead }}
+    /> || null }
+  </W0>
 }
 NewsitemContainer.propTypes = {
   item: PropTypes.object.isRequired,

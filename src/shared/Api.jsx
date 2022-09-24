@@ -70,6 +70,8 @@ const useApi = () => {
       })
     },
 
+    getPhoto: (slug) => request.get(`${config.apiOrigin}/api/photos/view/${slug}?jwt_token=${token}`).then((r) => r.data.photo),
+
     getReport: (slug) => request.get(`${config.apiOrigin}/api/reports/view/${slug}?jwt_token=${token}`).then((r) => r.data.report),
 
     getTag: (tag) => request.get(`${config.apiOrigin}/api/tags/view/${tag.slug}`).then((r) => r.data),

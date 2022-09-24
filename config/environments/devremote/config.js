@@ -7,8 +7,9 @@ const settings = {
   "debug": false,
 
   APP_ENV: 'development_web',
-  "homePath": "/en/locations/show/art-gallery",
+  "homePath": "/en/locations/show/root",
 
+  REACT_ENV: 'devremote',
   "requireLogin": false,
   stripePublicKey: 'pk_test_qr1QPmSpLdBFt1F7itdWJOj3',
 };

@@ -3,6 +3,7 @@ import { Device } from '@capacitor/device'
 import React, { useContext, useState } from 'react'
 import PropTypes from 'prop-types'
 import * as ReactRouterDOM from 'react-router-dom'
+import { toast } from 'react-toastify'
 
 import {
   AuthContext,
