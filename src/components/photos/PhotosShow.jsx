@@ -14,6 +14,7 @@ const PhotosShow = (props) => {
 
   return <>
     <img src={item.original_url} alt='' />
+    { item.subhead }
   </>
 }
 export default PhotosShow
