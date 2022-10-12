@@ -39,8 +39,10 @@ const FW = styled.div`
  *
 **/
 const WrappedMapPanel = React.forwardRef((props, ref) => {
-  logg(props, 'WrappedMapPanel')
-  // const { map } = props
+  // logg(props, 'WrappedMapPanel')
+  const {
+    // map,
+  } = props
 
   // // Testing overrides
   // switch (props.slug) {

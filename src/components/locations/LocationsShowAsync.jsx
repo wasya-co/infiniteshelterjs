@@ -24,7 +24,7 @@ import {
  *
 **/
 const LocationsShowAsync = (props) => {
-  logg(props, 'LocationsShowAsync')
+  // logg(props, 'LocationsShowAsync')
   const { match } = props
 
   // @TODO: this is elegantly LocationProvider _vp_ 2022-09-12
@@ -63,7 +63,7 @@ const LocationsShowAsync = (props) => {
       }
     }
     Promise.all(chain).then(rs => {
-      logg(rs, 'LocationsShowAsync ChainResults')
+      // logg(rs, 'LocationsShowAsync ChainResults')
       setLocation(rs[0])
 
       // @TODO: test-drive this. Clicking from a location-gallery back to location, should un-set the showItem. _vp_ 2022-09-11

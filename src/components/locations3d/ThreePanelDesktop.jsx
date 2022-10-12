@@ -24,6 +24,8 @@ import { appPaths } from "$src/AppRouter"
  *
  * Units are centimeters
  *
+ * Math capsule: https://github.com/mrdoob/three.js/blob/dev/examples/jsm/math/Capsule.js
+ *
  * Markers are obejcts _vp_ 2021-11-14
  * Continue.           _vp_ 2022-08-13
  * Continue.           _vp_ 2022-09-13
@@ -80,18 +82,27 @@ const ThreePanelDesktop = (props) => {
   const gltfLoader = new GLTFLoader()
   const worldOctree = new Octree()
 
-  const playerCollider = new Capsule( new THREE.Vector3( 0, 5, 0 ), new THREE.Vector3( 0, 30, 0 ), 20 )
+  const helperMaterial = new THREE.MeshBasicMaterial({ color: 0xffff00 })
+  const wireframeMaterial = new THREE.MeshStandardMaterial()
+  wireframeMaterial.wireframe = true
+
+  const playerCollider = new Capsule( new THREE.Vector3( 0, 5, 0 ),
+    new THREE.Vector3( 0, 30, 0 ),
+    20 ) // begin, end, radius
+  const playerColliderHelper = new THREE.Mesh(
+    new THREE.CylinderBufferGeometry(20, 20, 25, 8), // radiusTop, radiusBottom, height, radialSegments
+    wireframeMaterial )
+
   let playerOnFloor = false
   const playerVelocity = new THREE.Vector3()
   const playerDirection = new THREE.Vector3()
 
   const playerCtlGeometry = new THREE.SphereGeometry(5, 8, 8) // radius, widthSegments, heightSegments, phiStart, phiEnd, thetaStart, thetaEnd
   const playerBodyGeometry = new THREE.BoxGeometry(8, 20, 2)
-  // const playerMaterial = new THREE.MeshBasicMaterial({ color: 0xffff00 })
-  const playerMaterial = new THREE.MeshStandardMaterial()
-  playerMaterial.wireframe = true
-  const playerCtl = new THREE.Mesh( playerCtlGeometry, playerMaterial )
-  const playerBody = new THREE.Mesh( playerBodyGeometry, playerMaterial )
+
+
+  const playerCtl = new THREE.Mesh( playerCtlGeometry, wireframeMaterial )
+  const playerBody = new THREE.Mesh( playerBodyGeometry, wireframeMaterial )
   playerBody.position.y = 0
   playerBody.castShadow = true
   playerCtl.position.y = 17.5
@@ -116,9 +127,10 @@ const ThreePanelDesktop = (props) => {
     camera.position.z = 40 // this much behind the body
 
     playerCtl.add(camera)
-    playerCtl.add(playerCollider)
+    // playerCtl.add(playerCollider)
     scene.add( playerCtl )
     scene.add( playerBody )
+    scene.add( playerColliderHelper )
 
     /*
      * Lights
@@ -350,7 +362,7 @@ const ThreePanelDesktop = (props) => {
 
 
   const onWindowResize = () => {
-    logg([blockerRef.current.clientWidth, blockerRef.current.clientHeight], 'ThreePanelDesktop. OnWindowResize')
+    // logg([blockerRef.current.clientWidth, blockerRef.current.clientHeight], 'ThreePanelDesktop. OnWindowResize')
 
     // if (!blockerRef.current) { return }
     // if (!camera) { return }
