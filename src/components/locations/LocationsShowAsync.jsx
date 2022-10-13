@@ -67,7 +67,7 @@ const LocationsShowAsync = (props) => {
       setLocation(rs[0])
 
       // @TODO: test-drive this. Clicking from a location-gallery back to location, should un-set the showItem. _vp_ 2022-09-11
-      rs[1] ? setShowItem(rs[1]) : setShowItem(null)
+      setShowItem(rs[1] ? rs[1] : null)
 
     }).catch(err => {
       // logg(err, "Could not load Location.")

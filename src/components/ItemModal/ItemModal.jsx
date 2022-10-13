@@ -42,7 +42,6 @@ const ItemModal = (props) => {
   } = useContext(TwofoldContext)
 
   const onClose = () => {
-    setShowItem(false)
     history.push( appPaths.location({ slug: params.slug }) )
     setShowItem(null)
   }
@@ -57,7 +56,7 @@ const ItemModal = (props) => {
     overlayClassName={styles.ItemModalOverlay}
     portalClassName={styles.ItemModalPortal}
   >
-    <ModalHeader onClose={onClose} >_</ModalHeader>
+    <ModalHeader onClose={onClose} >{item.name}</ModalHeader>
 
     { item.item_type === C.item_types.photo && <PhotosShow item={item} /> }
     { item.item_type === C.item_types.report && item.action === C.actions.show && <ReportsShow item={item} match={{ params: { slug: item.reportname } }} /> }

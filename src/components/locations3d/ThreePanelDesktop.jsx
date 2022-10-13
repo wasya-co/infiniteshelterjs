@@ -97,6 +97,8 @@ const ThreePanelDesktop = (props) => {
   let prevTime = performance.now()
   const playerVelocity = new THREE.Vector3()
   const playerDirection = new THREE.Vector3()
+  let colliderCenter = new THREE.Vector3()
+  let deltaPosition
 
   const playerCtlGeometry = new THREE.SphereGeometry(5, 8, 8) // radius, widthSegments, heightSegments, phiStart, phiEnd, thetaStart, thetaEnd
   const playerBodyGeometry = new THREE.BoxGeometry(16, 20, 2)
@@ -448,7 +450,6 @@ const ThreePanelDesktop = (props) => {
           canJump = true
         }
         playerDirection.normalize()
-        // logg(playerDirection, 'playerDirection') // these are binary controls, i.e. keyboard presses
 
         controls.moveRight( - playerVelocity.x * delta )
         controls.moveForward( - playerVelocity.z * delta )
@@ -459,14 +460,11 @@ const ThreePanelDesktop = (props) => {
           canJump = true
         }
 
-        // logg(controls.getObject().rotation, 'controlsRotation')
+        deltaPosition = playerVelocity.clone().multiplyScalar( delta )
 
-        const deltaPosition = playerVelocity.clone().multiplyScalar( delta )
 
-        // logg(deltaPosition, 'deltaPosition')
         playerCollider.translate( deltaPosition )
-        // playerCollider.getCenter(vector)
-        // vector.addScaledVector( playerVelocity, delta )
+
 
         { // logs
 
@@ -479,6 +477,14 @@ const ThreePanelDesktop = (props) => {
         // scene.add( arrowHCD )
         // logg(cameraDirection, 'cameraDirection')
 
+        /* show deltaPosition - in body coords */
+        // const arrowHDP = new THREE.ArrowHelper(
+        //   deltaPosition,
+        //   controls.getObject().position,
+        //   20,
+        //   0xffffff )
+        // scene.add( arrowHDP )
+
         /* shows controls' position */
         // const arrowH1 = new THREE.ArrowHelper(
         //   controls.getObject().clone().position.normalize(),
@@ -487,14 +493,7 @@ const ThreePanelDesktop = (props) => {
         //   0xffffff )
         // scene.add( arrowH1 )
 
-        /* playerDirection */
-        /* not useful, use cameraDirection instead */
-        // const arrowHPD = new THREE.ArrowHelper(
-        //   playerDirection,
-        //   controls.getObject().position,
-        //   10,
-        //   0xff0f0 )
-        // scene.add( arrowHPD )
+        /* playerDirection - not used much. */
 
         /* Shows playerVelocity */
         // const arrowHPV = new THREE.ArrowHelper(
@@ -517,38 +516,11 @@ const ThreePanelDesktop = (props) => {
         } // endLogs
 
 
-        { // playerBody
-
-          // playerBody.rotation.x = controls.getObject().rotation.x
-          playerBody.rotation.y = controls.getObject().rotation.y
-          // playerBody.rotation.z = controls.getObject().rotation.z
-
-          // let q = new THREE.Quaternion()
-          // controls.getObject().getWorldQuaternion( q )
-          // // playerBody.setRotationFromQuaternion( q )
-          // let dp = deltaPosition.clone()
-          // dp.applyQuaternion( q )
-          // playerBody.position.x -= dp.x
-          // playerBody.position.y += dp.y
-          // playerBody.position.z += dp.z
-
-          /* I think the below works quite well */
-          // playerBody.position.x -= deltaPosition.x
-          // playerBody.position.z += deltaPosition.z
-
-          // playerBody.position.x = controls.getObject().position.x
-          // playerBody.position.y = controls.getObject().position.y
-          // playerBody.position.z = controls.getObject().position.z
-
-        } // endPlayerBody
-
-
         /* The below works well. */
-        playerCollider.getCenter( vector )
-        playerColliderHelper.position.x = vector.x
-        playerColliderHelper.position.y = vector.y
-        playerColliderHelper.position.z = vector.z
-        // logg(vector, 'playerCollider Center')
+        playerCollider.getCenter( colliderCenter )
+        playerColliderHelper.position.x = colliderCenter.x
+        playerColliderHelper.position.y = colliderCenter.y
+        playerColliderHelper.position.z = colliderCenter.z
 
 
       })()
