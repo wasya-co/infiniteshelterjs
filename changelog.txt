@@ -67,5 +67,4 @@ comfortable will resume auth and credit cards.
                      specs cleanup
                      bottomDrawer is sticky again
 2.9.0 - 2022-10-13 - minor stylistic fixes                     .
-                     .
-                     .
+                     no more Cities. and major stylistic issues.
