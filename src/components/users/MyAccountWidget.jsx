@@ -11,9 +11,8 @@ import Web3 from 'web3'
 import { useWeb3React, Web3ReactProvider } from "@web3-react/core"
 import { InjectedConnector } from '@web3-react/injected-connector'
 
-import config from "config"
 import {
-  AuthContext, AuthWidget,
+  AuthContext,
 } from 'ishlibjs'
 
 import {
@@ -22,7 +21,7 @@ import {
 import { TwofoldContext, } from "$components/TwofoldLayout"
 import {
   Btn,
-  Card,
+  C,
   logg,
   request,
 } from "$shared"
@@ -107,14 +106,43 @@ const W0 = styled.div`
 
 const W1 = styled.div``;
 
+
+
+const RegisterWithEmailBtn = (props) => {
+  return <Btn {...props} >Register with Email</Btn>
+}
+const LoginWithEmailBtn = (props) => {
+  return <Btn {...props} >Login with Email</Btn>
+}
+
+const IconLogout = ({ fill, w, h, ...props }) => {
+  // const theme = useTheme()
+
+  w = w ? w : '12px'
+  h = h ? h : '12px'
+  // fill = fill ? fill : theme.colors.text // @TODO: implement theme in ishlibjs
+  fill = fill ? fill : '#333333'
+
+  return <span {...props} >
+    <svg xmlns="http://www.w3.org/2000/svg"
+      width={w} height={h}
+      viewBox="0 0 96.943 96.943" style={{ enableBackground: 'new 0 0 96.943 96.943' }}
+    ><g><g><path d="M61.168,83.92H11.364V13.025H61.17c1.104,0,2-0.896,2-2V3.66c0-1.104-0.896-2-2-2H2c-1.104,0-2,0.896-2,2v89.623 c0,1.104,0.896,2,2,2h59.168c1.105,0,2-0.896,2-2V85.92C63.168,84.814,62.274,83.92,61.168,83.92z"/> <path d="M96.355,47.058l-26.922-26.92c-0.75-0.751-2.078-0.75-2.828,0l-6.387,6.388c-0.781,0.781-0.781,2.047,0,2.828 l12.16,12.162H19.737c-1.104,0-2,0.896-2,2v9.912c0,1.104,0.896,2,2,2h52.644L60.221,67.59c-0.781,0.781-0.781,2.047,0,2.828 l6.387,6.389c0.375,0.375,0.885,0.586,1.414,0.586c0.531,0,1.039-0.211,1.414-0.586l26.922-26.92 c0.375-0.375,0.586-0.885,0.586-1.414C96.943,47.941,96.73,47.433,96.355,47.058z"/> </g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g></g><g></g><g></g>
+    </svg>
+  </span>
+}
+
+
 /**
  * MyAccountWidget
 **/
 const MyAccountWidget = (props) => {
   // logg(props, 'MyAccountWidget')
+  const {} = props
 
   const {
     currentUser, setCurrentUser,
+    loginModalOpen, setLoginModalOpen,
     useApi,
   } = useContext(AuthContext)
   // logg(useContext(AuthContext), 'MyAccountWidgetUsedAuthContext')
@@ -124,6 +152,7 @@ const MyAccountWidget = (props) => {
     editorMode, setEditorMode,
     purchaseModalOpen, setPurchaseModalOpen,
   } = useContext(TwofoldContext)
+
 
   /*
    * @TODO: avatar would be an object s.t. multiple styles/sizes are there,
@@ -180,9 +209,13 @@ const MyAccountWidget = (props) => {
     })()
   }, [])
 
+  const doLogout = () => {
+    setCurrentUser(C.anonUser)
+    localStorage.removeItem('jwt_token')
+    window.location.reload(false)
+  }
+
   return <W0 className="MyAccountWidget" >
-
-
     { currentUser?.email && <Img src={currentUser?.profile_photo_url || avatar} /> }
 
     <FlexRow>
@@ -203,7 +236,14 @@ const MyAccountWidget = (props) => {
         </label>
       </Card> */}
 
-      <AuthWidget />
+      { currentUser?.email ? <FlexRow>
+        [&nbsp;{currentUser.email}&nbsp;<IconLogout onClick={doLogout} >Logout</IconLogout>&nbsp;]
+      </FlexRow> : <FlexRow>
+        {/* <FacebookLogin /> */}
+        <RegisterWithEmailBtn onClick={() => { setRegisterModalOpen(true) }} />
+        <LoginWithEmailBtn    onClick={() => { setLoginModalOpen(true) }} />
+      </FlexRow> }
+
 
     </FlexRow>
 
@@ -211,9 +251,7 @@ const MyAccountWidget = (props) => {
 
   </W0>
 }
-MyAccountWidget.propTypes = {
-  // no props
-};
+MyAccountWidget.propTypes = {}; // no props
 
 // const WrappedMyAccountWidget = (props) => <Elements stripe={stripePromise}><MyAccountWidget {...props} /></Elements>;
 // export default WrappedMyAccountWidget

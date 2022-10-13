@@ -97,7 +97,7 @@ const EditModeActions = ({ children, ...props }) => {
  * @TODO: variant should come from the location, right? _vp_ 2022-09-11
 **/
 const Newsitems = (props) => {
-  logg(props, 'Newsitems')
+  // logg(props, 'Newsitems')
   const {
     newsitems=[],
     variant,

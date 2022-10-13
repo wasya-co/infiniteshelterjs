@@ -32,6 +32,7 @@ import {
 } from "$shared"
 import {
   LocationProvider,
+  LocationsShowMobile,
   LocationsShowMobile3d,
   WrappedMapPanel,
 } from "./"
@@ -207,7 +208,7 @@ const Left = ({ children, ...props }) => {
 const _Right = styled.div`
   position: relative;
 
-  padding: 0 0 0 var(--handle-width);
+  padding: 0 0 0 ${p => ['android', 'ios'].includes(p.os) ? '' : 'var(--handle-width)'};
   display: ${p => p.foldedRight ? 'none' : 'flex'};
   // flex: ${p => p.foldedRight ? '2%' : `${(1-p.twofoldPercent)*100}%` };
   flex: ${p => `${(1-p.twofoldPercent)*100}%`};
@@ -224,7 +225,7 @@ const Right = ({ children, ...props }) => {
     folded, foldedLeft, foldedRight,
     twofoldPercent,
   } = useContext(TwofoldContext)
-  return <_Right className='Right' {...{ bottomDrawerOpen, foldedRight, twofoldPercent }} >
+  return <_Right className='Right' {...{ bottomDrawerOpen, foldedRight, twofoldPercent, ...props }} >
     { children }
   </_Right>
 }
@@ -250,7 +251,7 @@ const W0 = styled.div`
  * @TODO: hella enable caching all around and measure throughput. _vp_ 2022-09-10
 **/
 const LocationsShow = (props) => {
-  // logg(props, 'LocationsShow')
+  logg(props, 'LocationsShow')
   const {
     location,
     match,
@@ -307,7 +308,70 @@ const LocationsShow = (props) => {
   }, [bottomDrawerOpen, folded, mapPanelRef.current, twofoldPercent, windowWidth, windowHeight])
 
   if (['ios', 'android'].indexOf(os) !== -1) {
-    return <LocationsShowMobile3d {...{ ...props, location }} />
+    // return <LocationsShowMobile {...{ ...props, location }} />
+
+    return <W0><LocationProvider {...location} >
+
+      <Right os={os} >
+
+        <Breadcrumbs {...location} />
+
+        <Collapsible
+            className='Maps'
+            label={location.labels.map}
+            slug={C.collapsible.map}
+            variant={C.variants.transparent}
+        ><LocationsShowMobile3d
+          location={location.map ? location.map : location}
+          match={props.match}
+          ref={mapPanelRef}
+          slug={match.params.slug}
+        /></Collapsible>
+
+        { /* Markers */ }
+        { location.markers.length && <Collapsible
+            className='Markers'
+            label={location.labels.markers}
+            slug={C.collapsible.markers}
+            variant={C.variants.transparent}
+        >
+          <MarkersList markers={location.markers}
+            variant={C.variants.bordered}
+          />
+        </Collapsible> || null }
+
+        { /* Description */ }
+        { location.description && <Collapsible
+            className='Description'
+            label={location.labels.description}
+            slug={C.collapsible.description}
+            variant={C.variants.bordered}
+        >
+          <Description item={location} />
+        </Collapsible> || null }
+
+        { /* Newsitems */ }
+        { location.newsitems.length && <Collapsible
+            className='Newsitems'
+            label={location.labels.newsitems}
+            slug={C.collapsible.newsitems}
+            variant={C.variants.transparent}
+        >
+          <Newsitems
+            newsitems={location.newsitems}
+            variant={C.variants.bordered}
+          />
+        </Collapsible> || null }
+
+      </Right>
+
+      { showUrl && <IframeModal src={showUrl} /> }
+      { showItem && <ItemModal item={showItem} /> }
+      { loading && <Loading /> }
+
+      <UnlockModal />
+
+    </LocationProvider></W0>
   }
 
   return <W0><LocationProvider {...location} >

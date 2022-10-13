@@ -8,7 +8,7 @@ import styled, { useTheme } from 'styled-components'
 
 import config from "config"
 
-import { CitiesList, CitiesShow } from "$components/cities"
+
 import {
   GalleriesShow,
 } from "$components/galleries"
@@ -34,9 +34,6 @@ import {
  *
 **/
 export const appPaths = {
-  cityVenuesPath: (slug) => `/en/cities/travel-to/${slug}/venues`,
-  cityPath: (slug) => `/en/cities/travel-to/${slug}`,
-
   item: (props) => {
     // logg(props, 'appPaths.item')
 
@@ -98,9 +95,6 @@ const AppRouter = (props) => {
       <Redirect exact from="/" to={config.homePath} />
 
       <Route exact path="/en/account" component={Account} />
-
-      <Route exact path="/en/cities"                 component={CitiesList} />
-      <Route       path="/en/cities/travel-to/:name" component={CitiesShow} />
 
       <Route exact path="/en/galleries/show/:slug" component={GalleriesShow} />
 
