@@ -559,8 +559,8 @@ var CitiesShow = function CitiesShow(props) {
 
 // EXTERNAL MODULE: ./src/components/galleries/index.js + 1 modules
 var galleries = __webpack_require__(878935);
-// EXTERNAL MODULE: ./src/components/locations/index.jsx + 36 modules
-var locations = __webpack_require__(393985);
+// EXTERNAL MODULE: ./src/components/locations/index.jsx + 37 modules
+var locations = __webpack_require__(128266);
 // EXTERNAL MODULE: ./src/components/reports/index.jsx + 2 modules
 var reports = __webpack_require__(563204);
 // EXTERNAL MODULE: ./src/components/users/index.jsx + 5 modules
@@ -653,7 +653,7 @@ var appPaths = {
 **/
 
 var AppRouter = function AppRouter(props) {
-  (0,shared/* logg */.IJ)(props, 'AppRouter');
+  // logg(props, 'AppRouter')
   return /*#__PURE__*/external_react_default().createElement(external_react_router_dom_.BrowserRouter, null, /*#__PURE__*/external_react_default().createElement(external_react_router_dom_.Switch, {
     main: true
   }, /*#__PURE__*/external_react_default().createElement(external_react_router_dom_.Redirect, {
@@ -1939,8 +1939,8 @@ SideMenu.propTypes = {
   variant: (external_prop_types_default()).string
 };
 /* harmony default export */ const application_SideMenu = (SideMenu);
-// EXTERNAL MODULE: ./src/components/locations/index.jsx + 36 modules
-var locations = __webpack_require__(393985);
+// EXTERNAL MODULE: ./src/components/locations/index.jsx + 37 modules
+var locations = __webpack_require__(128266);
 // EXTERNAL MODULE: ./src/AppRouter.jsx + 6 modules
 var AppRouter = __webpack_require__(524495);
 // EXTERNAL MODULE: ./src/components/application/UnlockModal.module.scss
@@ -2000,9 +2000,9 @@ var UnlockModal = function UnlockModal(props) {
       purchaseModalOpen = _useContext3.purchaseModalOpen,
       setPurchaseModalOpen = _useContext3.setPurchaseModalOpen,
       ratedConfirmation = _useContext3.ratedConfirmation,
-      setRatedConfirmation = _useContext3.setRatedConfirmation;
+      setRatedConfirmation = _useContext3.setRatedConfirmation; // logg(useContext(TwofoldContext), 'unlockModalUsedTwofoldContext')
 
-  (0,shared/* logg */.IJ)((0,external_react_.useContext)(TwofoldLayout/* TwofoldContext */.Nd), 'unlockModalUsedTwofoldContext');
+
   var api = useApi();
 
   var doUnlock = /*#__PURE__*/function () {
@@ -2232,7 +2232,7 @@ var GalleriesShow = function GalleriesShow(props) {
 
 /***/ }),
 
-/***/ 393985:
+/***/ 128266:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -2578,7 +2578,7 @@ var PhotosShow = function PhotosShow(props) {
   return /*#__PURE__*/external_react_default().createElement((external_react_default()).Fragment, null, /*#__PURE__*/external_react_default().createElement("img", {
     src: item.original_url,
     alt: ""
-  }));
+  }), item.subhead);
 };
 
 /* harmony default export */ const photos_PhotosShow = (PhotosShow);
@@ -2632,7 +2632,6 @@ var ItemModal = function ItemModal(props) {
       setShowItem = _useContext.setShowItem;
 
   var onClose = function onClose() {
-    setShowItem(false);
     history.push(AppRouter/* appPaths.location */.X.location({
       slug: params.slug
     }));
@@ -2652,7 +2651,7 @@ var ItemModal = function ItemModal(props) {
     portalClassName: (ItemModal_module_default()).ItemModalPortal
   }, /*#__PURE__*/external_react_default().createElement(dist/* ModalHeader */.xB, {
     onClose: onClose
-  }, "_"), item.item_type === shared.C.item_types.photo && /*#__PURE__*/external_react_default().createElement(photos_PhotosShow, {
+  }, item.name), item.item_type === shared.C.item_types.photo && /*#__PURE__*/external_react_default().createElement(photos_PhotosShow, {
     item: item
   }), item.item_type === shared.C.item_types.report && item.action === shared.C.actions.show && /*#__PURE__*/external_react_default().createElement(reports/* ReportsShow */.X, {
     item: item,
@@ -3040,9 +3039,9 @@ var _MoveLeftRightIcon = function _MoveLeftRightIcon(_ref) {
     xmlns: "http://www.w3.org/2000/svg"
   }, /*#__PURE__*/external_react_default().createElement("defs", null), /*#__PURE__*/external_react_default().createElement("g", {
     stroke: "none",
-    "stroke-width": "1",
+    strokeWidth: "1",
     fill: "none",
-    "fill-rule": "evenodd"
+    fillRule: "evenodd"
   }, /*#__PURE__*/external_react_default().createElement("g", {
     transform: "translate(1.000000, 0.000000)",
     fill: fill
@@ -3315,7 +3314,7 @@ var LocationsShow_W0 = external_styled_components_default().div.withConfig({
 **/
 
 var LocationsShow = function LocationsShow(props) {
-  (0,shared/* logg */.IJ)(props, 'LocationsShow');
+  // logg(props, 'LocationsShow')
   var location = props.location,
       match = props.match,
       showItem = props.showItem;
@@ -3325,9 +3324,8 @@ var LocationsShow = function LocationsShow(props) {
   }
 
   var _useContext5 = (0,external_react_.useContext)(dist/* AuthContext */.Vo),
-      currentUser = _useContext5.currentUser;
+      currentUser = _useContext5.currentUser; // logg(useContext(AuthContext), 'LocationsShow Used AuthContext')
 
-  (0,shared/* logg */.IJ)((0,external_react_.useContext)(dist/* AuthContext */.Vo), 'LocationsShow Used AuthContext');
 
   var _useContext6 = (0,external_react_.useContext)(shared/* AppContext */.Il),
       os = _useContext6.os;
@@ -3349,9 +3347,8 @@ var LocationsShow = function LocationsShow(props) {
       setRatedConfirmation = _useContext7.setRatedConfirmation,
       showUrl = _useContext7.showUrl,
       setShowUrl = _useContext7.setShowUrl,
-      twofoldPercent = _useContext7.twofoldPercent;
+      twofoldPercent = _useContext7.twofoldPercent; // logg(useContext(TwofoldContext), 'LocationsShowUsedTwofoldContext')
 
-  (0,shared/* logg */.IJ)((0,external_react_.useContext)(TwofoldLayout/* TwofoldContext */.Nd), 'LocationsShowUsedTwofoldContext');
 
   var _useWindowSize3 = (0,shared/* useWindowSize */.iP)(),
       _useWindowSize4 = LocationsShow_slicedToArray(_useWindowSize3, 2),
@@ -3470,7 +3467,7 @@ function LocationsShowAsync_arrayWithHoles(arr) { if (Array.isArray(arr)) return
 **/
 
 var LocationsShowAsync = function LocationsShowAsync(props) {
-  (0,shared/* logg */.IJ)(props, 'LocationsShowAsync');
+  // logg(props, 'LocationsShowAsync')
   var match = props.match; // @TODO: this is elegantly LocationProvider _vp_ 2022-09-12
 
   var _useState = (0,external_react_.useState)(),
@@ -3525,10 +3522,10 @@ var LocationsShowAsync = function LocationsShowAsync(props) {
     }
 
     Promise.all(chain).then(function (rs) {
-      (0,shared/* logg */.IJ)(rs, 'LocationsShowAsync ChainResults');
+      // logg(rs, 'LocationsShowAsync ChainResults')
       setLocation(rs[0]); // @TODO: test-drive this. Clicking from a location-gallery back to location, should un-set the showItem. _vp_ 2022-09-11
 
-      rs[1] ? setShowItem(rs[1]) : setShowItem(null);
+      setShowItem(rs[1] ? rs[1] : null);
     })["catch"](function (err) {// logg(err, "Could not load Location.")
       // toast("Could not load Location.")
     });
@@ -5750,7 +5747,206 @@ var TabiversePlanet = function TabiversePlanet(props) {
 };
 
 /* harmony default export */ const locations3d_TabiversePlanet = (TabiversePlanet);
+// EXTERNAL MODULE: ./node_modules/three/examples/jsm/math/Capsule.js
+var math_Capsule = __webpack_require__(942936);
+;// CONCATENATED MODULE: ./src/components/locations3d/vendor/CSS2DRenderer.js
+function CSS2DRenderer_classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function CSS2DRenderer_defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function CSS2DRenderer_createClass(Constructor, protoProps, staticProps) { if (protoProps) CSS2DRenderer_defineProperties(Constructor.prototype, protoProps); if (staticProps) CSS2DRenderer_defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
+
+function _get() { if (typeof Reflect !== "undefined" && Reflect.get) { _get = Reflect.get.bind(); } else { _get = function _get(target, property, receiver) { var base = _superPropBase(target, property); if (!base) return; var desc = Object.getOwnPropertyDescriptor(base, property); if (desc.get) { return desc.get.call(arguments.length < 3 ? target : receiver); } return desc.value; }; } return _get.apply(this, arguments); }
+
+function _superPropBase(object, property) { while (!Object.prototype.hasOwnProperty.call(object, property)) { object = CSS2DRenderer_getPrototypeOf(object); if (object === null) break; } return object; }
+
+function CSS2DRenderer_inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); Object.defineProperty(subClass, "prototype", { writable: false }); if (superClass) CSS2DRenderer_setPrototypeOf(subClass, superClass); }
+
+function CSS2DRenderer_setPrototypeOf(o, p) { CSS2DRenderer_setPrototypeOf = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return CSS2DRenderer_setPrototypeOf(o, p); }
+
+function CSS2DRenderer_createSuper(Derived) { var hasNativeReflectConstruct = CSS2DRenderer_isNativeReflectConstruct(); return function _createSuperInternal() { var Super = CSS2DRenderer_getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = CSS2DRenderer_getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return CSS2DRenderer_possibleConstructorReturn(this, result); }; }
+
+function CSS2DRenderer_possibleConstructorReturn(self, call) { if (call && (typeof call === "object" || typeof call === "function")) { return call; } else if (call !== void 0) { throw new TypeError("Derived constructors may only return object or undefined"); } return CSS2DRenderer_assertThisInitialized(self); }
+
+function CSS2DRenderer_assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function CSS2DRenderer_isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+
+function CSS2DRenderer_getPrototypeOf(o) { CSS2DRenderer_getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf.bind() : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return CSS2DRenderer_getPrototypeOf(o); }
+
+
+
+var CSS2DObject = /*#__PURE__*/function (_Object3D) {
+  CSS2DRenderer_inherits(CSS2DObject, _Object3D);
+
+  var _super = CSS2DRenderer_createSuper(CSS2DObject);
+
+  function CSS2DObject() {
+    var _this2;
+
+    var element = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : document.createElement('div');
+
+    CSS2DRenderer_classCallCheck(this, CSS2DObject);
+
+    _this2 = _super.call(this);
+    _this2.isCSS2DObject = true;
+    _this2.element = element;
+    _this2.element.style.position = 'absolute';
+    _this2.element.style.userSelect = 'none';
+
+    _this2.element.setAttribute('draggable', false);
+
+    _this2.addEventListener('removed', function () {
+      this.traverse(function (object) {
+        if (object.element instanceof Element && object.element.parentNode !== null) {
+          object.element.parentNode.removeChild(object.element);
+        }
+      });
+    });
+
+    return _this2;
+  }
+
+  CSS2DRenderer_createClass(CSS2DObject, [{
+    key: "copy",
+    value: function copy(source, recursive) {
+      _get(CSS2DRenderer_getPrototypeOf(CSS2DObject.prototype), "copy", this).call(this, source, recursive);
+
+      this.element = source.element.cloneNode(true);
+      return this;
+    }
+  }]);
+
+  return CSS2DObject;
+}(external_three_.Object3D); //
+
+
+var CSS2DRenderer_vector = new external_three_.Vector3();
+
+var _viewMatrix = new external_three_.Matrix4();
+
+var _viewProjectionMatrix = new external_three_.Matrix4();
+
+var _a = new external_three_.Vector3();
+
+var _b = new external_three_.Vector3();
+
+var CSS2DRenderer = /*#__PURE__*/(/* unused pure expression or super */ null && (CSS2DRenderer_createClass(function CSS2DRenderer() {
+  var parameters = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+
+  CSS2DRenderer_classCallCheck(this, CSS2DRenderer);
+
+  var _this = this;
+
+  var _width, _height;
+
+  var _widthHalf, _heightHalf;
+
+  var cache = {
+    objects: new WeakMap()
+  };
+  var domElement = parameters.element !== undefined ? parameters.element : document.createElement('div');
+  domElement.style.overflow = 'hidden';
+  this.domElement = domElement;
+
+  this.getSize = function () {
+    return {
+      width: _width,
+      height: _height
+    };
+  };
+
+  this.render = function (scene, camera) {
+    if (scene.matrixWorldAutoUpdate === true) scene.updateMatrixWorld();
+    if (camera.parent === null && camera.matrixWorldAutoUpdate === true) camera.updateMatrixWorld();
+
+    _viewMatrix.copy(camera.matrixWorldInverse);
+
+    _viewProjectionMatrix.multiplyMatrices(camera.projectionMatrix, _viewMatrix);
+
+    renderObject(scene, scene, camera);
+    zOrder(scene);
+  };
+
+  this.setSize = function (width, height) {
+    _width = width;
+    _height = height;
+    _widthHalf = _width / 2;
+    _heightHalf = _height / 2;
+    domElement.style.width = width + 'px';
+    domElement.style.height = height + 'px';
+  };
+
+  function renderObject(object, scene, camera) {
+    if (object.isCSS2DObject) {
+      CSS2DRenderer_vector.setFromMatrixPosition(object.matrixWorld);
+
+      CSS2DRenderer_vector.applyMatrix4(_viewProjectionMatrix);
+
+      var visible = object.visible === true && CSS2DRenderer_vector.z >= -1 && CSS2DRenderer_vector.z <= 1 && object.layers.test(camera.layers) === true;
+      object.element.style.display = visible === true ? '' : 'none';
+
+      if (visible === true) {
+        object.onBeforeRender(_this, scene, camera);
+        var element = object.element;
+        element.style.transform = 'translate(-50%,-50%) translate(' + (CSS2DRenderer_vector.x * _widthHalf + _widthHalf) + 'px,' + (-CSS2DRenderer_vector.y * _heightHalf + _heightHalf) + 'px)';
+
+        if (element.parentNode !== domElement) {
+          domElement.appendChild(element);
+        }
+
+        object.onAfterRender(_this, scene, camera);
+      }
+
+      var objectData = {
+        distanceToCameraSquared: getDistanceToSquared(camera, object)
+      };
+      cache.objects.set(object, objectData);
+    }
+
+    for (var i = 0, l = object.children.length; i < l; i++) {
+      renderObject(object.children[i], scene, camera);
+    }
+  }
+
+  function getDistanceToSquared(object1, object2) {
+    _a.setFromMatrixPosition(object1.matrixWorld);
+
+    _b.setFromMatrixPosition(object2.matrixWorld);
+
+    return _a.distanceToSquared(_b);
+  }
+
+  function filterAndFlatten(scene) {
+    var result = [];
+    scene.traverse(function (object) {
+      if (object.isCSS2DObject) result.push(object);
+    });
+    return result;
+  }
+
+  function zOrder(scene) {
+    var sorted = filterAndFlatten(scene).sort(function (a, b) {
+      if (a.renderOrder !== b.renderOrder) {
+        return b.renderOrder - a.renderOrder;
+      }
+
+      var distanceA = cache.objects.get(a).distanceToCameraSquared;
+      var distanceB = cache.objects.get(b).distanceToCameraSquared;
+      return distanceA - distanceB;
+    });
+    var zMax = sorted.length;
+
+    for (var i = 0, l = sorted.length; i < l; i++) {
+      sorted[i].element.style.zIndex = zMax - i;
+    }
+  }
+})));
+
+
 ;// CONCATENATED MODULE: ./src/components/locations3d/ThreePanelDesktop.jsx
+
+
 
 
 
@@ -5766,11 +5962,13 @@ var TabiversePlanet = function TabiversePlanet(props) {
  *
  * Units are centimeters
  *
+ * Math capsule: https://github.com/mrdoob/three.js/blob/dev/examples/jsm/math/Capsule.js
+ *
  * Markers are obejcts _vp_ 2021-11-14
  * Continue.           _vp_ 2022-08-13
  * Continue.           _vp_ 2022-09-13
  *
- */
+**/
 
 var ThreePanelDesktop = function ThreePanelDesktop(props) {
   // logg(props, 'ThreePanelDesktop')
@@ -5788,12 +5986,13 @@ var ThreePanelDesktop = function ThreePanelDesktop(props) {
       controls,
       object,
       objects = [],
-      markerObjects = [],
-      markerObjectsIdxs = [],
+      collisionObjects = [],
+      pickingObjects = [],
       raycaster,
       renderer,
       texture,
       scene;
+  var GRAVITY = 30;
   var blockerRef = (0,external_react_.useRef)(null);
   var instructionsRef = (0,external_react_.useRef)(null);
   (0,external_react_.useEffect)(function () {
@@ -5809,26 +6008,72 @@ var ThreePanelDesktop = function ThreePanelDesktop(props) {
   var moveLeft = false;
   var moveRight = false;
   var canJump = false;
-  var prevTime = performance.now();
-  var velocity = new external_three_.Vector3();
-  var direction = new external_three_.Vector3();
-  var vertex = new external_three_.Vector3();
-  var color = new external_three_.Color();
   var textureLoader = new external_three_.TextureLoader();
   var gltfLoader = new loaders_GLTFLoader/* GLTFLoader */.E();
   var worldOctree = new math_Octree/* Octree */.V();
-  var pickedObject;
-  var pickedObjectSavedColor;
+  var helperMaterial = new external_three_.MeshBasicMaterial({
+    color: 0xffff00
+  });
+  var wireframeMaterial = new external_three_.MeshStandardMaterial();
+  wireframeMaterial.wireframe = true;
+  var playerCollider = new math_Capsule/* Capsule */.s(new external_three_.Vector3(0, 0, 0), new external_three_.Vector3(0, 17.5, 0), 6); // begin, end, radius
+
+  var playerColliderHelper = new external_three_.Mesh(new external_three_.CylinderBufferGeometry(6, 6, 17.5, 5), // radiusTop, radiusBottom, height, radialSegments
+  helperMaterial);
+  var playerOnFloor = false;
+  var prevTime = performance.now();
+  var playerVelocity = new external_three_.Vector3();
+  var playerDirection = new external_three_.Vector3();
+  var colliderCenter = new external_three_.Vector3();
+  var deltaPosition;
+  var playerCtlGeometry = new external_three_.SphereGeometry(5, 8, 8); // radius, widthSegments, heightSegments, phiStart, phiEnd, thetaStart, thetaEnd
+
+  var playerBodyGeometry = new external_three_.BoxGeometry(16, 20, 2);
+  var playerCtl = new external_three_.Mesh(playerCtlGeometry, wireframeMaterial);
+  var playerBody = new external_three_.Mesh(playerBodyGeometry, wireframeMaterial);
+  playerBody.position.y = 0;
+  playerBody.castShadow = true;
+  playerCtl.position.y = 17.5; // playerCtl.add(playerBody)
+
+  var collisionObject, collisionObectSavedColor;
+  var pickedObject, pickedObjectSavedColor;
+  var vector = new external_three_.Vector3();
+  var quaternion = new external_three_.Quaternion(); // create one and reuse it
+
+  var matrix = new external_three_.Matrix4(); // create one and reuse it
 
   function init() {
-    camera = new external_three_.PerspectiveCamera(75, 2, 1, 1000); // fov, aspect, near, far
-
-    camera.position.y = 10;
     scene = new external_three_.Scene();
     scene.background = new external_three_.Color(0xffffff);
     scene.fog = new external_three_.Fog(0xffffff, 0, 750);
     var axesHelper = new external_three_.AxesHelper(5);
-    scene.add(axesHelper);
+    scene.add(axesHelper); // 1.75m tall guy
+
+    camera = new external_three_.PerspectiveCamera(75, 2, .1, 1000); // fov, aspect, near, far
+
+    camera.position.y = 17.5; // 1.75m tall guy
+
+    camera.position.z = 40; // this much behind the body
+
+    playerCtl.add(camera); // playerCtl.add( playerCollider )
+
+    scene.add(playerCollider);
+    scene.add(playerCtl);
+    scene.add(playerBody);
+    scene.add(playerColliderHelper); // const labelRenderer = new CSS2DRenderer()
+    // const earthDiv = document.createElement( 'div' )
+    // earthDiv.className = 'label'
+    // earthDiv.textContent = 'Earth'
+    // earthDiv.style.marginTop = '-1em'
+    // const earthLabel = new CSS2DObject( earthDiv )
+    // earthLabel.position.set( 0, 20, 0 )
+    // playerCtl.add( earthLabel )
+    // earthLabel.layers.set( 0 )
+    // labelRenderer.setSize( window.innerWidth, window.innerHeight )
+    // labelRenderer.domElement.style.position = 'absolute'
+    // labelRenderer.domElement.style.top = '0px'
+    // document.body.appendChild( labelRenderer.domElement )
+
     /*
      * Lights
     **/
@@ -5837,10 +6082,10 @@ var ThreePanelDesktop = function ThreePanelDesktop(props) {
       var _shadowLight$position;
 
       // // Illuminate everytyhing
-      // const light = new THREE.HemisphereLight( 0xeeeeff, 0x777788, 0.75 )
-      // light.position.set( 0.5, 1, 0.75 )
-      // scene.add( light )
-      // Shadow
+      var light = new external_three_.HemisphereLight(0xeeeeff, 0x777788, 0.75);
+      light.position.set(0.5, 1, 0.75);
+      scene.add(light); // Shadow
+
       var white = 0xffffff;
       var shadowLightIntensity = 2;
       var shadowLightPosition = [0 * 10, 40 * 10, -10 * 100];
@@ -5869,16 +6114,17 @@ var ThreePanelDesktop = function ThreePanelDesktop(props) {
     **/
 
     {
-      controls = new PointerLockControls_PointerLockControls(camera, document.body);
+      controls = new PointerLockControls_PointerLockControls(playerCtl, document.body);
       blockerRef.current.addEventListener('click', function () {
-        (0,shared/* logg */.IJ)('locked controls');
+        (0,shared/* logg */.IJ)('event #click, locked controls');
         controls.lock();
       });
       controls.addEventListener('lock', function () {
         (0,shared/* logg */.IJ)('event #lock'); // instructions.style.display = 'none'
         // blocker.style.display = 'none'
       });
-      controls.addEventListener('unlock', function () {// blocker.style.display = 'block'
+      controls.addEventListener('unlock', function () {
+        (0,shared/* logg */.IJ)('event #unlock'); // blocker.style.display = 'block'
         // instructions.style.display = ''
       });
       scene.add(controls.getObject());
@@ -5918,7 +6164,7 @@ var ThreePanelDesktop = function ThreePanelDesktop(props) {
             break;
 
           case 'Space':
-            if (canJump === true) velocity.y += 350;
+            if (canJump === true) playerVelocity.y += 350;
             canJump = false;
             break;
         }
@@ -5955,14 +6201,15 @@ var ThreePanelDesktop = function ThreePanelDesktop(props) {
     } // endControls
 
     /*
-     * Ground
+     * Ground, Skybox
     **/
 
     {
-      // moon floor
+      // Moon floor
       texture = textureLoader.load("/assets/textures/moon-1.jpg");
       var floorGeometry = new external_three_.CircleGeometry(1000, 32); // radius, segments, thetaStart, thetaLength
 
+      floorGeometry.translate(0, 0, -1);
       floorGeometry.rotateX(-Math.PI / 2);
       var floorMaterial; // floorMaterial = new THREE.MeshBasicMaterial({ map: texture })
       // floorMaterial = new THREE.MeshStandardMaterial({ color: 0x333333 })
@@ -5972,37 +6219,49 @@ var ThreePanelDesktop = function ThreePanelDesktop(props) {
         side: external_three_.DoubleSide
       });
       var floor = new external_three_.Mesh(floorGeometry, floorMaterial);
-      floor.receiveShadow = true;
-      scene.add(floor);
+      floor.receiveShadow = true; // scene.add( floor )
+      // Skybox
+
+      texture = textureLoader.load("/assets/textures/space-5.jpg", function () {
+        var rt = new external_three_.WebGLCubeRenderTarget(texture.image.height); // rt.fromEquirectangularTexture(renderer, texture)
+
+        scene.background = rt.texture;
+      });
     } // endGround
 
     /*
-     * Load models of markers
+     * Load, import models of markers
     **/
 
     {
       map.markers.map(function (marker, idx) {
         gltfLoader.load(marker.asset3d_path, function (gltf) {
           gltf.scene.position.x = marker.x;
-          gltf.scene.position.y = marker.y; // @TODO: and Z ?!
+          gltf.scene.position.y = marker.y;
+          gltf.scene.scale.multiplyScalar(17); // @TODO: and Z ?!
           // @TODO: and parent-child relationships ?!
 
           scene.add(gltf.scene);
-          worldOctree.fromGraphNode(gltf.scene);
+          /*
+           * Collisions
+          **/
+
+          worldOctree.fromGraphNode(gltf.scene); // collisionObjects.push( gltf.scene )
+
           /*
            * Picking
           **/
 
           if (marker.destination_slug) {
-            markerObjects.push(gltf.scene);
+            pickingObjects.push(gltf.scene);
           }
 
           gltf.scene.traverse(function (child) {
             if (child.isMesh) {
-              child.castShadow = true; // child.receiveShadow = true
+              child.castShadow = true;
+              child.receiveShadow = true; // logg(child, 'mesh child')
 
-              if (child.material.map) {
-                child.material.map.anisotropy = 4;
+              if (child.material.map) {// child.material.map.anisotropy = 4
               }
               /*
               * Picking
@@ -6021,15 +6280,6 @@ var ThreePanelDesktop = function ThreePanelDesktop(props) {
     } // endLoadModels
 
     /*
-     * Skybox
-    **/
-
-    texture = textureLoader.load("/assets/textures/space-5.jpg", function () {
-      var rt = new external_three_.WebGLCubeRenderTarget(texture.image.height); // rt.fromEquirectangularTexture(renderer, texture)
-
-      scene.background = rt.texture;
-    });
-    /*
      * Render
     **/
 
@@ -6044,79 +6294,184 @@ var ThreePanelDesktop = function ThreePanelDesktop(props) {
     window.addEventListener('resize', onWindowResize);
   }
 
-  var onWindowResize = function onWindowResize() {
-    (0,shared/* logg */.IJ)([blockerRef.current.clientWidth, blockerRef.current.clientHeight], 'ThreePanelDesktop. OnWindowResize'); // if (!blockerRef.current) { return }
-    // if (!camera) { return }
+  function animate() {
+    requestAnimationFrame(animate);
+    var time = performance.now();
+    var delta = (time - prevTime) / 1000;
 
+    if (controls.isLocked === true) {
+      camera.updateMatrixWorld();
+      playerCtl.updateMatrixWorld();
+      var cameraDirection = new external_three_.Vector3();
+      camera.getWorldDirection(cameraDirection);
+      cameraDirection.normalize();
+      var cameraPosition = camera.position.clone();
+      cameraPosition.applyMatrix4(camera.matrixWorld); // logg(cameraPosition, 'cameraPosition')
+
+      /*
+       * Picking
+       */
+
+      var pickingScope = function () {
+        raycaster = new external_three_.Raycaster(cameraPosition, cameraDirection);
+        var pickingIntersections = raycaster.intersectObjects(pickingObjects, true);
+
+        if (pickedObject) {
+          pickedObject.material.emissive.setHex(pickedObjectSavedColor);
+          pickedObject = undefined;
+        }
+
+        if (pickingIntersections.length) {
+          pickedObject = pickingIntersections[0].object;
+          pickedObjectSavedColor = pickedObject.material.emissive.getHex();
+          pickedObject.material.emissive.setHex(0xFFFF00);
+        }
+      }();
+      /*
+       * Third-person body
+       */
+
+
+      var bodyScope = function () {
+        var damping = Math.exp(-4 * delta) - 1;
+
+        if (!playerOnFloor) {
+          playerVelocity.y -= GRAVITY * delta; // small air resistance
+
+          damping *= 0.1;
+        }
+
+        playerVelocity.addScaledVector(playerVelocity, damping);
+        var onObject = false; // collisionIntersections.length > 0
+
+        playerVelocity.x -= playerVelocity.x * 10.0 * delta;
+        playerVelocity.z -= playerVelocity.z * 10.0 * delta;
+        playerVelocity.y -= 9.8 * 100.0 * delta; // 100.0 = mass
+
+        playerDirection.z = Number(moveForward) - Number(moveBackward);
+        playerDirection.x = Number(moveRight) - Number(moveLeft);
+        if (moveForward || moveBackward) playerVelocity.z -= playerDirection.z * 400.0 * delta;
+        if (moveLeft || moveRight) playerVelocity.x -= playerDirection.x * 400.0 * delta;
+
+        if (onObject === true) {
+          playerVelocity.y = Math.max(0, playerVelocity.y);
+          canJump = true;
+        }
+
+        playerDirection.normalize();
+        controls.moveRight(-playerVelocity.x * delta);
+        controls.moveForward(-playerVelocity.z * delta);
+        controls.getObject().position.y += playerVelocity.y * delta;
+
+        if (controls.getObject().position.y < 10) {
+          playerVelocity.y = 0;
+          controls.getObject().position.y = 10;
+          canJump = true;
+        }
+
+        deltaPosition = playerVelocity.clone().multiplyScalar(delta);
+        playerCollider.translate(deltaPosition);
+        {// logs
+
+          /* cameraDirection */
+          // const arrowHCD = new THREE.ArrowHelper(
+          //   cameraDirection,
+          //   controls.getObject().position,
+          //   10,
+          //   0x336699 )
+          // scene.add( arrowHCD )
+          // logg(cameraDirection, 'cameraDirection')
+
+          /* show deltaPosition - in body coords */
+          // const arrowHDP = new THREE.ArrowHelper(
+          //   deltaPosition,
+          //   controls.getObject().position,
+          //   20,
+          //   0xffffff )
+          // scene.add( arrowHDP )
+
+          /* shows controls' position */
+          // const arrowH1 = new THREE.ArrowHelper(
+          //   controls.getObject().clone().position.normalize(),
+          //   new THREE.Vector3(0, 0, 0),
+          //   new THREE.Vector3(0, 0, 0).distanceTo( controls.getObject().position ),
+          //   0xffffff )
+          // scene.add( arrowH1 )
+
+          /* playerDirection - not used much. */
+
+          /* Shows playerVelocity */
+          // const arrowHPV = new THREE.ArrowHelper(
+          //   playerVelocity,
+          //   controls.getObject().position,
+          //   10,
+          //   0xffff00 )
+          // scene.add( arrowHPV )
+
+          /* shows deltaPosition above your head */
+
+          /* this is object-relative, left/right switched (-x) */
+          // const arrowH2 = new THREE.ArrowHelper(
+          //   deltaPosition.clone().normalize(),
+          //   controls.getObject().position,
+          //   deltaPosition.length()*10, // 10, // new THREE.Vector3(0, 0, 0).distanceTo( controls.getObject().position ),
+          //   0xff00ff )
+          // scene.add( arrowH2 )
+        } // endLogs
+
+        /* The below works well. */
+
+        playerCollider.getCenter(colliderCenter);
+        playerColliderHelper.position.x = colliderCenter.x;
+        playerColliderHelper.position.y = colliderCenter.y;
+        playerColliderHelper.position.z = colliderCenter.z;
+      }();
+      /*
+       * Collisions
+       * I'm mixing several methodologies here, should stick to one (for Desktop at least)
+       */
+
+
+      var collisionsScope = function () {
+        var collisionIntersections = worldOctree.capsuleIntersect(playerCollider);
+
+        if (collisionIntersections.length) {
+          (0,shared/* logg */.IJ)(collisionIntersections, 'collisionIntersections');
+
+          if (collisionIntersections[0].distance < 5) {
+            moveForward = false;
+          }
+        }
+
+        var result = worldOctree.capsuleIntersect(playerCollider);
+        playerOnFloor = false;
+
+        if (result) {
+          playerOnFloor = result.normal.y > 0;
+
+          if (!playerOnFloor) {
+            playerVelocity.addScaledVector(result.normal, -result.normal.dot(playerVelocity));
+          }
+
+          playerCollider.translate(result.normal.multiplyScalar(result.depth));
+        }
+      }();
+    } // end if controls are locked
+
+
+    prevTime = time;
+    renderer.render(scene, camera);
+  } // end animate()
+
+
+  var onWindowResize = function onWindowResize() {
+    // logg([blockerRef.current.clientWidth, blockerRef.current.clientHeight], 'ThreePanelDesktop. OnWindowResize')
+    // if (!blockerRef.current) { return }
+    // if (!camera) { return }
     camera.aspect = blockerRef.current.clientWidth / blockerRef.current.clientHeight;
     camera.updateProjectionMatrix();
     renderer.setSize(blockerRef.current.clientWidth, blockerRef.current.clientHeight);
   };
-
-  function animate() {
-    requestAnimationFrame(animate);
-    var time = performance.now();
-
-    if (controls.isLocked === true) {
-      /*
-       * Picking
-      **/
-
-      /* for standing on things */
-      // raycaster.ray.origin.copy( controls.getObject().position )
-      // raycaster.ray.origin.y -= 10
-      // And for picking _vp_ 2022-09-18
-      var cameraDirection = controls.getDirection(new external_three_.Vector3(0, 0, 0)).clone();
-      raycaster = new external_three_.Raycaster(camera.position, cameraDirection);
-      var intersections = raycaster.intersectObjects(markerObjects, true);
-
-      if (pickedObject) {
-        pickedObject.material.emissive.setHex(pickedObjectSavedColor);
-        pickedObject = undefined;
-      }
-
-      if (intersections.length) {
-        pickedObject = intersections[0].object;
-        pickedObjectSavedColor = pickedObject.material.emissive.getHex();
-        pickedObject.material.emissive.setHex(0xFFFF00);
-        /* collision */
-        // if (intersections[0].distance < 5) {
-        //   moveForward = false
-        // }
-      }
-
-      var onObject = intersections.length > 0;
-      var delta = (time - prevTime) / 1000;
-      velocity.x -= velocity.x * 10.0 * delta;
-      velocity.z -= velocity.z * 10.0 * delta;
-      velocity.y -= 9.8 * 100.0 * delta; // 100.0 = mass
-
-      direction.z = Number(moveForward) - Number(moveBackward);
-      direction.x = Number(moveRight) - Number(moveLeft);
-      direction.normalize(); // this ensures consistent movements in all directions
-
-      if (moveForward || moveBackward) velocity.z -= direction.z * 400.0 * delta;
-      if (moveLeft || moveRight) velocity.x -= direction.x * 400.0 * delta;
-
-      if (onObject === true) {
-        velocity.y = Math.max(0, velocity.y);
-        canJump = true;
-      }
-
-      controls.moveRight(-velocity.x * delta);
-      controls.moveForward(-velocity.z * delta);
-      controls.getObject().position.y += velocity.y * delta; // new behavior
-
-      if (controls.getObject().position.y < 10) {
-        velocity.y = 0;
-        controls.getObject().position.y = 10;
-        canJump = true;
-      }
-    }
-
-    prevTime = time;
-    renderer.render(scene, camera);
-  }
 
   return /*#__PURE__*/external_react_default().createElement(external_react_.Fragment, null, /*#__PURE__*/external_react_default().createElement("div", {
     ref: instructionsRef,
@@ -7004,8 +7359,6 @@ var ThreePanelV2_Loc = function Loc(props) {
 /* harmony default export */ const ThreePanelV2 = ((/* unused pure expression or super */ null && (ThreePanelV2_Loc)));
 // EXTERNAL MODULE: ./node_modules/three/examples/jsm/libs/stats.module.js
 var stats_module = __webpack_require__(915079);
-// EXTERNAL MODULE: ./node_modules/three/examples/jsm/math/Capsule.js
-var math_Capsule = __webpack_require__(942936);
 ;// CONCATENATED MODULE: ./src/components/locations3d/ThreePanelV3.jsx
 function _createForOfIteratorHelper(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = ThreePanelV3_unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
 
@@ -8298,6 +8651,8 @@ var MapPanel = function MapPanel(props) {
 // EXTERNAL MODULE: external "@material-ui/core"
 var core_ = __webpack_require__(8130);
 ;// CONCATENATED MODULE: ./src/components/locations/WrappedMapPanel.jsx
+function WrappedMapPanel_objectDestructuringEmpty(obj) { if (obj == null) throw new TypeError("Cannot destructure undefined"); }
+
 
 
 
@@ -8323,12 +8678,13 @@ var FW = external_styled_components_default().div.withConfig({
 **/
 
 var WrappedMapPanel = external_react_default().forwardRef(function (props, ref) {
-  (0,shared/* logg */.IJ)(props, 'WrappedMapPanel'); // const { map } = props
-  // // Testing overrides
+  // logg(props, 'WrappedMapPanel')
+  WrappedMapPanel_objectDestructuringEmpty(props); // // Testing overrides
   // switch (props.slug) {
   //   case 'root':
   //     return <FW ref={ref} ><ThreePanelDesktop {...props} /></FW>
   // }
+
 
   switch (props.map.config.map_panel_type) {
     case shared.C.map_panel_types.Equirectangular:
@@ -8460,8 +8816,8 @@ var shared = __webpack_require__(38085);
 // EXTERNAL MODULE: external "prop-types"
 var external_prop_types_ = __webpack_require__(580);
 var external_prop_types_default = /*#__PURE__*/__webpack_require__.n(external_prop_types_);
-// EXTERNAL MODULE: ./src/components/locations/index.jsx + 36 modules
-var locations = __webpack_require__(393985);
+// EXTERNAL MODULE: ./src/components/locations/index.jsx + 37 modules
+var locations = __webpack_require__(128266);
 // EXTERNAL MODULE: ./src/AppRouter.jsx + 6 modules
 var AppRouter = __webpack_require__(524495);
 ;// CONCATENATED MODULE: ./src/components/newsitems/NewsitemGallery.jsx

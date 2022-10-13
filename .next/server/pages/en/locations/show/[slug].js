@@ -36,8 +36,8 @@ var config = __webpack_require__(585553);
 var config_default = /*#__PURE__*/__webpack_require__.n(config);
 // EXTERNAL MODULE: ./src/components/application/index.js + 8 modules
 var application = __webpack_require__(660179);
-// EXTERNAL MODULE: ./src/components/locations/index.jsx + 36 modules
-var locations = __webpack_require__(393985);
+// EXTERNAL MODULE: ./src/components/locations/index.jsx + 37 modules
+var locations = __webpack_require__(128266);
 // EXTERNAL MODULE: ./src/shared/index.jsx + 8 modules
 var shared = __webpack_require__(38085);
 // EXTERNAL MODULE: ./src/WrappedApp.jsx
