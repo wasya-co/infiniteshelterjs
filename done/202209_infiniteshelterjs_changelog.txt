@@ -1,0 +1,72 @@
+0.0.0 20200704 - it shows shared videos, let's build for web. Then lets build for android.
+0.0.1 20200705 - facebook login on android
+0.0.2 20200709 - let's wire payments real quick
+      20201231 - be able to login to view my media
+0.0.3 20210529 - let's go, cleanup! (and take payments later on, very soon)
+      20210602 - let's go! Now I'm looking to show the bottom widget, my user
+                 well, logging in has been there for a while. Now, let's see
+								 if I have or don't have access to a premium newsitem.
+
+                 After that I'll only need to make a purchase to get a star,
+								 to feel good about today / this week.
+master 2021-08-28 - looking good, adapting gameui into guyd.me, once im
+comfortable will resume auth and credit cards.
+
+0.0.4 - 20210913 - lets iterate on auth and overall structure
+0.0.5 - lets place an ionic capacitor project on top of this.
+        looks like i can actually build an apk with this?!
+0.0.6 - lets build better, refine content delivery.
+        this is good, for my own individual usage.
+0.0.7 - 2021-10-01 Removed everything non-pretty to position for MyLocalGuide.
+                   Would add login asap!
+0.0.8 - wire in ether
+0.0.9 - better borders in twofold-layout
+0.0.10 - a bunch of 3d work - can pick! _vp_ 2021-11-11
+0.0.11 - 2021-11-15 making 3d canvas resize without glitching
+0.0.12 - TouchControls example is in.
+0.0.13 - builds on local machine
+         2022-01-16
+         removed equirectangular4 for now
+         2022-03-03 wow, can unlock!
+0.1.0 - 2022-03-20 - groking a lot
+        2022-04-16 - continue groking NFT
+0.1.1 - 2022-04-17 - added Space, multiple simulaneous feature improvements
+        2022-04-20 - threejs, octree actually works! a bit non-performant, but it works.
+0.2.0 - 2022-08-11 - BackBtn received a test!
+                     redmine#2521, full width of gallery modal on mobile
+        2022-08-13 - Let's get down let's get down to business : )
+                     asset3d, and geodesic some as a new home
+1.0.0 - 2022-08-15 - Wire in next.js
+                     also a better DayNightToggle
+                     Also MongoidVotable
+        2022-08-30 - and styling of Register, Login, BottomDrawer
+1.1.0 - 2022-09-02 - and also android
+                     renamed packages to com.infiniteshelter
+1.2.0 - 2022-09-02 - threejs touchControls ...
+                     looks better, can I make the MovementPad affect the camera?
+                     MovementPad is beginning to work!
+                     and stripe
+1.3.0 - 2022-09-05 - MenuLeft->SideMenu, cleanup
+                     massive changes to next_js config, making pre-fetched server-side page for LocationsShowDesktop.
+2.1.0 - 2022-09-09 - I skipped 2.0.0 and based on 1.3.0. Only bugfixes, tests, and minimal changes to make next_js statically compile a LocationsShow.
+2.2.0 - 2022-09-10 - refactoring and making show2 work on next_js. Release when this is ready?
+                     lets deploy
+2.3.0 - many changes, messy
+2.4.0 - cleaner, deployed to staging, 3d stuff worked okay with mobile movement!
+2.5.0 - root can be Panel3D.
+2.6.0 - 2022-09-19 - lets make map full-screen on desktop.
+                     full-screen is on hold, no need to implement it.
+                     Lotsa cleanup, testing. Obj: charge ppl, and pay via a stripe connect. Last objective.
+                     pagination of newsitems in a location...
+                     a lot of nice changes in this revision! and released.
+                     google_maps_key is in config now.
+2.7.0 - 2022-09-20 - next_js builds in branch `deploy` now.
+                     2 more jests pass. All jests should pass. Then, let's iterate. Then, let's ether.
+                     Bugfix #2576 - Handle looks wrong when folded-right
+2.8.0 - 2022-09-23 - Markers in MarkersList now show the premium/purchased icon
+                     specs cleanup
+                     bottomDrawer is sticky again
+2.9.0 - 2022-10-13 - minor stylistic fixes                     .
+                     no more Cities. and major stylistic issues.
+                     lets make a location show well, minimal emply space with a wall, and collisions.
+

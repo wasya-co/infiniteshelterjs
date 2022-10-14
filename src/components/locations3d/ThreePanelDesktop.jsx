@@ -21,6 +21,17 @@ import { PointerLockControls } from './vendor/PointerLockControls'
 import { appPaths } from "$src/AppRouter"
 
 /**
+ * Unit converter
+ * 1 unit is a centimeter
+**/
+const U = {
+  cm: (inn) => inn,
+  m: (inn) => inn * 100,
+  centimeters: (inn) => inn, // unit
+  meters: (inn) => inn * 100, // e.g. 1 meter is 100cm
+}
+
+/**
  * ThreePanelDesktop
  *
  * Units are centimeters
@@ -43,19 +54,22 @@ const ThreePanelDesktop = (props) => {
   // const {
   //   resizeCount,
   // } = useContext(TwofoldContext)
+  // useEffect(() => {
+  //   onWindowResize()
+  // }, [resizeCount])
 
   const history = useHistory()
   let markers2destinationSlugs = {}
 
-  let camera, controls,
-    object, objects = [],
-    collisionObjects = [],
-    pickingObjects = [],
-    raycaster, renderer,
-    texture,
-    scene
+  let camera, controls
+  let pickingObjects = []
+  let raycaster, renderer
+  let texture
+  let scene
 
-  const GRAVITY = 30;
+  const GRAVITY = U.m(3)
+  const playerH = U.m(1) // 1.75 ?
+  const keyStates = {}
 
   const blockerRef = useRef(null)
   const instructionsRef = useRef(null)
@@ -65,81 +79,63 @@ const ThreePanelDesktop = (props) => {
     onWindowResize()
   }, [])
 
-  // useEffect(() => {
-  //   onWindowResize()
-  // }, [resizeCount])
-
-
-  let moveForward = false
-  let moveBackward = false
-  let moveLeft = false
-  let moveRight = false
-  let canJump = false
-
   const textureLoader = new THREE.TextureLoader()
   const gltfLoader = new GLTFLoader()
   const worldOctree = new Octree()
 
-
+  let material
   const helperMaterial = new THREE.MeshBasicMaterial({ color: 0xffff00 })
   const wireframeMaterial = new THREE.MeshStandardMaterial()
   wireframeMaterial.wireframe = true
 
-  const playerCollider = new Capsule( new THREE.Vector3( 0, 0, 0 ),
-    new THREE.Vector3( 0, 17.5, 0 ),
-    6 ) // begin, end, radius
+
+  const playerCollider = new Capsule( // begin, end, radius
+    new THREE.Vector3( 0, 0, 0 ),
+    new THREE.Vector3( 0, playerH, 0 ),
+    U.m(0.5) )
+  playerCollider.translate(new THREE.Vector3(
+    -U.m(2),
+    0,
+    U.m(3)
+  ) ) // @TODO: make adjustable per-Location
   const playerColliderHelper = new THREE.Mesh(
-    new THREE.CylinderBufferGeometry(6, 6, 17.5, 5), // radiusTop, radiusBottom, height, radialSegments
+    new THREE.CylinderBufferGeometry(U.m(0.05), U.m(0.025), U.m(0.15), 5), // radiusTop, radiusBottom, height, radialSegments
     helperMaterial )
 
-  let playerOnFloor = false
 
+  const cameraCollider = new Capsule( new THREE.Vector3( 0, 0, 0 ),
+    new THREE.Vector3( 0, playerH, 0 ),
+    6 ) // begin, end, radius
+  const cameraColliderHelper = new THREE.Mesh(
+    new THREE.CylinderBufferGeometry(6, 3, playerH, 5), // radiusTop, radiusBottom, height, radialSegments
+    helperMaterial )
+
+
+  let collisionObject, collisionObectSavedColor
+  let deltaPosition
+  let playerOnObject = false
   let prevTime = performance.now()
   const playerVelocity = new THREE.Vector3()
   const playerDirection = new THREE.Vector3()
-  let colliderCenter = new THREE.Vector3()
-  let deltaPosition
+  let pickedObject, pickedObjectSavedColor
+  let result // collisions
 
   const playerCtlGeometry = new THREE.SphereGeometry(5, 8, 8) // radius, widthSegments, heightSegments, phiStart, phiEnd, thetaStart, thetaEnd
-  const playerBodyGeometry = new THREE.BoxGeometry(16, 20, 2)
-
-
   const playerCtl = new THREE.Mesh( playerCtlGeometry, wireframeMaterial )
+  playerCtl.position.y = playerH
+
+  // @TODO: make the below adjustable per-Location
+  playerCtl.position.x = -U.m(2)
+  playerCtl.position.z = U.m(3)
+
+  const playerBodyGeometry = new THREE.BoxGeometry(U.m(1), playerH, U.m(0.2)) // w, h, l
   const playerBody = new THREE.Mesh( playerBodyGeometry, wireframeMaterial )
   playerBody.position.y = 0
   playerBody.castShadow = true
-  playerCtl.position.y = 17.5
-  // playerCtl.add(playerBody)
-
-  let collisionObject, collisionObectSavedColor
-  let pickedObject, pickedObjectSavedColor
-
-  var vector = new THREE.Vector3()
-  var quaternion = new THREE.Quaternion() // create one and reuse it
-  var matrix = new THREE.Matrix4(); // create one and reuse it
+  playerCtl.add(playerBody)
 
 
-  function init() {
-
-    scene = new THREE.Scene()
-    scene.background = new THREE.Color( 0xffffff )
-    scene.fog = new THREE.Fog( 0xffffff, 0, 750 )
-
-    const axesHelper = new THREE.AxesHelper( 5 )
-    scene.add( axesHelper )
-
-    // 1.75m tall guy
-    camera = new THREE.PerspectiveCamera( 75, 2, .1, 1000 ) // fov, aspect, near, far
-    camera.position.y = 17.5 // 1.75m tall guy
-    camera.position.z = 40 // this much behind the body
-
-    playerCtl.add( camera )
-    // playerCtl.add( playerCollider )
-    scene.add( playerCollider )
-    scene.add( playerCtl )
-    scene.add( playerBody )
-    scene.add( playerColliderHelper )
-
+  function initLabels () {
 
     // const labelRenderer = new CSS2DRenderer()
     // const earthDiv = document.createElement( 'div' )
@@ -154,7 +150,10 @@ const ThreePanelDesktop = (props) => {
     // labelRenderer.domElement.style.position = 'absolute'
     // labelRenderer.domElement.style.top = '0px'
     // document.body.appendChild( labelRenderer.domElement )
+  }
 
+
+  const initStudio = () => {
 
     /*
      * Lights
@@ -191,185 +190,173 @@ const ThreePanelDesktop = (props) => {
 
     } // endLights
 
+    const studioLength = U.meters(25)
+    const studioWidth = U.meters(25)
+    /* Floor */
+    // texture = textureLoader.load(`/assets/textures/moon-1.jpg`)
+    texture = textureLoader.load(`/assets/textures/floor-1.png`)
+    const textureM = U.meters(1) // the texture is a unit meter
+    texture.wrapS = texture.wrapT = THREE.RepeatWrapping
+    texture.offset.set(0, 0)
+    texture.repeat.set(studioWidth/textureM, studioLength/textureM)
+    let floorGeometry = new THREE.PlaneGeometry( studioWidth, studioLength ) // width, height, widthSegments, heightSegments
+    floorGeometry.rotateZ( - Math.PI / 2 )
+    floorGeometry.rotateX( - Math.PI / 2 )
 
-    /*
-     * Controls
-    **/
-    {
-      controls = new PointerLockControls( playerCtl, document.body )
+    // material = new THREE.MeshStandardMaterial({ color: 0x333333 })
+    material = new THREE.MeshBasicMaterial({
+      map: texture,
+      side: THREE.DoubleSide,
+    })
+    const floor = new THREE.Mesh( floorGeometry, material )
+    floor.receiveShadow = true
+    scene.add( floor )
 
-      blockerRef.current.addEventListener( 'click', function () {
-        logg('event #click, locked controls')
-        controls.lock()
-      } )
+    /* Skybox */
+    texture = textureLoader.load(`/assets/textures/space-5.jpg`, () => {
+      const rt = new THREE.WebGLCubeRenderTarget(texture.image.height)
+      rt.fromEquirectangularTexture(renderer, texture)
+      scene.background = rt.texture
+    })
 
-      controls.addEventListener( 'lock', function () {
-        logg('event #lock')
-        // instructions.style.display = 'none'
-        // blocker.style.display = 'none'
-      } )
+    /* Measuring tools */
+    // @TODO: Measuring tools?!
 
-      controls.addEventListener( 'unlock', function () {
-        logg('event #unlock')
-        // blocker.style.display = 'block'
-        // instructions.style.display = ''
-      } )
+  }
 
-      scene.add( controls.getObject() )
+  const initControls = () => {
+    controls = new PointerLockControls( playerCtl, document.body ) // Only rotation, no movement!
 
+    blockerRef.current.addEventListener( 'click', function () {
+      logg('event #click, locked controls')
+      controls.lock()
+    } )
 
-      const onClick = (event) => {
-        // e.preventDefault()
-        if (pickedObject) {
-          // logg(pickedObject, 'pickedObject')
-          // logg(markers2destinationSlugs, 'all of them')
-          history.push( appPaths.location({
-            slug: markers2destinationSlugs[pickedObject.uuid].destination_slug
-          }) )
-        }
+    controls.addEventListener( 'lock', function () {
+      logg('event #lock')
+      // instructions.style.display = 'none'
+      // blocker.style.display = 'none'
+    } )
+
+    controls.addEventListener( 'unlock', function () {
+      logg('event #unlock')
+      // blocker.style.display = 'block'
+      // instructions.style.display = ''
+    } )
+
+    scene.add( controls.getObject() )
+
+    const onClick = (event) => {
+      // e.preventDefault()
+      if (pickedObject) {
+        // logg(pickedObject, 'pickedObject')
+        // logg(markers2destinationSlugs, 'all of them')
+        history.push( appPaths.location({
+          slug: markers2destinationSlugs[pickedObject.uuid].destination_slug
+        }) )
       }
+    }
+
+    document.addEventListener( 'keydown', ( event ) => {
+      keyStates[ event.code ] = true;
+    } );
+
+    document.addEventListener( 'keyup', ( event ) => {
+      keyStates[ event.code ] = false;
+    } );
+
+    document.addEventListener( 'click', onClick )
+
+    raycaster = new THREE.Raycaster( new THREE.Vector3(), new THREE.Vector3( 0, - 1, 0 ), 0, 10 )
 
 
-      const onKeyDown = (event) => {
-        // logg(event.code, '#onKeyDown')
+  }
 
-        switch ( event.code ) {
-          case 'ArrowUp':
-          case 'KeyW':
-            moveForward = true
-            break
-          case 'ArrowLeft':
-          case 'KeyA':
-            moveLeft = true
-            break
-          case 'ArrowDown':
-          case 'KeyS':
-            moveBackward = true
-            break
-          case 'ArrowRight':
-          case 'KeyD':
-            moveRight = true
-            break
-          case 'Space':
-            if ( canJump === true ) playerVelocity.y += 350
-            canJump = false
-            break
-        }
-      }
+  function init() {
 
-      const onKeyUp = function ( event ) {
-        switch ( event.code ) {
-          case 'ArrowUp':
-          case 'KeyW':
-            moveForward = false
-            break
-          case 'ArrowLeft':
-          case 'KeyA':
-            moveLeft = false
-            break
-          case 'ArrowDown':
-          case 'KeyS':
-            moveBackward = false
-            break
-          case 'ArrowRight':
-          case 'KeyD':
-            moveRight = false
-            break
-        }
-      }
+    scene = new THREE.Scene()
+    scene.background = new THREE.Color( 0xffffff )
+    scene.fog = new THREE.Fog( 0xffffff, 0, 750 )
 
-      document.addEventListener( 'keydown', onKeyDown )
-      document.addEventListener( 'keyup', onKeyUp )
-      document.addEventListener( 'click', onClick )
+    const axesHelper = new THREE.AxesHelper( 5 )
+    scene.add( axesHelper )
 
-      raycaster = new THREE.Raycaster( new THREE.Vector3(), new THREE.Vector3( 0, - 1, 0 ), 0, 10 )
-    } // endControls
+    camera = new THREE.PerspectiveCamera( 75, 2, U.cm(10), U.m(25) ) // fov, aspect, near, far
+    camera.position.y = U.m(0)
+    camera.position.z = U.cm(0) // 40cm behind the body
+
+    /* Adding playerBody */
+    playerCtl.add( camera )
+    scene.add( playerCtl )
+
+    // scene.add( playerBody )
+    // scene.add( cameraColliderHelper )
+    scene.add( playerColliderHelper )
 
 
-    /*
-     * Ground, Skybox
-    **/
-    {
-      // Moon floor
-      texture = textureLoader.load(`/assets/textures/moon-1.jpg`)
-      let floorGeometry = new THREE.CircleGeometry(1000, 32) // radius, segments, thetaStart, thetaLength
-      floorGeometry.translate(0, 0, -1)
-      floorGeometry.rotateX( - Math.PI / 2 )
-
-      let floorMaterial
-      // floorMaterial = new THREE.MeshBasicMaterial({ map: texture })
-      // floorMaterial = new THREE.MeshStandardMaterial({ color: 0x333333 })
-      floorMaterial = new THREE.MeshPhongMaterial({
-        map: texture,
-        side: THREE.DoubleSide,
-      })
-      const floor = new THREE.Mesh( floorGeometry, floorMaterial )
-      floor.receiveShadow = true
-      // scene.add( floor )
-
-      // Skybox
-      texture = textureLoader.load(`/assets/textures/space-5.jpg`, () => {
-        const rt = new THREE.WebGLCubeRenderTarget(texture.image.height)
-        // rt.fromEquirectangularTexture(renderer, texture)
-        scene.background = rt.texture
-      })
-
-    } // endGround
+    initControls()
+    initStudio()
 
 
-    /*
+    /**
      * Load, import models of markers
     **/
     {
       map.markers.map((marker, idx) => {
+        // logg(marker.asset3d_path, 'Loading asset...')
+        if (!!marker.asset3d_path) {
+          gltfLoader.load( marker.asset3d_path, ( gltf ) => {
 
-        gltfLoader.load( marker.asset3d_path, ( gltf ) => {
+            gltf.scene.position.x = marker.x
+            gltf.scene.position.y = marker.y
+            gltf.scene.scale.multiplyScalar(110)
+            // @TODO: and Z ?!
+            // @TODO: and parent-child relationships ?!
+            scene.add( gltf.scene )
 
-          gltf.scene.position.x = marker.x
-          gltf.scene.position.y = marker.y
-          gltf.scene.scale.multiplyScalar(17)
-          // @TODO: and Z ?!
-          // @TODO: and parent-child relationships ?!
-          scene.add( gltf.scene )
+            const box = new THREE.BoxHelper(gltf.scene, 0xff00ff)
+            scene.add( box )
 
-          /*
-           * Collisions
-          **/
-          worldOctree.fromGraphNode( gltf.scene )
-          // collisionObjects.push( gltf.scene )
+            /*
+            * Collisions
+            **/
+            worldOctree.fromGraphNode( gltf.scene )
+            // collisionObjects.push( gltf.scene )
 
-          /*
-           * Picking
-          **/
-          if (marker.destination_slug) {
-            pickingObjects.push( gltf.scene )
-          }
-
-
-
-          gltf.scene.traverse( child => {
-            if ( child.isMesh ) {
-              child.castShadow = true
-              child.receiveShadow = true
-
-              // logg(child, 'mesh child')
-
-
-              if ( child.material.map ) {
-                // child.material.map.anisotropy = 4
-              }
-
-              /*
-              * Picking
-              **/
-              if (marker.destination_slug) {
-                markers2destinationSlugs[child.uuid] = { destination_slug: marker.destination_slug }
-              }
-
+            /*
+            * Picking
+            **/
+            if (marker.destination_slug) {
+              pickingObjects.push( gltf.scene )
             }
-          } )
-        })
 
+
+            { // picking - not used
+            // gltf.scene.traverse( child => {
+            //   if ( child.isMesh ) {
+            //     child.castShadow = true
+            //     child.receiveShadow = true
+
+            //     // logg(child, 'mesh child')
+
+
+            //     if ( child.material.map ) {
+            //       // child.material.map.anisotropy = 4
+            //     }
+
+            //     /*
+            //     * Picking
+            //     **/
+            //     if (marker.destination_slug) {
+            //       markers2destinationSlugs[child.uuid] = { destination_slug: marker.destination_slug }
+            //     }
+
+            //   }
+            // } )
+            }
+
+          })
+        }
       })
     } // endLoadModels
 
@@ -385,183 +372,138 @@ const ThreePanelDesktop = (props) => {
     window.addEventListener( 'resize', onWindowResize )
   }
 
+
+  function getForwardVector() {
+
+    playerCtl.getWorldDirection( playerDirection );
+    playerDirection.y = 0;
+    playerDirection.normalize();
+
+    return playerDirection;
+
+  }
+
+  function getSideVector() {
+
+    playerCtl.getWorldDirection( playerDirection );
+    playerDirection.y = 0;
+    playerDirection.normalize();
+    playerDirection.cross( camera.up );
+
+    return playerDirection;
+
+  }
+
+  const animateBody = (deltaTime) => {
+
+    deltaPosition = playerVelocity.clone().multiplyScalar( deltaTime )
+    playerCollider.translate( deltaPosition )
+    playerCtl.position.copy( playerCollider.end )
+    playerColliderHelper.position.copy( playerCollider.end )
+
+    playerCtl.position.y += ( playerVelocity.y * deltaTime )
+    if ( playerCtl.position.y < playerH ) {
+      playerVelocity.y = 0
+      playerCtl.position.y = playerH
+      playerOnObject = true
+    }
+
+  }
+
+  const animateCollisions = () => {
+
+    // player body
+    result = worldOctree.capsuleIntersect( playerCollider )
+    if (result) {
+      playerOnObject = result.normal.y > 0
+      if ( !playerOnObject ) {
+        playerVelocity.addScaledVector( result.normal, - result.normal.dot( playerVelocity ) )
+      }
+      playerCollider.translate( result.normal.multiplyScalar( result.depth ) )
+    }
+
+    result = worldOctree.capsuleIntersect( cameraCollider )
+    if (result) {
+      logg(result, 'camera Collision') // herehere
+      // playerVelocity.addScaledVector( result.normal, - result.normal.dot( playerVelocity ) )
+      // playerCollider.translate( result.normal.multiplyScalar( result.depth ) )
+    }
+
+  }
+
+  function animateControls( deltaTime ) {
+
+    // gives a bit of air control
+    const speedDelta = deltaTime * ( playerOnObject ? U.m(5) : U.m(3) )
+
+    if ( keyStates[ 'KeyW' ] ) {
+      playerVelocity.add( getForwardVector().multiplyScalar( - speedDelta ) )
+    }
+
+    if ( keyStates[ 'KeyS' ] ) {
+      playerVelocity.add( getForwardVector().multiplyScalar( speedDelta ) )
+    }
+
+    if ( keyStates[ 'KeyA' ] ) {
+      playerVelocity.add( getSideVector().multiplyScalar( speedDelta ) )
+    }
+
+    if ( keyStates[ 'KeyD' ] ) {
+      playerVelocity.add( getSideVector().multiplyScalar( - speedDelta ) )
+    }
+
+    if ( playerOnObject ) {
+      if ( keyStates[ 'Space' ] ) {
+        playerVelocity.y = U.m(3)
+        playerOnObject = false
+      }
+    }
+
+    let damping = Math.exp( - 4 * deltaTime ) - 1;
+    if ( ! playerOnObject ) {
+      playerVelocity.y -= GRAVITY * deltaTime;
+      // small air resistance
+      damping *= 0.1;
+    }
+    playerVelocity.addScaledVector( playerVelocity, damping );
+
+  }
+
+  const animatePicking = () => {
+    raycaster = new THREE.Raycaster( cameraPosition, cameraDirection )
+
+    const pickingIntersections = raycaster.intersectObjects( pickingObjects, true )
+
+    if (pickedObject) {
+      pickedObject.material.emissive.setHex(pickedObjectSavedColor)
+      pickedObject = undefined
+    }
+    if (pickingIntersections.length) {
+      pickedObject = pickingIntersections[0].object
+      pickedObjectSavedColor = pickedObject.material.emissive.getHex()
+      pickedObject.material.emissive.setHex(0xFFFF00);
+    }
+  }
+
   function animate() {
-    requestAnimationFrame( animate )
     const time = performance.now()
     const delta = ( time - prevTime ) / 1000
-
     if ( controls.isLocked === true ) {
-      camera.updateMatrixWorld()
-      playerCtl.updateMatrixWorld()
 
-      var cameraDirection = new THREE.Vector3()
-      camera.getWorldDirection( cameraDirection )
-      cameraDirection.normalize()
+      // camera.updateMatrixWorld()
+      // playerCtl.updateMatrixWorld()
 
-      var cameraPosition = camera.position.clone()
-      cameraPosition.applyMatrix4( camera.matrixWorld )
-      // logg(cameraPosition, 'cameraPosition')
+      animateControls(delta)
 
-      /*
-       * Picking
-       */
-      const pickingScope = (() => {
-        raycaster = new THREE.Raycaster( cameraPosition, cameraDirection )
+      animateBody(delta)
 
-        const pickingIntersections = raycaster.intersectObjects( pickingObjects, true )
+      animateCollisions()
 
-        if (pickedObject) {
-          pickedObject.material.emissive.setHex(pickedObjectSavedColor)
-          pickedObject = undefined
-        }
-        if (pickingIntersections.length) {
-          pickedObject = pickingIntersections[0].object
-          pickedObjectSavedColor = pickedObject.material.emissive.getHex()
-          pickedObject.material.emissive.setHex(0xFFFF00);
-        }
-      })()
-
-
-      /*
-       * Third-person body
-       */
-      const bodyScope = (() => {
-
-        let damping = Math.exp( - 4 * delta ) - 1;
-        if ( ! playerOnFloor ) {
-          playerVelocity.y -= GRAVITY * delta;
-          // small air resistance
-          damping *= 0.1;
-        }
-        playerVelocity.addScaledVector( playerVelocity, damping );
-
-        const onObject = false // collisionIntersections.length > 0
-
-        playerVelocity.x -= playerVelocity.x * 10.0 * delta
-        playerVelocity.z -= playerVelocity.z * 10.0 * delta
-        playerVelocity.y -= 9.8 * 100.0 * delta; // 100.0 = mass
-
-        playerDirection.z = Number( moveForward ) - Number( moveBackward )
-        playerDirection.x = Number( moveRight ) - Number( moveLeft )
-        if ( moveForward || moveBackward ) playerVelocity.z -= playerDirection.z * 400.0 * delta
-        if ( moveLeft || moveRight ) playerVelocity.x -= playerDirection.x * 400.0 * delta
-        if ( onObject === true ) {
-          playerVelocity.y = Math.max( 0, playerVelocity.y )
-          canJump = true
-        }
-        playerDirection.normalize()
-
-        controls.moveRight( - playerVelocity.x * delta )
-        controls.moveForward( - playerVelocity.z * delta )
-        controls.getObject().position.y += ( playerVelocity.y * delta )
-        if ( controls.getObject().position.y < 10 ) {
-          playerVelocity.y = 0
-          controls.getObject().position.y = 10
-          canJump = true
-        }
-
-        deltaPosition = playerVelocity.clone().multiplyScalar( delta )
-
-
-        playerCollider.translate( deltaPosition )
-
-
-        { // logs
-
-        /* cameraDirection */
-        // const arrowHCD = new THREE.ArrowHelper(
-        //   cameraDirection,
-        //   controls.getObject().position,
-        //   10,
-        //   0x336699 )
-        // scene.add( arrowHCD )
-        // logg(cameraDirection, 'cameraDirection')
-
-        /* show deltaPosition - in body coords */
-        // const arrowHDP = new THREE.ArrowHelper(
-        //   deltaPosition,
-        //   controls.getObject().position,
-        //   20,
-        //   0xffffff )
-        // scene.add( arrowHDP )
-
-        /* shows controls' position */
-        // const arrowH1 = new THREE.ArrowHelper(
-        //   controls.getObject().clone().position.normalize(),
-        //   new THREE.Vector3(0, 0, 0),
-        //   new THREE.Vector3(0, 0, 0).distanceTo( controls.getObject().position ),
-        //   0xffffff )
-        // scene.add( arrowH1 )
-
-        /* playerDirection - not used much. */
-
-        /* Shows playerVelocity */
-        // const arrowHPV = new THREE.ArrowHelper(
-        //   playerVelocity,
-        //   controls.getObject().position,
-        //   10,
-        //   0xffff00 )
-        // scene.add( arrowHPV )
-
-
-        /* shows deltaPosition above your head */
-        /* this is object-relative, left/right switched (-x) */
-        // const arrowH2 = new THREE.ArrowHelper(
-        //   deltaPosition.clone().normalize(),
-        //   controls.getObject().position,
-        //   deltaPosition.length()*10, // 10, // new THREE.Vector3(0, 0, 0).distanceTo( controls.getObject().position ),
-        //   0xff00ff )
-        // scene.add( arrowH2 )
-
-        } // endLogs
-
-
-        /* The below works well. */
-        playerCollider.getCenter( colliderCenter )
-        playerColliderHelper.position.x = colliderCenter.x
-        playerColliderHelper.position.y = colliderCenter.y
-        playerColliderHelper.position.z = colliderCenter.z
-
-
-      })()
-
-
-      /*
-       * Collisions
-       * I'm mixing several methodologies here, should stick to one (for Desktop at least)
-       */
-      const collisionsScope = (() => {
-        const collisionIntersections = worldOctree.capsuleIntersect( playerCollider )
-
-        if (collisionIntersections.length) {
-          logg(collisionIntersections, 'collisionIntersections')
-
-          if (collisionIntersections[0].distance < 5) {
-            moveForward = false
-          }
-        }
-
-        const result = worldOctree.capsuleIntersect( playerCollider )
-
-        playerOnFloor = false
-        if ( result ) {
-          playerOnFloor = result.normal.y > 0
-          if ( !playerOnFloor ) {
-            playerVelocity.addScaledVector( result.normal, - result.normal.dot( playerVelocity ) )
-          }
-          playerCollider.translate( result.normal.multiplyScalar( result.depth ) )
-        }
-      })()
-
-
-
-
-    } // end if controls are locked
-
-    prevTime = time
+    }
     renderer.render( scene, camera )
-
-  } // end animate()
+    prevTime = time
+    requestAnimationFrame( animate )
+  }
 
   const onWindowResize = () => {
     // logg([blockerRef.current.clientWidth, blockerRef.current.clientHeight], 'ThreePanelDesktop. OnWindowResize')
