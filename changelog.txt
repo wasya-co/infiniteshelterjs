@@ -1,4 +1,5 @@
 2.9.0 - 2022-10-13 - minor stylistic fixes                     .
                      no more Cities. and major stylistic issues.
                      lets make a location show well, minimal emply space with a wall, and collisions.
-
+                     collisions work.
+2.10.0 - 2022-10-14 - lets... but the lightbox around the office

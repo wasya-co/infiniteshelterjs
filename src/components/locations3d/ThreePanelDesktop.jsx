@@ -66,10 +66,11 @@ const ThreePanelDesktop = (props) => {
   let raycaster, renderer
   let texture
   let scene
+  const keyStates = {}
 
   const GRAVITY = U.m(3)
   const playerH = U.m(1) // 1.75 ?
-  const keyStates = {}
+  const playerForce = U.m(8)
 
   const blockerRef = useRef(null)
   const instructionsRef = useRef(null)
@@ -155,6 +156,11 @@ const ThreePanelDesktop = (props) => {
 
   const initStudio = () => {
 
+    // config
+    const studioLength = U.meters(25)
+    const studioWidth = U.meters(25)
+    const hasFloor = false
+
     /*
      * Lights
     **/
@@ -190,27 +196,30 @@ const ThreePanelDesktop = (props) => {
 
     } // endLights
 
-    const studioLength = U.meters(25)
-    const studioWidth = U.meters(25)
-    /* Floor */
-    // texture = textureLoader.load(`/assets/textures/moon-1.jpg`)
-    texture = textureLoader.load(`/assets/textures/floor-1.png`)
-    const textureM = U.meters(1) // the texture is a unit meter
-    texture.wrapS = texture.wrapT = THREE.RepeatWrapping
-    texture.offset.set(0, 0)
-    texture.repeat.set(studioWidth/textureM, studioLength/textureM)
-    let floorGeometry = new THREE.PlaneGeometry( studioWidth, studioLength ) // width, height, widthSegments, heightSegments
-    floorGeometry.rotateZ( - Math.PI / 2 )
-    floorGeometry.rotateX( - Math.PI / 2 )
+    { /* Floor */
+      if (hasFloor) {
 
-    // material = new THREE.MeshStandardMaterial({ color: 0x333333 })
-    material = new THREE.MeshBasicMaterial({
-      map: texture,
-      side: THREE.DoubleSide,
-    })
-    const floor = new THREE.Mesh( floorGeometry, material )
-    floor.receiveShadow = true
-    scene.add( floor )
+      // texture = textureLoader.load(`/assets/textures/moon-1.jpg`)
+      texture = textureLoader.load(`/assets/textures/floor-1.png`)
+      const textureM = U.meters(1) // the texture is a unit meter
+      texture.wrapS = texture.wrapT = THREE.RepeatWrapping
+      texture.offset.set(0, 0)
+      texture.repeat.set(studioWidth/textureM, studioLength/textureM)
+      let floorGeometry = new THREE.PlaneGeometry( studioWidth, studioLength ) // width, height, widthSegments, heightSegments
+      floorGeometry.rotateZ( - Math.PI / 2 )
+      floorGeometry.rotateX( - Math.PI / 2 )
+
+      // material = new THREE.MeshStandardMaterial({ color: 0x333333 })
+      material = new THREE.MeshBasicMaterial({
+        map: texture,
+        side: THREE.DoubleSide,
+      })
+      const floor = new THREE.Mesh( floorGeometry, material )
+      floor.receiveShadow = true
+      scene.add( floor )
+
+      }
+    } /* endFloor */
 
     /* Skybox */
     texture = textureLoader.load(`/assets/textures/space-5.jpg`, () => {
@@ -433,8 +442,8 @@ const ThreePanelDesktop = (props) => {
 
   function animateControls( deltaTime ) {
 
-    // gives a bit of air control
-    const speedDelta = deltaTime * ( playerOnObject ? U.m(5) : U.m(3) )
+    let speedDelta = deltaTime * playerForce
+    if (playerOnObject) speedDelta *= 0.6 // gives a bit of air control
 
     if ( keyStates[ 'KeyW' ] ) {
       playerVelocity.add( getForwardVector().multiplyScalar( - speedDelta ) )
