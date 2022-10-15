@@ -4,6 +4,7 @@ import React, { useContext, useState } from 'react'
 import PropTypes from 'prop-types'
 import * as ReactRouterDOM from 'react-router-dom'
 import { toast } from 'react-toastify'
+import * as THREE from "three"
 
 import {
   AuthContext,
@@ -76,10 +77,18 @@ const AppProvider = ({ children, ...props }) => {
   }
   fn()
 
+  const [ scene, setScene ] = useState(new THREE.Scene())
+
+  const [ pickingObjects, setPickingObjects ] = useState([])
+  const [ markers2destinationSlugs, setMarkers2destinationSlugs ] = useState({})
+
 
   return <AppContext.Provider value={{
     os,
     useHistory,
+    scene,
+    pickingObjects, setPickingObjects,
+    markers2destinationSlugs, setMarkers2destinationSlugs,
   }} >
     <ThemeProvider >
       <AuthContextProvider {...{ useApi, }} >

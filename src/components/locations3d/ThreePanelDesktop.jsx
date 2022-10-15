@@ -1,10 +1,11 @@
 
-import React, { Fragment as F, useContext, useEffect, useRef } from 'react'
+import React, { Fragment as F, useContext, useEffect, useLayoutEffect, useRef, useState } from 'react'
 import * as THREE from "three"
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader"
 import { Octree } from 'three/examples/jsm/math/Octree'
 import { Capsule } from 'three/examples/jsm/math/Capsule'
 import { CSS2DRenderer, CSS2DObject } from './vendor/CSS2DRenderer.js'
+import ResourceTracker from './vendor/ResourceTracker'
 import styled from 'styled-components'
 
 import {
@@ -44,29 +45,31 @@ const U = {
  *
 **/
 const ThreePanelDesktop = (props) => {
-  // logg(props, 'ThreePanelDesktop')
-  const { map } = props
+  logg(props, 'ThreePanelDesktop')
+  const { map, slug } = props
 
   const {
     useHistory,
+    scene,
+    pickingObjects, setPickingObjects,
+    markers2destinationSlugs, setSarkers2destinationSlugs,
   } = useContext(AppContext)
-
-  // const {
-  //   resizeCount,
-  // } = useContext(TwofoldContext)
-  // useEffect(() => {
-  //   onWindowResize()
-  // }, [resizeCount])
+  const resMgr = new ResourceTracker();
+  const track = resMgr.track.bind(resMgr);
+  const tracked = []
 
   const history = useHistory()
-  let markers2destinationSlugs = {}
 
-  let camera, controls
-  let pickingObjects = []
-  let raycaster, renderer
-  let texture
-  let scene
+  let camera = new THREE.PerspectiveCamera( 75, 2, U.cm(10), U.m(25) ) // fov, aspect, near, far
+  let controls
+  let raycaster
   const keyStates = {}
+
+  let renderer = new THREE.WebGLRenderer({ antialias: true })
+  renderer.setPixelRatio( window.devicePixelRatio )
+  renderer.setSize( 700, 350 ) // aspect ratio 0.5
+  renderer.shadowMap.enabled = true
+  let texture
 
   const GRAVITY = U.m(3)
   const playerH = U.m(1) // 1.75 ?
@@ -74,21 +77,22 @@ const ThreePanelDesktop = (props) => {
 
   const blockerRef = useRef(null)
   const instructionsRef = useRef(null)
+
   useEffect(() => {
+    resMgr.dispose()
     init()
     animate()
     onWindowResize()
-  }, [])
+  }, [ map.id, slug ])
 
   const textureLoader = new THREE.TextureLoader()
   const gltfLoader = new GLTFLoader()
-  const worldOctree = new Octree()
+  let worldOctree = new Octree()
 
   let material
   const helperMaterial = new THREE.MeshBasicMaterial({ color: 0xffff00 })
   const wireframeMaterial = new THREE.MeshStandardMaterial()
   wireframeMaterial.wireframe = true
-
 
   const playerCollider = new Capsule( // begin, end, radius
     new THREE.Vector3( 0, 0, 0 ),
@@ -111,8 +115,6 @@ const ThreePanelDesktop = (props) => {
     new THREE.CylinderBufferGeometry(6, 3, playerH, 5), // radiusTop, radiusBottom, height, radialSegments
     helperMaterial )
 
-
-  let collisionObject, collisionObectSavedColor
   let deltaPosition
   let playerOnObject = false
   let prevTime = performance.now()
@@ -120,20 +122,32 @@ const ThreePanelDesktop = (props) => {
   const playerDirection = new THREE.Vector3()
   let pickedObject, pickedObjectSavedColor
   let result // collisions
+  let frame_id
 
   const playerCtlGeometry = new THREE.SphereGeometry(5, 8, 8) // radius, widthSegments, heightSegments, phiStart, phiEnd, thetaStart, thetaEnd
-  const playerCtl = new THREE.Mesh( playerCtlGeometry, wireframeMaterial )
-  playerCtl.position.y = playerH
+  let playerCtl
 
-  // @TODO: make the below adjustable per-Location
-  playerCtl.position.x = -U.m(2)
-  playerCtl.position.z = U.m(3)
+  window.addEventListener( 'resize', onWindowResize )
 
-  const playerBodyGeometry = new THREE.BoxGeometry(U.m(1), playerH, U.m(0.2)) // w, h, l
-  const playerBody = new THREE.Mesh( playerBodyGeometry, wireframeMaterial )
-  playerBody.position.y = 0
-  playerBody.castShadow = true
-  playerCtl.add(playerBody)
+  const dispose = (resource) => {
+    if (resource instanceof THREE.Object3D) {
+      if (resource.parent) {
+        resource.parent.remove(resource);
+      }
+    }
+    if (resource.dispose) {
+      resource.dispose();
+    }
+  }
+
+
+
+
+
+
+
+
+
 
 
   function initLabels () {
@@ -153,10 +167,6 @@ const ThreePanelDesktop = (props) => {
     // document.body.appendChild( labelRenderer.domElement )
   }
 
-  // config
-  // const studioLength = U.meters(25)
-  // const studioWidth = U.meters(25)
-  // const hasFloor = false
   const initStudio = (c) => {
 
     { /* Lights */
@@ -223,9 +233,6 @@ const ThreePanelDesktop = (props) => {
       scene.background = rt.texture
     })
 
-    /* Measuring tools */
-    // @TODO: Measuring tools?!
-
   }
 
   const initControls = () => {
@@ -250,11 +257,22 @@ const ThreePanelDesktop = (props) => {
 
     scene.add( controls.getObject() )
 
-    const onClick = (event) => {
-      // e.preventDefault()
-      if (pickedObject) {
-        // logg(pickedObject, 'pickedObject')
-        // logg(markers2destinationSlugs, 'all of them')
+    const onClick = () => { // There is no event passed in here.
+      if (pickedObject && controls.isLocked) {
+
+        /* cleanup */
+        while(tracked.length) {
+          const popped = tracked.pop()
+          logg(popped, 'popped')
+          dispose(popped)
+        }
+        // setPickingObjects([])
+        // resMgr.dispose()
+
+        // worldOctree = null // I still need to clear the octree
+
+        // logg(markers2destinationSlugs, 'markers2destinationSlugs')
+
         history.push( appPaths.location({
           slug: markers2destinationSlugs[pickedObject.uuid].destination_slug
         }) )
@@ -272,102 +290,94 @@ const ThreePanelDesktop = (props) => {
     document.addEventListener( 'click', onClick )
 
     raycaster = new THREE.Raycaster( new THREE.Vector3(), new THREE.Vector3( 0, - 1, 0 ), 0, 10 )
-
-
   }
 
-  function init() {
+  const initModels = () => {
+    map.markers.map((marker, idx) => {
 
-    scene = new THREE.Scene()
+      if (!!marker.asset3d_path) {
+        gltfLoader.load( marker.asset3d_path, ( gltf ) => {
+
+          tracked.push(gltf.scene)
+
+          gltf.scene.position.x = marker.x
+          gltf.scene.position.y = marker.y
+          gltf.scene.position.z = marker.z
+          gltf.scene.scale.multiplyScalar(110)
+          // @TODO: and Z ?!
+          // @TODO: and parent-child relationships ?!
+
+          scene.add(gltf.scene)
+
+          /* show the bounding box */
+          let box = new THREE.BoxHelper(gltf.scene, 0xff00ff)
+          box = track(box)
+          scene.add( box )
+
+          /*
+          * Collisions
+          **/
+          worldOctree.fromGraphNode( gltf.scene )
+          // collisionObjects.push( gltf.scene )
+
+
+          { // init Picking, @TODO: remove usage of markers2destinationSlugs
+
+
+            if (marker.destination_slug) {
+              pickingObjects.push( gltf.scene )
+            }
+
+            gltf.scene.traverse( child => {
+              if ( child.isMesh ) {
+                child.castShadow = true
+                child.receiveShadow = true
+
+                if (marker.destination_slug) {
+
+                  // logg(marker, 'init Picking')
+                  // logg(gltf.scene, 'init Picking 2')
+
+                  markers2destinationSlugs[child.uuid] = { destination_slug: marker.destination_slug }
+                }
+              }
+            })
+
+          } // endInitPicking
+
+        })
+      }
+
+    })
+  } // end InitModels
+
+  function init() {
+    logg(scene, 'init() scene')
     scene.background = new THREE.Color( 0xffffff )
     scene.fog = new THREE.Fog( 0xffffff, 0, 750 )
 
     const axesHelper = new THREE.AxesHelper( 5 )
     scene.add( axesHelper )
 
-    camera = new THREE.PerspectiveCamera( 75, 2, U.cm(10), U.m(25) ) // fov, aspect, near, far
     camera.position.y = U.m(0)
     camera.position.z = U.cm(0) // 40cm behind the body
 
-    /* Adding playerBody */
+    playerCtl = new THREE.Mesh( playerCtlGeometry, wireframeMaterial )
+    playerCtl.position.y = playerH
+
+
+    playerCtl.position.x = -U.m(2) // @TODO: make adjustable per-Location
+    playerCtl.position.z = U.m(3)
     playerCtl.add( camera )
     scene.add( playerCtl )
-
-    // scene.add( playerBody )
-    // scene.add( cameraColliderHelper )
     scene.add( playerColliderHelper )
-
 
     initControls()
     initStudio(map.config.studio)
+    initModels()
 
-
-    /**
-     * Load, import models of markers
-    **/
-    {
-      map.markers.map((marker, idx) => {
-        // logg(marker.asset3d_path, 'Loading asset...')
-        if (!!marker.asset3d_path) {
-          gltfLoader.load( marker.asset3d_path, ( gltf ) => {
-
-            gltf.scene.position.x = marker.x
-            gltf.scene.position.y = marker.y
-            gltf.scene.scale.multiplyScalar(110)
-            // @TODO: and Z ?!
-            // @TODO: and parent-child relationships ?!
-            scene.add( gltf.scene )
-
-            /* show the bounding box */
-            // const box = new THREE.BoxHelper(gltf.scene, 0xff00ff)
-            // scene.add( box )
-
-            /*
-            * Collisions
-            **/
-            worldOctree.fromGraphNode( gltf.scene )
-            // collisionObjects.push( gltf.scene )
-
-
-            { // Picking, active
-
-              if (marker.destination_slug) {
-                pickingObjects.push( gltf.scene )
-              }
-
-              gltf.scene.traverse( child => {
-                if ( child.isMesh ) {
-                  child.castShadow = true
-                  child.receiveShadow = true
-
-                  if ( child.material.map ) {
-                    // child.material.map.anisotropy = 4
-                  }
-
-                  if (marker.destination_slug) {
-                    markers2destinationSlugs[child.uuid] = { destination_slug: marker.destination_slug }
-                  }
-
-                }
-              })
-
-            } // endPicking
-
-          })
-        }
-      })
-    } // endLoadModels
-
-
-    /*
-     * Render
-    **/
-    renderer = new THREE.WebGLRenderer({ antialias: true })
-    renderer.setPixelRatio( window.devicePixelRatio )
-    renderer.setSize( 700, 350 ) // aspect ratio 0.5
-    renderer.shadowMap.enabled = true
     blockerRef.current.appendChild( renderer.domElement )
-    window.addEventListener( 'resize', onWindowResize )
+
   }
 
 
@@ -388,8 +398,7 @@ const ThreePanelDesktop = (props) => {
     playerDirection.normalize();
     playerDirection.cross( camera.up );
 
-    return playerDirection;
-
+    return playerDirection
   }
 
   const animateBody = (deltaTime) => {
@@ -409,6 +418,7 @@ const ThreePanelDesktop = (props) => {
   }
 
   const animateCollisions = () => {
+    if (!worldOctree) return
 
     // player body
     result = worldOctree.capsuleIntersect( playerCollider )
@@ -473,9 +483,14 @@ const ThreePanelDesktop = (props) => {
     let cameraDirection = new THREE.Vector3()
     camera.getWorldDirection( cameraDirection )
     cameraDirection.normalize()
+
     raycaster = new THREE.Raycaster( cameraPosition, cameraDirection )
+    // scene.add( new THREE.ArrowHelper( cameraDirection, cameraPosition, 100, 0xff0000 ) )
 
     const pickingIntersections = raycaster.intersectObjects( pickingObjects, true )
+
+    // logg(pickingObjects, 'pickingObjects')
+    // logg(pickingIntersections, 'pickingIntersections')
 
     if (pickedObject) {
       pickedObject.material.emissive.setHex(pickedObjectSavedColor)
@@ -484,7 +499,9 @@ const ThreePanelDesktop = (props) => {
     if (pickingIntersections.length) {
       pickedObject = pickingIntersections[0].object
       pickedObjectSavedColor = pickedObject.material.emissive.getHex()
-      pickedObject.material.emissive.setHex(0xFFFF00);
+      pickedObject.material.emissive.setHex(0xFFFF00)
+
+      // logg(pickedObject, 'pickedObject')
     }
   }
 
@@ -503,7 +520,7 @@ const ThreePanelDesktop = (props) => {
     }
     renderer.render( scene, camera )
     prevTime = time
-    requestAnimationFrame( animate )
+    frame_id = requestAnimationFrame( animate )
   }
 
   const onWindowResize = () => {

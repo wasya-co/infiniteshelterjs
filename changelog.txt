@@ -3,3 +3,6 @@
                      lets make a location show well, minimal emply space with a wall, and collisions.
                      collisions work.
 2.10.0 - 2022-10-14 - lets... but the lightbox around the office
+                      picking works again
+                      bugfixes
+                      lets be able to move between location3d's
