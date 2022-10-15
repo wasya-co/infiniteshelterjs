@@ -153,18 +153,13 @@ const ThreePanelDesktop = (props) => {
     // document.body.appendChild( labelRenderer.domElement )
   }
 
+  // config
+  // const studioLength = U.meters(25)
+  // const studioWidth = U.meters(25)
+  // const hasFloor = false
+  const initStudio = (c) => {
 
-  const initStudio = () => {
-
-    // config
-    const studioLength = U.meters(25)
-    const studioWidth = U.meters(25)
-    const hasFloor = false
-
-    /*
-     * Lights
-    **/
-    {
+    { /* Lights */
 
       // // Illuminate everytyhing
       const light = new THREE.HemisphereLight( 0xeeeeff, 0x777788, 0.75 )
@@ -197,20 +192,20 @@ const ThreePanelDesktop = (props) => {
     } // endLights
 
     { /* Floor */
-      if (hasFloor) {
+      if (c.hasFloor) {
 
-      // texture = textureLoader.load(`/assets/textures/moon-1.jpg`)
       texture = textureLoader.load(`/assets/textures/floor-1.png`)
       const textureM = U.meters(1) // the texture is a unit meter
       texture.wrapS = texture.wrapT = THREE.RepeatWrapping
       texture.offset.set(0, 0)
-      texture.repeat.set(studioWidth/textureM, studioLength/textureM)
-      let floorGeometry = new THREE.PlaneGeometry( studioWidth, studioLength ) // width, height, widthSegments, heightSegments
+      texture.repeat.set(c.studioWidth/textureM, c.studioLength/textureM)
+      let floorGeometry = new THREE.PlaneGeometry( c.studioWidth, c.studioLength ) // width, height, widthSegments, heightSegments
       floorGeometry.rotateZ( - Math.PI / 2 )
       floorGeometry.rotateX( - Math.PI / 2 )
 
+      // Basic material cannot receive shadow, but standard material can.
       // material = new THREE.MeshStandardMaterial({ color: 0x333333 })
-      material = new THREE.MeshBasicMaterial({
+      material = new THREE.MeshStandardMaterial({
         map: texture,
         side: THREE.DoubleSide,
       })
@@ -222,7 +217,7 @@ const ThreePanelDesktop = (props) => {
     } /* endFloor */
 
     /* Skybox */
-    texture = textureLoader.load(`/assets/textures/space-5.jpg`, () => {
+    texture = textureLoader.load(`/assets/textures/space.jpg`, () => {
       const rt = new THREE.WebGLCubeRenderTarget(texture.image.height)
       rt.fromEquirectangularTexture(renderer, texture)
       scene.background = rt.texture
@@ -304,7 +299,7 @@ const ThreePanelDesktop = (props) => {
 
 
     initControls()
-    initStudio()
+    initStudio(map.config.studio)
 
 
     /**
@@ -323,8 +318,9 @@ const ThreePanelDesktop = (props) => {
             // @TODO: and parent-child relationships ?!
             scene.add( gltf.scene )
 
-            const box = new THREE.BoxHelper(gltf.scene, 0xff00ff)
-            scene.add( box )
+            /* show the bounding box */
+            // const box = new THREE.BoxHelper(gltf.scene, 0xff00ff)
+            // scene.add( box )
 
             /*
             * Collisions
@@ -332,37 +328,30 @@ const ThreePanelDesktop = (props) => {
             worldOctree.fromGraphNode( gltf.scene )
             // collisionObjects.push( gltf.scene )
 
-            /*
-            * Picking
-            **/
-            if (marker.destination_slug) {
-              pickingObjects.push( gltf.scene )
-            }
 
+            { // Picking, active
 
-            { // picking - not used
-            // gltf.scene.traverse( child => {
-            //   if ( child.isMesh ) {
-            //     child.castShadow = true
-            //     child.receiveShadow = true
+              if (marker.destination_slug) {
+                pickingObjects.push( gltf.scene )
+              }
 
-            //     // logg(child, 'mesh child')
+              gltf.scene.traverse( child => {
+                if ( child.isMesh ) {
+                  child.castShadow = true
+                  child.receiveShadow = true
 
+                  if ( child.material.map ) {
+                    // child.material.map.anisotropy = 4
+                  }
 
-            //     if ( child.material.map ) {
-            //       // child.material.map.anisotropy = 4
-            //     }
+                  if (marker.destination_slug) {
+                    markers2destinationSlugs[child.uuid] = { destination_slug: marker.destination_slug }
+                  }
 
-            //     /*
-            //     * Picking
-            //     **/
-            //     if (marker.destination_slug) {
-            //       markers2destinationSlugs[child.uuid] = { destination_slug: marker.destination_slug }
-            //     }
+                }
+              })
 
-            //   }
-            // } )
-            }
+            } // endPicking
 
           })
         }
@@ -431,19 +420,19 @@ const ThreePanelDesktop = (props) => {
       playerCollider.translate( result.normal.multiplyScalar( result.depth ) )
     }
 
-    result = worldOctree.capsuleIntersect( cameraCollider )
-    if (result) {
-      logg(result, 'camera Collision') // herehere
-      // playerVelocity.addScaledVector( result.normal, - result.normal.dot( playerVelocity ) )
-      // playerCollider.translate( result.normal.multiplyScalar( result.depth ) )
-    }
+    // result = worldOctree.capsuleIntersect( cameraCollider )
+    // if (result) {
+    //   logg(result, 'camera Collision') // herehere
+    //   // playerVelocity.addScaledVector( result.normal, - result.normal.dot( playerVelocity ) )
+    //   // playerCollider.translate( result.normal.multiplyScalar( result.depth ) )
+    // }
 
   }
 
   function animateControls( deltaTime ) {
 
     let speedDelta = deltaTime * playerForce
-    if (playerOnObject) speedDelta *= 0.6 // gives a bit of air control
+    if (playerOnObject) speedDelta *= 0.8 // gives a bit of air control
 
     if ( keyStates[ 'KeyW' ] ) {
       playerVelocity.add( getForwardVector().multiplyScalar( - speedDelta ) )
@@ -479,6 +468,11 @@ const ThreePanelDesktop = (props) => {
   }
 
   const animatePicking = () => {
+    let cameraPosition = camera.position.clone()
+    cameraPosition.applyMatrix4( camera.matrixWorld )
+    let cameraDirection = new THREE.Vector3()
+    camera.getWorldDirection( cameraDirection )
+    cameraDirection.normalize()
     raycaster = new THREE.Raycaster( cameraPosition, cameraDirection )
 
     const pickingIntersections = raycaster.intersectObjects( pickingObjects, true )
@@ -503,11 +497,9 @@ const ThreePanelDesktop = (props) => {
       // playerCtl.updateMatrixWorld()
 
       animateControls(delta)
-
       animateBody(delta)
-
       animateCollisions()
-
+      animatePicking()
     }
     renderer.render( scene, camera )
     prevTime = time
