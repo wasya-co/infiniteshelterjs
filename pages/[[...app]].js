@@ -25,7 +25,7 @@ function App() {
     <WrappedApp />
 
     <Script
-      src="https://www.googletagmanager.com/gtag/js?id=G-W8PVZ83B9H"
+      src="https://www.googletagmanager.com/gtag/js?id=UA-53077236-2"
       strategy="lazyOnload"
     />
     <Script id="google-analytics" strategy="lazyOnload">
@@ -34,7 +34,7 @@ function App() {
         function gtag(){window.dataLayer.push(arguments);}
         gtag('js', new Date());
 
-        gtag('config', 'G-W8PVZ83B9H');
+        gtag('config', 'UA-53077236-2');
       `}
     </Script>
 

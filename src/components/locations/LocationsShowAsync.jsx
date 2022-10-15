@@ -24,7 +24,7 @@ import {
  *
 **/
 const LocationsShowAsync = (props) => {
-  // logg(props, 'LocationsShowAsync')
+  logg(props, 'LocationsShowAsync')
   const { match } = props
 
   // @TODO: this is elegantly LocationProvider _vp_ 2022-09-12
@@ -44,7 +44,11 @@ const LocationsShowAsync = (props) => {
   const api = useApi()
 
   useEffect(() => {
+    logg(match, 'LocationsShowAsync Request Chain')
+
     const chain = [ api.getLocation( match.params ) ]
+
+    // only if item_type is present
     if (match.params.item_type) {
       const itemType = inflector.classify(match.params.item_type)
       switch (itemType) {
@@ -63,7 +67,8 @@ const LocationsShowAsync = (props) => {
       }
     }
     Promise.all(chain).then(rs => {
-      // logg(rs, 'LocationsShowAsync ChainResults')
+      logg(rs, 'LocationsShowAsync ChainResults')
+
       setLocation(rs[0])
 
       // @TODO: test-drive this. Clicking from a location-gallery back to location, should un-set the showItem. _vp_ 2022-09-11
@@ -77,7 +82,8 @@ const LocationsShowAsync = (props) => {
     match.params.item_type,
     match.params.item_slug,
     match.params.slug,
-    match.params.newsitems_page ])
+    match.params.newsitems_page,
+  ])
 
   if (!location) { return  null }
   if (location.is_premium && !location.is_purchased) { return <LocationsRestricted /> }
