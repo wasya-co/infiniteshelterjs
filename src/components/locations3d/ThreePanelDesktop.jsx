@@ -1,12 +1,14 @@
 
 import React, { Fragment as F, useContext, useEffect, useLayoutEffect, useRef, useState } from 'react'
 import * as THREE from "three"
+import OctreeHelper from './vendor/OctreeHelper.js'
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader"
 import { Octree } from 'three/examples/jsm/math/Octree'
 import { Capsule } from 'three/examples/jsm/math/Capsule'
 import { CSS2DRenderer, CSS2DObject } from './vendor/CSS2DRenderer.js'
 import ResourceTracker from './vendor/ResourceTracker'
 import styled from 'styled-components'
+
 
 import {
   AppContext,
@@ -52,11 +54,12 @@ const ThreePanelDesktop = (props) => {
     useHistory,
     scene,
     pickingObjects, setPickingObjects,
+    worldOctree, setWorldOctree,
     markers2destinationSlugs, setSarkers2destinationSlugs,
+    tracked, // @TODO: rename
   } = useContext(AppContext)
   const resMgr = new ResourceTracker();
   const track = resMgr.track.bind(resMgr);
-  const tracked = []
 
   const history = useHistory()
 
@@ -87,7 +90,8 @@ const ThreePanelDesktop = (props) => {
 
   const textureLoader = new THREE.TextureLoader()
   const gltfLoader = new GLTFLoader()
-  let worldOctree = new Octree()
+
+  let octreeHelper
 
   let material
   const helperMaterial = new THREE.MeshBasicMaterial({ color: 0xffff00 })
@@ -139,14 +143,6 @@ const ThreePanelDesktop = (props) => {
       resource.dispose();
     }
   }
-
-
-
-
-
-
-
-
 
 
 
@@ -257,21 +253,21 @@ const ThreePanelDesktop = (props) => {
 
     scene.add( controls.getObject() )
 
-    const onClick = () => { // There is no event passed in here.
+    const onClick = () => { // There is no event here.
       if (pickedObject && controls.isLocked) {
 
+        logg(tracked, 'cleaning Up')
         /* cleanup */
         while(tracked.length) {
           const popped = tracked.pop()
           logg(popped, 'popped')
+          scene.remove(popped)
           dispose(popped)
         }
-        // setPickingObjects([])
-        // resMgr.dispose()
 
-        // worldOctree = null // I still need to clear the octree
-
-        // logg(markers2destinationSlugs, 'markers2destinationSlugs')
+        const TmpWorldOctree = new Octree()
+        setWorldOctree(TmpWorldOctree)
+        // scene.remove(octreeHelper)
 
         history.push( appPaths.location({
           slug: markers2destinationSlugs[pickedObject.uuid].destination_slug
@@ -295,10 +291,11 @@ const ThreePanelDesktop = (props) => {
   const initModels = () => {
     map.markers.map((marker, idx) => {
 
-      if (!!marker.asset3d_path) {
+      if (marker.asset3d_path) {
         gltfLoader.load( marker.asset3d_path, ( gltf ) => {
 
           tracked.push(gltf.scene)
+          logg(tracked, 'adding Tracking')
 
           gltf.scene.position.x = marker.x
           gltf.scene.position.y = marker.y
@@ -311,21 +308,20 @@ const ThreePanelDesktop = (props) => {
 
           /* show the bounding box */
           let box = new THREE.BoxHelper(gltf.scene, 0xff00ff)
-          box = track(box)
           scene.add( box )
 
-          /*
-          * Collisions
-          **/
-          worldOctree.fromGraphNode( gltf.scene )
-          // collisionObjects.push( gltf.scene )
-
+          /* Collisions */
+          worldOctree.fromGraphNode( gltf.scene, scene )
+          octreeHelper = new OctreeHelper( worldOctree )
+          octreeHelper.visible = false
+          scene.add( octreeHelper ) // @TODO: these need to be multiple, if I'm keeping it
 
           { // init Picking, @TODO: remove usage of markers2destinationSlugs
 
 
             if (marker.destination_slug) {
               pickingObjects.push( gltf.scene )
+              logg(gltf.scene, 'added to picking')
             }
 
             gltf.scene.traverse( child => {
@@ -342,6 +338,8 @@ const ThreePanelDesktop = (props) => {
                 }
               }
             })
+
+            logg(pickingObjects, 'pickingObjects')
 
           } // endInitPicking
 
@@ -373,7 +371,7 @@ const ThreePanelDesktop = (props) => {
     scene.add( playerColliderHelper )
 
     initControls()
-    initStudio(map.config.studio)
+    // initStudio(map.config.studio)
     initModels()
 
     blockerRef.current.appendChild( renderer.domElement )
@@ -485,12 +483,8 @@ const ThreePanelDesktop = (props) => {
     cameraDirection.normalize()
 
     raycaster = new THREE.Raycaster( cameraPosition, cameraDirection )
-    // scene.add( new THREE.ArrowHelper( cameraDirection, cameraPosition, 100, 0xff0000 ) )
 
     const pickingIntersections = raycaster.intersectObjects( pickingObjects, true )
-
-    // logg(pickingObjects, 'pickingObjects')
-    // logg(pickingIntersections, 'pickingIntersections')
 
     if (pickedObject) {
       pickedObject.material.emissive.setHex(pickedObjectSavedColor)
@@ -500,8 +494,6 @@ const ThreePanelDesktop = (props) => {
       pickedObject = pickingIntersections[0].object
       pickedObjectSavedColor = pickedObject.material.emissive.getHex()
       pickedObject.material.emissive.setHex(0xFFFF00)
-
-      // logg(pickedObject, 'pickedObject')
     }
   }
 

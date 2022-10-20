@@ -5,6 +5,7 @@ import PropTypes from 'prop-types'
 import * as ReactRouterDOM from 'react-router-dom'
 import { toast } from 'react-toastify'
 import * as THREE from "three"
+import { Octree } from 'three/examples/jsm/math/Octree'
 
 import {
   AuthContext,
@@ -78,15 +79,17 @@ const AppProvider = ({ children, ...props }) => {
   fn()
 
   const [ scene, setScene ] = useState(new THREE.Scene())
-
+  const [ tracked, setTracked ] = useState([])
   const [ pickingObjects, setPickingObjects ] = useState([])
   const [ markers2destinationSlugs, setMarkers2destinationSlugs ] = useState({})
-
+  const [ worldOctree, setWorldOctree ] = useState(new Octree())
 
   return <AppContext.Provider value={{
     os,
     useHistory,
     scene,
+    tracked, setTracked,
+    worldOctree, setWorldOctree,
     pickingObjects, setPickingObjects,
     markers2destinationSlugs, setMarkers2destinationSlugs,
   }} >
