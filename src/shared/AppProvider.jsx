@@ -80,9 +80,11 @@ const AppProvider = ({ children, ...props }) => {
 
   const [ scene, setScene ] = useState(new THREE.Scene())
   const [ tracked, setTracked ] = useState([])
-  const [ pickingObjects, setPickingObjects ] = useState([])
   const [ markers2destinationSlugs, setMarkers2destinationSlugs ] = useState({})
   const [ worldOctree, setWorldOctree ] = useState(new Octree())
+  // const [ pickingObjects, setPickingObjects ] = useState([])
+  const pickingObjects = []
+  const setPickingObjects = () => {}
 
   return <AppContext.Provider value={{
     os,

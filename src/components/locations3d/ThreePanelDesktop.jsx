@@ -53,13 +53,15 @@ const ThreePanelDesktop = (props) => {
   const {
     useHistory,
     scene,
-    pickingObjects, setPickingObjects,
     worldOctree, setWorldOctree,
     markers2destinationSlugs, setSarkers2destinationSlugs,
     tracked, // @TODO: rename
   } = useContext(AppContext)
   const resMgr = new ResourceTracker();
   const track = resMgr.track.bind(resMgr);
+
+  // const [ pickingObjects, setPickingObjects ] = useState([])
+  const pickingObjects = useRef([])
 
   const history = useHistory()
 
@@ -289,6 +291,8 @@ const ThreePanelDesktop = (props) => {
   }
 
   const initModels = () => {
+    // setPickingObjects([])
+    pickingObjects.current = []
     map.markers.map((marker, idx) => {
 
       if (marker.asset3d_path) {
@@ -320,8 +324,13 @@ const ThreePanelDesktop = (props) => {
 
 
             if (marker.destination_slug) {
-              pickingObjects.push( gltf.scene )
-              logg(gltf.scene, 'added to picking')
+              pickingObjects.current.push( gltf.scene )
+              // logg(gltf.scene, 'added to picking')
+              gltf.scene.traverse( child => {
+                if ( child.isMesh ) {
+                  child.material.emissive.setHex(0x00FFFF)
+                }
+              })
             }
 
             gltf.scene.traverse( child => {
@@ -476,6 +485,7 @@ const ThreePanelDesktop = (props) => {
   }
 
   const animatePicking = () => {
+
     let cameraPosition = camera.position.clone()
     cameraPosition.applyMatrix4( camera.matrixWorld )
     let cameraDirection = new THREE.Vector3()
@@ -483,8 +493,10 @@ const ThreePanelDesktop = (props) => {
     cameraDirection.normalize()
 
     raycaster = new THREE.Raycaster( cameraPosition, cameraDirection )
+    // scene.add( new THREE.ArrowHelper( cameraDirection, cameraPosition, 100, 0xff0000 ) )
 
-    const pickingIntersections = raycaster.intersectObjects( pickingObjects, true )
+    const pickingIntersections = raycaster.intersectObjects( pickingObjects.current, true )
+    // logg(pickingObjects, 'animating picking?')
 
     if (pickedObject) {
       pickedObject.material.emissive.setHex(pickedObjectSavedColor)

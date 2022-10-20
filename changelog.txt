@@ -7,3 +7,5 @@
                       bugfixes
                       lets be able to move between location3d's
          2022-10-19 - restarted with alchemy
+                      cont. being able to transition between pages. raycaster?
+                      picking actually works, wow
