@@ -33,20 +33,22 @@ import "react-toggle/style.css"
 
 import bodyNFT from '$src/artifacts/contracts/Body.sol/BodyNFT.json'
 
+const FlexCol = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
 const FlexRow = styled.div`
   display: flex;
   flex-wrap: wrap;
 `;
+
 
 /*
  * ropsten, _vp_ 2021-10-26
  * Dana, nude 1 (nude 3)
  */
 const bodyAddress = '0x3e1a03a9e1682f4dd95413e0be69e5b7bccaf15d'
-
-const Cell = styled.div`
-  margin-right: ${p => p.theme.smallWidth};
-`;
 
 const Edit = styled(EditIcon)`
   font-size: 18px;
@@ -104,7 +106,8 @@ const W0 = styled.div`
   align-items: center;
 `;
 
-const W1 = styled.div``;
+const W1 = styled.div`
+`;
 
 
 
@@ -218,34 +221,52 @@ const MyAccountWidget = (props) => {
   return <W0 className="MyAccountWidget" >
     { currentUser?.email && <Img src={currentUser?.profile_photo_url || avatar} /> }
 
-    <FlexRow>
+    <FlexCol>
+      <FlexRow>
 
-      { currentUser.email && <CoinManager>
-        [&nbsp;{ typeof currentUser.n_unlocks === 'undefined' ? '?' : currentUser.n_unlocks} coins&nbsp;
-        <AddCircleOutlineIcon onClick={() => setPurchaseModalOpen(true)} />&nbsp;]
-      </CoinManager> }
+        { currentUser.email && <CoinManager>
+          [&nbsp;{ typeof currentUser.n_unlocks === 'undefined' ? '?' : currentUser.n_unlocks} coins&nbsp;
+          <AddCircleOutlineIcon onClick={() => setPurchaseModalOpen(true)} />&nbsp;]
+        </CoinManager> }
 
-      { /* set EditorMode */ }
-      {/* <Card>
-        <label>
-          <Toggle
-            defaultChecked={editorMode}
-            icons={false}
-            onChange={() => setEditorMode(!editorMode) } />
-          <span>Editor mode</span>
-        </label>
-      </Card> */}
-
-      { currentUser?.email ? <FlexRow>
-        [&nbsp;{currentUser.email}&nbsp;<IconLogout onClick={doLogout} >Logout</IconLogout>&nbsp;]
-      </FlexRow> : <FlexRow>
-        {/* <FacebookLogin /> */}
-        <RegisterWithEmailBtn onClick={() => { setRegisterModalOpen(true) }} />
-        <LoginWithEmailBtn    onClick={() => { setLoginModalOpen(true) }} />
-      </FlexRow> }
+        { /* set EditorMode */ }
+        {/* <Card>
+          <label>
+            <Toggle
+              defaultChecked={editorMode}
+              icons={false}
+              onChange={() => setEditorMode(!editorMode) } />
+            <span>Editor mode</span>
+          </label>
+        </Card> */}
 
 
-    </FlexRow>
+
+
+        { currentUser?.email ? <FlexRow>
+          [&nbsp;{currentUser.email}&nbsp;<IconLogout onClick={doLogout} >Logout</IconLogout>&nbsp;]
+        </FlexRow> : <FlexRow>
+          {/* <FacebookLogin /> */}
+          <RegisterWithEmailBtn onClick={() => { setRegisterModalOpen(true) }} />
+          <LoginWithEmailBtn    onClick={() => { setLoginModalOpen(true) }} />
+        </FlexRow> }
+
+
+      </FlexRow>
+      <FlexRow>
+
+        { /* Metamask */ }
+        { active && <W1> [
+          <span>Connected with <b>{account}</b></span>
+          <button onClick={disconnect} >Disconnect</button>
+          <button onClick={myBodies} >myBodies</button> ]</W1> }
+        { !active && <W1>
+        <span>Not Connected</span>
+        <button onClick={connect} >Connect to MetaMask</button>
+        </W1> }
+
+      </FlexRow>
+    </FlexCol>
 
     <PurchaseModal />
 
@@ -259,13 +280,6 @@ export default MyAccountWidget
 
 
 
-// { active && <W1> [
-//   <span>Connected with <b>{account}</b></span>
-//   <button onClick={disconnect} >Disconnect</button>
-//   <button onClick={myBodies} >myBodies</button> ]</W1> }
-// { !active && <W1>
-// <span>Not Connected</span>
-// <button onClick={connect} >Connect to MetaMask</button>
-// </W1> }
+
 
 
