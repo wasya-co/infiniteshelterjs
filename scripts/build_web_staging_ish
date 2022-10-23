@@ -20,10 +20,11 @@ yarn run next_build
 echo $(date) > timestamp
 git add . &&
 git commit -m "autobuild `date "+%Y%m%d"`" || echo 'nothing to commit'
+git push
 
 
 
-ssh do "cd /home/ubuntu/projects/staging_ishjs && git pull && sudo apachectl -k restart && sudo pkill nginx && sudo nginx"
+ssh do "cd /home/ubuntu/projects/staging_infiniteshelterjs && git pull && sudo apachectl -k restart && sudo pkill nginx && sudo nginx"
 
 set +e
 echo 'build_web_staging_ish ok'

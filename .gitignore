@@ -19,7 +19,7 @@ public/assets/objects
 .next/trace
 !.next/.keep
 
-## this is what https://guyd.me and infiniteshelter.com uses... I cant ignore these at the moment.
+## this is what infiniteshelter.com uses... I cant ignore these at the moment.
 # /build
 # !/build/.keep
 
