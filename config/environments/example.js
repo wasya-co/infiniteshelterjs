@@ -12,6 +12,7 @@ const settings = {
   "homePath": "/en/locations/show/root",
 
   "requireLogin": false,
+  "ageRestricted": false,
 };
 
 const defaultSettings = require('../default.js')
