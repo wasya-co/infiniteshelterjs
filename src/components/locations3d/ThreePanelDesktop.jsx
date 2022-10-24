@@ -128,7 +128,6 @@ const ThreePanelDesktop = (props) => {
   const playerDirection = new THREE.Vector3()
   let pickedObject, pickedObjectSavedColor
   let result // collisions
-  let frame_id
 
   const playerCtlGeometry = new THREE.SphereGeometry(5, 8, 8) // radius, widthSegments, heightSegments, phiStart, phiEnd, thetaStart, thetaEnd
   let playerCtl
@@ -166,41 +165,92 @@ const ThreePanelDesktop = (props) => {
   }
 
   const initStudio = (c) => {
+    logg(null, 'initStudio')
+
+    let light
+
+    // // Hemisphere
+    // const light = new THREE.HemisphereLight( 0xeeeeff, 0x777788, 0.75 ) // skylight color, ground color, intensity
+    // light.position.set( 0.5, 1, 0.75 )
+    // scene.add( light )
+
+    // Ambient
+    light = new THREE.AmbientLight(0xFFFFFF, 1.1);
+    scene.add(light)
+
+    // Directional
+    light = new THREE.DirectionalLight(0xFFFFFF, 1)
+    light.position.set(50, 100, 0);
+    light.target.position.set(0, 0, 0);
+    scene.add(light)
+    scene.add(light.target)
+
+    // Directional Shadow
+    light.castShadow = true
+    let shadowLight = light
+    shadowLight.shadow.camera.bottom = -150
+    shadowLight.shadow.camera.top = 150
+    shadowLight.shadow.camera.left = -150
+    shadowLight.shadow.camera.right = 150
+    shadowLight.shadow.camera.near = 10
+    shadowLight.shadow.camera.far = 5000
+    shadowLight.shadow.camera.updateProjectionMatrix()
+    const shadowLightPosition = [ 0, 400, 0 ]
+    shadowLight.position.set( ...shadowLightPosition )
+    scene.add( shadowLight )
+    const helper = new THREE.CameraHelper(shadowLight.shadow.camera)
+    scene.add( helper )
+
+    // Point
+    // const color = 0xFFFFFF;
+    // const intensity = 100;
+    // const light = new THREE.PointLight(color, intensity);
+    // light.position.set( 0, 250, 0 )
+    // scene.add(light);
+
+
+  }
+
+  const initInteriorStudio = (c) => {
+    logg(null, 'initInteriorStudio')
+
+    scene.background = new THREE.Color( 0xffffff )
+    scene.fog = new THREE.Fog( 0xffffff, 0, 750 )
 
     { /* Lights */
 
       // // Illuminate everytyhing
-      const light = new THREE.HemisphereLight( 0xeeeeff, 0x777788, 0.75 )
-      light.position.set( 0.5, 1, 0.75 )
-      scene.add( light )
+      // const light = new THREE.HemisphereLight( 0xeeeeff, 0x777788, 0.75 )
+      // light.position.set( 0.5, 1, 0.75 )
+      // scene.add( light )
 
-      // Shadow
-      const white = 0xffffff
-      const shadowLightIntensity = 2
-      const shadowLightPosition = [ 0*10, 40*10, -10*100 ]
-      const shadowLight = new THREE.DirectionalLight(white, shadowLightIntensity)
-      shadowLight.castShadow = true
-      // shadowLight.shadow.mapSize.width = 512
-      // shadowLight.shadow.mapSize.height = 512
+      // // Shadow
+      // const white = 0xffffff
+      // const shadowLightIntensity = 2
+      // const shadowLightPosition = [ 0*10, 40*10, -10*100 ]
+      // const shadowLight = new THREE.DirectionalLight(white, shadowLightIntensity)
+      // shadowLight.castShadow = true
+      // // shadowLight.shadow.mapSize.width = 512
+      // // shadowLight.shadow.mapSize.height = 512
 
-      shadowLight.shadow.camera.bottom = -150
-      shadowLight.shadow.camera.top = 150
-      shadowLight.shadow.camera.left = -150
-      shadowLight.shadow.camera.right = 150
-      shadowLight.shadow.camera.near = 10
-      shadowLight.shadow.camera.far = 5000
-      shadowLight.shadow.camera.updateProjectionMatrix()
+      // shadowLight.shadow.camera.bottom = -150
+      // shadowLight.shadow.camera.top = 150
+      // shadowLight.shadow.camera.left = -150
+      // shadowLight.shadow.camera.right = 150
+      // shadowLight.shadow.camera.near = 10
+      // shadowLight.shadow.camera.far = 5000
+      // shadowLight.shadow.camera.updateProjectionMatrix()
 
-      shadowLight.position.set( ...shadowLightPosition )
-      scene.add( shadowLight )
-      // const helper = new THREE.DirectionalLightHelper( shadowLight, 5 )
-      const helper = new THREE.CameraHelper(shadowLight.shadow.camera)
-      scene.add( helper )
+      // shadowLight.position.set( ...shadowLightPosition )
+      // scene.add( shadowLight )
+      // // const helper = new THREE.DirectionalLightHelper( shadowLight, 5 )
+      // const helper = new THREE.CameraHelper(shadowLight.shadow.camera)
+      // scene.add( helper )
 
     } // endLights
 
-    { /* Floor */
-      if (c.hasFloor) {
+
+    if (c.hasFloor) {
 
       texture = textureLoader.load(`/assets/textures/floor-1.png`)
       const textureM = U.meters(1) // the texture is a unit meter
@@ -221,8 +271,7 @@ const ThreePanelDesktop = (props) => {
       floor.receiveShadow = true
       scene.add( floor )
 
-      }
-    } /* endFloor */
+    }
 
     /* Skybox */
     texture = textureLoader.load(`/assets/textures/space.jpg`, () => {
@@ -320,37 +369,28 @@ const ThreePanelDesktop = (props) => {
           octreeHelper.visible = false
           scene.add( octreeHelper ) // @TODO: these need to be multiple, if I'm keeping it
 
-          { // init Picking, @TODO: remove usage of markers2destinationSlugs
-
-
-            if (marker.destination_slug) {
-              pickingObjects.current.push( gltf.scene )
-              // logg(gltf.scene, 'added to picking')
-              gltf.scene.traverse( child => {
-                if ( child.isMesh ) {
-                  child.material.emissive.setHex(0x00FFFF)
-                }
-              })
+          gltf.scene.traverse( child => { // shadows enabled?
+            if ( child.isMesh ) {
+              if (marker.castShadow) {
+                child.castShadow = true
+              }
+              if (marker.receiveShadow) {
+                child.receiveShadow = true
+              }
             }
+          })
 
+          if (marker.destination_slug) { // init Picking
+            pickingObjects.current.push( gltf.scene )
             gltf.scene.traverse( child => {
               if ( child.isMesh ) {
-                child.castShadow = true
-                child.receiveShadow = true
-
-                if (marker.destination_slug) {
-
-                  // logg(marker, 'init Picking')
-                  // logg(gltf.scene, 'init Picking 2')
-
-                  markers2destinationSlugs[child.uuid] = { destination_slug: marker.destination_slug }
-                }
+                child.material.emissive.setHex(0x00FFFF)
+                // // @TODO: remove usage of markers2destinationSlugs
+                markers2destinationSlugs[child.uuid] = { destination_slug: marker.destination_slug }
               }
             })
+          }
 
-            logg(pickingObjects, 'pickingObjects')
-
-          } // endInitPicking
 
         })
       }
@@ -359,11 +399,9 @@ const ThreePanelDesktop = (props) => {
   } // end InitModels
 
   function init() {
-    logg(scene, 'init() scene')
-    scene.background = new THREE.Color( 0xffffff )
-    scene.fog = new THREE.Fog( 0xffffff, 0, 750 )
+    logg(scene, 'init Scene')
 
-    const axesHelper = new THREE.AxesHelper( 5 )
+    const axesHelper = new THREE.AxesHelper( 5 ) // origin
     scene.add( axesHelper )
 
     camera.position.y = U.m(0)
@@ -380,7 +418,7 @@ const ThreePanelDesktop = (props) => {
     scene.add( playerColliderHelper )
 
     initControls()
-    // initStudio(map.config.studio)
+    initStudio(map.config.studio)
     initModels()
 
     blockerRef.current.appendChild( renderer.domElement )
@@ -524,7 +562,7 @@ const ThreePanelDesktop = (props) => {
     }
     renderer.render( scene, camera )
     prevTime = time
-    frame_id = requestAnimationFrame( animate )
+    requestAnimationFrame( animate )
   }
 
   const onWindowResize = () => {

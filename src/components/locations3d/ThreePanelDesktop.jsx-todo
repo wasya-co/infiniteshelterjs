@@ -1,0 +1,68 @@
+
+  const initExteriorStudio = (c) => {
+
+    { /* Lights */
+
+      // // Illuminate everytyhing
+      const light = new THREE.HemisphereLight( 0xeeeeff, 0x777788, 0.75 )
+      light.position.set( 0.5, 1, 0.75 )
+      scene.add( light )
+
+      // Shadow
+      const white = 0xffffff
+      const shadowLightIntensity = 2
+      const shadowLightPosition = [ 0*10, 40*10, -10*100 ]
+      const shadowLight = new THREE.DirectionalLight(white, shadowLightIntensity)
+      shadowLight.castShadow = true
+      // shadowLight.shadow.mapSize.width = 512
+      // shadowLight.shadow.mapSize.height = 512
+
+      shadowLight.shadow.camera.bottom = -150
+      shadowLight.shadow.camera.top = 150
+      shadowLight.shadow.camera.left = -150
+      shadowLight.shadow.camera.right = 150
+      shadowLight.shadow.camera.near = 10
+      shadowLight.shadow.camera.far = 5000
+      shadowLight.shadow.camera.updateProjectionMatrix()
+
+      shadowLight.position.set( ...shadowLightPosition )
+      scene.add( shadowLight )
+      // const helper = new THREE.DirectionalLightHelper( shadowLight, 5 )
+      const helper = new THREE.CameraHelper(shadowLight.shadow.camera)
+      scene.add( helper )
+
+    } // endLights
+
+    { /* Floor */
+      if (c.hasFloor) {
+
+      texture = textureLoader.load(`/assets/textures/floor-1.png`)
+      const textureM = U.meters(1) // the texture is a unit meter
+      texture.wrapS = texture.wrapT = THREE.RepeatWrapping
+      texture.offset.set(0, 0)
+      texture.repeat.set(c.studioWidth/textureM, c.studioLength/textureM)
+      let floorGeometry = new THREE.PlaneGeometry( c.studioWidth, c.studioLength ) // width, height, widthSegments, heightSegments
+      floorGeometry.rotateZ( - Math.PI / 2 )
+      floorGeometry.rotateX( - Math.PI / 2 )
+
+      // Basic material cannot receive shadow, but standard material can.
+      // material = new THREE.MeshStandardMaterial({ color: 0x333333 })
+      material = new THREE.MeshStandardMaterial({
+        map: texture,
+        side: THREE.DoubleSide,
+      })
+      const floor = new THREE.Mesh( floorGeometry, material )
+      floor.receiveShadow = true
+      scene.add( floor )
+
+      }
+    } /* endFloor */
+
+    /* Skybox */
+    texture = textureLoader.load(`/assets/textures/space.jpg`, () => {
+      const rt = new THREE.WebGLCubeRenderTarget(texture.image.height)
+      rt.fromEquirectangularTexture(renderer, texture)
+      scene.background = rt.texture
+    })
+
+  }
