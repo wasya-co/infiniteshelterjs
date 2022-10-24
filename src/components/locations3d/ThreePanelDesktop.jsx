@@ -199,7 +199,7 @@ const ThreePanelDesktop = (props) => {
     shadowLight.position.set( ...shadowLightPosition )
     scene.add( shadowLight )
     const helper = new THREE.CameraHelper(shadowLight.shadow.camera)
-    scene.add( helper )
+    // scene.add( helper )
 
     // Point
     // const color = 0xFFFFFF;
@@ -340,6 +340,24 @@ const ThreePanelDesktop = (props) => {
   }
 
   const initModels = () => {
+
+    const outlineMat = new THREE.MeshLambertMaterial({
+      color:'black',
+      side: THREE.BackSide
+    })
+    outlineMat.onBeforeCompile = (shader) => {
+      const token = '#include <begin_vertex>'
+      const customTransform = `
+        vec3 transformed = position + objectNormal*0.06;
+      `
+      shader.vertexShader = shader.vertexShader.replace(token,customTransform)
+    }
+    const regularMat = new THREE.MeshPhongMaterial({
+      color:'yellow',
+      side: THREE.FrontSide
+    })
+
+
     // setPickingObjects([])
     pickingObjects.current = []
     map.markers.map((marker, idx) => {
@@ -353,15 +371,23 @@ const ThreePanelDesktop = (props) => {
           gltf.scene.position.x = marker.x
           gltf.scene.position.y = marker.y
           gltf.scene.position.z = marker.z
-          gltf.scene.scale.multiplyScalar(110)
-          // @TODO: and Z ?!
-          // @TODO: and parent-child relationships ?!
+          gltf.scene.scale.multiplyScalar(110) // @TODO: abstract. _vp_ 2022-10-23
+
+          const clone = gltf.scene.clone()
+          // clone.scale.multiplyScalar(110)
+          // clone.scale.multiplyScalar(1.1)
+          // clone.scale.set(112, 112, 112)
+          clone.traverse(child => {
+            child.material = outlineMat
+          })
+          scene.add(clone)
 
           scene.add(gltf.scene)
 
+
           /* show the bounding box */
-          let box = new THREE.BoxHelper(gltf.scene, 0xff00ff)
-          scene.add( box )
+          // let box = new THREE.BoxHelper(gltf.scene, 0xff00ff)
+          // scene.add( box )
 
           /* Collisions */
           worldOctree.fromGraphNode( gltf.scene, scene )
@@ -392,6 +418,8 @@ const ThreePanelDesktop = (props) => {
           }
 
 
+
+
         })
       }
 
@@ -401,7 +429,7 @@ const ThreePanelDesktop = (props) => {
   function init() {
     logg(scene, 'init Scene')
 
-    const axesHelper = new THREE.AxesHelper( 5 ) // origin
+    const axesHelper = new THREE.AxesHelper( 50 ) // origin
     scene.add( axesHelper )
 
     camera.position.y = U.m(0)
