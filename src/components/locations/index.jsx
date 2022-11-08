@@ -1,4 +1,6 @@
 
+export { default as ConferenceRoom } from '../ConferenceRoom/ConferenceRoom'
+
 export { default as GoogleMaps } from './GoogleMaps'
 
 export { default as LocationProvider, LocationContext } from './LocationProvider'
