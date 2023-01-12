@@ -11,4 +11,4 @@
                       picking actually works, wow
          2022-10-23 - 2.10.0 looked great. Now, lets add edges to marker3d's
 2.11.0 - 2022-11-08 - lets implement webRTC quickly
-
+2.12.0 - 2023-01-11 - no big changes, only deployed. added self location
