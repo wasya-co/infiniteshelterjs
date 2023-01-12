@@ -4,6 +4,7 @@ import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline'
 import EditIcon from '@material-ui/icons/Edit'
 import PropTypes from 'prop-types'
 import React, { Fragment as F, useContext, useEffect, useState } from "react"
+import { Link } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import Toggle from 'react-toggle'
 import styled from 'styled-components'
@@ -28,6 +29,7 @@ import {
 import {
   FbLogin2,
 } from "./"
+import { appPaths } from '$src/AppRouter'
 
 import "react-toggle/style.css"
 
@@ -240,11 +242,10 @@ const MyAccountWidget = (props) => {
           </label>
         </Card> */}
 
-
-
-
         { currentUser?.email ? <FlexRow>
-          [&nbsp;{currentUser.email}&nbsp;<IconLogout onClick={doLogout} >Logout</IconLogout>&nbsp;]
+          [&nbsp;
+          <a href={ appPaths.location({ slug: 'self' }) } >{ currentUser.email }</a>
+          &nbsp;<IconLogout onClick={doLogout} />&nbsp;]
         </FlexRow> : <FlexRow>
           {/* <FacebookLogin /> */}
           <RegisterWithEmailBtn onClick={() => { setRegisterModalOpen(true) }} />

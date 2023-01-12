@@ -22,6 +22,9 @@ const roomId = "ce7abac6-5fa5-11ed-9b6a-0242ac120002" // const thisId = uuid()
  * ConferenceRoom
  *
  * From: https://peerjs.com/docs/#start
+ * From: https://socket.io/get-started/chat
+ * From: https://github.com/itstaranarora/video-chat-v1/blob/master/public/script.js#L49
+ * From: https://developer.mozilla.org/en-US/docs/Web/API/Web_Speech_API/Using_the_Web_Speech_API
 **/
 const ConferenceRoom = (props) => {
   logg(props, 'ConferenceRoom')
