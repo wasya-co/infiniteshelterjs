@@ -1,6 +1,6 @@
 
 // import io from 'socket.io-client' // nope, I inject my own via head.script tag
-import { Peer } from "peerjs"
+// import { Peer } from "peerjs"
 import PropTypes from 'prop-types'
 import React, { useContext, useEffect, useRef, useState } from 'react'
 // import uuid from 'react-uuid'
@@ -12,7 +12,7 @@ import {
 
 const W0 = styled.div``;
 
-const peer = new Peer()
+// const peer = new Peer()
 const isVideo = false
 const isAudio = false
 const roomId = "ce7abac6-5fa5-11ed-9b6a-0242ac120002" // const thisId = uuid()
@@ -28,6 +28,12 @@ const roomId = "ce7abac6-5fa5-11ed-9b6a-0242ac120002" // const thisId = uuid()
 **/
 const ConferenceRoom = (props) => {
   logg(props, 'ConferenceRoom')
+
+  // "peerjs": "^1.4.7", <- put this back in package.json
+  // it's not there now b/c its presence craps out next_js entirely.
+  if (false || typeof window === 'undefined') {
+    return <h1>next_js render - see ConferenceRoom.jsx</h1>;
+   }
 
   const socket = io('ws://localhost:3030')
   const [isConnected, setIsConnected] = useState(socket.connected)

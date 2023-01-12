@@ -72,7 +72,7 @@ module.exports = _objectSpread(_objectSpread({}, defaultSettings), settings);
 /* harmony import */ var config__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(585553);
 /* harmony import */ var config__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(config__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var $components_galleries__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(878935);
-/* harmony import */ var $components_locations__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(754587);
+/* harmony import */ var $components_locations__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(596707);
 /* harmony import */ var $components_reports__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(563204);
 /* harmony import */ var $components_users__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(255502);
 /* harmony import */ var $shared__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(38085);
@@ -1435,8 +1435,8 @@ SideMenu.propTypes = {
   variant: (external_prop_types_default()).string
 };
 /* harmony default export */ const application_SideMenu = (SideMenu);
-// EXTERNAL MODULE: ./src/components/locations/index.jsx + 49 modules
-var locations = __webpack_require__(754587);
+// EXTERNAL MODULE: ./src/components/locations/index.jsx + 50 modules
+var locations = __webpack_require__(596707);
 // EXTERNAL MODULE: ./src/AppRouter.jsx
 var AppRouter = __webpack_require__(448433);
 // EXTERNAL MODULE: ./src/components/application/UnlockModal.module.scss
@@ -1728,13 +1728,14 @@ var GalleriesShow = function GalleriesShow(props) {
 
 /***/ }),
 
-/***/ 754587:
+/***/ 596707:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 
 // EXPORTS
 __webpack_require__.d(__webpack_exports__, {
+  "Tv": () => (/* reexport */ ConferenceRoom_ConferenceRoom),
   "LZ": () => (/* reexport */ LocationContext),
   "vR": () => (/* reexport */ locations_LocationProvider),
   "QH": () => (/* reexport */ LocationsRestricted),
@@ -1747,9 +1748,243 @@ __webpack_require__.d(__webpack_exports__, {
 
 // UNUSED EXPORTS: GoogleMaps, ZoomCtrl
 
+// EXTERNAL MODULE: external "prop-types"
+var external_prop_types_ = __webpack_require__(580);
+var external_prop_types_default = /*#__PURE__*/__webpack_require__.n(external_prop_types_);
 // EXTERNAL MODULE: external "react"
 var external_react_ = __webpack_require__(616689);
 var external_react_default = /*#__PURE__*/__webpack_require__.n(external_react_);
+// EXTERNAL MODULE: external "styled-components"
+var external_styled_components_ = __webpack_require__(857518);
+var external_styled_components_default = /*#__PURE__*/__webpack_require__.n(external_styled_components_);
+// EXTERNAL MODULE: ./src/shared/index.jsx + 8 modules
+var shared = __webpack_require__(38085);
+;// CONCATENATED MODULE: ./src/components/ConferenceRoom/ConferenceRoom.jsx
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
+
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+function _iterableToArrayLimit(arr, i) { var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"]; if (_i == null) return; var _arr = []; var _n = true; var _d = false; var _s, _e; try { for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
+// import io from 'socket.io-client' // nope, I inject my own via head.script tag
+// import { Peer } from "peerjs"
+
+ // import uuid from 'react-uuid'
+
+
+
+var W0 = external_styled_components_default().div.withConfig({
+  displayName: "ConferenceRoom__W0",
+  componentId: "sc-q97saq-0"
+})([""]); // const peer = new Peer()
+
+var isVideo = false;
+var isAudio = false;
+var roomId = "ce7abac6-5fa5-11ed-9b6a-0242ac120002"; // const thisId = uuid()
+
+/**
+ * ConferenceRoom
+ *
+ * From: https://peerjs.com/docs/#start
+ * From: https://socket.io/get-started/chat
+ * From: https://github.com/itstaranarora/video-chat-v1/blob/master/public/script.js#L49
+ * From: https://developer.mozilla.org/en-US/docs/Web/API/Web_Speech_API/Using_the_Web_Speech_API
+**/
+
+var ConferenceRoom = function ConferenceRoom(props) {
+  (0,shared/* logg */.IJ)(props, 'ConferenceRoom'); // "peerjs": "^1.4.7", <- put this back in package.json
+  // it's not there now b/c its presence craps out next_js entirely.
+
+  if (true) {
+    return /*#__PURE__*/external_react_default().createElement("h1", null, "next_js render - see ConferenceRoom.jsx");
+  }
+
+  var socket = io('ws://localhost:3030');
+
+  var _useState = (0,external_react_.useState)(socket.connected),
+      _useState2 = _slicedToArray(_useState, 2),
+      isConnected = _useState2[0],
+      setIsConnected = _useState2[1];
+
+  var _useState3 = (0,external_react_.useState)(null),
+      _useState4 = _slicedToArray(_useState3, 2),
+      lastPong = _useState4[0],
+      setLastPong = _useState4[1];
+
+  var _useState5 = (0,external_react_.useState)(),
+      _useState6 = _slicedToArray(_useState5, 2),
+      myId = _useState6[0],
+      setMyId = _useState6[1];
+
+  (0,shared/* logg */.IJ)(myId, 'myId');
+  var conn;
+  var videoGridRef = (0,external_react_.useRef)();
+  var myVideo = document.createElement("video");
+  myVideo.muted = true;
+  var myVideoStream;
+  (0,external_react_.useEffect)(function () {
+    if (!isConnected) {
+      return function () {};
+    }
+
+    peer.on("open", function (id) {
+      (0,shared/* logg */.IJ)(id, 'peer onOpen Id');
+      setMyId(id);
+      conn = peer.connect(roomId);
+      socket.emit('join', {
+        roomId: roomId,
+        myId: id
+      }); // conn.send("Ping")
+    }); // receive
+
+    peer.on("connection", function (conn) {
+      (0,shared/* logg */.IJ)(conn, 'peer onConnection');
+      conn.on("data", function (data) {
+        (0,shared/* logg */.IJ)(data, 'Peer OnData');
+      });
+      conn.on("open", function () {
+        (0,shared/* logg */.IJ)([], 'peer OnOpen');
+        conn.send("Pong");
+      });
+    }); // answer
+
+    peer.on("call", function (call) {
+      (0,shared/* logg */.IJ)(call, 'peer OnCall');
+      navigator.mediaDevices.getUserMedia({
+        video: isVideo,
+        audio: isAudio
+      }, function (stream) {
+        call.answer(stream); // Answer the call with an A/V stream.
+
+        call.on("stream", function (remoteStream) {
+          (0,shared/* logg */.IJ)('show the stream in a <video> element 2'); // Show stream in some <video> element.
+        });
+      }, function (err) {
+        console.error("Failed to get local stream 2", err);
+      });
+    });
+    return function () {};
+  }, [isConnected]);
+
+  var cleanupCb = function cleanupCb() {
+    socket.off('connect');
+    socket.off('disconnect');
+    socket.off('pong');
+    socket.off('joined');
+  };
+
+  (0,external_react_.useEffect)(function () {
+    socket.on('connect', function () {
+      // logg('socket connected')
+      setIsConnected(true);
+    });
+
+    if (!myId) {
+      return cleanupCb;
+    }
+
+    socket.on('disconnect', function () {
+      (0,shared/* logg */.IJ)('socket disconnected');
+      setIsConnected(false);
+    });
+    socket.on('pong', function () {
+      // logg('socket pong')
+      setLastPong(new Date().toISOString());
+    });
+    socket.on('joined', function (props) {
+      (0,shared/* logg */.IJ)(props, 'socket OnJoined');
+      var id = props.id;
+
+      if (id !== myId) {
+        (0,shared/* logg */.IJ)([], 'Calling...'); // call
+
+        navigator.mediaDevices.getUserMedia({
+          video: isVideo,
+          audio: isAudio
+        }, function (stream) {
+          var call = peer.call(id, stream);
+          call.on("stream", function (remoteStream) {
+            (0,shared/* logg */.IJ)('show the stream in a <video> element'); // Show stream in some <video> element.
+          });
+        }, function (err) {
+          console.error("Failed to get local stream", err);
+        });
+      }
+    });
+    return cleanupCb;
+  }, [myId]);
+
+  var sendPing = function sendPing() {
+    socket.emit('ping');
+  };
+
+  var connectToNewUser = function connectToNewUser(userId, stream) {
+    var call = peer.call(userId, stream);
+    var video = document.createElement("video");
+    call.on("stream", function (userVideoStream) {
+      addVideoStream(video, userVideoStream);
+    });
+  };
+
+  var myStream;
+  var refAudio = (0,external_react_.useRef)();
+
+  var addVideoStream = function addVideoStream(video, stream) {
+    // video.srcObject = stream
+    if (refAudio.current) {
+      refAudio.current.srcObject = stream;
+    }
+
+    myStream = stream;
+    video.addEventListener("loadedmetadata", function () {
+      video.play(); // React.findDOMNode(videoGridRef.current).append(video);
+    });
+  };
+
+  navigator.mediaDevices.getUserMedia({
+    video: isVideo,
+    audio: isAudio
+  }).then(function (stream) {
+    myVideoStream = stream;
+    addVideoStream(myVideo, stream);
+    peer.on("call", function (call) {
+      call.answer(stream);
+      var video = document.createElement("video");
+      call.on("stream", function (userVideoStream) {
+        addVideoStream(video, userVideoStream);
+      });
+    });
+    socket.on("user-connected", function (userId) {
+      connectToNewUser(userId, stream);
+    });
+  });
+  return /*#__PURE__*/external_react_default().createElement(W0, null, /*#__PURE__*/external_react_default().createElement("p", null, "myId: ", myId, " Connected: ", '' + isConnected), /*#__PURE__*/external_react_default().createElement("p", null, "Last pong: ", lastPong || '-', /*#__PURE__*/external_react_default().createElement("button", {
+    onClick: sendPing
+  }, "Send ping")), /*#__PURE__*/external_react_default().createElement("div", {
+    id: "videoGrid",
+    ref: videoGridRef,
+    style: {
+      width: '500px',
+      height: '400px',
+      border: '1px solid red'
+    }
+  }, /*#__PURE__*/external_react_default().createElement("audio", {
+    controls: true,
+    volume: "true",
+    autoPlay: true,
+    ref: refAudio
+  })));
+};
+
+ConferenceRoom.propTypes = {}; // none
+
+/* harmony default export */ const ConferenceRoom_ConferenceRoom = (ConferenceRoom);
 // EXTERNAL MODULE: external "react-dom"
 var external_react_dom_ = __webpack_require__(566405);
 // EXTERNAL MODULE: external "@googlemaps/react-wrapper"
@@ -1757,8 +1992,6 @@ var react_wrapper_ = __webpack_require__(376943);
 // EXTERNAL MODULE: ./config/environments/production_ish/config.js
 var config = __webpack_require__(585553);
 var config_default = /*#__PURE__*/__webpack_require__.n(config);
-// EXTERNAL MODULE: ./src/shared/index.jsx + 8 modules
-var shared = __webpack_require__(38085);
 ;// CONCATENATED MODULE: ./src/components/locations/GoogleMaps.jsx
 var _excluded = ["onClick", "onIdle", "children", "style"];
 
@@ -1772,17 +2005,17 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
-function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
+function GoogleMaps_slicedToArray(arr, i) { return GoogleMaps_arrayWithHoles(arr) || GoogleMaps_iterableToArrayLimit(arr, i) || GoogleMaps_unsupportedIterableToArray(arr, i) || GoogleMaps_nonIterableRest(); }
 
-function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function GoogleMaps_nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
 
-function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+function GoogleMaps_unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return GoogleMaps_arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return GoogleMaps_arrayLikeToArray(o, minLen); }
 
-function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+function GoogleMaps_arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
 
-function _iterableToArrayLimit(arr, i) { var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"]; if (_i == null) return; var _arr = []; var _n = true; var _d = false; var _s, _e; try { for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+function GoogleMaps_iterableToArrayLimit(arr, i) { var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"]; if (_i == null) return; var _arr = []; var _n = true; var _d = false; var _s, _e; try { for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
 
-function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+function GoogleMaps_arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 
@@ -1798,12 +2031,12 @@ var App = function App(props) {
   var map = props.map;
 
   var _React$useState = external_react_.useState([]),
-      _React$useState2 = _slicedToArray(_React$useState, 2),
+      _React$useState2 = GoogleMaps_slicedToArray(_React$useState, 2),
       clicks = _React$useState2[0],
       setClicks = _React$useState2[1];
 
   var _React$useState3 = external_react_.useState(12),
-      _React$useState4 = _slicedToArray(_React$useState3, 2),
+      _React$useState4 = GoogleMaps_slicedToArray(_React$useState3, 2),
       zoom = _React$useState4[0],
       setZoom = _React$useState4[1]; // initial zoom
 
@@ -1812,7 +2045,7 @@ var App = function App(props) {
     lat: map.x,
     lng: map.y
   }),
-      _React$useState6 = _slicedToArray(_React$useState5, 2),
+      _React$useState6 = GoogleMaps_slicedToArray(_React$useState5, 2),
       center = _React$useState6[0],
       setCenter = _React$useState6[1];
 
@@ -1918,7 +2151,7 @@ var Map = function Map(_ref) {
   var ref = external_react_.useRef(null);
 
   var _React$useState7 = external_react_.useState(),
-      _React$useState8 = _slicedToArray(_React$useState7, 2),
+      _React$useState8 = GoogleMaps_slicedToArray(_React$useState7, 2),
       map = _React$useState8[0],
       setMap = _React$useState8[1];
 
@@ -1966,7 +2199,7 @@ var Map = function Map(_ref) {
 
 var Marker = function Marker(options) {
   var _React$useState9 = external_react_.useState(),
-      _React$useState10 = _slicedToArray(_React$useState9, 2),
+      _React$useState10 = GoogleMaps_slicedToArray(_React$useState9, 2),
       marker = _React$useState10[0],
       setMarker = _React$useState10[1];
 
@@ -2046,15 +2279,9 @@ var Page = function Page() {
 };
 
 /* harmony default export */ const LocationsRestricted = (Page);
-// EXTERNAL MODULE: external "prop-types"
-var external_prop_types_ = __webpack_require__(580);
-var external_prop_types_default = /*#__PURE__*/__webpack_require__.n(external_prop_types_);
 // EXTERNAL MODULE: external "react-modal"
 var external_react_modal_ = __webpack_require__(219931);
 var external_react_modal_default = /*#__PURE__*/__webpack_require__.n(external_react_modal_);
-// EXTERNAL MODULE: external "styled-components"
-var external_styled_components_ = __webpack_require__(857518);
-var external_styled_components_default = /*#__PURE__*/__webpack_require__.n(external_styled_components_);
 // EXTERNAL MODULE: ../ishlibjs/dist/index.js
 var dist = __webpack_require__(401928);
 // EXTERNAL MODULE: ./src/components/application/index.js + 8 modules
@@ -2292,7 +2519,7 @@ var ImageLarge = external_styled_components_default().img.withConfig({
   displayName: "NewsitemPhoto__ImageLarge",
   componentId: "sc-2jnpzp-0"
 })(["max-width:100%;"]);
-var W0 = external_styled_components_default().div.withConfig({
+var NewsitemPhoto_W0 = external_styled_components_default().div.withConfig({
   displayName: "NewsitemPhoto__W0",
   componentId: "sc-2jnpzp-1"
 })(["display:flex;justify-content:center;"]);
@@ -2308,7 +2535,7 @@ var NewsitemPhoto = function NewsitemPhoto(props) {
     className: "Newsitem NewsitemPhoto",
     item: item,
     variant: variant
-  }, /*#__PURE__*/external_react_default().createElement(W0, null, item.photos[0] && /*#__PURE__*/external_react_default().createElement(ImageLarge, {
+  }, /*#__PURE__*/external_react_default().createElement(NewsitemPhoto_W0, null, item.photos[0] && /*#__PURE__*/external_react_default().createElement(ImageLarge, {
     src: item.photos[0].large_url
   })));
 };
@@ -6900,7 +7127,6 @@ var ThreePanelDesktop = function ThreePanelDesktop(props) {
   var pickedObject, pickedObjectSavedColor;
   var result; // collisions
 
-  var frame_id;
   var playerCtlGeometry = new external_three_.SphereGeometry(5, 8, 8); // radius, widthSegments, heightSegments, phiStart, phiEnd, thetaStart, thetaEnd
 
   var playerCtl;
@@ -6934,65 +7160,102 @@ var ThreePanelDesktop = function ThreePanelDesktop(props) {
   }
 
   var initStudio = function initStudio(c) {
-    {
-      var _shadowLight$position;
+    var _shadowLight$position;
 
+    (0,shared/* logg */.IJ)(null, 'initStudio');
+    var light; // // Hemisphere
+    // const light = new THREE.HemisphereLight( 0xeeeeff, 0x777788, 0.75 ) // skylight color, ground color, intensity
+    // light.position.set( 0.5, 1, 0.75 )
+    // scene.add( light )
+    // Ambient
+
+    light = new external_three_.AmbientLight(0xFFFFFF, 1.1);
+    scene.add(light); // Directional
+
+    light = new external_three_.DirectionalLight(0xFFFFFF, 1);
+    light.position.set(50, 100, 0);
+    light.target.position.set(0, 0, 0);
+    scene.add(light);
+    scene.add(light.target); // Directional Shadow
+
+    light.castShadow = true;
+    var shadowLight = light;
+    shadowLight.shadow.camera.bottom = -150;
+    shadowLight.shadow.camera.top = 150;
+    shadowLight.shadow.camera.left = -150;
+    shadowLight.shadow.camera.right = 150;
+    shadowLight.shadow.camera.near = 10;
+    shadowLight.shadow.camera.far = 5000;
+    shadowLight.shadow.camera.updateProjectionMatrix();
+    var shadowLightPosition = [0, 400, 0];
+
+    (_shadowLight$position = shadowLight.position).set.apply(_shadowLight$position, shadowLightPosition);
+
+    scene.add(shadowLight);
+    var helper = new external_three_.CameraHelper(shadowLight.shadow.camera); // scene.add( helper )
+    // Point
+    // const color = 0xFFFFFF;
+    // const intensity = 100;
+    // const light = new THREE.PointLight(color, intensity);
+    // light.position.set( 0, 250, 0 )
+    // scene.add(light);
+  };
+
+  var initInteriorStudio = function initInteriorStudio(c) {
+    (0,shared/* logg */.IJ)(null, 'initInteriorStudio');
+    scene.background = new external_three_.Color(0xffffff);
+    scene.fog = new external_three_.Fog(0xffffff, 0, 750);
+    {
       /* Lights */
       // // Illuminate everytyhing
-      var light = new external_three_.HemisphereLight(0xeeeeff, 0x777788, 0.75);
-      light.position.set(0.5, 1, 0.75);
-      scene.add(light); // Shadow
-
-      var white = 0xffffff;
-      var shadowLightIntensity = 2;
-      var shadowLightPosition = [0 * 10, 40 * 10, -10 * 100];
-      var shadowLight = new external_three_.DirectionalLight(white, shadowLightIntensity);
-      shadowLight.castShadow = true; // shadowLight.shadow.mapSize.width = 512
-      // shadowLight.shadow.mapSize.height = 512
-
-      shadowLight.shadow.camera.bottom = -150;
-      shadowLight.shadow.camera.top = 150;
-      shadowLight.shadow.camera.left = -150;
-      shadowLight.shadow.camera.right = 150;
-      shadowLight.shadow.camera.near = 10;
-      shadowLight.shadow.camera.far = 5000;
-      shadowLight.shadow.camera.updateProjectionMatrix();
-
-      (_shadowLight$position = shadowLight.position).set.apply(_shadowLight$position, shadowLightPosition);
-
-      scene.add(shadowLight); // const helper = new THREE.DirectionalLightHelper( shadowLight, 5 )
-
-      var helper = new external_three_.CameraHelper(shadowLight.shadow.camera);
-      scene.add(helper);
+      // const light = new THREE.HemisphereLight( 0xeeeeff, 0x777788, 0.75 )
+      // light.position.set( 0.5, 1, 0.75 )
+      // scene.add( light )
+      // // Shadow
+      // const white = 0xffffff
+      // const shadowLightIntensity = 2
+      // const shadowLightPosition = [ 0*10, 40*10, -10*100 ]
+      // const shadowLight = new THREE.DirectionalLight(white, shadowLightIntensity)
+      // shadowLight.castShadow = true
+      // // shadowLight.shadow.mapSize.width = 512
+      // // shadowLight.shadow.mapSize.height = 512
+      // shadowLight.shadow.camera.bottom = -150
+      // shadowLight.shadow.camera.top = 150
+      // shadowLight.shadow.camera.left = -150
+      // shadowLight.shadow.camera.right = 150
+      // shadowLight.shadow.camera.near = 10
+      // shadowLight.shadow.camera.far = 5000
+      // shadowLight.shadow.camera.updateProjectionMatrix()
+      // shadowLight.position.set( ...shadowLightPosition )
+      // scene.add( shadowLight )
+      // // const helper = new THREE.DirectionalLightHelper( shadowLight, 5 )
+      // const helper = new THREE.CameraHelper(shadowLight.shadow.camera)
+      // scene.add( helper )
     } // endLights
 
-    {
-      /* Floor */
-      if (c.hasFloor) {
-        texture = textureLoader.load("/assets/textures/floor-1.png");
-        var textureM = U.meters(1); // the texture is a unit meter
+    if (c.hasFloor) {
+      texture = textureLoader.load("/assets/textures/floor-1.png");
+      var textureM = U.meters(1); // the texture is a unit meter
 
-        texture.wrapS = texture.wrapT = external_three_.RepeatWrapping;
-        texture.offset.set(0, 0);
-        texture.repeat.set(c.studioWidth / textureM, c.studioLength / textureM);
-        var floorGeometry = new external_three_.PlaneGeometry(c.studioWidth, c.studioLength); // width, height, widthSegments, heightSegments
+      texture.wrapS = texture.wrapT = external_three_.RepeatWrapping;
+      texture.offset.set(0, 0);
+      texture.repeat.set(c.studioWidth / textureM, c.studioLength / textureM);
+      var floorGeometry = new external_three_.PlaneGeometry(c.studioWidth, c.studioLength); // width, height, widthSegments, heightSegments
 
-        floorGeometry.rotateZ(-Math.PI / 2);
-        floorGeometry.rotateX(-Math.PI / 2); // Basic material cannot receive shadow, but standard material can.
-        // material = new THREE.MeshStandardMaterial({ color: 0x333333 })
+      floorGeometry.rotateZ(-Math.PI / 2);
+      floorGeometry.rotateX(-Math.PI / 2); // Basic material cannot receive shadow, but standard material can.
+      // material = new THREE.MeshStandardMaterial({ color: 0x333333 })
 
-        material = new external_three_.MeshStandardMaterial({
-          map: texture,
-          side: external_three_.DoubleSide
-        });
-        var floor = new external_three_.Mesh(floorGeometry, material);
-        floor.receiveShadow = true;
-        scene.add(floor);
-      }
+      material = new external_three_.MeshStandardMaterial({
+        map: texture,
+        side: external_three_.DoubleSide
+      });
+      var floor = new external_three_.Mesh(floorGeometry, material);
+      floor.receiveShadow = true;
+      scene.add(floor);
     }
-    /* endFloor */
-
     /* Skybox */
+
 
     texture = textureLoader.load("/assets/textures/space.jpg", function () {
       var rt = new external_three_.WebGLCubeRenderTarget(texture.image.height);
@@ -7051,7 +7314,22 @@ var ThreePanelDesktop = function ThreePanelDesktop(props) {
   };
 
   var initModels = function initModels() {
-    // setPickingObjects([])
+    var outlineMat = new external_three_.MeshLambertMaterial({
+      color: 'black',
+      side: external_three_.BackSide
+    });
+
+    outlineMat.onBeforeCompile = function (shader) {
+      var token = '#include <begin_vertex>';
+      var customTransform = "\n        vec3 transformed = position + objectNormal*0.06;\n      ";
+      shader.vertexShader = shader.vertexShader.replace(token, customTransform);
+    };
+
+    var regularMat = new external_three_.MeshPhongMaterial({
+      color: 'yellow',
+      side: external_three_.FrontSide
+    }); // setPickingObjects([])
+
     pickingObjects.current = [];
     map.markers.map(function (marker, idx) {
       if (marker.asset3d_path) {
@@ -7061,14 +7339,21 @@ var ThreePanelDesktop = function ThreePanelDesktop(props) {
           gltf.scene.position.x = marker.x;
           gltf.scene.position.y = marker.y;
           gltf.scene.position.z = marker.z;
-          gltf.scene.scale.multiplyScalar(110); // @TODO: and Z ?!
-          // @TODO: and parent-child relationships ?!
+          gltf.scene.scale.multiplyScalar(110); // @TODO: abstract. _vp_ 2022-10-23
 
+          var clone = gltf.scene.clone(); // clone.scale.multiplyScalar(110)
+          // clone.scale.multiplyScalar(1.1)
+          // clone.scale.set(112, 112, 112)
+
+          clone.traverse(function (child) {
+            child.material = outlineMat;
+          });
+          scene.add(clone);
           scene.add(gltf.scene);
           /* show the bounding box */
+          // let box = new THREE.BoxHelper(gltf.scene, 0xff00ff)
+          // scene.add( box )
 
-          var box = new external_three_.BoxHelper(gltf.scene, 0xff00ff);
-          scene.add(box);
           /* Collisions */
 
           worldOctree.fromGraphNode(gltf.scene, scene);
@@ -7076,34 +7361,32 @@ var ThreePanelDesktop = function ThreePanelDesktop(props) {
           octreeHelper.visible = false;
           scene.add(octreeHelper); // @TODO: these need to be multiple, if I'm keeping it
 
-          {
-            // init Picking, @TODO: remove usage of markers2destinationSlugs
-            if (marker.destination_slug) {
-              pickingObjects.current.push(gltf.scene); // logg(gltf.scene, 'added to picking')
+          gltf.scene.traverse(function (child) {
+            // shadows enabled?
+            if (child.isMesh) {
+              if (marker.castShadow) {
+                child.castShadow = true;
+              }
 
-              gltf.scene.traverse(function (child) {
-                if (child.isMesh) {
-                  child.material.emissive.setHex(0x00FFFF);
-                }
-              });
+              if (marker.receiveShadow) {
+                child.receiveShadow = true;
+              }
             }
+          });
 
+          if (marker.destination_slug) {
+            // init Picking
+            pickingObjects.current.push(gltf.scene);
             gltf.scene.traverse(function (child) {
               if (child.isMesh) {
-                child.castShadow = true;
-                child.receiveShadow = true;
+                child.material.emissive.setHex(0x00FFFF); // // @TODO: remove usage of markers2destinationSlugs
 
-                if (marker.destination_slug) {
-                  // logg(marker, 'init Picking')
-                  // logg(gltf.scene, 'init Picking 2')
-                  markers2destinationSlugs[child.uuid] = {
-                    destination_slug: marker.destination_slug
-                  };
-                }
+                markers2destinationSlugs[child.uuid] = {
+                  destination_slug: marker.destination_slug
+                };
               }
             });
-            (0,shared/* logg */.IJ)(pickingObjects, 'pickingObjects');
-          } // endInitPicking
+          }
         });
       }
     });
@@ -7111,10 +7394,9 @@ var ThreePanelDesktop = function ThreePanelDesktop(props) {
 
 
   function init() {
-    (0,shared/* logg */.IJ)(scene, 'init() scene');
-    scene.background = new external_three_.Color(0xffffff);
-    scene.fog = new external_three_.Fog(0xffffff, 0, 750);
-    var axesHelper = new external_three_.AxesHelper(5);
+    (0,shared/* logg */.IJ)(scene, 'init Scene');
+    var axesHelper = new external_three_.AxesHelper(50); // origin
+
     scene.add(axesHelper);
     camera.position.y = U.m(0);
     camera.position.z = U.cm(0); // 40cm behind the body
@@ -7127,8 +7409,8 @@ var ThreePanelDesktop = function ThreePanelDesktop(props) {
     playerCtl.add(camera);
     scene.add(playerCtl);
     scene.add(playerColliderHelper);
-    initControls(); // initStudio(map.config.studio)
-
+    initControls();
+    initStudio(map.config.studio);
     initModels();
     blockerRef.current.appendChild(renderer.domElement);
   }
@@ -7259,7 +7541,7 @@ var ThreePanelDesktop = function ThreePanelDesktop(props) {
 
     renderer.render(scene, camera);
     prevTime = time;
-    frame_id = requestAnimationFrame(animate);
+    requestAnimationFrame(animate);
   }
 
   var onWindowResize = function onWindowResize() {
@@ -9520,6 +9802,9 @@ var WrappedMapPanel = external_react_default().forwardRef(function (props, ref) 
     case shared.C.map_panel_types.GoogleMaps:
       return /*#__PURE__*/external_react_default().createElement(WrappedMapPanel_W0, null, /*#__PURE__*/external_react_default().createElement(GoogleMaps, props));
 
+    case shared.C.map_panel_types.ConferenceRoom:
+      return /*#__PURE__*/external_react_default().createElement(WrappedMapPanel_W0, null, /*#__PURE__*/external_react_default().createElement(ConferenceRoom_ConferenceRoom, props));
+
     default:
       return /*#__PURE__*/external_react_default().createElement(WrappedMapPanel_W0, {
         ref: ref,
@@ -9576,6 +9861,7 @@ var ZoomCtrl = function ZoomCtrl(props) {
 
 /* harmony default export */ const locations_ZoomCtrl = ((/* unused pure expression or super */ null && (ZoomCtrl)));
 ;// CONCATENATED MODULE: ./src/components/locations/index.jsx
+
 
 
 
@@ -10218,6 +10504,8 @@ var external_web3_react_core_ = __webpack_require__(918054);
 var injected_connector_ = __webpack_require__(876590);
 // EXTERNAL MODULE: ../ishlibjs/dist/index.js
 var dist = __webpack_require__(401928);
+// EXTERNAL MODULE: ./src/AppRouter.jsx
+var AppRouter = __webpack_require__(448433);
 ;// CONCATENATED MODULE: ./src/artifacts/contracts/Body.sol/BodyNFT.json
 const BodyNFT_namespaceObject = JSON.parse('{"Mt":[{"inputs":[],"stateMutability":"nonpayable","type":"constructor"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"owner","type":"address"},{"indexed":true,"internalType":"address","name":"approved","type":"address"},{"indexed":true,"internalType":"uint256","name":"tokenId","type":"uint256"}],"name":"Approval","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"owner","type":"address"},{"indexed":true,"internalType":"address","name":"operator","type":"address"},{"indexed":false,"internalType":"bool","name":"approved","type":"bool"}],"name":"ApprovalForAll","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"previousOwner","type":"address"},{"indexed":true,"internalType":"address","name":"newOwner","type":"address"}],"name":"OwnershipTransferred","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"from","type":"address"},{"indexed":true,"internalType":"address","name":"to","type":"address"},{"indexed":true,"internalType":"uint256","name":"tokenId","type":"uint256"}],"name":"Transfer","type":"event"},{"inputs":[{"internalType":"address","name":"to","type":"address"},{"internalType":"uint256","name":"tokenId","type":"uint256"}],"name":"approve","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"player","type":"address"},{"internalType":"string","name":"tokenURI","type":"string"}],"name":"awardToken","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"owner","type":"address"}],"name":"balanceOf","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"tokenId","type":"uint256"}],"name":"getApproved","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"owner","type":"address"},{"internalType":"address","name":"operator","type":"address"}],"name":"isApprovedForAll","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"name","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"owner","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"tokenId","type":"uint256"}],"name":"ownerOf","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"renounceOwnership","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"from","type":"address"},{"internalType":"address","name":"to","type":"address"},{"internalType":"uint256","name":"tokenId","type":"uint256"}],"name":"safeTransferFrom","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"from","type":"address"},{"internalType":"address","name":"to","type":"address"},{"internalType":"uint256","name":"tokenId","type":"uint256"},{"internalType":"bytes","name":"data","type":"bytes"}],"name":"safeTransferFrom","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"operator","type":"address"},{"internalType":"bool","name":"approved","type":"bool"}],"name":"setApprovalForAll","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"bytes4","name":"interfaceId","type":"bytes4"}],"name":"supportsInterface","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"symbol","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"_owner","type":"address"},{"internalType":"uint256","name":"_idx","type":"uint256"}],"name":"tokenOfOwnerByIndex","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"tokenId","type":"uint256"}],"name":"tokenURI","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"_owner","type":"address"}],"name":"tokensOfOwner","outputs":[{"internalType":"uint256[]","name":"ownerTokens","type":"uint256[]"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"totalSupply","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"from","type":"address"},{"internalType":"address","name":"to","type":"address"},{"internalType":"uint256","name":"tokenId","type":"uint256"}],"name":"transferFrom","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"newOwner","type":"address"}],"name":"transferOwnership","outputs":[],"stateMutability":"nonpayable","type":"function"}]}');
 ;// CONCATENATED MODULE: ./src/components/users/MyAccountWidget.jsx
@@ -10247,6 +10535,8 @@ function _objectDestructuringEmpty(obj) { if (obj == null) throw new TypeError("
 function _objectWithoutProperties(source, excluded) { if (source == null) return {}; var target = _objectWithoutPropertiesLoose(source, excluded); var key, i; if (Object.getOwnPropertySymbols) { var sourceSymbolKeys = Object.getOwnPropertySymbols(source); for (i = 0; i < sourceSymbolKeys.length; i++) { key = sourceSymbolKeys[i]; if (excluded.indexOf(key) >= 0) continue; if (!Object.prototype.propertyIsEnumerable.call(source, key)) continue; target[key] = source[key]; } } return target; }
 
 function _objectWithoutPropertiesLoose(source, excluded) { if (source == null) return {}; var target = {}; var sourceKeys = Object.keys(source); var key, i; for (i = 0; i < sourceKeys.length; i++) { key = sourceKeys[i]; if (excluded.indexOf(key) >= 0) continue; target[key] = source[key]; } return target; }
+
+
 
 
 
@@ -10589,9 +10879,13 @@ var MyAccountWidget = function MyAccountWidget(props) {
     onClick: function onClick() {
       return setPurchaseModalOpen(true);
     }
-  }), "\xA0]"), currentUser !== null && currentUser !== void 0 && currentUser.email ? /*#__PURE__*/external_react_default().createElement(FlexRow, null, "[\xA0", currentUser.email, "\xA0", /*#__PURE__*/external_react_default().createElement(IconLogout, {
+  }), "\xA0]"), currentUser !== null && currentUser !== void 0 && currentUser.email ? /*#__PURE__*/external_react_default().createElement(FlexRow, null, "[\xA0", /*#__PURE__*/external_react_default().createElement("a", {
+    href: AppRouter/* appPaths.location */.X.location({
+      slug: 'self'
+    })
+  }, currentUser.email), "\xA0", /*#__PURE__*/external_react_default().createElement(IconLogout, {
     onClick: doLogout
-  }, "Logout"), "\xA0]") : /*#__PURE__*/external_react_default().createElement(FlexRow, null, /*#__PURE__*/external_react_default().createElement(RegisterWithEmailBtn, {
+  }), "\xA0]") : /*#__PURE__*/external_react_default().createElement(FlexRow, null, /*#__PURE__*/external_react_default().createElement(RegisterWithEmailBtn, {
     onClick: function onClick() {
       setRegisterModalOpen(true);
     }
@@ -10888,6 +11182,7 @@ var C = {
   },
   // M
   map_panel_types: {
+    ConferenceRoom: 'ConferenceRoom',
     Equirectangular: "Equirectangular",
     GoogleMaps: "GoogleMaps",
     MapPanel: "MapPanel",
@@ -12139,7 +12434,7 @@ var WBorderedItem = styled.div(_templateObject13 || (_templateObject13 = _tagged
 var Wrapper = styled.div(_templateObject14 || (_templateObject14 = _taggedTemplateLiteralLoose(["\n  height: 100vh;\n"])));
 var ZoomContext = React__default.createContext({});
 
-var styles = {"LoginModal":"_2YolN","LoginModalOverlay":"_3hqvY","Notice":"_2ifwF"};
+var styles = {"LoginModal":"_LoginModal-module__LoginModal__2YolN","LoginModalOverlay":"_LoginModal-module__LoginModalOverlay__3hqvY","Notice":"_LoginModal-module__Notice__2ifwF"};
 
 var LoginModal = function LoginModal(props) {
   var onError = props.onError,
@@ -12415,86 +12710,99 @@ AuthContextProvider.propTypes = {
   useApi: PropTypes.func.isRequired
 };
 
-var config = {
+const config = {
   apiOrigin: 'http://localhost:3001'
 };
+const W0 = styled.div`
+  width: 680px;
+  border: 1px solid black;
+  border-radius: 10px;
 
-var TestApp = function TestApp() {
-  var useApi = function useApi() {
-    return {
-      doRegister: function doRegister(_ref) {
-        var email = _ref.email,
-            password = _ref.password;
-        return request.post(config.apiOrigin + "/api/users", {
-          email: email,
-          password: password
-        }).then(function (r) {
-          return r.data;
-        }).then(function (r) {
-          logg(r, 'done registered');
-          return r;
-        });
-      }
-    };
-  };
+  // box-shadow: -12px 12px 2px 1px rgba(0, 0, 255, .2);
 
-  var _useState = React.useState(false),
-      loginModalOpen = _useState[0],
-      setLoginModalOpen = _useState[1];
+  --ish-shadow-size: 3px;
+  --ish-card-bg: white;
 
-  var _useState2 = React.useState(true),
-      registerModalOpen = _useState2[0],
-      setRegisterModalOpen = _useState2[1];
+  box-shadow: var(--ish-shadow-size) var(--ish-shadow-size) calc( 2 * var(--ish-shadow-size)) #b2b8c9, var(--ish-shadow-size) var(--ish-shadow-size) calc( 2 * var(--ish-shadow-size)) #f0f8ff;
+  background: var(--ish-card-bg);
+  min-height: 50vh;
+  margin: 30px auto 130px auto ;
+  padding: .5em;
+`;
 
+const Card$1 = _ref => {
+  let {
+    children,
+    ...props
+  } = _ref;
+  return /*#__PURE__*/React__default.createElement(W0, null, children);
+};
+
+const TestApp = () => {
+  const useApi = () => ({
+    doRegister: _ref2 => {
+      let {
+        email,
+        password
+      } = _ref2;
+      return request.post(`${config.apiOrigin}/api/users`, {
+        email,
+        password
+      }).then(r => r.data).then(r => {
+        logg(r, 'done registered');
+        return r;
+      });
+    }
+  });
+
+  const [loginModalOpen, setLoginModalOpen] = React.useState(false);
+  const [registerModalOpen, setRegisterModalOpen] = React.useState(true);
   return /*#__PURE__*/React__default.createElement(AuthContextProvider, {
-    loginModalOpen: loginModalOpen,
-    setLoginModalOpen: setLoginModalOpen,
-    registerModalOpen: registerModalOpen,
-    setRegisterModalOpen: setRegisterModalOpen,
-    useApi: useApi
-  }, /*#__PURE__*/React__default.createElement(LoginModal, null), /*#__PURE__*/React__default.createElement(reactToastify.ToastContainer, {
+    loginModalOpen,
+    setLoginModalOpen,
+    registerModalOpen,
+    setRegisterModalOpen,
+    useApi
+  }, /*#__PURE__*/React__default.createElement(Card$1, null, /*#__PURE__*/React__default.createElement("form", null, /*#__PURE__*/React__default.createElement("label", null, "hello?"), /*#__PURE__*/React__default.createElement("input", {
+    type: "text"
+  }), /*#__PURE__*/React__default.createElement("button", null, "World")), /*#__PURE__*/React__default.createElement("h1", null, "Hello, world!")), /*#__PURE__*/React__default.createElement(reactToastify.ToastContainer, {
     position: "bottom-left"
   }));
 };
 
-var _templateObject$1, _templateObject2$1, _templateObject3$1, _templateObject4$1;
+const JwtContext = React__default.createContext({});
 
-var _excluded$2 = ["children"];
-var JwtContext = React__default.createContext({});
+const LoginWithPassword = () => {};
 
-var JwtContextProvider = function JwtContextProvider(_ref) {
-  var children = _ref.children,
-      props = _objectWithoutPropertiesLoose(_ref, _excluded$2);
-
+const JwtContextProvider = _ref => {
+  let {
+    children,
+    ...props
+  } = _ref;
   logg(props, 'JwtContextProvider 222');
-  var api = props.api;
-
-  var _useState = React.useState({}),
-      currentUser = _useState[0],
-      setCurrentUser = _useState[1];
-
-  var _useState2 = React.useState({}),
-      loginModalOpen = _useState2[0],
-      setLoginModalOpen = _useState2[1];
-
-  React.useEffect(function () {
+  const {
+    api
+  } = props;
+  const [currentUser, setCurrentUser] = React.useState({});
+  const [loginModalOpen, setLoginModalOpen] = React.useState({});
+  React.useEffect(() => {
     logg('setting currentUser...');
-    api.getMyAccount().then(function (resp) {
+    api.getMyAccount().then(resp => {
       logg(resp, 'got this resp');
       setCurrentUser(resp);
-    }).catch(function (e) {
+    }).catch(e => {
       logg(e, 'e322');
-      reactToastify.toast("Login failed: " + e);
+      reactToastify.toast(`Login failed: ${e}`);
       setCurrentUser({});
     });
   }, []);
   return /*#__PURE__*/React__default.createElement(JwtContext.Provider, {
     value: {
-      api: api,
-      currentUser: currentUser,
-      setCurrentUser: setCurrentUser,
-      loginModalOpen: loginModalOpen,
-      setLoginModalOpen: setLoginModalOpen
+      api,
+      currentUser,
+      setCurrentUser,
+      loginModalOpen,
+      setLoginModalOpen
     }
   }, children);
 };
@@ -12502,23 +12810,45 @@ var JwtContextProvider = function JwtContextProvider(_ref) {
 JwtContextProvider.props = {
   api: PropTypes.object
 };
-var FlexRow$1 = styled.div(_templateObject$1 || (_templateObject$1 = _taggedTemplateLiteralLoose(["\n  display: flex;\n\n  > * {\n    margin: auto .4em;\n  }\n"])));
-var W1 = styled.div(_templateObject2$1 || (_templateObject2$1 = _taggedTemplateLiteralLoose(["\n  border: 1px solid red;\n"])));
-var W2 = styled.div(_templateObject3$1 || (_templateObject3$1 = _taggedTemplateLiteralLoose(["\n  display: flex;\n"])));
-var SimpleJwtRow = function SimpleJwtRow() {
-  var _useContext = React.useContext(JwtContext),
-      currentUser = _useContext.currentUser;
+const FlexRow$1 = styled.div`
+  display: flex;
 
+  > * {
+    margin: auto .4em;
+  }
+`;
+const W1 = styled.div`
+  border: 1px solid red;
+`;
+const W2 = styled.div`
+  display: flex;
+`;
+const SimpleJwtRow = () => {
+  const {
+    api,
+    currentUser,
+    setCurrentUser,
+    loginModalOpen,
+    setLoginModalOpen
+  } = React.useContext(JwtContext);
   return /*#__PURE__*/React__default.createElement(W1, null, /*#__PURE__*/React__default.createElement(FlexRow$1, null, currentUser.email && /*#__PURE__*/React__default.createElement(W2, null, /*#__PURE__*/React__default.createElement("i", null, currentUser.email), /*#__PURE__*/React__default.createElement(Logout, null)), !currentUser.email && /*#__PURE__*/React__default.createElement(LoginWithPassword, null)));
 };
 
-var _W = styled.div(_templateObject4$1 || (_templateObject4$1 = _taggedTemplateLiteralLoose(["\n  display: flex;\n\n  > * {\n    // margin: auto .4em;\n  }\n"])));
+const _W = styled.div`
+  display: flex;
 
-var Logout = function Logout() {
-  var _useContext2 = React.useContext(JwtContext),
-      setCurrentUser = _useContext2.setCurrentUser;
+  > * {
+    // margin: auto .4em;
+  }
+`;
 
-  var doLogout = function doLogout() {
+const Logout = () => {
+  const {
+    currentUser,
+    setCurrentUser
+  } = React.useContext(JwtContext);
+
+  const doLogout = () => {
     localStorage.removeItem('jwt_token');
     setCurrentUser({});
   };
@@ -12536,8 +12866,8 @@ var JwtContext$1 = {
   Logout: Logout
 };
 
-var _templateObject$2;
-var W0 = styled.div(_templateObject$2 || (_templateObject$2 = _taggedTemplateLiteralLoose(["\n"])));
+var _templateObject$1;
+var W0$1 = styled.div(_templateObject$1 || (_templateObject$1 = _taggedTemplateLiteralLoose(["\n"])));
 
 var Scratchpad = function Scratchpad(props) {
   var _useContext = React.useContext(AuthContext),
@@ -12558,7 +12888,7 @@ var Scratchpad = function Scratchpad(props) {
     });
   };
 
-  return /*#__PURE__*/React__default.createElement(W0, null, /*#__PURE__*/React__default.createElement("textarea", {
+  return /*#__PURE__*/React__default.createElement(W0$1, null, /*#__PURE__*/React__default.createElement("textarea", {
     name: "scratchpad",
     rows: "20",
     cols: "40",
@@ -12573,14 +12903,14 @@ var Scratchpad = function Scratchpad(props) {
 
 Scratchpad.propTypes = {};
 
-var _excluded$3 = ["children"];
+var _excluded$2 = ["children"];
 
-var _templateObject$3;
-var W0$1 = styled.div(_templateObject$3 || (_templateObject$3 = _taggedTemplateLiteralLoose(["\n  height: 100vh;\n  display: flex;\n  flex-direction: column;\n  justify-content: space-between;\n  align-content: space-between;\n"])));
+var _templateObject$2;
+var W0$2 = styled.div(_templateObject$2 || (_templateObject$2 = _taggedTemplateLiteralLoose(["\n  height: 100vh;\n  display: flex;\n  flex-direction: column;\n  justify-content: space-between;\n  align-content: space-between;\n"])));
 
 var SideMenu = function SideMenu(_ref) {
   var children = _ref.children,
-      props = _objectWithoutPropertiesLoose(_ref, _excluded$3);
+      props = _objectWithoutPropertiesLoose(_ref, _excluded$2);
 
   var listItems = props.listItems;
 
@@ -12613,7 +12943,7 @@ var SideMenu = function SideMenu(_ref) {
     onClose: function onClose() {
       return setDrawerOpen(false);
     }
-  }, /*#__PURE__*/React__default.createElement(W0$1, null, /*#__PURE__*/React__default.createElement(List, null, listItems.map(function (_ref2) {
+  }, /*#__PURE__*/React__default.createElement(W0$2, null, /*#__PURE__*/React__default.createElement(List, null, listItems.map(function (_ref2) {
     var label = _ref2.label,
         key = _ref2.key,
         path = _ref2.path;
