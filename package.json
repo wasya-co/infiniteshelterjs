@@ -62,7 +62,6 @@
     "next": "^12.2.5",
     "octree-helper": "^1.1.6",
     "optimize-css-assets-webpack-plugin": "5.0.3",
-    "peerjs": "^1.4.7",
     "pnp-webpack-plugin": "1.6.4",
     "postcss-flexbugs-fixes": "4.1.0",
     "postcss-loader": "3.0.0",
