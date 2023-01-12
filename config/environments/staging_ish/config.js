@@ -10,9 +10,10 @@ const settings = {
   "debug": false,
 
   APP_ENV: 'development_web',
-  "homePath": "/en/locations/show/three-geodesic",
+  "homePath": "/en/locations/show/3d",
 
   "requireLogin": false,
+  "ageRestricted": false,
 };
 
 const defaultSettings = require('../default.js')

@@ -24,7 +24,7 @@ const {
  * @type import('hardhat/config').HardhatUserConfig
  */
 module.exports = {
-  defaultNetwork: "hardhat",
+  defaultNetwork: "goerli",
   etherscan: {
     apiKey: process.env.ETHERSCAN_API_KEY,
   },
@@ -33,9 +33,9 @@ module.exports = {
     hardhat: {
       chainId: 1337,
     },
-    ropsten: {
-      url: API_URL || "",
-      accounts: PRIVATE_KEY ? [PRIVATE_KEY] : [],
+    goerli: {
+      url: API_URL,
+      accounts: [`0x${PRIVATE_KEY}`], // PRIVATE_KEY ? [PRIVATE_KEY] : [],
     },
   },
   paths: {

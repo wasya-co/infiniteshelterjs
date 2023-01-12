@@ -36,8 +36,8 @@ var config = __webpack_require__(585553);
 var config_default = /*#__PURE__*/__webpack_require__.n(config);
 // EXTERNAL MODULE: ./src/components/application/index.js + 8 modules
 var application = __webpack_require__(660179);
-// EXTERNAL MODULE: ./src/components/locations/index.jsx + 37 modules
-var locations = __webpack_require__(128266);
+// EXTERNAL MODULE: ./src/components/locations/index.jsx + 49 modules
+var locations = __webpack_require__(754587);
 // EXTERNAL MODULE: ./src/shared/index.jsx + 8 modules
 var shared = __webpack_require__(38085);
 // EXTERNAL MODULE: ./src/WrappedApp.jsx
@@ -107,12 +107,12 @@ var Page = function Page(props) {
   })), /*#__PURE__*/external_react_default().createElement(application/* BottomDrawer */.lY, null), /*#__PURE__*/external_react_default().createElement(external_react_toastify_.ToastContainer, {
     position: "bottom-left"
   })), /*#__PURE__*/external_react_default().createElement((script_default()), {
-    src: "https://www.googletagmanager.com/gtag/js?id=G-W8PVZ83B9H",
+    src: "https://www.googletagmanager.com/gtag/js?id=UA-53077236-3",
     strategy: "lazyOnload"
   }), /*#__PURE__*/external_react_default().createElement((script_default()), {
     id: "google-analytics",
     strategy: "lazyOnload"
-  }, "\n        window.dataLayer = window.dataLayer || [];\n        function gtag(){window.dataLayer.push(arguments);}\n        gtag('js', new Date());\n\n        gtag('config', 'G-W8PVZ83B9H');\n      "));
+  }, "\n        window.dataLayer = window.dataLayer || [];\n        function gtag(){window.dataLayer.push(arguments);}\n        gtag('js', new Date());\n\n        gtag('config', 'UA-53077236-3');\n      "));
 };
 
 /* harmony default export */ const _slug_ = (Page);

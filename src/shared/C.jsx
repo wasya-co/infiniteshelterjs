@@ -56,6 +56,7 @@ const C = {
 
   // M
   map_panel_types: {
+    ConferenceRoom: 'ConferenceRoom',
     Equirectangular: "Equirectangular",
     GoogleMaps: "GoogleMaps",
     MapPanel: "MapPanel",

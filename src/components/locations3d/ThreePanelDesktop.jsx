@@ -1,12 +1,14 @@
 
 import React, { Fragment as F, useContext, useEffect, useLayoutEffect, useRef, useState } from 'react'
 import * as THREE from "three"
+import OctreeHelper from './vendor/OctreeHelper.js'
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader"
 import { Octree } from 'three/examples/jsm/math/Octree'
 import { Capsule } from 'three/examples/jsm/math/Capsule'
 import { CSS2DRenderer, CSS2DObject } from './vendor/CSS2DRenderer.js'
 import ResourceTracker from './vendor/ResourceTracker'
 import styled from 'styled-components'
+
 
 import {
   AppContext,
@@ -51,12 +53,15 @@ const ThreePanelDesktop = (props) => {
   const {
     useHistory,
     scene,
-    pickingObjects, setPickingObjects,
+    worldOctree, setWorldOctree,
     markers2destinationSlugs, setSarkers2destinationSlugs,
+    tracked, // @TODO: rename
   } = useContext(AppContext)
   const resMgr = new ResourceTracker();
   const track = resMgr.track.bind(resMgr);
-  const tracked = []
+
+  // const [ pickingObjects, setPickingObjects ] = useState([])
+  const pickingObjects = useRef([])
 
   const history = useHistory()
 
@@ -87,7 +92,8 @@ const ThreePanelDesktop = (props) => {
 
   const textureLoader = new THREE.TextureLoader()
   const gltfLoader = new GLTFLoader()
-  let worldOctree = new Octree()
+
+  let octreeHelper
 
   let material
   const helperMaterial = new THREE.MeshBasicMaterial({ color: 0xffff00 })
@@ -122,7 +128,6 @@ const ThreePanelDesktop = (props) => {
   const playerDirection = new THREE.Vector3()
   let pickedObject, pickedObjectSavedColor
   let result // collisions
-  let frame_id
 
   const playerCtlGeometry = new THREE.SphereGeometry(5, 8, 8) // radius, widthSegments, heightSegments, phiStart, phiEnd, thetaStart, thetaEnd
   let playerCtl
@@ -139,14 +144,6 @@ const ThreePanelDesktop = (props) => {
       resource.dispose();
     }
   }
-
-
-
-
-
-
-
-
 
 
 
@@ -168,41 +165,92 @@ const ThreePanelDesktop = (props) => {
   }
 
   const initStudio = (c) => {
+    logg(null, 'initStudio')
+
+    let light
+
+    // // Hemisphere
+    // const light = new THREE.HemisphereLight( 0xeeeeff, 0x777788, 0.75 ) // skylight color, ground color, intensity
+    // light.position.set( 0.5, 1, 0.75 )
+    // scene.add( light )
+
+    // Ambient
+    light = new THREE.AmbientLight(0xFFFFFF, 1.1);
+    scene.add(light)
+
+    // Directional
+    light = new THREE.DirectionalLight(0xFFFFFF, 1)
+    light.position.set(50, 100, 0);
+    light.target.position.set(0, 0, 0);
+    scene.add(light)
+    scene.add(light.target)
+
+    // Directional Shadow
+    light.castShadow = true
+    let shadowLight = light
+    shadowLight.shadow.camera.bottom = -150
+    shadowLight.shadow.camera.top = 150
+    shadowLight.shadow.camera.left = -150
+    shadowLight.shadow.camera.right = 150
+    shadowLight.shadow.camera.near = 10
+    shadowLight.shadow.camera.far = 5000
+    shadowLight.shadow.camera.updateProjectionMatrix()
+    const shadowLightPosition = [ 0, 400, 0 ]
+    shadowLight.position.set( ...shadowLightPosition )
+    scene.add( shadowLight )
+    const helper = new THREE.CameraHelper(shadowLight.shadow.camera)
+    // scene.add( helper )
+
+    // Point
+    // const color = 0xFFFFFF;
+    // const intensity = 100;
+    // const light = new THREE.PointLight(color, intensity);
+    // light.position.set( 0, 250, 0 )
+    // scene.add(light);
+
+
+  }
+
+  const initInteriorStudio = (c) => {
+    logg(null, 'initInteriorStudio')
+
+    scene.background = new THREE.Color( 0xffffff )
+    scene.fog = new THREE.Fog( 0xffffff, 0, 750 )
 
     { /* Lights */
 
       // // Illuminate everytyhing
-      const light = new THREE.HemisphereLight( 0xeeeeff, 0x777788, 0.75 )
-      light.position.set( 0.5, 1, 0.75 )
-      scene.add( light )
+      // const light = new THREE.HemisphereLight( 0xeeeeff, 0x777788, 0.75 )
+      // light.position.set( 0.5, 1, 0.75 )
+      // scene.add( light )
 
-      // Shadow
-      const white = 0xffffff
-      const shadowLightIntensity = 2
-      const shadowLightPosition = [ 0*10, 40*10, -10*100 ]
-      const shadowLight = new THREE.DirectionalLight(white, shadowLightIntensity)
-      shadowLight.castShadow = true
-      // shadowLight.shadow.mapSize.width = 512
-      // shadowLight.shadow.mapSize.height = 512
+      // // Shadow
+      // const white = 0xffffff
+      // const shadowLightIntensity = 2
+      // const shadowLightPosition = [ 0*10, 40*10, -10*100 ]
+      // const shadowLight = new THREE.DirectionalLight(white, shadowLightIntensity)
+      // shadowLight.castShadow = true
+      // // shadowLight.shadow.mapSize.width = 512
+      // // shadowLight.shadow.mapSize.height = 512
 
-      shadowLight.shadow.camera.bottom = -150
-      shadowLight.shadow.camera.top = 150
-      shadowLight.shadow.camera.left = -150
-      shadowLight.shadow.camera.right = 150
-      shadowLight.shadow.camera.near = 10
-      shadowLight.shadow.camera.far = 5000
-      shadowLight.shadow.camera.updateProjectionMatrix()
+      // shadowLight.shadow.camera.bottom = -150
+      // shadowLight.shadow.camera.top = 150
+      // shadowLight.shadow.camera.left = -150
+      // shadowLight.shadow.camera.right = 150
+      // shadowLight.shadow.camera.near = 10
+      // shadowLight.shadow.camera.far = 5000
+      // shadowLight.shadow.camera.updateProjectionMatrix()
 
-      shadowLight.position.set( ...shadowLightPosition )
-      scene.add( shadowLight )
-      // const helper = new THREE.DirectionalLightHelper( shadowLight, 5 )
-      const helper = new THREE.CameraHelper(shadowLight.shadow.camera)
-      scene.add( helper )
+      // shadowLight.position.set( ...shadowLightPosition )
+      // scene.add( shadowLight )
+      // // const helper = new THREE.DirectionalLightHelper( shadowLight, 5 )
+      // const helper = new THREE.CameraHelper(shadowLight.shadow.camera)
+      // scene.add( helper )
 
     } // endLights
 
-    { /* Floor */
-      if (c.hasFloor) {
+
+    if (c.hasFloor) {
 
       texture = textureLoader.load(`/assets/textures/floor-1.png`)
       const textureM = U.meters(1) // the texture is a unit meter
@@ -223,8 +271,7 @@ const ThreePanelDesktop = (props) => {
       floor.receiveShadow = true
       scene.add( floor )
 
-      }
-    } /* endFloor */
+    }
 
     /* Skybox */
     texture = textureLoader.load(`/assets/textures/space.jpg`, () => {
@@ -257,21 +304,21 @@ const ThreePanelDesktop = (props) => {
 
     scene.add( controls.getObject() )
 
-    const onClick = () => { // There is no event passed in here.
+    const onClick = () => { // There is no event here.
       if (pickedObject && controls.isLocked) {
 
+        logg(tracked, 'cleaning Up')
         /* cleanup */
         while(tracked.length) {
           const popped = tracked.pop()
           logg(popped, 'popped')
+          scene.remove(popped)
           dispose(popped)
         }
-        // setPickingObjects([])
-        // resMgr.dispose()
 
-        // worldOctree = null // I still need to clear the octree
-
-        // logg(markers2destinationSlugs, 'markers2destinationSlugs')
+        const TmpWorldOctree = new Octree()
+        setWorldOctree(TmpWorldOctree)
+        // scene.remove(octreeHelper)
 
         history.push( appPaths.location({
           slug: markers2destinationSlugs[pickedObject.uuid].destination_slug
@@ -293,57 +340,85 @@ const ThreePanelDesktop = (props) => {
   }
 
   const initModels = () => {
+
+    const outlineMat = new THREE.MeshLambertMaterial({
+      color:'black',
+      side: THREE.BackSide
+    })
+    outlineMat.onBeforeCompile = (shader) => {
+      const token = '#include <begin_vertex>'
+      const customTransform = `
+        vec3 transformed = position + objectNormal*0.06;
+      `
+      shader.vertexShader = shader.vertexShader.replace(token,customTransform)
+    }
+    const regularMat = new THREE.MeshPhongMaterial({
+      color:'yellow',
+      side: THREE.FrontSide
+    })
+
+
+    // setPickingObjects([])
+    pickingObjects.current = []
     map.markers.map((marker, idx) => {
 
-      if (!!marker.asset3d_path) {
+      if (marker.asset3d_path) {
         gltfLoader.load( marker.asset3d_path, ( gltf ) => {
 
           tracked.push(gltf.scene)
+          logg(tracked, 'adding Tracking')
 
           gltf.scene.position.x = marker.x
           gltf.scene.position.y = marker.y
           gltf.scene.position.z = marker.z
-          gltf.scene.scale.multiplyScalar(110)
-          // @TODO: and Z ?!
-          // @TODO: and parent-child relationships ?!
+          gltf.scene.scale.multiplyScalar(110) // @TODO: abstract. _vp_ 2022-10-23
+
+          const clone = gltf.scene.clone()
+          // clone.scale.multiplyScalar(110)
+          // clone.scale.multiplyScalar(1.1)
+          // clone.scale.set(112, 112, 112)
+          clone.traverse(child => {
+            child.material = outlineMat
+          })
+          scene.add(clone)
 
           scene.add(gltf.scene)
 
+
           /* show the bounding box */
-          let box = new THREE.BoxHelper(gltf.scene, 0xff00ff)
-          box = track(box)
-          scene.add( box )
+          // let box = new THREE.BoxHelper(gltf.scene, 0xff00ff)
+          // scene.add( box )
 
-          /*
-          * Collisions
-          **/
-          worldOctree.fromGraphNode( gltf.scene )
-          // collisionObjects.push( gltf.scene )
+          /* Collisions */
+          worldOctree.fromGraphNode( gltf.scene, scene )
+          octreeHelper = new OctreeHelper( worldOctree )
+          octreeHelper.visible = false
+          scene.add( octreeHelper ) // @TODO: these need to be multiple, if I'm keeping it
 
-
-          { // init Picking, @TODO: remove usage of markers2destinationSlugs
-
-
-            if (marker.destination_slug) {
-              pickingObjects.push( gltf.scene )
+          gltf.scene.traverse( child => { // shadows enabled?
+            if ( child.isMesh ) {
+              if (marker.castShadow) {
+                child.castShadow = true
+              }
+              if (marker.receiveShadow) {
+                child.receiveShadow = true
+              }
             }
+          })
 
+          if (marker.destination_slug) { // init Picking
+            pickingObjects.current.push( gltf.scene )
             gltf.scene.traverse( child => {
               if ( child.isMesh ) {
-                child.castShadow = true
-                child.receiveShadow = true
-
-                if (marker.destination_slug) {
-
-                  // logg(marker, 'init Picking')
-                  // logg(gltf.scene, 'init Picking 2')
-
-                  markers2destinationSlugs[child.uuid] = { destination_slug: marker.destination_slug }
-                }
+                child.material.emissive.setHex(0x00FFFF)
+                // // @TODO: remove usage of markers2destinationSlugs
+                markers2destinationSlugs[child.uuid] = { destination_slug: marker.destination_slug }
               }
             })
+          }
 
-          } // endInitPicking
+
+
 
         })
       }
@@ -352,11 +427,9 @@ const ThreePanelDesktop = (props) => {
   } // end InitModels
 
   function init() {
-    logg(scene, 'init() scene')
-    scene.background = new THREE.Color( 0xffffff )
-    scene.fog = new THREE.Fog( 0xffffff, 0, 750 )
+    logg(scene, 'init Scene')
 
-    const axesHelper = new THREE.AxesHelper( 5 )
+    const axesHelper = new THREE.AxesHelper( 50 ) // origin
     scene.add( axesHelper )
 
     camera.position.y = U.m(0)
@@ -478,6 +551,7 @@ const ThreePanelDesktop = (props) => {
   }
 
   const animatePicking = () => {
+
     let cameraPosition = camera.position.clone()
     cameraPosition.applyMatrix4( camera.matrixWorld )
     let cameraDirection = new THREE.Vector3()
@@ -487,10 +561,8 @@ const ThreePanelDesktop = (props) => {
     raycaster = new THREE.Raycaster( cameraPosition, cameraDirection )
     // scene.add( new THREE.ArrowHelper( cameraDirection, cameraPosition, 100, 0xff0000 ) )
 
-    const pickingIntersections = raycaster.intersectObjects( pickingObjects, true )
-
-    // logg(pickingObjects, 'pickingObjects')
-    // logg(pickingIntersections, 'pickingIntersections')
+    const pickingIntersections = raycaster.intersectObjects( pickingObjects.current, true )
+    // logg(pickingObjects, 'animating picking?')
 
     if (pickedObject) {
       pickedObject.material.emissive.setHex(pickedObjectSavedColor)
@@ -500,8 +572,6 @@ const ThreePanelDesktop = (props) => {
       pickedObject = pickingIntersections[0].object
       pickedObjectSavedColor = pickedObject.material.emissive.getHex()
       pickedObject.material.emissive.setHex(0xFFFF00)
-
-      // logg(pickedObject, 'pickedObject')
     }
   }
 
@@ -520,7 +590,7 @@ const ThreePanelDesktop = (props) => {
     }
     renderer.render( scene, camera )
     prevTime = time
-    frame_id = requestAnimationFrame( animate )
+    requestAnimationFrame( animate )
   }
 
   const onWindowResize = () => {

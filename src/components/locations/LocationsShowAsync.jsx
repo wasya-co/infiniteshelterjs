@@ -85,9 +85,13 @@ const LocationsShowAsync = (props) => {
     match.params.newsitems_page,
   ])
 
+  const memoed = React.useMemo(() => {
+    return <LocationsShow {...{ location, match, showItem }} />
+  }, [ location ])
+
   if (!location) { return  null }
   if (location.is_premium && !location.is_purchased) { return <LocationsRestricted /> }
-  return <LocationsShow {...{ location, match, showItem }} />
+  return <>{memoed}</>
 }
 LocationsShowAsync.propTypes = {
   match: PropTypes.object.isRequired,

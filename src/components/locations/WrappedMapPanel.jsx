@@ -5,6 +5,7 @@ import React, { Fragment as F, useContext, useEffect, useRef, useState } from "r
 import styled from 'styled-components'
 
 import {
+  ConferenceRoom,
   MapPanel,
 } from "./"
 import GoogleMaps from './GoogleMaps'
@@ -72,6 +73,9 @@ const WrappedMapPanel = React.forwardRef((props, ref) => {
 
     case C.map_panel_types.GoogleMaps:
       return <W0><GoogleMaps {...props} /></W0>
+
+      case C.map_panel_types.ConferenceRoom:
+        return <W0><ConferenceRoom {...props} /></W0>
 
     default:
       return <W0 ref={ref} className="WrappedMapPanel" ><MapPanel {...props} /></W0>
