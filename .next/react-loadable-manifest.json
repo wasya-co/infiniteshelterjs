@@ -1,242 +1,248 @@
 {
   "../../ishlibjs/node_modules/@ionic/core/components/index4.js -> ./ios.transition.js": {
-    "id": 9189,
-    "files": [
-      "static/chunks/7089.50ee6fc4b9232637.js",
-      "static/chunks/9189.286dea7e3b849f78.js"
-    ]
+    "id": "../../ishlibjs/node_modules/@ionic/core/components/index4.js -> ./ios.transition.js",
+    "files": []
   },
   "../../ishlibjs/node_modules/@ionic/core/components/index4.js -> ./md.transition.js": {
-    "id": 4996,
-    "files": [
-      "static/chunks/7089.50ee6fc4b9232637.js",
-      "static/chunks/4996.74290524f6d68cd1.js"
-    ]
+    "id": "../../ishlibjs/node_modules/@ionic/core/components/index4.js -> ./md.transition.js",
+    "files": []
   },
   "../../ishlibjs/node_modules/@ionic/core/components/ion-app.js -> ./focus-visible.js": {
-    "id": null,
+    "id": "../../ishlibjs/node_modules/@ionic/core/components/ion-app.js -> ./focus-visible.js",
     "files": []
   },
   "../../ishlibjs/node_modules/@ionic/core/components/ion-app.js -> ./hardware-back-button.js": {
-    "id": null,
+    "id": "../../ishlibjs/node_modules/@ionic/core/components/ion-app.js -> ./hardware-back-button.js",
     "files": []
   },
   "../../ishlibjs/node_modules/@ionic/core/components/ion-app.js -> ./index10.js": {
-    "id": null,
-    "files": []
+    "id": "../../ishlibjs/node_modules/@ionic/core/components/ion-app.js -> ./index10.js",
+    "files": [
+      "static/chunks/ishlibjs_node_modules_ionic_core_components_index10_js.js"
+    ]
   },
   "../../ishlibjs/node_modules/@ionic/core/components/ion-app.js -> ./input-shims.js": {
-    "id": null,
-    "files": []
+    "id": "../../ishlibjs/node_modules/@ionic/core/components/ion-app.js -> ./input-shims.js",
+    "files": [
+      "static/chunks/ishlibjs_node_modules_ionic_core_components_input-shims_js.js"
+    ]
   },
   "../../ishlibjs/node_modules/@ionic/core/components/ion-app.js -> ./keyboard.js": {
-    "id": null,
+    "id": "../../ishlibjs/node_modules/@ionic/core/components/ion-app.js -> ./keyboard.js",
     "files": []
   },
   "../../ishlibjs/node_modules/@ionic/core/components/ion-app.js -> ./status-tap.js": {
-    "id": null,
-    "files": []
+    "id": "../../ishlibjs/node_modules/@ionic/core/components/ion-app.js -> ./status-tap.js",
+    "files": [
+      "static/chunks/ishlibjs_node_modules_ionic_core_components_status-tap_js.js"
+    ]
   },
   "../../ishlibjs/node_modules/@ionic/core/components/ion-item-sliding.js -> ./index2.js": {
-    "id": null,
+    "id": "../../ishlibjs/node_modules/@ionic/core/components/ion-item-sliding.js -> ./index2.js",
     "files": []
   },
   "../../ishlibjs/node_modules/@ionic/core/components/ion-menu.js -> ./index2.js": {
-    "id": null,
+    "id": "../../ishlibjs/node_modules/@ionic/core/components/ion-menu.js -> ./index2.js",
     "files": []
   },
   "../../ishlibjs/node_modules/@ionic/core/components/ion-nav.js -> ./swipe-back.js": {
-    "id": 5458,
+    "id": "../../ishlibjs/node_modules/@ionic/core/components/ion-nav.js -> ./swipe-back.js",
     "files": [
-      "static/chunks/5458.e026de37d8012c51.js"
+      "static/chunks/ishlibjs_node_modules_ionic_core_components_swipe-back_js.js"
     ]
   },
   "../../ishlibjs/node_modules/@ionic/core/components/ion-range.js -> ./index2.js": {
-    "id": null,
+    "id": "../../ishlibjs/node_modules/@ionic/core/components/ion-range.js -> ./index2.js",
     "files": []
   },
   "../../ishlibjs/node_modules/@ionic/core/components/ion-refresher.js -> ./index2.js": {
-    "id": null,
+    "id": "../../ishlibjs/node_modules/@ionic/core/components/ion-refresher.js -> ./index2.js",
     "files": []
   },
   "../../ishlibjs/node_modules/@ionic/core/components/ion-reorder-group.js -> ./index2.js": {
-    "id": null,
+    "id": "../../ishlibjs/node_modules/@ionic/core/components/ion-reorder-group.js -> ./index2.js",
     "files": []
   },
   "../../ishlibjs/node_modules/@ionic/core/components/ion-router-outlet.js -> ./swipe-back.js": {
-    "id": 5458,
+    "id": "../../ishlibjs/node_modules/@ionic/core/components/ion-router-outlet.js -> ./swipe-back.js",
     "files": [
-      "static/chunks/5458.e026de37d8012c51.js"
+      "static/chunks/ishlibjs_node_modules_ionic_core_components_swipe-back_js.js"
     ]
   },
   "../../ishlibjs/node_modules/@ionic/core/components/ion-segment.js -> ./index2.js": {
-    "id": null,
+    "id": "../../ishlibjs/node_modules/@ionic/core/components/ion-segment.js -> ./index2.js",
     "files": []
   },
   "../../ishlibjs/node_modules/@ionic/core/components/ion-slides.js -> ./swiper.bundle.js": {
-    "id": null,
-    "files": []
+    "id": "../../ishlibjs/node_modules/@ionic/core/components/ion-slides.js -> ./swiper.bundle.js",
+    "files": [
+      "static/chunks/ishlibjs_node_modules_ionic_core_components_swiper_bundle_js.js"
+    ]
   },
   "../../ishlibjs/node_modules/@ionic/core/components/ion-toggle.js -> ./index2.js": {
-    "id": null,
+    "id": "../../ishlibjs/node_modules/@ionic/core/components/ion-toggle.js -> ./index2.js",
     "files": []
   },
   "../../ishlibjs/node_modules/@ionic/core/components/picker-column.js -> ./index2.js": {
-    "id": null,
+    "id": "../../ishlibjs/node_modules/@ionic/core/components/picker-column.js -> ./index2.js",
     "files": []
   },
   "../../ishlibjs/node_modules/@ionic/core/node_modules/@stencil/core/internal/client/index.js -> ./shadow-css.js": {
-    "id": 3497,
+    "id": "../../ishlibjs/node_modules/@ionic/core/node_modules/@stencil/core/internal/client/index.js -> ./shadow-css.js",
     "files": [
-      "static/chunks/3497.2e0329ce9ca6d859.js"
+      "static/chunks/ishlibjs_node_modules_ionic_core_node_modules_stencil_core_internal_client_shadow-css_js.js"
     ]
   },
   "../../ishlibjs/node_modules/@stencil/core/internal/client/index.js -> ./shadow-css.js": {
-    "id": 6225,
+    "id": "../../ishlibjs/node_modules/@stencil/core/internal/client/index.js -> ./shadow-css.js",
     "files": [
-      "static/chunks/6225.e850d13496686a0a.js"
+      "static/chunks/ishlibjs_node_modules_stencil_core_internal_client_shadow-css_js.js"
     ]
   },
   "../node_modules/@capacitor-community/facebook-login/dist/esm/index.js -> ./web": {
-    "id": 303,
+    "id": "../node_modules/@capacitor-community/facebook-login/dist/esm/index.js -> ./web",
     "files": [
-      "static/chunks/303.9aaed062955ea10f.js"
+      "static/chunks/node_modules_capacitor-community_facebook-login_dist_esm_web_js.js"
     ]
   },
   "../node_modules/@capacitor/device/dist/esm/index.js -> ./web": {
-    "id": 7961,
+    "id": "../node_modules/@capacitor/device/dist/esm/index.js -> ./web",
     "files": [
-      "static/chunks/7961.b06555842272a287.js"
+      "static/chunks/node_modules_capacitor_device_dist_esm_web_js.js"
     ]
   },
   "../node_modules/@capacitor/toast/dist/esm/index.js -> ./web": {
-    "id": 5056,
+    "id": "../node_modules/@capacitor/toast/dist/esm/index.js -> ./web",
     "files": [
-      "static/chunks/5056.c9b76d46ed864e1a.js"
+      "static/chunks/node_modules_capacitor_toast_dist_esm_web_js.js"
     ]
   },
   "../node_modules/@ionic/core/dist/esm-es5/index-7a8b7a1c.js -> ./shadow-css-a3f00b33.js": {
-    "id": 6048,
+    "id": "../node_modules/@ionic/core/dist/esm-es5/index-7a8b7a1c.js -> ./shadow-css-a3f00b33.js",
     "files": [
-      "static/chunks/6048.2db4ceb80848c20f.js"
+      "static/chunks/node_modules_ionic_core_dist_esm-es5_shadow-css-a3f00b33_js.js"
     ]
   },
   "../node_modules/@ionic/core/dist/esm-es5/index-a7711c1e.js -> ./ios.transition-7812dd37.js": {
-    "id": 273,
+    "id": "../node_modules/@ionic/core/dist/esm-es5/index-a7711c1e.js -> ./ios.transition-7812dd37.js",
     "files": []
   },
   "../node_modules/@ionic/core/dist/esm-es5/index-a7711c1e.js -> ./md.transition-51c13987.js": {
-    "id": 2930,
+    "id": "../node_modules/@ionic/core/dist/esm-es5/index-a7711c1e.js -> ./md.transition-51c13987.js",
     "files": []
   },
   "../node_modules/@ionic/core/dist/esm-es5/ion-app_8.entry.js -> ./focus-visible-f4ad4f1a.js": {
-    "id": 3954,
+    "id": "../node_modules/@ionic/core/dist/esm-es5/ion-app_8.entry.js -> ./focus-visible-f4ad4f1a.js",
     "files": [
-      "static/chunks/3954.1e645b2ea1538363.js"
+      "static/chunks/node_modules_ionic_core_dist_esm-es5_focus-visible-f4ad4f1a_js.js"
     ]
   },
   "../node_modules/@ionic/core/dist/esm-es5/ion-app_8.entry.js -> ./hardware-back-button-4a6b37fb.js": {
-    "id": 6895,
+    "id": "../node_modules/@ionic/core/dist/esm-es5/ion-app_8.entry.js -> ./hardware-back-button-4a6b37fb.js",
     "files": []
   },
   "../node_modules/@ionic/core/dist/esm-es5/ion-app_8.entry.js -> ./input-shims-ce03ee9f.js": {
-    "id": 1324,
+    "id": "../node_modules/@ionic/core/dist/esm-es5/ion-app_8.entry.js -> ./input-shims-ce03ee9f.js",
     "files": [
-      "static/chunks/1324.249faeadab27e983.js"
+      "static/chunks/node_modules_ionic_core_dist_esm-es5_input-shims-ce03ee9f_js.js"
     ]
   },
   "../node_modules/@ionic/core/dist/esm-es5/ion-app_8.entry.js -> ./keyboard-5742b5da.js": {
-    "id": 9097,
+    "id": "../node_modules/@ionic/core/dist/esm-es5/ion-app_8.entry.js -> ./keyboard-5742b5da.js",
     "files": [
-      "static/chunks/9097.ad7229c7bbb94cb1.js"
+      "static/chunks/node_modules_ionic_core_dist_esm-es5_keyboard-5742b5da_js.js"
     ]
   },
   "../node_modules/@ionic/core/dist/esm-es5/ion-app_8.entry.js -> ./status-tap-9cb487b1.js": {
-    "id": 4246,
+    "id": "../node_modules/@ionic/core/dist/esm-es5/ion-app_8.entry.js -> ./status-tap-9cb487b1.js",
     "files": [
-      "static/chunks/4246.30be6490add53882.js"
+      "static/chunks/node_modules_ionic_core_dist_esm-es5_status-tap-9cb487b1_js.js"
     ]
   },
   "../node_modules/@ionic/core/dist/esm-es5/ion-app_8.entry.js -> ./swipe-back-1bbd08e0.js": {
-    "id": 3147,
+    "id": "../node_modules/@ionic/core/dist/esm-es5/ion-app_8.entry.js -> ./swipe-back-1bbd08e0.js",
     "files": [
-      "static/chunks/3147.0563f396b4c35893.js"
+      "static/chunks/node_modules_ionic_core_dist_esm-es5_swipe-back-1bbd08e0_js.js"
     ]
   },
   "../node_modules/@ionic/core/dist/esm-es5/ion-app_8.entry.js -> ./tap-click-7ddcdebb.js": {
-    "id": 7507,
+    "id": "../node_modules/@ionic/core/dist/esm-es5/ion-app_8.entry.js -> ./tap-click-7ddcdebb.js",
     "files": [
-      "static/chunks/7507.9f1292fd81da3ad9.js"
+      "static/chunks/node_modules_ionic_core_dist_esm-es5_tap-click-7ddcdebb_js.js"
     ]
   },
   "../node_modules/@ionic/core/dist/esm-es5/ion-datetime_3.entry.js -> ./index-34cb2743.js": {
-    "id": 8224,
+    "id": "../node_modules/@ionic/core/dist/esm-es5/ion-datetime_3.entry.js -> ./index-34cb2743.js",
     "files": []
   },
   "../node_modules/@ionic/core/dist/esm-es5/ion-item-option_3.entry.js -> ./index-34cb2743.js": {
-    "id": 8224,
+    "id": "../node_modules/@ionic/core/dist/esm-es5/ion-item-option_3.entry.js -> ./index-34cb2743.js",
     "files": []
   },
   "../node_modules/@ionic/core/dist/esm-es5/ion-menu_3.entry.js -> ./index-34cb2743.js": {
-    "id": 8224,
+    "id": "../node_modules/@ionic/core/dist/esm-es5/ion-menu_3.entry.js -> ./index-34cb2743.js",
     "files": []
   },
   "../node_modules/@ionic/core/dist/esm-es5/ion-nav_2.entry.js -> ./swipe-back-1bbd08e0.js": {
-    "id": 3147,
+    "id": "../node_modules/@ionic/core/dist/esm-es5/ion-nav_2.entry.js -> ./swipe-back-1bbd08e0.js",
     "files": [
-      "static/chunks/3147.0563f396b4c35893.js"
+      "static/chunks/node_modules_ionic_core_dist_esm-es5_swipe-back-1bbd08e0_js.js"
     ]
   },
   "../node_modules/@ionic/core/dist/esm-es5/ion-range.entry.js -> ./index-34cb2743.js": {
-    "id": 8224,
+    "id": "../node_modules/@ionic/core/dist/esm-es5/ion-range.entry.js -> ./index-34cb2743.js",
     "files": []
   },
   "../node_modules/@ionic/core/dist/esm-es5/ion-refresher_2.entry.js -> ./index-34cb2743.js": {
-    "id": 8224,
+    "id": "../node_modules/@ionic/core/dist/esm-es5/ion-refresher_2.entry.js -> ./index-34cb2743.js",
     "files": []
   },
   "../node_modules/@ionic/core/dist/esm-es5/ion-reorder_2.entry.js -> ./index-34cb2743.js": {
-    "id": 8224,
+    "id": "../node_modules/@ionic/core/dist/esm-es5/ion-reorder_2.entry.js -> ./index-34cb2743.js",
     "files": []
   },
   "../node_modules/@ionic/core/dist/esm-es5/ion-segment_2.entry.js -> ./index-34cb2743.js": {
-    "id": 8224,
+    "id": "../node_modules/@ionic/core/dist/esm-es5/ion-segment_2.entry.js -> ./index-34cb2743.js",
     "files": []
   },
   "../node_modules/@ionic/core/dist/esm-es5/ion-slide_2.entry.js -> ./swiper.bundle-6c5e7804.js": {
-    "id": 8493,
+    "id": "../node_modules/@ionic/core/dist/esm-es5/ion-slide_2.entry.js -> ./swiper.bundle-6c5e7804.js",
     "files": [
-      "static/chunks/8493.2de16edf2b5b4b53.js"
+      "static/chunks/node_modules_ionic_core_dist_esm-es5_swiper_bundle-6c5e7804_js.js"
     ]
   },
   "../node_modules/@ionic/core/dist/esm-es5/ion-toggle.entry.js -> ./index-34cb2743.js": {
-    "id": 8224,
+    "id": "../node_modules/@ionic/core/dist/esm-es5/ion-toggle.entry.js -> ./index-34cb2743.js",
     "files": []
   },
   "../node_modules/@ionic/core/dist/esm-es5/loader.js -> ./css-shim-2ccf4dec.js": {
-    "id": 5999,
+    "id": "../node_modules/@ionic/core/dist/esm-es5/loader.js -> ./css-shim-2ccf4dec.js",
     "files": [
-      "static/chunks/5999.f262806e3eb0de23.js"
+      "static/chunks/node_modules_ionic_core_dist_esm-es5_css-shim-2ccf4dec_js.js"
     ]
   },
   "../node_modules/@ionic/core/dist/esm/polyfills/index.js -> ./core-js.js": {
-    "id": null,
-    "files": []
+    "id": "../node_modules/@ionic/core/dist/esm/polyfills/index.js -> ./core-js.js",
+    "files": [
+      "static/chunks/polyfills-core-js.js"
+    ]
   },
   "../node_modules/@ionic/core/dist/esm/polyfills/index.js -> ./dom.js": {
-    "id": null,
-    "files": []
+    "id": "../node_modules/@ionic/core/dist/esm/polyfills/index.js -> ./dom.js",
+    "files": [
+      "static/chunks/polyfills-dom.js"
+    ]
   },
   "../node_modules/next/dist/client/index.js -> ../pages/_app": {
-    "id": 2741,
+    "id": "../node_modules/next/dist/client/index.js -> ../pages/_app",
     "files": [
-      "static/chunks/2741.55e8b551d4960338.js"
+      "static/chunks/node_modules_next_dist_pages__app_js.js"
     ]
   },
   "../node_modules/next/dist/client/index.js -> ../pages/_error": {
-    "id": 9651,
+    "id": "../node_modules/next/dist/client/index.js -> ../pages/_error",
     "files": [
-      "static/chunks/9651.32a062942d08f34d.js"
+      "static/chunks/node_modules_next_dist_pages__error_js.js"
     ]
   }
 }
