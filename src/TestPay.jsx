@@ -1,4 +1,6 @@
 
+import 'date-fns'; // From: https://v4.mui.com/components/pickers/
+import DateFnsUtils from '@date-io/date-fns';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
@@ -37,7 +39,7 @@ const _TestPay = (props) => {
   return (<>
     <Maxwidth >
       <MuiPickersUtilsProvider
-        // utils={DateFnsUtils}
+        utils={DateFnsUtils}
       >
         <h1>TestPay</h1>
 
@@ -55,7 +57,7 @@ const _TestPay = (props) => {
 
 
     <Grid container justifyContent="space-around">
-      <KeyboardDatePicker
+      {/* <KeyboardDatePicker
         disableToolbar
         variant="inline"
         format="MM/dd/yyyy"
@@ -67,7 +69,7 @@ const _TestPay = (props) => {
         KeyboardButtonProps={{
           'aria-label': 'change date',
         }}
-      />
+      /> */}
       <KeyboardTimePicker
         margin="normal"
         id="time-picker"
