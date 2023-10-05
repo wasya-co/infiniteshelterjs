@@ -54,9 +54,7 @@ const WrappedApp = (props) => {
   return (<AppProvider >
 
     <Root className='Root' >
-
       <AppRouter />
-
     </Root>
 
     <BottomDrawer />
