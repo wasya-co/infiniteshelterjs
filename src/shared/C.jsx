@@ -1,7 +1,7 @@
 
 /**
  * Constants
- */
+**/
 const C = {
 
   // A
