@@ -25,6 +25,7 @@ import {
   inflector,
   logg,
 } from "$shared"
+import TestPay from './TestPay'
 
 /**
  * appPaths
@@ -95,6 +96,8 @@ const AppRouter = (props) => {
       <Redirect exact from="/" to={config.homePath} />
 
       <Route exact path="/en/account" component={Account} />
+
+      <Route exact path="/test/pay" render={(props) => <TestPay layout={C.layout_onecol} {...props} />} />
 
       <Route exact path="/en/galleries/show/:slug" component={GalleriesShow} />
 

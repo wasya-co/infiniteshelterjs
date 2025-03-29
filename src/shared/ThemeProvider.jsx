@@ -13,6 +13,7 @@ import {
 **/
 export const ThemeContext = React.createContext({})
 const ThemeProvider = ({ children, ...props }) => {
+  // logg(props, 'ThemeProvider')
 
   const defaultTheme = 'undefined' === typeof window ? C.themes.light : ( window.localStorage.getItem(C.theme) || C.themes.light )
   const [theme, setTheme] = useState(defaultTheme)

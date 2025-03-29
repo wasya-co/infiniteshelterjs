@@ -15,7 +15,11 @@ import {
 } from "$components/TwofoldLayout"
 import { MyAccountWidget } from "$components/users"
 import {
-  C, logg, MenuIcon, S,
+  AppContext,
+  C,
+  logg,
+  MenuIcon,
+  S,
 } from "$shared"
 
 const Drawer = styled(_Drawer)`
@@ -80,6 +84,17 @@ const WClosed = styled.div`
 const BottomDrawer = (props) => {
   // logg(props, 'BottomDrawer')
   const {} = props
+
+  const {
+    layout,
+  } = useContext(AppContext)
+  logg(useContext(AppContext), 'BottomDrawer usedAppContext')
+  // only render in gameui layout
+  // _vp_ 2023-01-22
+  // untested, brittle
+  if (layout && layout !== C.layout_gameui) {
+    return null;
+  }
 
   const {
     bottomDrawerOpen, setBottomDrawerOpen,

@@ -64,7 +64,7 @@ export const AppContext = React.createContext({})
  *
 **/
 const AppProvider = ({ children, ...props }) => {
-  // logg(props, 'AppProvider')
+  logg(props, 'AppProvider')
   const {
     useHistory = ReactRouterDOM.useHistory,
   } = props
@@ -86,9 +86,14 @@ const AppProvider = ({ children, ...props }) => {
   const pickingObjects = []
   const setPickingObjects = () => {}
 
+  const [ layout, setLayout ] = useState(C.layout_gameui)
+
   return <AppContext.Provider value={{
     os,
     useHistory,
+
+    layout, setLayout,
+
     scene,
     tracked, setTracked,
     worldOctree, setWorldOctree,
